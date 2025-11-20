@@ -12,7 +12,7 @@ public class TilemapFader : MonoBehaviour
     [SerializeField] int fadeWidth = 3;
 
 
-    private void Start()
+    public void Setup()
     {
         if (tilemap == null) return;
 
@@ -29,6 +29,9 @@ public class TilemapFader : MonoBehaviour
                 Vector3Int pos = new Vector3Int(x, y, 0);
                 if (tilemap.HasTile(pos))
                 {
+                    // ! unlock color modification of the tile
+                    tilemap.SetTileFlags(pos, TileFlags.None);
+
                     // Apply fade
                     Color c = tilemap.GetColor(pos);
                     float t = Mathf.Clamp01((float)(x - startX) / fadeWidth);
