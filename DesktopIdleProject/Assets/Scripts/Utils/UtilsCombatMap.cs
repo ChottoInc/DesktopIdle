@@ -4,6 +4,39 @@ using UnityEngine;
 
 public static class UtilsCombatMap
 {
+    private static CombatMapSO[] maps;
+
+
+    public static void Initialize()
+    {
+        maps = LoadMaps();
+    }
+
+    private static CombatMapSO[] LoadMaps()
+    {
+        return Resources.LoadAll<CombatMapSO>("Data/CombatMaps");
+    }
+
+
+    public static CombatMapSO[] GetAllMaps()
+    {
+        return maps;
+    }
+
+    public static CombatMapSO GetMapById(int id)
+    {
+        foreach (var map in maps)
+        {
+            if(map.IdMap == id)
+                return map;
+        }
+        return null;
+    }
+
+
+
+
+
     public enum MapDifficulty
     {
         VeryEasy,   // 0
@@ -44,7 +77,7 @@ public static class UtilsCombatMap
                     * Mathf.Pow(enemyLevel, 1.03f)
                     * DifficultyExpMultiplier[(int)difficulty];
 
-        return Mathf.FloorToInt(exp);
-        //return Mathf.FloorToInt(exp * 100);
+        //return Mathf.FloorToInt(exp);
+        return Mathf.FloorToInt(exp * 100);
     }
 }

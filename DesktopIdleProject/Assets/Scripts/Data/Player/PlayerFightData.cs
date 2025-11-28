@@ -115,6 +115,36 @@ public class PlayerFightData
 
     public PlayerFightData()
     {
+        GenerateBaseStats();
+    }
+
+    public PlayerFightData(PlayerFightSaveData saveData)
+    {
+        GenerateBaseStats();
+
+        levelStatMaxHp = saveData.levelStatMaxHp;
+
+        levelStatAtk = saveData.levelStatAtk;
+        levelStatDef = saveData.levelStatDef;
+
+        levelStatAtkSpd = saveData.levelStatAtkSpd;
+
+        levelStatCritRate = saveData.levelStatCritRate;
+        levelStatCritDmg = saveData.levelStatCritDmg;
+
+        levelStatLuck = saveData.levelStatLuck;
+
+
+        availableStatPoints = saveData.availableStatPoints;
+
+        currentLevel = saveData.currentLevel;
+        currentExp = saveData.currentExp;
+
+        currentHp = MaxHp;
+    }
+
+    private void GenerateBaseStats()
+    {
         currentLevel = 1;
         currentExp = 0;
 
@@ -125,11 +155,11 @@ public class PlayerFightData
         baseDef = 2.5f;
 
         baseAtkSpd = 1.2f;   // 1 attack per second
-        
+
         baseCritRate = 0.05f;  // 5%
         baseCritDmg = 1.5f;  // +50%
 
-        baseLuck = 1.0f; 
+        baseLuck = 1.0f;
     }
 
     #region STATS

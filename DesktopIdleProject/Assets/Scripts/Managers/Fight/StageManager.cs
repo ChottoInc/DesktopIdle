@@ -17,6 +17,8 @@ public class StageManager : MonoBehaviour
     private int currentStage;
     private int currentEnemyIndex;
 
+    private CombatMapSaveData combatMapSaveData;
+
 
     private int currentStageKilled;
 
@@ -53,8 +55,19 @@ public class StageManager : MonoBehaviour
     {
         currentEnemies = new List<Enemy>();
 
-        currentPrestige = 0;
-        currentStage = 1;
+        combatMapSaveData = SettingsManager.Instance.GetCombatMapSaveData(CombatManager.Instance.MapSO);
+
+        if(combatMapSaveData != null)
+        {
+            currentPrestige = combatMapSaveData.reachedPrestige;
+            currentStage = combatMapSaveData.currentStage;
+        }
+        else
+        {
+            currentPrestige = 0;
+            currentStage = 1;
+        }
+
         currentEnemyIndex = 1;
 
         minXSpawn = Camera.main.ScreenToWorldPoint(new Vector2(0f + offsetSpawn, 0)).x; 
@@ -73,7 +86,7 @@ public class StageManager : MonoBehaviour
     private EnemyData GenerateEnemy()
     {
         // generate data
-        EnemyData result = new EnemyData(CombatManager.Instance.TempMap);
+        EnemyData result = new EnemyData(CombatManager.Instance.MapSO);
 
         // increase index
         currentEnemyIndex++;
@@ -141,14 +154,20 @@ public class StageManager : MonoBehaviour
          * */
         if (currentStageKilled != currentEnemyIndex - 1) return false;
 
-        if(currentStage <= CombatManager.Instance.TempMap.Stages && SettingsManager.Instance.IsAutoBattleOn)
+        if(currentStage <= CombatManager.Instance.MapSO.Stages && SettingsManager.Instance.IsAutoBattleOn)
         {
+            // update stage
             currentStage++;
+
+            // check for save
+            HandleUpdateSaveMap();
 
             Resets();
 
+            // restart wave
             StartCoroutine(CoSpawnStartingEnemies());
 
+            // update ui
             UpdateStageUI();
 
             return true;
@@ -159,24 +178,49 @@ public class StageManager : MonoBehaviour
 
             Resets();
 
+            // restart wave
             StartCoroutine(CoSpawnStartingEnemies());
 
+            // update ui
             UpdateStageUI();
 
             return true;
         }
     }
 
+    /// <summary>
+    /// Handle update of data and save file
+    /// </summary>
+    private void HandleUpdateSaveMap()
+    {
+        // update reached max stage
+        if (currentStage > combatMapSaveData.reachedStage)
+        {
+            combatMapSaveData.reachedStage = currentStage;
+        }
+
+        // update stage counter
+        combatMapSaveData.currentStage = currentStage;
+
+        // update save file
+        SettingsManager.Instance.SaveCombatMapData(CombatManager.Instance.MapSO, combatMapSaveData);
+    }
+
     public void RestartCurrentStage()
+    {
+        KillAllEnemies();
+
+        Resets();
+
+        StartCoroutine(CoSpawnStartingEnemies(2f));
+    }
+
+    public void KillAllEnemies()
     {
         foreach (var enemy in currentEnemies)
         {
             enemy.PlayDeath(true);
         }
-
-        Resets();
-
-        StartCoroutine(CoSpawnStartingEnemies(2f));
     }
 
     private void Resets()
@@ -189,7 +233,7 @@ public class StageManager : MonoBehaviour
 
     private void UpdateStageUI()
     {
-        textStage.text = $"Forest - {CurrentStage}";
+        textStage.text = $"{CombatManager.Instance.MapSO.MapName} - {CurrentStage}";
     }
 
     #endregion

@@ -59,6 +59,7 @@ public class PlayerFight : MonoBehaviour
         if(playerData != null)
         {
             playerData.OnHpChange -= UpdateHpBarUI;
+            playerData.OnLevelUp -= SaveFightData;
         }
     }
 
@@ -185,6 +186,7 @@ public class PlayerFight : MonoBehaviour
         if (playerData != null)
         {
             playerData.OnHpChange += UpdateHpBarUI;
+            playerData.OnLevelUp += SaveFightData;
         }
 
         hpBar.Setup(playerData.MaxHp, playerData.CurrentHp);
@@ -215,4 +217,14 @@ public class PlayerFight : MonoBehaviour
         hitEnemy = Physics2D.OverlapCircle(point, radius, enemyMask);
         return hitEnemy != null;
     }
+
+    #region SAVE
+
+    public void SaveFightData()
+    {
+        PlayerManager.Instance.UpdateFightData(playerData);
+        PlayerManager.Instance.SaveFightData();
+    }
+
+    #endregion
 }

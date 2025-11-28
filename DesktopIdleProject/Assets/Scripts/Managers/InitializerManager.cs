@@ -1,4 +1,5 @@
 using Kirurobo;
+using System.IO;
 using UnityEngine;
 
 using static Kirurobo.UniWindowController;
@@ -11,8 +12,15 @@ public class InitializerManager : MonoBehaviour
     [Space(10)]
     [SerializeField] float offsetBound = 200f;
 
-    [Header("UI")]
-    [SerializeField] UIManagerCombatMap uiManagerCombatMap;
+    [Header("Scene Loader")]
+    [SerializeField] SceneLoaderManager sceneLoaderManager;
+
+
+
+
+    private IDataService jsonService = new JsonDataService();
+
+
 
     private bool isInit;
 
@@ -40,6 +48,9 @@ public class InitializerManager : MonoBehaviour
         Vector2 usableScreen = GetUsableDesktopSize();
         windowController.windowPosition = new Vector2(0, Screen.currentResolution.height - usableScreen.y);
 
+        /*
+         * need to check which scene currently in when loading up, and get the correct player data to feed to the manager
+         * */
 
         HandleOtherSetups();
 
@@ -68,9 +79,47 @@ public class InitializerManager : MonoBehaviour
 
     private void HandleOtherSetups()
     {
-        CombatManager.Instance.Setup();
-        uiManagerCombatMap.Setup();
+        // utils setups
+        UtilsCombatMap.Initialize();
+
+        // load files
+        HandleSaves();
+
+        // call loader scene setup - set material
+        sceneLoaderManager.Setup();
+
+        // check save for last scene - loading scene manager should handle the alpha
+        sceneLoaderManager.LoadFirstScene(SettingsManager.Instance.LastSceneSettings);
     }
+
+    private void HandleSaves()
+    {
+        string persistent = Application.persistentDataPath + "/";
+
+        // Create folder if never opened
+        if (!Directory.Exists(persistent + UtilsSave.ROOT_FOLDER))
+        {
+            Directory.CreateDirectory(persistent + UtilsSave.ROOT_FOLDER);
+
+            /*
+             * need
+             * player folder
+             * settings folder
+             * */
+
+            Directory.CreateDirectory(persistent + UtilsSave.GetPlayerFolder());
+            Directory.CreateDirectory(persistent + UtilsSave.GetSettingsFolder());
+            Directory.CreateDirectory(persistent + UtilsSave.GetCombatMapsFolder());
+        }
+
+
+        SettingsManager.Instance.Setup(jsonService);
+        PlayerManager.Instance.Setup(jsonService);
+    }
+
+
+
+
 
     public static float GetScreenWidth()
     {

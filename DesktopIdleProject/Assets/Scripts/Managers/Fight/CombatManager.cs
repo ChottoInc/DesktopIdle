@@ -3,11 +3,13 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    [SerializeField] CombatMapSO tempMap;
     [SerializeField] PlayerFight player;
 
+    private CombatMapSO mapSO;
 
-    public CombatMapSO TempMap => tempMap;
+
+
+    public CombatMapSO MapSO => mapSO;
 
     private Enemy currentEnemy;
 
@@ -42,18 +44,15 @@ public class CombatManager : MonoBehaviour
     }
 
 
-    public void Setup()
+    public void Setup(CombatMapSO mapSO)
     {
+        this.mapSO = mapSO;
+
         // setup stage
         StageManager.Instance.Setup();
 
-        /*
-         * when dead call stage manager to get new enemy
-         * set enemy every time you start new fight
-         * */
-
         // temp initialize player
-        PlayerFightData playerData = new PlayerFightData();
+        PlayerFightData playerData = PlayerManager.Instance.PlayerFightData;
         player.Setup(playerData);
 
 
@@ -132,7 +131,7 @@ public class CombatManager : MonoBehaviour
         //Debug.Log("Enemy dead");
         
         // get exp before starting death for safety
-        int rewardedExp = UtilsCombatMap.GetEnemyExp(currentEnemy.EnemyData.CurrentLevel, tempMap.MapDifficuty);
+        int rewardedExp = UtilsCombatMap.GetEnemyExp(currentEnemy.EnemyData.CurrentLevel, mapSO.MapDifficuty);
 
         // kill enemy
         currentEnemy.PlayDeath(false);
@@ -177,5 +176,15 @@ public class CombatManager : MonoBehaviour
     {
         player.SetAttacking(fight);
         currentEnemy.SetAttacking(fight);
+    }
+
+
+    public void HandleSwitchScene()
+    {
+        EnableFight(false);
+
+        StageManager.Instance.KillAllEnemies();
+
+        player.PlayerData.ResetAfterStage();
     }
 }

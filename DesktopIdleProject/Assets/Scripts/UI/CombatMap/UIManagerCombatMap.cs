@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class UIManagerCombatMap : MonoBehaviour
+public class UIManagerCombatMap : UIManager
 {
     [SerializeField] UIPlayerExpBar playerExpBar;
 
-    public void Setup()
+    public override void Setup()
     {
         playerExpBar.Setup();
     }

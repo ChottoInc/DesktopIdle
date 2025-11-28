@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
 
 public class UITabWindow : MonoBehaviour
 {
     protected bool isOpen;
+
+    public event Action OnTabClose;
 
     public virtual void Open()
     {
@@ -16,5 +19,7 @@ public class UITabWindow : MonoBehaviour
         isOpen = false;
 
         gameObject.SetActive(false);
+
+        OnTabClose?.Invoke();
     }
 }

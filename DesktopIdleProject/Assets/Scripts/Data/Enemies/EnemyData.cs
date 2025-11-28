@@ -93,8 +93,8 @@ public class EnemyData
 
     private float CalculateAtk()
     {
-        //return 3.5f * Mathf.Pow(currentLevel, 1.05f);
-        return 20f * Mathf.Pow(currentLevel, 1.05f);
+        return 3.5f * Mathf.Pow(currentLevel, 1.05f);
+        //return 20f * Mathf.Pow(currentLevel, 1.05f);
     }
 
     private float CalculateDef()
