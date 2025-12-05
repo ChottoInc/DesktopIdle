@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RockData
@@ -16,11 +14,29 @@ public class RockData
     public float CurrentDurability => currentDurability;
 
 
-    public void Setup(RockSO rockSO)
+    public RockData(RockSO rockSO)
     {
         this.rockSO = rockSO;
 
         currentDurability = UtilsGather.GetRockDurabilityByType(rockSO.RockType);
+    }
+
+    public void TakeDamage(PlayerMinerData data)
+    {
+        // can't take less than 0 or it will cure
+
+        float baseDamage = data.CurrentPower;
+        float total;
+
+        total = Mathf.Max(0f, baseDamage * data.CurrentPrecision);
+
+        // subtract total to hp
+        currentDurability -= total;
+
+        if (currentDurability <= 0f)
+        {
+            currentDurability = 0;
+        }
     }
 
     public void SetSmashed()

@@ -7,8 +7,17 @@ public class ItemSO : ScriptableObject
     [SerializeField] int id;
     [SerializeField] ItemType itemType;
 
-    public int Id;
+    [Space(10)]
+    [SerializeField] Sprite sprite;
+    [SerializeField] string itemName;
+
+    public int Id => id;
     public ItemType ItemType => itemType;
+
+    public Sprite Sprite => sprite;
+    public string ItemName => itemName;
+
+
 
     public override bool Equals(object other)
     {

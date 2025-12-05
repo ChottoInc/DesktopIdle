@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoaderManager : MonoBehaviour
 {
-    public enum SceneType { CombatMap }
+    public enum SceneType { CombatMap, Miner }
 
 
     [SerializeField] Material fadeMaterial;
@@ -67,19 +67,13 @@ public class SceneLoaderManager : MonoBehaviour
         // if the time was stopped before changing scene, resume it
         UtilsTime.Resume();
 
-        // disable scene barrier after loading
-        currentSceneBarrier = FindFirstObjectByType<UIBarrier>();
-        if(currentSceneBarrier != null)
-        {
-            currentSceneBarrier.EnableBarrier(false);
-        }
-
         // handle current scene hide objects
 
         switch (SettingsManager.Instance.LastSceneSettings.lastSceneType)
         {
             default: Debug.Log("Current scene type isn't allowed"); break;
             case SceneType.CombatMap: CombatManager.Instance.HandleSwitchScene(); break;
+            case SceneType.Miner: SmashManager.Instance.HandleSwitchScene(); break;
         }
 
 
@@ -114,14 +108,35 @@ public class SceneLoaderManager : MonoBehaviour
             return;
         }
 
+        // disable scene barrier after loading
+        currentSceneBarrier = FindFirstObjectByType<UIBarrier>();
+        if (currentSceneBarrier != null)
+        {
+            currentSceneBarrier.EnableBarrier(false);
+        }
+
         StartCoroutine(CoFadeIn());
 
         LastSceneSettings settings = SettingsManager.Instance.LastSceneSettings;
 
-        if (settings.lastSceneType == SceneType.CombatMap)
+        UIManager uiManager = null;
+
+        switch(settings.lastSceneType)
         {
-            CombatManager.Instance.Setup(UtilsCombatMap.GetMapById(settings.lastCombatMapId));
-            FindFirstObjectByType<UIManager>().Setup();
+            case SceneType.CombatMap:
+                CombatManager.Instance.Setup(UtilsCombatMap.GetMapById(settings.lastCombatMapId));
+                uiManager = FindFirstObjectByType<UIManager>();
+                break;
+
+            case SceneType.Miner:
+                SmashManager.Instance.Setup();
+                uiManager = FindFirstObjectByType<UIManager>();
+                break;
+        }
+
+        if(uiManager != null)
+        {
+            uiManager.Setup();
         }
     }
 

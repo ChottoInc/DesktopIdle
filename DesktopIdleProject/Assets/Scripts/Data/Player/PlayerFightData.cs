@@ -1,26 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using static UtilsPlayer;
 
 public class PlayerFightData
 {
-    /*
-     * make leveling stats possible
-     * for each stat max cap is current level * 3
-     * use gain per level const to calculate the new stat
-     * */
-
-    
-    private const float PER_LEVEL_GAIN_MAXHP = 20;
-    private const float PER_LEVEL_GAIN_ATK = 2;
-    private const float PER_LEVEL_GAIN_DEF = 1;
-    private const float PER_LEVEL_GAIN_ATK_SPEED = 0.01f;
-    private const float PER_LEVEL_GAIN_CRIT_RATE = 0.001f;
-    private const float PER_LEVEL_GAIN_CRIT_DMG = 0.02f;
-    private const float PER_LEVEL_GAIN_LUCK = 0.1f;
-
-
     // ---- BASE STAT VALUES
 
     private float baseMaxHp;
@@ -84,24 +67,30 @@ public class PlayerFightData
 
     public int CurrentLevel => currentLevel;
     public int CurrentExp => currentExp;
-    public int ExpToNextLevel => UtilsPlayer.RequiredExpForLevel(currentLevel + 1) - UtilsPlayer.RequiredExpForLevel(currentLevel);
-    public int TotalExpToNextLevel => UtilsPlayer.RequiredExpForLevel(currentLevel + 1);
-    public int TotalExp => UtilsPlayer.RequiredExpForLevel(currentLevel) + currentExp;
+    public int ExpToNextLevel => RequiredExpForWarriorLevel(currentLevel + 1) - RequiredExpForWarriorLevel(currentLevel);
+    public int TotalExpToNextLevel => RequiredExpForWarriorLevel(currentLevel + 1);
+    public int TotalExp => RequiredExpForWarriorLevel(currentLevel) + currentExp;
 
 
-    public float MaxHp => baseMaxHp + PER_LEVEL_GAIN_MAXHP * (levelStatMaxHp - 1);
+    public float MaxHp => baseMaxHp + PER_LEVEL_WARRIOR_GAIN_MAXHP * (levelStatMaxHp - 1);
     public float CurrentHp => currentHp;
 
-    public float CurrentAtk => baseAtk + PER_LEVEL_GAIN_ATK * (levelStatAtk - 1);
-    public float CurrentDef => baseDef + PER_LEVEL_GAIN_DEF * (levelStatDef - 1);
+    /*
+     * using weapon miner level 
+     */
+    public float CurrentAtk => 
+        (baseAtk + PER_LEVEL_WARRIOR_GAIN_ATK * (levelStatAtk - 1)) *
+        PlayerManager.Instance.WeaponMinerMultiplier;
+
+    public float CurrentDef => baseDef + PER_LEVEL_WARRIOR_GAIN_DEF * (levelStatDef - 1);
 
     // todo: if more mehods will be available to increase atk spd and crit rate, then check if you want those stats to be past the max threshold
-    public float CurrentAtkSpd => baseAtkSpd + PER_LEVEL_GAIN_ATK_SPEED * (levelStatAtkSpd - 1);
-    public float CurrentCritRate => baseCritRate + PER_LEVEL_GAIN_CRIT_RATE * (levelStatCritRate - 1);
-    public float CurrentCritDmg => baseCritDmg + PER_LEVEL_GAIN_CRIT_DMG * (levelStatCritDmg - 1);
+    public float CurrentAtkSpd => baseAtkSpd + PER_LEVEL_WARRIOR_GAIN_ATK_SPEED * (levelStatAtkSpd - 1);
+    public float CurrentCritRate => baseCritRate + PER_LEVEL_WARRIOR_GAIN_CRIT_RATE * (levelStatCritRate - 1);
+    public float CurrentCritDmg => baseCritDmg + PER_LEVEL_WARRIOR_GAIN_CRIT_DMG * (levelStatCritDmg - 1);
 
     // affects drops, crit rolls, rarity
-    public float CurrentLuck => baseLuck + PER_LEVEL_GAIN_LUCK * (levelStatLuck - 1);
+    public float CurrentLuck => baseLuck + PER_LEVEL_WARRIOR_GAIN_LUCK * (levelStatLuck - 1);
 
 
 
@@ -199,13 +188,13 @@ public class PlayerFightData
         switch (id)
         {
             default: Debug.Log("Increased stat id not correct. " + id); break;
-            case UtilsPlayer.ID_MAXHP: levelStatMaxHp += amount; break;
-            case UtilsPlayer.ID_ATK: levelStatAtk += amount; break;
-            case UtilsPlayer.ID_DEF: levelStatDef += amount; break;
-            case UtilsPlayer.ID_ATKSPD: levelStatAtkSpd += amount; break;
-            case UtilsPlayer.ID_CRITRATE: levelStatCritRate += amount; break;
-            case UtilsPlayer.ID_CRITDMG: levelStatCritDmg += amount; break;
-            case UtilsPlayer.ID_LUCK: levelStatLuck += amount; break;
+            case ID_WARRIOR_MAXHP: levelStatMaxHp += amount; break;
+            case ID_WARRIOR_ATK: levelStatAtk += amount; break;
+            case ID_WARRIOR_DEF: levelStatDef += amount; break;
+            case ID_WARRIOR_ATKSPD: levelStatAtkSpd += amount; break;
+            case ID_WARRIOR_CRITRATE: levelStatCritRate += amount; break;
+            case ID_WARRIOR_CRITDMG: levelStatCritDmg += amount; break;
+            case ID_WARRIOR_LUCK: levelStatLuck += amount; break;
         }
     }
 

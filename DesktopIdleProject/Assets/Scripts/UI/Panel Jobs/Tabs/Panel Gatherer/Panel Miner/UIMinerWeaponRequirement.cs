@@ -1,0 +1,50 @@
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UIMinerWeaponRequirement : MonoBehaviour
+{
+    [SerializeField] Image imageItem;
+    [SerializeField] TMP_Text textRequirement;
+
+    [Space(10)]
+    [SerializeField] Transform tooltipPosition;
+
+
+    private int quantityInventory;
+    private ItemGroup requirement;
+
+    private ItemSO itemSO;
+
+    public void Setup(ItemGroup requirement)
+    {
+        this.requirement = requirement;
+
+        itemSO = UtilsItem.GetItemById(requirement.IdItem);
+        imageItem.sprite = itemSO.Sprite;
+
+        if (PlayerManager.Instance.Inventory.HasItem(requirement.IdItem))
+        {
+            int index = PlayerManager.Instance.Inventory.GetGroupIndex(requirement.IdItem);
+            quantityInventory = PlayerManager.Instance.Inventory.ItemGroups[index].Quantity;
+        }
+
+        textRequirement.text = $"{quantityInventory}/{requirement.Quantity}";
+    }
+
+    public void OnPointerEnter()
+    {
+        string itemName = "N/A";
+        if(itemSO != null)
+        {
+            itemName = itemSO.ItemName;
+        }
+
+        UITooltipManager.Instance.Show(UITooltipManager.ID_SHOW_NAME, itemName, tooltipPosition.position, true);
+    }
+
+    public void OnPointerExit()
+    {
+        UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_NAME, true);
+    }
+}

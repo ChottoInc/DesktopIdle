@@ -80,7 +80,9 @@ public class InitializerManager : MonoBehaviour
     private void HandleOtherSetups()
     {
         // utils setups
+        UtilsItem.Initialize();
         UtilsCombatMap.Initialize();
+        UtilsGather.Initialize();
 
         // load files
         HandleSaves();

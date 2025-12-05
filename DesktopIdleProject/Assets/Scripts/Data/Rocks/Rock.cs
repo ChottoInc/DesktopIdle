@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Rock : MonoBehaviour, IPoolObject
@@ -20,7 +18,7 @@ public class Rock : MonoBehaviour, IPoolObject
 
     // ------- DEATH
 
-    private bool isSmasVFXPlaying;
+    private bool isSmashVFXPlaying;
 
 
 
@@ -30,9 +28,16 @@ public class Rock : MonoBehaviour, IPoolObject
     public bool IsSmashed => rockData.CurrentDurability <= 0;
 
 
+    public int RockIndex => rockIndex;
+
+    private void Start()
+    {
+        smashVFXDuration = smashVFX.main.duration;
+    }
+
     private void Update()
     {
-        if (isSmasVFXPlaying)
+        if (isSmashVFXPlaying)
         {
             CheckSmashVFX();
         }
@@ -42,7 +47,7 @@ public class Rock : MonoBehaviour, IPoolObject
     {
         if (timerSmashVFX <= 0)
         {
-            isSmasVFXPlaying = false;
+            isSmashVFXPlaying = false;
             HideAfterSmash();
         }
         else
@@ -57,6 +62,7 @@ public class Rock : MonoBehaviour, IPoolObject
 
         rockIndex = index;
 
+        spriteRenderer.sprite = rockData.RockSO.Sprite;
         spriteRenderer.sortingOrder = rockIndex;
     }
 
@@ -81,7 +87,7 @@ public class Rock : MonoBehaviour, IPoolObject
         // play vfx
         smashVFX.Play();
         timerSmashVFX = smashVFXDuration;
-        isSmasVFXPlaying = true;
+        isSmashVFXPlaying = true;
     }
 
     private void HideAfterSmash()
@@ -102,7 +108,7 @@ public class Rock : MonoBehaviour, IPoolObject
 
     public void Die()
     {
-        //StageManager.Instance.RemoveFromCurrentEnemiesList(this);
+        RockSpawnManager.Instance.RemoveFromCurrentRocksList(this);
         PoolManager.Instance.Return(gameObject, "Rock");
     }
 

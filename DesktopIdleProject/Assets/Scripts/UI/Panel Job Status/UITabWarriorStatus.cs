@@ -52,37 +52,37 @@ public class UITabWarriorStatus : UITabPlayerStatus
 
         if (distributedPointsOnMaxHp > 0)
         {
-            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_MAXHP, distributedPointsOnMaxHp);
+            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_WARRIOR_MAXHP, distributedPointsOnMaxHp);
         }
 
         if (distributedPointsOnAtk > 0)
         {
-            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_ATK, distributedPointsOnAtk);
+            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_WARRIOR_ATK, distributedPointsOnAtk);
         }
 
         if (distributedPointsOnDef > 0)
         {
-            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_DEF, distributedPointsOnDef);
+            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_WARRIOR_DEF, distributedPointsOnDef);
         }
 
         if (distributedPointsOnAtkSpd > 0)
         {
-            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_ATKSPD, distributedPointsOnAtkSpd);
+            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_WARRIOR_ATKSPD, distributedPointsOnAtkSpd);
         }
 
         if (distributedPointsOnCritRate > 0)
         {
-            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_CRITRATE, distributedPointsOnCritRate);
+            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_WARRIOR_CRITRATE, distributedPointsOnCritRate);
         }
 
         if (distributedPointsOnCritDmg > 0)
         {
-            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_CRITDMG, distributedPointsOnCritDmg);
+            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_WARRIOR_CRITDMG, distributedPointsOnCritDmg);
         }
 
         if (distributedPointsOnLuck > 0)
         {
-            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_LUCK, distributedPointsOnLuck);
+            player.PlayerData.IncreaseLevelStat(UtilsPlayer.ID_WARRIOR_LUCK, distributedPointsOnLuck);
         }
 
 
@@ -105,13 +105,13 @@ public class UITabWarriorStatus : UITabPlayerStatus
         switch (id)
         {
             default: Debug.Log("Increased stat id not correct. " + id); break;
-            case UtilsPlayer.ID_MAXHP: distributedPointsOnMaxHp++; break;
-            case UtilsPlayer.ID_ATK: distributedPointsOnAtk++; break;
-            case UtilsPlayer.ID_DEF: distributedPointsOnDef++; break;
-            case UtilsPlayer.ID_ATKSPD: distributedPointsOnAtkSpd++; break;
-            case UtilsPlayer.ID_CRITRATE: distributedPointsOnCritRate++; break;
-            case UtilsPlayer.ID_CRITDMG: distributedPointsOnCritDmg++; break;
-            case UtilsPlayer.ID_LUCK: distributedPointsOnLuck++; break;
+            case UtilsPlayer.ID_WARRIOR_MAXHP: distributedPointsOnMaxHp++; break;
+            case UtilsPlayer.ID_WARRIOR_ATK: distributedPointsOnAtk++; break;
+            case UtilsPlayer.ID_WARRIOR_DEF: distributedPointsOnDef++; break;
+            case UtilsPlayer.ID_WARRIOR_ATKSPD: distributedPointsOnAtkSpd++; break;
+            case UtilsPlayer.ID_WARRIOR_CRITRATE: distributedPointsOnCritRate++; break;
+            case UtilsPlayer.ID_WARRIOR_CRITDMG: distributedPointsOnCritDmg++; break;
+            case UtilsPlayer.ID_WARRIOR_LUCK: distributedPointsOnLuck++; break;
         }
     }
 
@@ -120,13 +120,13 @@ public class UITabWarriorStatus : UITabPlayerStatus
         switch (id)
         {
             default: Debug.Log("Increased stat id not correct. " + id); break;
-            case UtilsPlayer.ID_MAXHP: distributedPointsOnMaxHp--; break;
-            case UtilsPlayer.ID_ATK: distributedPointsOnAtk--; break;
-            case UtilsPlayer.ID_DEF: distributedPointsOnDef--; break;
-            case UtilsPlayer.ID_ATKSPD: distributedPointsOnAtkSpd--; break;
-            case UtilsPlayer.ID_CRITRATE: distributedPointsOnCritRate--; break;
-            case UtilsPlayer.ID_CRITDMG: distributedPointsOnCritDmg--; break;
-            case UtilsPlayer.ID_LUCK: distributedPointsOnLuck--; break;
+            case UtilsPlayer.ID_WARRIOR_MAXHP: distributedPointsOnMaxHp--; break;
+            case UtilsPlayer.ID_WARRIOR_ATK: distributedPointsOnAtk--; break;
+            case UtilsPlayer.ID_WARRIOR_DEF: distributedPointsOnDef--; break;
+            case UtilsPlayer.ID_WARRIOR_ATKSPD: distributedPointsOnAtkSpd--; break;
+            case UtilsPlayer.ID_WARRIOR_CRITRATE: distributedPointsOnCritRate--; break;
+            case UtilsPlayer.ID_WARRIOR_CRITDMG: distributedPointsOnCritDmg--; break;
+            case UtilsPlayer.ID_WARRIOR_LUCK: distributedPointsOnLuck--; break;
         }
     }
 
@@ -135,13 +135,13 @@ public class UITabWarriorStatus : UITabPlayerStatus
         switch (id)
         {
             default: Debug.Log("Increased stat id not correct. " + id); return -1;
-            case UtilsPlayer.ID_MAXHP: return player.PlayerData.LevelStatMaxHp;
-            case UtilsPlayer.ID_ATK: return player.PlayerData.LevelStatAtk;
-            case UtilsPlayer.ID_DEF: return player.PlayerData.LevelStatDef;
-            case UtilsPlayer.ID_ATKSPD: return player.PlayerData.LevelStatAtkSpd;
-            case UtilsPlayer.ID_CRITRATE: return player.PlayerData.LevelStatCritRate;
-            case UtilsPlayer.ID_CRITDMG: return player.PlayerData.LevelStatCritDmg;
-            case UtilsPlayer.ID_LUCK: return player.PlayerData.LevelStatLuck;
+            case UtilsPlayer.ID_WARRIOR_MAXHP: return player.PlayerData.LevelStatMaxHp;
+            case UtilsPlayer.ID_WARRIOR_ATK: return player.PlayerData.LevelStatAtk;
+            case UtilsPlayer.ID_WARRIOR_DEF: return player.PlayerData.LevelStatDef;
+            case UtilsPlayer.ID_WARRIOR_ATKSPD: return player.PlayerData.LevelStatAtkSpd;
+            case UtilsPlayer.ID_WARRIOR_CRITRATE: return player.PlayerData.LevelStatCritRate;
+            case UtilsPlayer.ID_WARRIOR_CRITDMG: return player.PlayerData.LevelStatCritDmg;
+            case UtilsPlayer.ID_WARRIOR_LUCK: return player.PlayerData.LevelStatLuck;
         }
     }
 }

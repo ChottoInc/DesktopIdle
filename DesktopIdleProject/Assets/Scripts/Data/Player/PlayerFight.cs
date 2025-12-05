@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerFight : MonoBehaviour
@@ -37,6 +35,8 @@ public class PlayerFight : MonoBehaviour
     private Rigidbody2D rb;
 
     // ------ ATTACK VARS
+
+    private bool isEnemyDetected;
 
     private bool isAttacking;
     private float CooldownAttack => 1f / playerData.CurrentAtkSpd;
@@ -109,12 +109,17 @@ public class PlayerFight : MonoBehaviour
 
     private void CheckForEnemy()
     {
+        if (isEnemyDetected) return;
+
         if (CheckEnemyAtPoint(checkEnemyPoint.position, 0.3f, enemyLayer, out Collider2D hit))
         {
             Enemy enemy = hit.GetComponent<Enemy>();
 
             if(!enemy.IsDead && !IsDead)
+            {
+                isEnemyDetected = true;
                 CombatManager.Instance.StartFight(enemy);
+            }
         }
     }
 
@@ -208,6 +213,12 @@ public class PlayerFight : MonoBehaviour
         rb.velocity = new Vector2(0, rb.velocity.y);
 
         this.isAttacking = isAttacking;
+
+        //reset detection rocks for update
+        if (!isAttacking)
+        {
+            isEnemyDetected = false;
+        }
 
         animator.SetBool("isAttacking", isAttacking);
     }

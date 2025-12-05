@@ -7,6 +7,16 @@ public class EnemyData
     private const float PER_STAGE_GAIN_LEVEL = 1f;
     private const float PER_ENEMY_GAIN_LEVEL = 0.0202f;
 
+
+    private const float MAXHP_GAIN_PER_LEVEL = 1.5f;
+    private const float ATK_GAIN_PER_LEVEL = 0.1f;
+    private const float DEF_GAIN_PER_LEVEL = 0.1f;
+
+
+    private EnemySO enemySO;
+
+
+
     /*
     private const float PER_STAGE_GAIN_MAXHP = 1.12f;
     private const float PER_STAGE_GAIN_ATK = 1.1f;
@@ -40,6 +50,9 @@ public class EnemyData
     private CombatMapSO mapSO;
 
 
+    public EnemySO EnemySO => enemySO;
+
+
     public int CurrentLevel => currentLevel;
 
     public float MaxHp => maxHp;
@@ -57,8 +70,9 @@ public class EnemyData
 
 
 
-    public EnemyData(CombatMapSO mapSO)
+    public EnemyData(EnemySO enemySO, CombatMapSO mapSO)
     {
+        this.enemySO = enemySO;
         this.mapSO = mapSO;
 
         currentLevel = Mathf.FloorToInt(CalculateLevel());
@@ -69,10 +83,10 @@ public class EnemyData
         currentAtk = CalculateAtk();
         currentDef = CalculateDef();
 
-        currentAtkSpd = 0.8f;
+        currentAtkSpd = CalculateAtkSpd();
 
-        currentCritRate = 0.02f;
-        currentCritDmg = 1.3f;
+        currentCritRate = CalculateCritRate();
+        currentCritDmg = CalculateCritDmg();
     }
 
     private float CalculateLevel()
@@ -88,18 +102,54 @@ public class EnemyData
 
     private float CalculateMaxHp()
     {
-        return 20f * Mathf.Pow(currentLevel, 1.1f);
+        // exp growth
+        float p = 0.85f;
+        return enemySO.BaseMaxHp + MAXHP_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 
     private float CalculateAtk()
     {
-        return 3.5f * Mathf.Pow(currentLevel, 1.05f);
-        //return 20f * Mathf.Pow(currentLevel, 1.05f);
+        // exp growth
+        float p = 0.85f;
+        return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
+        //return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 
     private float CalculateDef()
     {
-        return 1.2f * Mathf.Pow(currentLevel, 1.05f);
+        // exp growth
+        float p = 0.85f;
+        return enemySO.BaseDef + DEF_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
+    }
+
+    private float CalculateAtkSpd()
+    {
+        float minDelay = 0.6f;
+        float maxDelay = 1.0f;
+        float k = 80f;
+
+        float t = currentLevel / (currentLevel + k);
+        return Mathf.Lerp(maxDelay, minDelay, t);
+    }
+
+    private float CalculateCritRate()
+    {
+        float maxCritRate = 0.5f;
+
+        // controls how fast the crit rate goes, the bigger the slower
+        float k = 100f;
+
+        return Mathf.Min(maxCritRate, maxCritRate * (currentLevel / (currentLevel + k)));
+    }
+
+    private float CalculateCritDmg()
+    {
+        float maxCritDmg = 1.5f;
+
+        // controls how fast the crit dmg goes, the bigger the slower
+        float k = 200f;
+
+        return enemySO.BaseCritDmg + maxCritDmg * (currentLevel / (currentLevel + k));
     }
 
     /*
