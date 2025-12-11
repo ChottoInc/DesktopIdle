@@ -5,10 +5,12 @@ using UnityEngine;
 public class UITooltipManager : MonoBehaviour
 {
     public const int ID_SHOW_NAME = 0;
+    public const int ID_SHOW_CARD = 1;
 
 
 
     [SerializeField] UITooltipName tooltipName;
+    [SerializeField] UITooltipCard tooltipCard;
 
 
     public static UITooltipManager Instance { get; private set; }
@@ -25,12 +27,13 @@ public class UITooltipManager : MonoBehaviour
         }
     }
 
-    public void Show(int idTooltip, string text, Vector2 position, bool fade = false)
+    public void Show(TooltipManagerData tooltipData, Vector2 position, bool fade = false)
     {
-        switch(idTooltip)
+        switch(tooltipData.idTooltip)
         {
             default:
-            case ID_SHOW_NAME: tooltipName.Show(text, position, fade); break;
+            case ID_SHOW_NAME: tooltipName.Show(tooltipData.textName, position, fade); break;
+            case ID_SHOW_CARD: tooltipCard.Show(tooltipData.cardSO, fade); break;
         }
     }
 
@@ -40,6 +43,18 @@ public class UITooltipManager : MonoBehaviour
         {
             default:
             case ID_SHOW_NAME: tooltipName.Hide(fade); break;
+            case ID_SHOW_CARD: tooltipCard.Hide(fade); break;
         }
     }
+}
+
+public struct TooltipManagerData
+{
+    public int idTooltip;
+
+    // tooltip name
+    public string textName;
+
+    // tooltip card
+    public CardSO cardSO;
 }

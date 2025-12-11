@@ -8,15 +8,22 @@ public class StageManager : MonoBehaviour
     //public const int MAX_ENEMY_INDEX = 100;
     public const int MAX_ENEMY_INDEX = 10;
 
+    [Header("Enemies")]
     [SerializeField] UtilsGeneral.GeneralChances<EnemySO>[] possibleEnemies;
     [SerializeField] private int startingEnemies = 20;
+
+    [Header("Drops")]
+    [SerializeField] UtilsGeneral.GeneralChances<CardSO>[] possibleCards;
 
     [Header("UI")]
     [SerializeField] TMP_Text textStage;
 
+
+
     private int currentPrestige;
     private int currentStage;
     private int currentEnemyIndex;
+
 
     private CombatMapSaveData combatMapSaveData;
 
@@ -31,6 +38,13 @@ public class StageManager : MonoBehaviour
 
     private List<Enemy> currentEnemies;
 
+    // drop utils
+
+    public UtilsGeneral.GeneralChances<CardSO>[] PossibleCards => possibleCards;
+
+
+
+    // enemy utils
 
     public int CurrentPrestige => currentPrestige;
     public int CurrentStage => currentStage;
@@ -86,8 +100,7 @@ public class StageManager : MonoBehaviour
     /// </summary>
     private EnemyData GenerateEnemy()
     {
-        float randEnemy = Random.value;
-        EnemySO randEnemySO = UtilsGeneral.GetRandomValueFromGeneralChanches(possibleEnemies); 
+        EnemySO randEnemySO = UtilsGeneral.GetRandomValueFromGeneralChanches(possibleEnemies);
 
         // generate data
         EnemyData result = new EnemyData(randEnemySO, CombatManager.Instance.MapSO);

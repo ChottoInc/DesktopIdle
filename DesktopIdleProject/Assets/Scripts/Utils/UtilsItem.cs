@@ -11,6 +11,8 @@ public static class UtilsItem
 
     public enum ItemType { Ore, Card }
 
+    public enum CardRarity { Common, Uncommon, Rare }
+
 
     private static List<ItemSO> ores;
     private static List<ItemSO> cards;

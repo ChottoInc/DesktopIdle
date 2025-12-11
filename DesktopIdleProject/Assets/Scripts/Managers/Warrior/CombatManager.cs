@@ -130,7 +130,7 @@ public class CombatManager : MonoBehaviour
     {
         //Debug.Log("Enemy dead");
         
-        // get exp before starting death for safety
+        // --- get exp before starting death for safety
         int rewardedExp = UtilsCombatMap.GetEnemyExp(currentEnemy.EnemyData.CurrentLevel, mapSO.MapDifficuty);
 
         // kill enemy
@@ -142,6 +142,13 @@ public class CombatManager : MonoBehaviour
 
         // give exp to player
         player.PlayerData.AddExp(rewardedExp);
+
+        // --- get card drop, card can be null, it means no drop
+        CardSO randCardSO = UtilsGeneral.GetRandomValueFromGeneralChanches(StageManager.Instance.PossibleCards);
+        if(randCardSO != null)
+        {
+            player.AddItem(randCardSO.Id, 1);
+        }
 
         if (StageManager.Instance.CurrentEnemyIndex < StageManager.MAX_ENEMY_INDEX)
         {
@@ -176,8 +183,13 @@ public class CombatManager : MonoBehaviour
     {
         player.SetAttacking(fight);
 
+        
         if(currentEnemy != null)
-            currentEnemy.SetAttacking(fight);
+        {
+            Vector2 playerDir = player.transform.position - currentEnemy.transform.position;
+            currentEnemy.SetAttacking(fight, playerDir.normalized);
+        }
+            
     }
 
 

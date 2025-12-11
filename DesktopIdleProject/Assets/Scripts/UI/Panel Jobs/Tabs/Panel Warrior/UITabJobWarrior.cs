@@ -76,7 +76,8 @@ public class UITabJobWarrior : UITabWindow
 
             if (prefab.TryGetComponent(out UICollectionCard obj))
             {
-                obj.Setup(this, cards[i]);
+                CardSO cardSO = cards[i] as CardSO;
+                obj.Setup(this, cardSO);
             }
             cardObjs.Add(prefab);
         }

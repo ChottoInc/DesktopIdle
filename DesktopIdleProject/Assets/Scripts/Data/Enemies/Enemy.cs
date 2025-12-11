@@ -101,6 +101,8 @@ public class Enemy : MonoBehaviour, IPoolObject
     {
         float distance = Mathf.Abs(transform.position.x - currentTarget);
 
+        animator.SetFloat("Velocity", Mathf.Abs(rb.velocity.x));
+
         if (distance > 0.1f && !isIdling)
         {
             // get target dir
@@ -151,6 +153,27 @@ public class Enemy : MonoBehaviour, IPoolObject
             transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
         }
         else if (vx < -0.01f && !faceRight)
+        {
+            transform.localScale = startScale;
+        }
+    }
+
+    private void CheckFlipOnEnemy(Vector2 dir)
+    {
+        // check sprite flip
+        if (dir.x > 0 && faceRight)
+        {
+            transform.localScale = startScale;
+        }
+        else if (dir.x > 0f && !faceRight)
+        {
+            transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
+        }
+        else if (dir.x < 0 && faceRight)
+        {
+            transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
+        }
+        else if (dir.x < 0 && !faceRight)
         {
             transform.localScale = startScale;
         }
@@ -209,16 +232,18 @@ public class Enemy : MonoBehaviour, IPoolObject
     }
 
 
-    public void SetAttacking(bool isAttacking)
+    public void SetAttacking(bool isAttacking, Vector2 playerDir)
     {
         rb.velocity = new Vector2(0, rb.velocity.y);
 
         this.isAttacking = isAttacking;
 
+        CheckFlipOnEnemy(playerDir);
+
         // reset attacking when change enemy basically
         timerAttack = CooldownAttack;
 
-        animator.SetBool("isAttacking", isAttacking);
+        animator.SetBool("IsAttacking", isAttacking);
     }
 
     public void PlayDeath(bool setDead)

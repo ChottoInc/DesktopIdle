@@ -118,6 +118,7 @@ public class SmashManager : MonoBehaviour
         float randPercLoot = Random.value;
         float thresholdLoot = currentRock.RockData.RockSO.BaseLootChance + player.PlayerData.CurrentLuck;
 
+        // TEST
         if (randPercLoot <= 1f)
         //if (randPercLoot <= thresholdLoot)
         {
@@ -126,8 +127,7 @@ public class SmashManager : MonoBehaviour
 
             if(randLoot != null)
             {
-                PlayerManager.Instance.Inventory.AddItem(randLoot.Id, 1);
-                PlayerManager.Instance.SaveInventoryData();
+                player.AddItem(randLoot.Id, 1);
             }
         }
     }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerMiner : MonoBehaviour
+public class PlayerMiner : Player
 {
     [Header("Movement")]
     [SerializeField] Animator animator;
@@ -207,8 +207,7 @@ public class PlayerMiner : MonoBehaviour
             isRockDetected = false;
         }
 
-        //todo: update is attacking with is smashing animation
-        animator.SetBool("isAttacking", isSmashing);
+        animator.SetBool("isSmashing", isSmashing);
     }
 
     public bool CheckRockAtPoint(Vector2 point, float radius, LayerMask rockMask, out Collider2D hitRock)

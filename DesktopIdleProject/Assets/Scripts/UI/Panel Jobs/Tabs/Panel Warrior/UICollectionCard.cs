@@ -1,38 +1,56 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UICollectionCard : MonoBehaviour
 {
-    /*
-     * maybe cardso, with reference on how to obtain it for a info panel
-     * */
-
     [SerializeField] Sprite spriteLocked;
     [SerializeField] Image imageCard;
 
-    private UITabJobWarrior panelWarrior;
-    private ItemSO card;
+    [Space(10)]
+    [SerializeField] Image imageRarity;
+    [SerializeField] TMP_Text textRarity;
 
-    public void Setup(UITabJobWarrior panelWarrior, ItemSO card)
+    private UITabJobWarrior panelWarrior;
+    private CardSO cardSO;
+
+    public void Setup(UITabJobWarrior panelWarrior, CardSO cardSO)
     {
         this.panelWarrior = panelWarrior;
-        this.card = card;
+        this.cardSO = cardSO;
+
+        imageRarity.color = UtilsGeneral.GetColorByRarity(cardSO.CardRarity);
+        textRarity.text = $"{cardSO.CardRarity}";
     }
 
     public void Refresh()
     {
-        if (PlayerManager.Instance.Inventory.HasItem(card.Id))
+        if (PlayerManager.Instance.Inventory.HasItem(cardSO.Id))
         {
-            if (card != null)
+            if (cardSO != null)
             {
-                imageCard.sprite = card.Sprite;
+                imageCard.sprite = cardSO.Sprite;
             }
         }
         else
         {
             imageCard.sprite = spriteLocked;
         }
+    }
+
+    public void OnPointerEnter()
+    {
+        if (cardSO != null)
+        {
+            TooltipManagerData tooltipData = new TooltipManagerData();
+            tooltipData.idTooltip = UITooltipManager.ID_SHOW_CARD;
+            tooltipData.cardSO = cardSO;
+            UITooltipManager.Instance.Show(tooltipData, Vector2.zero, true);
+        }
+    }
+
+    public void OnPointerExit()
+    {
+        UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_CARD, true);
     }
 }

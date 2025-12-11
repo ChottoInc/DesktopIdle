@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerFight : MonoBehaviour
+public class PlayerFight : Player
 {
     [Header("Movement")]
     [SerializeField] Animator animator;
@@ -111,7 +111,7 @@ public class PlayerFight : MonoBehaviour
     {
         if (isEnemyDetected) return;
 
-        if (CheckEnemyAtPoint(checkEnemyPoint.position, 0.3f, enemyLayer, out Collider2D hit))
+        if (CheckEnemyAtPoint(checkEnemyPoint.position, 0.5f, enemyLayer, out Collider2D hit))
         {
             Enemy enemy = hit.GetComponent<Enemy>();
 
