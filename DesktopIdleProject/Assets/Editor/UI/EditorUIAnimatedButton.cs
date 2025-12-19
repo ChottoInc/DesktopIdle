@@ -5,6 +5,7 @@ using UnityEditor.UI;
 [CanEditMultipleObjects]
 public class EditorUIAnimatedButton : ButtonEditor
 {
+    private SerializedProperty s_imageToAnimate;
     private SerializedProperty s_timeSingleFrame;
     private SerializedProperty s_spriteList;
 
@@ -12,6 +13,7 @@ public class EditorUIAnimatedButton : ButtonEditor
     {
         base.OnEnable();
 
+        s_imageToAnimate = serializedObject.FindProperty("imageToAnimate");
         s_timeSingleFrame = serializedObject.FindProperty("timeSingleFrame");
         s_spriteList = serializedObject.FindProperty("spriteList");
     }
@@ -21,6 +23,7 @@ public class EditorUIAnimatedButton : ButtonEditor
         serializedObject.Update();
         base.OnInspectorGUI();
 
+        EditorGUILayout.PropertyField(s_imageToAnimate);
         EditorGUILayout.PropertyField(s_timeSingleFrame);
         EditorGUILayout.PropertyField(s_spriteList);
 

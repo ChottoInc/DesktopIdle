@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UITooltipManager : MonoBehaviour
 {
-    public const int ID_SHOW_NAME = 0;
+    public const int ID_SHOW_TEXT = 0;
     public const int ID_SHOW_CARD = 1;
 
 
@@ -32,7 +32,7 @@ public class UITooltipManager : MonoBehaviour
         switch(tooltipData.idTooltip)
         {
             default:
-            case ID_SHOW_NAME: tooltipName.Show(tooltipData.textName, position, fade); break;
+            case ID_SHOW_TEXT: tooltipName.Show(tooltipData.text, position, fade); break;
             case ID_SHOW_CARD: tooltipCard.Show(tooltipData.cardSO, fade); break;
         }
     }
@@ -42,7 +42,7 @@ public class UITooltipManager : MonoBehaviour
         switch (idTooltip)
         {
             default:
-            case ID_SHOW_NAME: tooltipName.Hide(fade); break;
+            case ID_SHOW_TEXT: tooltipName.Hide(fade); break;
             case ID_SHOW_CARD: tooltipCard.Hide(fade); break;
         }
     }
@@ -53,7 +53,7 @@ public struct TooltipManagerData
     public int idTooltip;
 
     // tooltip name
-    public string textName;
+    public string text;
 
     // tooltip card
     public CardSO cardSO;

@@ -7,26 +7,34 @@ public class SettingsManager : MonoBehaviour
 {
     private IDataService saveService;
 
-    
+    // ---- TUTORIAL ----
+
+    private bool hasSeenIntroTutorial;
+
+
+    public bool HasSeenIntroTutorial => hasSeenIntroTutorial;
+
 
     // --- LAST OPEN VARS ---
 
     private LastSceneSettings lastSceneSettings;
 
+    
+
+    public LastSceneSettings LastSceneSettings => lastSceneSettings;
 
     // --- SETTINGS ---
     private bool isAutoBattleOn;
 
 
 
-
-
-    public LastSceneSettings LastSceneSettings => lastSceneSettings;
-
-
-
-
     public bool IsAutoBattleOn => isAutoBattleOn;
+
+
+
+
+
+
 
 
 
@@ -63,6 +71,11 @@ public class SettingsManager : MonoBehaviour
 
     private void SetupFromFile(SettingsSaveData saveData)
     {
+        // tutorial
+
+        hasSeenIntroTutorial = saveData.hasSeenIntroTutorial;
+
+
         // last scene
 
         lastSceneSettings = new LastSceneSettings();
@@ -76,6 +89,11 @@ public class SettingsManager : MonoBehaviour
 
     private void SetupFromDefault()
     {
+        // tutorial
+
+        hasSeenIntroTutorial = false;
+
+
         // last scene
 
         lastSceneSettings = new LastSceneSettings();
@@ -97,6 +115,22 @@ public class SettingsManager : MonoBehaviour
 
         Save();
     }
+
+    #region TUTORIAL
+
+    public void SetSeenTutorial(int idTutorial, bool save = true)
+    {
+        switch (idTutorial)
+        {
+            default:
+            case UtilsGeneral.ID_INTRO_TUTORIAL: hasSeenIntroTutorial = true; break;
+        }
+
+        if (save)
+            Save();
+    }
+
+    #endregion
 
     #region SCENE
 

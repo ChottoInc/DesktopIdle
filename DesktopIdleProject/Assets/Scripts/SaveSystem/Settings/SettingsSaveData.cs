@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SettingsSaveData
 {
+    // ---- TUTORIAL ----
+
+    public bool hasSeenIntroTutorial;
+
+
     // ---- LAST SCENE ----
 
     public string lastSceneName;
@@ -23,9 +28,15 @@ public class SettingsSaveData
 
     public SettingsSaveData(SettingsManager manager)
     {
+        hasSeenIntroTutorial = manager.HasSeenIntroTutorial;
+
+
+
         lastSceneName = manager.LastSceneSettings.lastSceneName;
         lastSceneType = (int)manager.LastSceneSettings.lastSceneType;
         lastCombatMapId = manager.LastSceneSettings.lastCombatMapId;
+
+
 
         isAutoBattleOn = manager.IsAutoBattleOn;
     }

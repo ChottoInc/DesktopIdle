@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoaderManager : MonoBehaviour
 {
-    public enum SceneType { CombatMap, Miner }
+    public enum SceneType { Home, CombatMap, Miner }
 
 
     [SerializeField] Material fadeMaterial;
@@ -52,16 +51,6 @@ public class SceneLoaderManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-
-    /// <summary>
-    /// Used by initialier manager, and does not fade out
-    /// </summary>
-    public void LoadFirstScene(LastSceneSettings settings)
-    {
-        SettingsManager.Instance.SetSceneSettings(settings);
-        SceneManager.LoadScene(settings.lastSceneName);
-    }
-
     public void LoadScene(LastSceneSettings settings)
     {
         // if the time was stopped before changing scene, resume it
@@ -69,13 +58,19 @@ public class SceneLoaderManager : MonoBehaviour
 
         // handle current scene hide objects
 
-        switch (SettingsManager.Instance.LastSceneSettings.lastSceneType)
+        if(SceneManager.GetActiveScene().name == "HomeScene")
         {
-            default: Debug.Log("Current scene type isn't allowed"); break;
-            case SceneType.CombatMap: CombatManager.Instance.HandleSwitchScene(); break;
-            case SceneType.Miner: SmashManager.Instance.HandleSwitchScene(); break;
+            HomeWorldManager.Instance.HandleSwitchScene();
         }
-
+        else
+        {
+            switch (SettingsManager.Instance.LastSceneSettings.lastSceneType)
+            {
+                default: Debug.Log("Current scene type isn't allowed"); break;
+                case SceneType.CombatMap: CombatManager.Instance.HandleSwitchScene(); break;
+                case SceneType.Miner: SmashManager.Instance.HandleSwitchScene(); break;
+            }
+        }
 
         StartCoroutine(CoChangeScene(settings));
     }
@@ -105,7 +100,6 @@ public class SceneLoaderManager : MonoBehaviour
         if (!isInit)
         {
             isInit = true;
-            return;
         }
 
         // disable scene barrier after loading
@@ -117,24 +111,33 @@ public class SceneLoaderManager : MonoBehaviour
 
         StartCoroutine(CoFadeIn());
 
-        LastSceneSettings settings = SettingsManager.Instance.LastSceneSettings;
-
         UIManager uiManager = null;
 
-        switch(settings.lastSceneType)
+        // if home only
+        if (scene.name == "HomeScene")
         {
-            case SceneType.CombatMap:
-                CombatManager.Instance.Setup(UtilsCombatMap.GetMapById(settings.lastCombatMapId));
-                uiManager = FindFirstObjectByType<UIManager>();
-                break;
+            HomeWorldManager.Instance.Setup();
+            //uiManager = FindFirstObjectByType<UIManager>();
+        }
+        else
+        {
+            LastSceneSettings settings = SettingsManager.Instance.LastSceneSettings;
 
-            case SceneType.Miner:
-                SmashManager.Instance.Setup();
-                uiManager = FindFirstObjectByType<UIManager>();
-                break;
+            switch (settings.lastSceneType)
+            {
+                case SceneType.CombatMap:
+                    CombatManager.Instance.Setup(UtilsCombatMap.GetMapById(settings.lastCombatMapId));
+                    uiManager = FindFirstObjectByType<UIManager>();
+                    break;
+
+                case SceneType.Miner:
+                    SmashManager.Instance.Setup();
+                    uiManager = FindFirstObjectByType<UIManager>();
+                    break;
+            }
         }
 
-        if(uiManager != null)
+        if (uiManager != null)
         {
             uiManager.Setup();
         }

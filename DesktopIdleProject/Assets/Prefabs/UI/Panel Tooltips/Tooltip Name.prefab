@@ -25,7 +25,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 823858793256812211}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -263,7 +263,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 3418552655627870997}
   timeToFade: 0.3
+  root: {fileID: 7044208315940144625}
   textName: {fileID: 5615537922576713457}
+  minWidth: 80
+  maxWidth: 2000
 --- !u!225 &3418552655627870997
 CanvasGroup:
   m_ObjectHideFlags: 0

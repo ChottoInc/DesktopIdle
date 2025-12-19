@@ -68,6 +68,10 @@ public class EnemyData
 
 
 
+    public EnemyData(EnemySO enemySO)
+    {
+        this.enemySO = enemySO;
+    }
 
 
     public EnemyData(EnemySO enemySO, CombatMapSO mapSO)

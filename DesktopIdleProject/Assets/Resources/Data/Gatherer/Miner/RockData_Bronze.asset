@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f79bab17efb3744b0563d466540e6a, type: 3}
+  m_Name: RockData_Bronze
+  m_EditorClassIdentifier: 
+  id: 2
+  sprite: {fileID: 21300000, guid: 1b36f7398bac4a44d86e7daa828148c6, type: 3}
+  rockType: 2
+  baseLootChance: 10
+  possibleItems:
+  - value: {fileID: 11400000, guid: 40b3652450966b94c834e90465112a4a, type: 2}
+    chanches: 40
+  - value: {fileID: 11400000, guid: f24bac65791bba74082850e232f32ac0, type: 2}
+    chanches: 40
+  - value: {fileID: 11400000, guid: d27b762b5b5d6e949a20d21a519c31d6, type: 2}
+    chanches: 15
+  - value: {fileID: 11400000, guid: 022c10ec650c76448ac6287d338249ea, type: 2}
+    chanches: 5

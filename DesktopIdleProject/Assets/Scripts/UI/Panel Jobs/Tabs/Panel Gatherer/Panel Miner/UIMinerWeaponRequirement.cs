@@ -41,13 +41,13 @@ public class UIMinerWeaponRequirement : MonoBehaviour
         }
 
         TooltipManagerData tooltipData = new TooltipManagerData();
-        tooltipData.idTooltip = UITooltipManager.ID_SHOW_NAME;
-        tooltipData.textName = itemName;
+        tooltipData.idTooltip = UITooltipManager.ID_SHOW_TEXT;
+        tooltipData.text = itemName;
         UITooltipManager.Instance.Show(tooltipData, tooltipPosition.position, true);
     }
 
     public void OnPointerExit()
     {
-        UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_NAME, true);
+        UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_TEXT, true);
     }
 }

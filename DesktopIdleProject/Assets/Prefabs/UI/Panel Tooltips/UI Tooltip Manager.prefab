@@ -60,18 +60,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5654144835157290847}
     m_Modifications:
-    - target: {fileID: 1027166923205616987, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
-      propertyPath: canvasGroup
-      value: 
-      objectReference: {fileID: 96694518250701909}
-    - target: {fileID: 1027166923205616987, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
-      propertyPath: rectTransform
-      value: 
-      objectReference: {fileID: 5756913716118577841}
-    - target: {fileID: 3949731180800051321, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
-      propertyPath: m_Color.a
-      value: 0.78431374
-      objectReference: {fileID: 0}
     - target: {fileID: 6240973114822437984, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
       propertyPath: m_Name
       value: Tooltip Name
@@ -106,11 +94,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7044208315940144625, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 538.37
+      value: 379.98
       objectReference: {fileID: 0}
     - target: {fileID: 7044208315940144625, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 217.03
+      value: 171.22
       objectReference: {fileID: 0}
     - target: {fileID: 7044208315940144625, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -142,11 +130,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7044208315940144625, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -93.9
+      value: -129.4
       objectReference: {fileID: 0}
     - target: {fileID: 7044208315940144625, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -93.59
+      value: -116.49
       objectReference: {fileID: 0}
     - target: {fileID: 7044208315940144625, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -160,20 +148,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7760824302646078164, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
-      propertyPath: m_PixelsPerUnitMultiplier
-      value: 0.6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
---- !u!225 &96694518250701909 stripped
-CanvasGroup:
-  m_CorrespondingSourceObject: {fileID: 3418552655627870997, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}
-  m_PrefabInstance: {fileID: 3325526389488445248}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2335009196322767387 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1027166923205616987, guid: 2fab95e98a2350f48bc10393a5ff84a2, type: 3}

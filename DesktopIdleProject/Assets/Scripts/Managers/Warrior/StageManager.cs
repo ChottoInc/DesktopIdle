@@ -33,7 +33,7 @@ public class StageManager : MonoBehaviour
 
 
     private float offsetSpawn = 200f;
-    private float ySpawn = 2f;
+    private float ySpawn = 0f;
     private float minXSpawn, maxXSpawn;
 
     private List<Enemy> currentEnemies;
@@ -133,7 +133,7 @@ public class StageManager : MonoBehaviour
         Enemy enemy = enemyObj.GetComponent<Enemy>();
         currentEnemies.Add(enemy);
 
-        enemy.Setup(data, currentEnemyIndex - 1);
+        enemy.Setup(data, currentEnemyIndex - 1, SceneLoaderManager.SceneType.CombatMap);
 
         enemyObj.transform.position = spawnPos;
     }

@@ -51,7 +51,7 @@ MonoBehaviour:
   animator: {fileID: 8259868822070200029}
   spriteRenderer: {fileID: 7255071826316726164}
   faceRight: 1
-  speed: 6
+  speed: 4
   cooldownIdle: 1.5
   checkRockPoint: {fileID: 4694128961953293564}
   rockLayer:
@@ -89,7 +89,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0000019073486, y: 0.4741261}
+  m_Offset: {x: 0.01584673, y: 0.059519887}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -100,7 +100,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4528999, y: 2.4974046}
+  m_Size: {x: 0.8191061, y: 1.1083424}
   m_EdgeRadius: 0
 --- !u!50 &2597152809733967556
 Rigidbody2D:
@@ -157,7 +157,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 12, y: 12, z: 12}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4694128961953293564}
@@ -291,6 +291,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 7414096800624778939}
+    - target: {fileID: 5019092027908374915, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8393632110225679489, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -357,11 +361,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957772293559954643, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.07
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8957772293559954643, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.2278
+      value: 2.55
       objectReference: {fileID: 0}
     - target: {fileID: 8957772293559954643, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

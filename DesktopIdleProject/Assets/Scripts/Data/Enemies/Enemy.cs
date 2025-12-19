@@ -54,6 +54,8 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     private bool isDeathVFXPlaying;
 
+    private SceneLoaderManager.SceneType sceneType;
+
 
 
 
@@ -211,11 +213,13 @@ public class Enemy : MonoBehaviour, IPoolObject
         }
     }
 
-    public void Setup(EnemyData enemyData, int index)
+    public void Setup(EnemyData enemyData, int index, SceneLoaderManager.SceneType sceneType)
     {
         this.enemyData = enemyData;
 
         enemyIndex = index;
+
+        this.sceneType = sceneType;
 
         spriteRenderer.sortingOrder = enemyIndex;
     }
@@ -277,8 +281,13 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public void Die() 
     {
-        StageManager.Instance.RemoveFromCurrentEnemiesList(this);
-        PoolManager.Instance.Return(gameObject, "Enemy");
+        switch (sceneType)
+        {
+            case SceneLoaderManager.SceneType.CombatMap:
+                StageManager.Instance.RemoveFromCurrentEnemiesList(this);
+                PoolManager.Instance.Return(gameObject, "Enemy");
+                break;
+        }
     }
 
 

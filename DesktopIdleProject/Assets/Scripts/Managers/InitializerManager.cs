@@ -7,6 +7,7 @@ using static Kirurobo.UniWindowController;
 public class InitializerManager : MonoBehaviour
 {
     [Header("Screen")]
+    [SerializeField] int heightScreen = 450;
     [SerializeField] UniWindowController windowController;
 
     [Space(10)]
@@ -24,6 +25,19 @@ public class InitializerManager : MonoBehaviour
 
     private bool isInit;
 
+    private bool hasCheckFiles;
+
+    private bool hasSaveFile;
+
+
+
+    public bool HasCheckFiles => hasCheckFiles;
+    public bool HasSaveFile => hasSaveFile;
+
+
+
+
+
     public static InitializerManager Instance { get; private set; }
 
     private void Awake()
@@ -38,12 +52,25 @@ public class InitializerManager : MonoBehaviour
         windowController.OnStateChanged += Setup;
     }
 
+
+    private void OnDestroy()
+    {
+        // if a save is never created but the game has been opened, delete newly created save files
+        if (!hasSaveFile)
+        {
+            string persistent = Application.persistentDataPath + "/";
+
+            Directory.Delete(persistent + UtilsSave.ROOT_FOLDER, true);
+        }
+    }
+
+
     private void Setup(WindowStateEventType type)
     {
         if (isInit) return;
         isInit = true;
 
-        windowController.windowSize = new Vector2(Screen.currentResolution.width, 250);
+        windowController.windowSize = new Vector2(Screen.currentResolution.width, heightScreen);
 
         Vector2 usableScreen = GetUsableDesktopSize();
         windowController.windowPosition = new Vector2(0, Screen.currentResolution.height - usableScreen.y);
@@ -90,8 +117,12 @@ public class InitializerManager : MonoBehaviour
         // call loader scene setup - set material
         sceneLoaderManager.Setup();
 
+        // set checked files
+        hasCheckFiles = true;
+
+        Debug.Log(SettingsManager.Instance.LastSceneSettings.lastSceneName);
+
         // check save for last scene - loading scene manager should handle the alpha
-        sceneLoaderManager.LoadFirstScene(SettingsManager.Instance.LastSceneSettings);
     }
 
     private void HandleSaves()
@@ -101,6 +132,8 @@ public class InitializerManager : MonoBehaviour
         // Create folder if never opened
         if (!Directory.Exists(persistent + UtilsSave.ROOT_FOLDER))
         {
+            hasSaveFile = false;
+
             Directory.CreateDirectory(persistent + UtilsSave.ROOT_FOLDER);
 
             /*
@@ -113,7 +146,10 @@ public class InitializerManager : MonoBehaviour
             Directory.CreateDirectory(persistent + UtilsSave.GetSettingsFolder());
             Directory.CreateDirectory(persistent + UtilsSave.GetCombatMapsFolder());
         }
-
+        else
+        {
+            hasSaveFile = true;
+        }
 
         SettingsManager.Instance.Setup(jsonService);
         PlayerManager.Instance.Setup(jsonService);
@@ -131,5 +167,13 @@ public class InitializerManager : MonoBehaviour
     public float GetScreenOffsetBound()
     {
         return offsetBound;
+    }
+
+
+
+
+    public void SetHasSaveFile()
+    {
+        hasSaveFile = true;
     }
 }

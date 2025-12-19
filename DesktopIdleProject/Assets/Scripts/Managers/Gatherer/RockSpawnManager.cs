@@ -8,7 +8,8 @@ public class RockSpawnManager : MonoBehaviour
     //public const int MAX_ENEMY_INDEX = 100;
     public const int MAX_ROCK_INDEX = 50;
 
-    [SerializeField] private int startingRocks = 20;
+    [SerializeField] int startingRocks = 20;
+    [SerializeField] UtilsGeneral.GeneralChances<RockSO>[] possibleRocks;
 
     [Header("UI")]
     [SerializeField] TMP_Text textStage;
@@ -67,7 +68,8 @@ public class RockSpawnManager : MonoBehaviour
     {
         // generate data
 
-        RockSO randRock = UtilsGather.GetRandomRock();
+        //RockSO randRock = UtilsGather.GetRandomRock();
+        RockSO randRock = UtilsGeneral.GetRandomValueFromGeneralChanches(possibleRocks);
         RockData result = new RockData(randRock);
 
         // increase index

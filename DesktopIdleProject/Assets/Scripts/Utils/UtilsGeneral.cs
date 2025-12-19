@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using UnityEngine;
 
 public static class UtilsGeneral
@@ -70,4 +71,55 @@ public static class UtilsGeneral
 
         return result;
     }
+
+
+
+    #region TUTORIAL
+
+    public const int ID_INTRO_TUTORIAL = 0;
+
+
+    private const string TUTORIAL_INTRO_1 = "This is you.";
+    private const string TUTORIAL_INTRO_2 = "Defeat monsters to advance the stages.";
+    private const string TUTORIAL_INTRO_3 = "Here you can increase your job levels.";
+    private const string TUTORIAL_INTRO_4 = "Here you can change your current job.";
+    private const string TUTORIAL_INTRO_5 = "Here you can see your inventory.";
+
+    /// <summary>
+    /// Struct containing the dialogue and if the text panel need to move to next position
+    /// </summary>
+    public struct TutorialDialogueNeedPos
+    {
+        private readonly string dialogue;
+        private readonly bool need;
+
+        public TutorialDialogueNeedPos(string dialgoue, bool need)
+        {
+            this.dialogue = dialgoue;
+            this.need = need;
+        }
+
+        public string Dialogue => dialogue;
+        public bool Need => need;
+    }
+
+    // Tutorial intro
+    public static readonly IList<TutorialDialogueNeedPos> TutorialIntroDialogues = new ReadOnlyCollection<TutorialDialogueNeedPos>(
+        new[]
+        {
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_1, false),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_2, false),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_3, true),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_4, true),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_5, true),
+        });
+    
+
+    // Use to get all the dialogue for a specific tutorial
+    public static readonly Dictionary<int, IList<TutorialDialogueNeedPos>> DictTutorials = new Dictionary<int, IList<TutorialDialogueNeedPos>>()
+    {
+        { ID_INTRO_TUTORIAL, TutorialIntroDialogues }
+    };
+
+    #endregion
 }

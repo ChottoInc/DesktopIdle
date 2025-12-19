@@ -47,8 +47,8 @@ public static class UtilsPlayer
 
     public const float PER_LEVEL_MINER_GAIN_POWER = 2;
     public const float PER_LEVEL_MINER_GAIN_SMASHSPEED = 0.02f;
-    public const float PER_LEVEL_MINER_GAIN_PRECISION = 0.1f;
-    public const float PER_LEVEL_MINER_GAIN_LUCK = 0.1f;
+    public const float PER_LEVEL_MINER_GAIN_PRECISION = 0.01f;
+    public const float PER_LEVEL_MINER_GAIN_LUCK = 0.01f;
 
     public const int PER_LEVEL_MINER_MAX_POWER = 50;
     public const int PER_LEVEL_MINER_MAX_SMASHSPEED = 40;
@@ -63,7 +63,7 @@ public static class UtilsPlayer
     private const float MINER_WEAPON_LINEAR_GROWTH = 0.35f;
     private const float MINER_WEAPON_QUADRATIC_GROWTH = 0.05f;
 
-    private const int MINER_WEAPON_MAX_LEVLE = 5;
+    private const int MINER_WEAPON_MAX_LEVEL = 5;
 
 
 

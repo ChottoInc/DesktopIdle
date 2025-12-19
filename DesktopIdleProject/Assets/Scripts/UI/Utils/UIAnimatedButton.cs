@@ -5,11 +5,21 @@ using UnityEngine.UI;
 
 public class UIAnimatedButton : Button
 {
+    [SerializeField] Image imageToAnimate;
     [SerializeField] float timeSingleFrame = 0.2f;
     [SerializeField] Sprite[] spriteList;
 
+
     private int animationDirection = 1;
     private int spriteIndex = 0;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (imageToAnimate == null)
+            imageToAnimate = image;
+    }
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
@@ -34,14 +44,14 @@ public class UIAnimatedButton : Button
         animationDirection = 1;
         spriteIndex = 0;
 
-        image.sprite = spriteList[0];
+        imageToAnimate.sprite = spriteList[0];
     }
 
     private IEnumerator CoAnimation(float timeBtwFrames)
     {
         while (true)
         {
-            image.sprite = GetNextSprite();
+            imageToAnimate.sprite = GetNextSprite();
             yield return new WaitForSecondsRealtime(timeBtwFrames);
         }
     }
