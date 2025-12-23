@@ -44,6 +44,12 @@ public class UITabJobWarrior : UITabWindow
         }
     }
 
+    public void OnButtonBack()
+    {
+        Close();
+        panelJob.ChangeCurrentTab(-1);
+    }
+
     private void FillMaps()
     {
         mapObjs = new List<GameObject>();

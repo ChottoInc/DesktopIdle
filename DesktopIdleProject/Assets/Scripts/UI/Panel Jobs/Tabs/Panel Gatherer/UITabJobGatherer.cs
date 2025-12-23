@@ -15,7 +15,7 @@ public class UITabJobGatherer : UITabWindow
     {
         base.Open();
 
-        panelJob.ChangeCurrentTab(UITabPlayerJob.ID_GATHERER_TAB);
+        panelJob.ChangeCurrentTab(UITabPlayerJob.ID_MINER_TAB);
 
         switch (currentTab)
         {

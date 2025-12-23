@@ -5,10 +5,14 @@ using UnityEngine;
 public class UITabPlayerJob : UITabWindow
 {
     public const int ID_WARRIOR_TAB = 0;
-    public const int ID_GATHERER_TAB = 1;
 
+    public const int ID_MINER_TAB = 1;
+
+    [SerializeField] GameObject panelScroll;
+
+    [Header("Windows")]
     [SerializeField] UITab tabWarrior;
-    [SerializeField] UITab tabGatherer;
+    [SerializeField] UITab tabMiner;
 
     private int currentTab = -1;
 
@@ -18,14 +22,23 @@ public class UITabPlayerJob : UITabWindow
 
         switch (currentTab)
         {
-            default:
+            default: panelScroll.SetActive(true); break;
             case ID_WARRIOR_TAB: tabWarrior.Select(); break;
-            case ID_GATHERER_TAB: tabGatherer.Select(); break;
+            case ID_MINER_TAB: tabMiner.Select(); break;
         }
     }
 
     public void ChangeCurrentTab(int id)
     {
+        if(id != -1)
+        {
+            panelScroll.SetActive(false);
+        }
+        else
+        {
+            panelScroll.SetActive(true);
+        }
+
         currentTab = id;
     }
 

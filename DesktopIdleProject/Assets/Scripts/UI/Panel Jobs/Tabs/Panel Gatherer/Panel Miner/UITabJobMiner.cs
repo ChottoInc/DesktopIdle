@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class UITabJobMiner : UITabWindow
 {
-    [SerializeField] UITabJobGatherer panelGatherer;
+    [SerializeField] UITabPlayerJob panelJob;
 
     [Space(10)]
     [SerializeField] GameObject requirementPrefab;
@@ -12,15 +12,31 @@ public class UITabJobMiner : UITabWindow
 
     private List<GameObject> requirementObjs;
 
+    [Header("Weapon")]
+    [SerializeField] Image imageSword;
+    [SerializeField] int changeMinerWeaponEvery = 5;
+
+    [Header("Buttons")]
     [SerializeField] Button buttonLevelUp;
 
     private List<ItemGroup> requirements;
+
+
+    private PlayerMiner player;
+
 
     public override void Open()
     {
         base.Open();
 
-        panelGatherer.ChangeCurrentTab(UITabJobGatherer.ID_MINER_TAB);
+        if(player == null)
+        {
+            player = FindFirstObjectByType<PlayerMiner>();
+        }
+
+        UpdateMinerSwordUI();
+
+        panelJob.ChangeCurrentTab(UITabPlayerJob.ID_MINER_TAB);
 
         // clear list and refill requirements updated to inventory numbers
         requirementObjs = ClearList(requirementObjs);
@@ -28,6 +44,12 @@ public class UITabJobMiner : UITabWindow
 
         // check requirements
         buttonLevelUp.interactable = CheckEnableLevelUp();
+    }
+
+    public void OnButtonBack()
+    {
+        Close();
+        panelJob.ChangeCurrentTab(-1);
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -80,6 +102,24 @@ public class UITabJobMiner : UITabWindow
         return true;
     }
 
+    /// <summary>
+    /// Change sprite of the sword every N levels
+    /// </summary>
+    private void UpdateMinerSwordUI()
+    {
+        int indexMinerWeaponSprite = PlayerManager.Instance.PlayerMinerData.WeaponLevel / changeMinerWeaponEvery;
+
+        Sprite sprite = UtilsGather.GetMinerWeaponSpriteByIndex(indexMinerWeaponSprite);
+        if(sprite == null)
+        {
+            sprite = UtilsGather.GetMinerWeaponSpriteByIndex(UtilsGather.GetAllMinerWeaponSprites().Length - 1);
+        }
+
+        imageSword.sprite = sprite;
+    }
+
+
+
     public void OnButtonGather()
     {
         LastSceneSettings settings = new LastSceneSettings();
@@ -87,5 +127,35 @@ public class UITabJobMiner : UITabWindow
         settings.lastSceneType = SceneLoaderManager.SceneType.Miner;
 
         SceneLoaderManager.Instance.LoadScene(settings);
+    }
+
+    public void OnButtonLevelUp()
+    {
+        // remove requirements
+        // save level and items
+        // update sword ui
+
+        foreach (var requirement in requirements)
+        {
+            PlayerManager.Instance.Inventory.RemoveItem(requirement.IdItem, requirement.Quantity);
+        }
+
+        PlayerManager.Instance.SaveInventoryData();
+
+        if(player == null)
+        {
+            // update directly from save if not in miner scene
+            PlayerManager.Instance.PlayerMinerData.AddMinerWeaponLevel(1);
+        }
+        else
+        {
+            // or update from temp data if in miner scene, and update from there
+            player.AddMinerWeaponLevel(1);
+            PlayerManager.Instance.UpdateMinerData(player.PlayerData);
+        }
+
+        PlayerManager.Instance.SaveMinerData();
+
+        UpdateMinerSwordUI();
     }
 }

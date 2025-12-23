@@ -129,13 +129,21 @@ public class StageManager : MonoBehaviour
 
     private void SpawnEnemy(EnemyData data, Vector2 spawnPos)
     {
-        GameObject enemyObj = PoolManager.Instance.Pull("Enemy");
-        Enemy enemy = enemyObj.GetComponent<Enemy>();
-        currentEnemies.Add(enemy);
+        GameObject enemyObj = PoolManager.Instance.Pull(data.EnemySO.EnemyPoolName);
 
-        enemy.Setup(data, currentEnemyIndex - 1, SceneLoaderManager.SceneType.CombatMap);
+        if(enemyObj != null)
+        {
+            Enemy enemy = enemyObj.GetComponent<Enemy>();
+            currentEnemies.Add(enemy);
 
-        enemyObj.transform.position = spawnPos;
+            enemy.Setup(data, currentEnemyIndex - 1, SceneLoaderManager.SceneType.CombatMap);
+
+            enemyObj.transform.position = spawnPos;
+        }
+        else
+        {
+            Debug.Log("Object not instatiated, probably the enemy so misses the pooling name");
+        }
     }
 
     public void SpawnNextEnemy()
@@ -171,7 +179,7 @@ public class StageManager : MonoBehaviour
          * */
         if (currentStageKilled != currentEnemyIndex - 1) return false;
 
-        if(currentStage <= CombatManager.Instance.MapSO.Stages && SettingsManager.Instance.IsAutoBattleOn)
+        if(currentStage < CombatManager.Instance.MapSO.Stages && SettingsManager.Instance.IsAutoBattleOn)
         {
             // update stage
             currentStage++;

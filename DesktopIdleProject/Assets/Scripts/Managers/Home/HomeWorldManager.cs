@@ -90,7 +90,7 @@ public class HomeWorldManager : MonoBehaviour
 
     private void SpawnEnemy(EnemyData data, Vector2 spawnPos)
     {
-        GameObject enemyObj = PoolManager.Instance.Pull("Enemy");
+        GameObject enemyObj = PoolManager.Instance.Pull(data.EnemySO.EnemyPoolName);
         Enemy enemy = enemyObj.GetComponent<Enemy>();
         currentEnemies.Add(enemy);
 

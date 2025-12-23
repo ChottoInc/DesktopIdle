@@ -5,6 +5,8 @@ public static class UtilsGather
 {
     private static RockSO[] rocks;
 
+    private static Sprite[] minerWeaponSprites;
+
     // ----- MINER -----
     private const float BASE_ROCK_DURABILITY = 20f;
     private const float ROCK_DURABILITY_SCALE = 1.8f;
@@ -63,12 +65,13 @@ public static class UtilsGather
         Gold
     }
 
-    #region ROCKS
-
     public static void Initialize()
     {
         rocks = LoadRocks();
+        minerWeaponSprites = LoadMinerWeaponSprites();
     }
+
+    #region ROCKS
 
     private static RockSO[] LoadRocks()
     {
@@ -173,6 +176,28 @@ public static class UtilsGather
     private static int RequiredItemAmount(int level, int itemIndex)
     {
         return Mathf.FloorToInt(BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE[itemIndex]));
+    }
+
+    #endregion
+
+    #region MINER WEAPON
+
+    private static Sprite[] LoadMinerWeaponSprites()
+    {
+        return Resources.LoadAll<Sprite>("Sprites/Miner/Weapon");
+    }
+
+
+    public static Sprite[] GetAllMinerWeaponSprites()
+    {
+        return minerWeaponSprites;
+    }
+
+    public static Sprite GetMinerWeaponSpriteByIndex(int index)
+    {
+        if (index < minerWeaponSprites.Length)
+            return minerWeaponSprites[index];
+        return null;
     }
 
     #endregion

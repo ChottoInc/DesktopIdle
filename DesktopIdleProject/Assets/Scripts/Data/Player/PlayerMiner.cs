@@ -216,6 +216,14 @@ public class PlayerMiner : Player
         return hitRock != null;
     }
 
+
+    public void AddMinerWeaponLevel(int level)
+    {
+        playerData.AddMinerWeaponLevel(level);
+    }
+
+
+
     #region SAVE
 
     public void SaveFightData()

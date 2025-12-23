@@ -68,7 +68,6 @@ public static class UtilsPlayer
 
 
 
-
     public static int RequiredExpForWarriorLevel(int level)
     {
         return Mathf.FloorToInt(BASE_FIGHT_EXP_GROWTH * Mathf.Pow(level, EXPO_FIGHT_EXP_GROWTH) + FLAT_FIGHT_EXP_GROWTH * level);

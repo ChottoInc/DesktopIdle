@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Enemy/Enemy Data", fileName = "EnemyData_")]
 public class EnemySO : ScriptableObject
 {
+    [SerializeField] string enemyPoolName;
     [SerializeField] int id;
 
     [Space(10)]
@@ -12,6 +13,7 @@ public class EnemySO : ScriptableObject
     [SerializeField] float baseCritDmg = 1.5f;
 
 
+    public string EnemyPoolName => enemyPoolName;
     public int Id => id;
 
     public float BaseMaxHp => baseMaxHp;

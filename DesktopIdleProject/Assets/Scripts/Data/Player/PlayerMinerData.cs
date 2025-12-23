@@ -151,4 +151,9 @@ public class PlayerMinerData
             case ID_MINER_LUCK: levelStatLuck += amount; break;
         }
     }
+
+    public void AddMinerWeaponLevel(int level)
+    {
+        levelWeaponMiner += level;
+    }
 }
