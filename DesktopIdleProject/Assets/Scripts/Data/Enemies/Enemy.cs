@@ -285,7 +285,7 @@ public class Enemy : MonoBehaviour, IPoolObject
         {
             case SceneLoaderManager.SceneType.CombatMap:
                 StageManager.Instance.RemoveFromCurrentEnemiesList(this);
-                PoolManager.Instance.Return(gameObject, "Enemy");
+                PoolManager.Instance.Return(gameObject, enemyData.EnemySO.EnemyPoolName);
                 break;
         }
     }

@@ -77,7 +77,14 @@ public static class UtilsQuest
     [System.Serializable]
     public struct QuestDataProgress
     {
+        public QuestDataProgress(QuestStorySaveData saveData)
+        {
+            progressCounter = saveData.progressCounter;
+            isCleared = saveData.isCleared;
+        }
+
         public int progressCounter;
+        public bool isCleared;
     }
 
     #endregion

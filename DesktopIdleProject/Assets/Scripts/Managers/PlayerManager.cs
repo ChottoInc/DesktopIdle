@@ -1,22 +1,29 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
     private IDataService saveService;
 
+    // --- QUESTS
+    private Dictionary<string, UtilsQuest.QuestDataProgress> dictQuestsStoryProgress;
+
+
     // --- INVENTORY
     private Inventory inventory;
 
+
     // --- WARRIOR
     private PlayerFightData playerFightData;
-
 
     // --- GATHERER
     private PlayerMinerData playerMinerData;
 
 
+
     public Inventory Inventory => inventory;
+
 
     public PlayerFightData PlayerFightData => playerFightData;
 
@@ -48,14 +55,67 @@ public class PlayerManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    // Called after Settings Manager setup
     public void Setup(IDataService service)
     {
         saveService = service;
 
+        LoadQuestsData();
         LoadInventoryData();
         LoadFightData();
         LoadMinerData();
     }
+
+    #region QUESTS
+
+    private void LoadQuestsData()
+    {
+        LoadStoryQuests();
+    }
+
+    private void LoadStoryQuests()
+    {
+        dictQuestsStoryProgress = new Dictionary<string, UtilsQuest.QuestDataProgress>();
+
+        var storyQuestSOs = UtilsQuest.GetAllStoryQuests();
+
+        // used for debug infos
+        int excpetionIndex = 0;
+
+        try
+        {
+            for (int i = 0; i < storyQuestSOs.Length; i++)
+            {
+                excpetionIndex = i;
+
+                // get file for single quest
+                QuestStorySaveData saveData = saveService.LoadData<QuestStorySaveData>(UtilsSave.GetQuestFile(storyQuestSOs[i].UniqueId), false);
+
+                // save in dictionary
+                dictQuestsStoryProgress.Add(saveData.questId, new UtilsQuest.QuestDataProgress(saveData));
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Can't load quest data id: " + storyQuestSOs[excpetionIndex].UniqueId);
+        }
+
+        Debug.Log("Dictionary quests counter: " + dictQuestsStoryProgress.Count);
+    }
+
+    /*
+    public void UpdateInventoryData(Inventory data)
+    {
+        inventory = data;
+    }*/
+
+    public void SaveQuestsData()
+    {
+        InventorySaveData data = new InventorySaveData(inventory);
+        saveService.SaveData(UtilsSave.GetPlayerInventoryFile(), data, false);
+    }
+
+    #endregion
 
     #region INVENTORY DATA
 
@@ -69,9 +129,8 @@ public class PlayerManager : MonoBehaviour
         catch (Exception e)
         {
             inventory = new Inventory();
+            SaveInventoryData();
         }
-
-        SaveInventoryData();
     }
 
     /*
@@ -100,9 +159,9 @@ public class PlayerManager : MonoBehaviour
         catch (Exception e)
         {
             playerFightData = new PlayerFightData();
+            SaveFightData();
         }
 
-        SaveFightData();
     }
 
     public void UpdateFightData(PlayerFightData data)
@@ -130,9 +189,9 @@ public class PlayerManager : MonoBehaviour
         catch (Exception e)
         {
             playerMinerData = new PlayerMinerData();
+            SaveMinerData();
         }
 
-        SaveMinerData();
     }
 
     public void UpdateMinerData(PlayerMinerData data)

@@ -214,8 +214,10 @@ public class SettingsManager : MonoBehaviour
                     break;
             }
 
+            questProgress.isCleared = false;
+
             // save first time for each story quest
-            QuestStorySaveData questStoryData = new QuestStorySaveData(storyQuests[i].UniqueId, questProgress);
+            QuestStorySaveData questStoryData = new QuestStorySaveData(so.UniqueId, questProgress);
             saveService.SaveData(UtilsSave.GetQuestFile(so.UniqueId), questStoryData, false);
         }
     }
