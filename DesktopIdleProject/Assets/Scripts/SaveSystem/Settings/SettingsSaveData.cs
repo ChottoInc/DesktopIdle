@@ -21,8 +21,27 @@ public class SettingsSaveData
 
     // ---- SETTINGS ----
 
+    // ------------ GAMEPLAY
 
     public bool isAutoBattleOn;
+    public bool areTooltipsOn;
+
+
+    // ------------ VIDEO
+
+    public bool isAlwaysOnTop;
+    public bool isClickThrough;
+    public bool is60FPS;
+
+
+    // ------------ AUDIO
+
+    public float masterVolume;
+
+
+
+
+
 
     public SettingsSaveData() { }
 
@@ -38,6 +57,19 @@ public class SettingsSaveData
 
 
 
+
+
         isAutoBattleOn = manager.IsAutoBattleOn;
+        areTooltipsOn = manager.AreTooltipsOn;
+
+
+
+        isAlwaysOnTop = manager.IsAlwaysOnTop;
+        isClickThrough = manager.IsClickThrough;
+        is60FPS = manager.Is60FPS;
+
+
+
+        masterVolume = manager.MasterVolume;
     }
 }

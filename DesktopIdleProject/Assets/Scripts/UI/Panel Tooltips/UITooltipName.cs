@@ -60,6 +60,8 @@ public class UITooltipName : MonoBehaviour
 
     public void Show(string text, Vector2 position, bool fade = false)
     {
+        if (!SettingsManager.Instance.AreTooltipsOn) return;
+
         // set pos
         transform.position = position;
 

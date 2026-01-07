@@ -18,6 +18,9 @@ public static class UtilsSave
     public const string COMBATMAPS_FOLDER = "CombatMaps";
     public const string COMBATMAPS_EXT = ".json";
 
+    public const string QUESTS_FOLDER = "Quests";
+    public const string QUESTS_EXT = ".json";
+
     // ----- SETTINGS
 
     public static string GetSettingsFolder()
@@ -63,5 +66,18 @@ public static class UtilsSave
     public static string GetCombatMapFile(string firstPart)
     {
         return GetCombatMapsFolder() + "/" + firstPart + COMBATMAPS_EXT;
+    }
+
+
+    // ----- QUESTS
+
+    public static string GetQuestsFolder()
+    {
+        return ROOT_FOLDER + "/" + QUESTS_FOLDER;
+    }
+
+    public static string GetQuestFile(string firstPart)
+    {
+        return GetQuestsFolder() + "/" + firstPart + QUESTS_EXT;
     }
 }

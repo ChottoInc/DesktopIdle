@@ -109,6 +109,7 @@ public class InitializerManager : MonoBehaviour
         // utils setups
         UtilsItem.Initialize();
         UtilsCombatMap.Initialize();
+        UtilsQuest.Initialize();
         UtilsGather.Initialize();
 
         // load files
@@ -145,6 +146,7 @@ public class InitializerManager : MonoBehaviour
             Directory.CreateDirectory(persistent + UtilsSave.GetPlayerFolder());
             Directory.CreateDirectory(persistent + UtilsSave.GetSettingsFolder());
             Directory.CreateDirectory(persistent + UtilsSave.GetCombatMapsFolder());
+            Directory.CreateDirectory(persistent + UtilsSave.GetQuestsFolder());
         }
         else
         {

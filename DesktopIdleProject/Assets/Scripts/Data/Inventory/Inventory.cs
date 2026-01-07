@@ -4,19 +4,27 @@ using UnityEngine;
 
 public class Inventory
 {
+    // base currency
+    private int currentBits;
+
     private List<ItemGroup> itemGroups;
 
+
+    public int CurrentBits => currentBits;
 
     public List<ItemGroup> ItemGroups => itemGroups;
 
 
     public Inventory()
     {
+        currentBits = 0;
         itemGroups = new List<ItemGroup>();
     }
 
     public Inventory(InventorySaveData saveData)
     {
+        currentBits = saveData.currentBits;
+
         itemGroups = new List<ItemGroup>();
 
         foreach (var group in saveData.groupSaves)
@@ -24,6 +32,29 @@ public class Inventory
             itemGroups.Add(new ItemGroup(group));
         }
     }
+
+    #region CURRENCIES
+
+    public void AddBits(int amount)
+    {
+        currentBits += amount;
+    }
+
+    public bool RemoveBits(int amount)
+    {
+        if(currentBits < amount)
+        {
+            Debug.Log("Insufficient bits");
+            return false;
+        }
+
+        currentBits -= amount;
+        return true;
+    }
+
+    #endregion
+
+    #region ITEMS
 
     public void AddItem(int id, int quantity)
     {
@@ -94,4 +125,6 @@ public class Inventory
         }
         return -1;
     }
+
+    #endregion
 }

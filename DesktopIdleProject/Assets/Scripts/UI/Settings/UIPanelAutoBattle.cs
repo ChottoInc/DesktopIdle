@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,10 @@ public class UIPanelAutoBattle : MonoBehaviour
     private bool hasStartedTimer;
     private float timerTooltip;
     private bool isShowingTooltip;
+
+
+    public event Action<bool> OnSet;
+
 
     public void Start()
     {
@@ -48,7 +53,29 @@ public class UIPanelAutoBattle : MonoBehaviour
     public void OnToggleAutoBattle(bool isOn)
     {
         SettingsManager.Instance.SetIsAutoBattle(isOn);
+
+        OnSet?.Invoke(isOn);
     }
+
+
+    public void Setup()
+    {
+        toggleAutoBattle.SetIsOnWithoutNotify(SettingsManager.Instance.IsAutoBattleOn);
+    }
+
+
+    /// <summary>
+    /// Used to set isOn if toggled anywhere
+    /// </summary>
+    public void SetToggleWithoutNotify(bool isOn)
+    {
+        toggleAutoBattle.SetIsOnWithoutNotify(isOn);
+    }
+
+
+
+
+
 
 
     public void OnPointerEnter()

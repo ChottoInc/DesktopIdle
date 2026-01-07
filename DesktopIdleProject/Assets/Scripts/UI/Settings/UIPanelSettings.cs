@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class UIPanelSettings : MonoBehaviour
 {
-    [SerializeField] Toggle toggleAutoBattle;
+    [SerializeField] UITabSettingsGameplay panelGameplay;
 
-    public void Start()
+    public void Setup()
     {
-        toggleAutoBattle.SetIsOnWithoutNotify(SettingsManager.Instance.IsAutoBattleOn);
+        //panelGameplay.
     }
 
 

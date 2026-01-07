@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UITabSettings : UITabWindow
 {
-    [SerializeField] UIPanelSettings panelSettings;
+    //[SerializeField] UIPanelSettings panelSettings;
 
     public void OnButtonClose()
     {
