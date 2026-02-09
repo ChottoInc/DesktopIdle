@@ -23,11 +23,15 @@ public class UIAnimatedButton : Button
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
+        if (!interactable) return;
+
         StartCoroutine(CoAnimation(timeSingleFrame));
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
+        if (!interactable) return;
+
         ResetButton();
     }
 

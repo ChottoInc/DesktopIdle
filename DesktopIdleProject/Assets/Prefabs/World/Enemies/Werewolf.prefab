@@ -53,6 +53,8 @@ MonoBehaviour:
   speed: 3
   cooldownIdle: 1.5
   animator: {fileID: 2350838371573029908}
+  walkClip: {fileID: 7400000, guid: 5c65e233fec1b894b87093678521e369, type: 2}
+  attackClip: {fileID: 7400000, guid: 70ab49eba2be82d4a9c6a8033abd6490, type: 2}
   deathVFX: {fileID: 6251170778833621011}
 --- !u!61 &5445865618329719493
 BoxCollider2D:

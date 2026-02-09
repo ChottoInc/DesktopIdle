@@ -1,10 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UITabSettings : UITabWindow
 {
-    //[SerializeField] UIPanelSettings panelSettings;
+    [SerializeField] TabManager tabManager;
+
+    public override void Open()
+    {
+        base.Open();
+
+        tabManager.SelectFirstTab();
+    }
 
     public void OnButtonClose()
     {

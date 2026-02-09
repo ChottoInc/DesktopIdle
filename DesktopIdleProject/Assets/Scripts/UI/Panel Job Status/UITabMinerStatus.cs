@@ -76,7 +76,7 @@ public class UITabMinerStatus : UITabPlayerStatus
         SaveChanges();
 
 
-        player.SaveFightData();
+        player.SaveMinerData();
     }
 
     protected override void HandleIncreaseJobStat(int id)

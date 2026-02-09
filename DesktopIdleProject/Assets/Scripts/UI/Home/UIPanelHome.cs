@@ -35,7 +35,7 @@ public class UIPanelHome : MonoBehaviour
         buttonNew.interactable = true;
         buttonQuit.interactable = true;
 
-        Debug.Log(SettingsManager.Instance.LastSceneSettings.lastSceneName);
+        //Debug.Log(SettingsManager.Instance.LastSceneSettings.lastSceneName);
     }
 
     public void OnButtonContinue()

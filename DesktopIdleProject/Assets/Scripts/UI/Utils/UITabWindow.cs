@@ -22,4 +22,9 @@ public class UITabWindow : MonoBehaviour
 
         OnTabClose?.Invoke();
     }
+
+    public virtual bool CanClose()
+    {
+        return true;
+    }
 }

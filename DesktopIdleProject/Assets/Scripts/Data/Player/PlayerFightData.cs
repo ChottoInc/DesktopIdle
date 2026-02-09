@@ -72,7 +72,9 @@ public class PlayerFightData
     public int TotalExp => RequiredExpForWarriorLevel(currentLevel) + currentExp;
 
 
-    public float MaxHp => baseMaxHp + PER_LEVEL_WARRIOR_GAIN_MAXHP * (levelStatMaxHp - 1);
+    public float MaxHp => 
+        (baseMaxHp + PER_LEVEL_WARRIOR_GAIN_MAXHP * (levelStatMaxHp - 1)) *
+        PlayerManager.Instance.HelmetMaxHpBlacksmithMultiplier;
     public float CurrentHp => currentHp;
 
     /*
@@ -82,12 +84,21 @@ public class PlayerFightData
         (baseAtk + PER_LEVEL_WARRIOR_GAIN_ATK * (levelStatAtk - 1)) *
         PlayerManager.Instance.WeaponMinerMultiplier;
 
-    public float CurrentDef => baseDef + PER_LEVEL_WARRIOR_GAIN_DEF * (levelStatDef - 1);
+    public float CurrentDef => 
+        (baseDef + PER_LEVEL_WARRIOR_GAIN_DEF * (levelStatDef - 1)) *
+        PlayerManager.Instance.ArmorDefBlacksmithMultiplier *
+        PlayerManager.Instance.BootsDefBlacksmithMultiplier;
 
     // todo: if more mehods will be available to increase atk spd and crit rate, then check if you want those stats to be past the max threshold
-    public float CurrentAtkSpd => baseAtkSpd + PER_LEVEL_WARRIOR_GAIN_ATK_SPEED * (levelStatAtkSpd - 1);
-    public float CurrentCritRate => baseCritRate + PER_LEVEL_WARRIOR_GAIN_CRIT_RATE * (levelStatCritRate - 1);
-    public float CurrentCritDmg => baseCritDmg + PER_LEVEL_WARRIOR_GAIN_CRIT_DMG * (levelStatCritDmg - 1);
+    public float CurrentAtkSpd => 
+        (baseAtkSpd + PER_LEVEL_WARRIOR_GAIN_ATK_SPEED * (levelStatAtkSpd - 1)) *
+        PlayerManager.Instance.GlovesAtkSpdBlacksmithMultiplier;
+    public float CurrentCritRate => 
+        (baseCritRate + PER_LEVEL_WARRIOR_GAIN_CRIT_RATE * (levelStatCritRate - 1)) *
+        PlayerManager.Instance.BootsCritRateBlacksmithMultiplier;
+    public float CurrentCritDmg => 
+        (baseCritDmg + PER_LEVEL_WARRIOR_GAIN_CRIT_DMG * (levelStatCritDmg - 1)) *
+        PlayerManager.Instance.GlovesCritDmgBlacksmithMultiplier;
 
     // affects drops, crit rolls, rarity
     public float CurrentLuck => baseLuck + PER_LEVEL_WARRIOR_GAIN_LUCK * (levelStatLuck - 1);
@@ -98,6 +109,9 @@ public class PlayerFightData
     public event Action OnLevelUp;
 
     public event Action OnHpChange;
+
+
+    public event Action<int, int> OnStatChange;
 
 
 
@@ -144,6 +158,7 @@ public class PlayerFightData
         baseDef = 2.5f;
 
         baseAtkSpd = 1.2f;   // 1 attack per second
+        //baseAtkSpd = 5f;   // 1 attack per second
 
         baseCritRate = 0.05f;  // 5%
         baseCritDmg = 1.5f;  // +50%
@@ -196,6 +211,8 @@ public class PlayerFightData
             case ID_WARRIOR_CRITDMG: levelStatCritDmg += amount; break;
             case ID_WARRIOR_LUCK: levelStatLuck += amount; break;
         }
+
+        OnStatChange?.Invoke(id, amount);
     }
 
     #endregion

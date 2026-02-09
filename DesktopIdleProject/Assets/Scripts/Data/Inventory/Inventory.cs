@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,10 +16,19 @@ public class Inventory
     public List<ItemGroup> ItemGroups => itemGroups;
 
 
+
+    // Trigger used for quests
+    public event Action<int> OnItemAdd;
+
+
+
     public Inventory()
     {
-        currentBits = 0;
+        currentBits = 100;
+        //currentBits = 0;
         itemGroups = new List<ItemGroup>();
+
+        itemGroups.Add(new ItemGroup(0, 35));
     }
 
     public Inventory(InventorySaveData saveData)
@@ -58,6 +68,8 @@ public class Inventory
 
     public void AddItem(int id, int quantity)
     {
+        OnItemAdd?.Invoke(id);
+
         if (!HasItem(id))
         {
             ItemGroup group = new ItemGroup(id, quantity);

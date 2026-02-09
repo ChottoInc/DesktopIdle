@@ -8,7 +8,6 @@ public class PlayerMiner : Player
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] bool faceRight;
     [SerializeField] float speed = 5f;
-    [SerializeField] float cooldownIdle = 1.5f;
 
 
     [Header("Combat")]
@@ -25,7 +24,6 @@ public class PlayerMiner : Player
     private float currentTarget;
 
     private bool isIdling;
-    private float timerIdle;
 
     private bool dirLeft;
 
@@ -43,6 +41,8 @@ public class PlayerMiner : Player
 
     public event Action OnPerformSmash;
 
+    public event Action<int, int> OnStatChange;
+
 
 
 
@@ -53,7 +53,9 @@ public class PlayerMiner : Player
     {
         if (playerData != null)
         {
-            playerData.OnLevelUp -= SaveFightData;
+            playerData.OnLevelUp -= SaveMinerData;
+
+            playerData.OnStatChange -= OnStatChangeMiner;
         }
     }
 
@@ -185,7 +187,9 @@ public class PlayerMiner : Player
 
         if (playerData != null)
         {
-            playerData.OnLevelUp += SaveFightData;
+            playerData.OnLevelUp += SaveMinerData;
+
+            playerData.OnStatChange += OnStatChangeMiner;
         }
     }
 
@@ -226,12 +230,20 @@ public class PlayerMiner : Player
 
     #region SAVE
 
-    public void SaveFightData()
+    public void SaveMinerData()
     {
         PlayerManager.Instance.UpdateMinerData(playerData);
         PlayerManager.Instance.SaveMinerData();
     }
 
+    #endregion
+
+    #region HANDLE EVENTS FROM MINER DATA
+
+    private void OnStatChangeMiner(int id, int value)
+    {
+        OnStatChange?.Invoke(id, value);
+    }
 
     #endregion
 }

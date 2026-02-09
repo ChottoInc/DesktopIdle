@@ -106,6 +106,7 @@ public class SmashManager : MonoBehaviour
 
         // give exp to player
         player.PlayerData.AddExp(rewardedExp);
+        PlayerManager.Instance.UpdateMinerData(player.PlayerData);
 
         GiveLoot();
 

@@ -21,6 +21,8 @@ public class SettingsSaveData
 
     // ---- SETTINGS ----
 
+    public long lastLoginDate;
+
     // ------------ GAMEPLAY
 
     public bool isAutoBattleOn;
@@ -56,6 +58,8 @@ public class SettingsSaveData
         lastCombatMapId = manager.LastSceneSettings.lastCombatMapId;
 
 
+
+        lastLoginDate = manager.LastLoginDate;
 
 
 

@@ -80,14 +80,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2910634273924911395}
+  walkClip: {fileID: 7400000, guid: f747c572532c79c45b4c112baf5a5489, type: 2}
+  attackClip: {fileID: 7400000, guid: 8eb8959ef2d42bd4984e172bde3deceb, type: 2}
   spriteRenderer: {fileID: 1845208534959236019}
   faceRight: 1
   speed: 3.5
-  cooldownIdle: 1.5
   checkEnemyPoint: {fileID: 8951612909480592430}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  swordHitVFXPrefab: {fileID: 8588506279805518995, guid: 99d8f4d1e54d8ab4f89cc668b6647ca9, type: 3}
   hpBar: {fileID: 5052471557200108800}
 --- !u!61 &4276897723236361461
 BoxCollider2D:

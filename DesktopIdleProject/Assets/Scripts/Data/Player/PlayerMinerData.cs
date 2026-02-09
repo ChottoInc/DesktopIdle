@@ -64,9 +64,7 @@ public class PlayerMinerData
 
     public event Action OnAddedExp;
     public event Action OnLevelUp;
-
-
-
+    public event Action<int, int> OnStatChange;
 
     public PlayerMinerData()
     {
@@ -150,6 +148,8 @@ public class PlayerMinerData
             case ID_MINER_PRECISION: levelPrecision += amount; break;
             case ID_MINER_LUCK: levelStatLuck += amount; break;
         }
+
+        OnStatChange?.Invoke(id, amount);
     }
 
     public void AddMinerWeaponLevel(int level)

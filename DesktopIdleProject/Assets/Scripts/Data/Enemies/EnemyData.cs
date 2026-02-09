@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,6 +65,9 @@ public class EnemyData
     public float CurrentAtkSpd => currentAtkSpd;
     public float CurrentCritRate => currentCritRate;
     public float CurrentCritDmg => currentCritDmg;
+
+
+    public event Action OnTakeDamage;
 
 
 
@@ -207,7 +211,7 @@ public class EnemyData
         float baseDamage = data.CurrentAtk;
         float total;
 
-        if(Random.value <= data.CurrentCritRate)
+        if(UnityEngine.Random.value <= data.CurrentCritRate)
         {
             baseDamage *= data.CurrentCritDmg;
         }
@@ -216,6 +220,8 @@ public class EnemyData
 
         // subtract total to hp
         currentHp -= total;
+
+        OnTakeDamage?.Invoke();
 
         if(currentHp <= 0f)
         {

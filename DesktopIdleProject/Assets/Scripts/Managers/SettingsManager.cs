@@ -31,6 +31,11 @@ public class SettingsManager : MonoBehaviour
 
     // --- SETTINGS ---
 
+    private long lastLoginDate;
+
+
+    public long LastLoginDate => lastLoginDate;
+
     // --------- GAMEPLAY
 
     private bool isAutoBattleOn;
@@ -95,7 +100,7 @@ public class SettingsManager : MonoBehaviour
             SettingsSaveData saveData = saveService.LoadData<SettingsSaveData>(UtilsSave.GetSettingsFile(), false);
             SetupFromFile(saveData);
         }
-        catch(Exception e)
+        catch
         {
             SetupFromDefault();
         }
@@ -116,6 +121,9 @@ public class SettingsManager : MonoBehaviour
         lastSceneSettings.lastCombatMapId = saveData.lastCombatMapId;
 
         // settings
+
+        lastLoginDate = saveData.lastLoginDate;
+
         // --- gameplay
         SetIsAutoBattle(saveData.isAutoBattleOn, false);
         SetAreTooltipsOn(saveData.areTooltipsOn, false);
@@ -151,12 +159,10 @@ public class SettingsManager : MonoBehaviour
             saveService.SaveData(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), mapData, false);
         }
 
-
-        // Quest files
-        InitializeQuests();
-
-
         // settings
+
+        lastLoginDate = DateTime.UtcNow.Ticks;
+
         // --- gameplay
         SetIsAutoBattle(true, false);
         SetAreTooltipsOn(true, false);
@@ -188,43 +194,6 @@ public class SettingsManager : MonoBehaviour
 
     #endregion
 
-    #region QUESTS
-
-    private void InitializeQuests()
-    {
-        InitializeStoryQuests();
-    }
-
-    private void InitializeStoryQuests()
-    {
-        // first save for each story quest
-        QuestStorySO[] storyQuests = UtilsQuest.GetAllStoryQuests();
-        for (int i = 0; i < storyQuests.Length; i++)
-        {
-            QuestStorySO so = storyQuests[i];
-            UtilsQuest.QuestDataProgress questProgress = new UtilsQuest.QuestDataProgress();
-
-            // initialize quest data progress
-            switch (so.QuestData.questType)
-            {
-                case UtilsQuest.QuestType.Kill:
-                case UtilsQuest.QuestType.Obtain:
-                case UtilsQuest.QuestType.LevelUp:
-                    questProgress.progressCounter = 0;
-                    break;
-            }
-
-            questProgress.isCleared = false;
-
-            // save first time for each story quest
-            QuestStorySaveData questStoryData = new QuestStorySaveData(so.UniqueId, questProgress);
-            saveService.SaveData(UtilsSave.GetQuestFile(so.UniqueId), questStoryData, false);
-        }
-    }
-
-
-    #endregion
-
 
     #region SCENE
 
@@ -243,7 +212,7 @@ public class SettingsManager : MonoBehaviour
             CombatMapSaveData saveData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), false);
             return saveData;
         }
-        catch (Exception e)
+        catch
         {
             Debug.LogError("Can't load combat map data id: " + mapSO.IdMap);
             return null;
@@ -343,6 +312,8 @@ public class SettingsManager : MonoBehaviour
 
     public void Save()
     {
+        lastLoginDate = DateTime.UtcNow.Ticks;
+
         SettingsSaveData data = new SettingsSaveData(this);
         saveService.SaveData(UtilsSave.GetSettingsFile(), data, false);
     }

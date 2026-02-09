@@ -12,14 +12,20 @@ public static class UtilsSave
 
     public const string PLAYER_FOLDER = "Player";
     public const string PLAYER_INVENTORY_FILE = "player_inventory.json";
+
+    public const string PLAYER_JOBS_FILE = "player_jobs.json";
     public const string PLAYER_FIGHT_FILE = "player_fight.json";
     public const string PLAYER_MINER_FILE = "player_miner.json";
+    public const string PLAYER_BLACKSMITH_FILE = "player_blacksmith.json";
 
     public const string COMBATMAPS_FOLDER = "CombatMaps";
     public const string COMBATMAPS_EXT = ".json";
 
     public const string QUESTS_FOLDER = "Quests";
-    public const string QUESTS_EXT = ".json";
+    public const string QUESTS_FILE = "quests.json";
+
+    public const string SHOP_FOLDER = "Shop";
+    public const string SHOP_FILE = "shop.json";
 
     // ----- SETTINGS
 
@@ -46,6 +52,11 @@ public static class UtilsSave
         return GetPlayerFolder() + "/" + PLAYER_INVENTORY_FILE;
     }
 
+    public static string GetPlayerJobsFile()
+    {
+        return GetPlayerFolder() + "/" + PLAYER_JOBS_FILE;
+    }
+
     public static string GetPlayerFightFile()
     {
         return GetPlayerFolder() + "/" + PLAYER_FIGHT_FILE;
@@ -54,6 +65,11 @@ public static class UtilsSave
     public static string GetPlayerMinerFile()
     {
         return GetPlayerFolder() + "/" + PLAYER_MINER_FILE;
+    }
+
+    public static string GetPlayerBlacksmithFile()
+    {
+        return GetPlayerFolder() + "/" + PLAYER_BLACKSMITH_FILE;
     }
 
     // ----- MAPS
@@ -76,8 +92,20 @@ public static class UtilsSave
         return ROOT_FOLDER + "/" + QUESTS_FOLDER;
     }
 
-    public static string GetQuestFile(string firstPart)
+    public static string GetQuestFile()
     {
-        return GetQuestsFolder() + "/" + firstPart + QUESTS_EXT;
+        return GetQuestsFolder() + "/" + QUESTS_FILE;
+    }
+
+    // ----- SHOP
+
+    public static string GetShopFolder()
+    {
+        return ROOT_FOLDER + "/" + SHOP_FOLDER;
+    }
+
+    public static string GetShopFile()
+    {
+        return GetShopFolder() + "/" + SHOP_FILE;
     }
 }

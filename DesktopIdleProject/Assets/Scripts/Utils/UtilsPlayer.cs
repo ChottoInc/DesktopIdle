@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 
 public static class UtilsPlayer
 {
+    public enum PlayerJob { None, Warrior, Miner, Blacksmith }
+
+    private static PlayerJobSO[] jobs;
+
+
     // ----- IDS -------
 
     public const int ID_WARRIOR_MAXHP = 0;
@@ -18,6 +24,10 @@ public static class UtilsPlayer
     public const int ID_MINER_SMASHSPEED = 21;
     public const int ID_MINER_PRECISION = 22;
     public const int ID_MINER_LUCK = 23;
+
+    public const int ID_BLACKSMITH_CRAFTSPEED = 30;
+    public const int ID_BLACKSMITH_EFFICIENCY = 31;
+    public const int ID_BLACKSMITH_LUCK = 32;
 
     // ------ FIGHT STATS ------
 
@@ -63,9 +73,82 @@ public static class UtilsPlayer
     private const float MINER_WEAPON_LINEAR_GROWTH = 0.35f;
     private const float MINER_WEAPON_QUADRATIC_GROWTH = 0.05f;
 
-    private const int MINER_WEAPON_MAX_LEVEL = 5;
+    private const int MINER_WEAPON_MAX_LEVEL = 10;
 
 
+    // ------ BLACKSMITH STATS ------
+
+    public const float PER_LEVEL_BLACKSMITH_GAIN_CRAFTSPEED = 0.02f;
+    public const float PER_LEVEL_BLACKSMITH_GAIN_EFFICIENCY = 0.01f;
+    public const float PER_LEVEL_BLACKSMITH_GAIN_LUCK = 0.01f;
+
+    public const int PER_LEVEL_BLACKSMITH_MAX_CRAFTSPEED = 50;
+    public const int PER_LEVEL_BLACKSMITH_MAX_EFFICIENCY = 30;
+    public const int PER_LEVEL_BLACKSMITH_MAX_LUCK = 70;
+
+
+
+    private const float BASE_BLACKSMITH_EXP_GROWTH = 10f;
+    private const float EXPO_BLACKSMITH_EXP_GROWTH = 1.15f;
+
+    //Helmet
+    private const float BLACKSMITH_HELMET_MAXHP_LINEAR_GROWTH = 0.30f;
+    private const float BLACKSMITH_HELMET_MAXHP_QUADRATIC_GROWTH = 0.05f;
+
+    // Armor
+    private const float BLACKSMITH_ARMOR_DEF_LINEAR_GROWTH = 0.25f;
+    private const float BLACKSMITH_ARMOR_DEF_QUADRATIC_GROWTH = 0.04f;
+
+    // Gloves
+    private const float BLACKSMITH_GLOVES_ATKSPD_LINEAR_GROWTH = 0.25f;
+    private const float BLACKSMITH_GLOVES_ATKSPD_QUADRATIC_GROWTH = 0.04f;
+
+    private const float BLACKSMITH_GLOVES_CRITDGM_LINEAR_GROWTH = 0.25f;
+    private const float BLACKSMITH_GLOVES_CRITDGM_QUADRATIC_GROWTH = 0.05f;
+
+    // Boots
+    private const float BLACKSMITH_BOOTS_DEF_LINEAR_GROWTH = 0.15f;
+    private const float BLACKSMITH_BOOTS_DEF_QUADRATIC_GROWTH = 0.038f;
+
+    private const float BLACKSMITH_BOOTS_CRITRATE_LINEAR_GROWTH = 0.25f;
+    private const float BLACKSMITH_BOOTS_CRITRATE_QUADRATIC_GROWTH = 0.05f;
+
+
+    private const int BLACKSMITH_HELMET_MAX_LEVEL = 10;
+    private const int BLACKSMITH_ARMOR_MAX_LEVEL = 10;
+    private const int BLACKSMITH_GLOVES_MAX_LEVEL = 10;
+    private const int BLACKSMITH_BOOTS_MAX_LEVEL = 10;
+
+
+    public static void Initialize()
+    {
+        jobs = LoadJobs();
+    }
+
+    #region JOBS
+
+    private static PlayerJobSO[] LoadJobs()
+    {
+        return Resources.LoadAll<PlayerJobSO>("Data/Player/Jobs");
+    }
+
+
+    public static PlayerJobSO[] GetAllJobs()
+    {
+        return jobs;
+    }
+
+    public static PlayerJobSO GetJobByType(PlayerJob job)
+    {
+        foreach (var playerJob in jobs)
+        {
+            if (playerJob.Job == job)
+                return playerJob;
+        }
+        return null;
+    }
+
+    #endregion
 
 
     public static int RequiredExpForWarriorLevel(int level)
@@ -81,6 +164,18 @@ public static class UtilsPlayer
         // Formula: baseExp * (growthRate^(level-1) - 1)
         return Mathf.RoundToInt(BASE_MINER_EXP_GROWTH * Mathf.Pow(EXPO_MINER_EXP_GROWTH, level - 1));
     }
+
+    public static int RequiredExpForBlacksmithLevel(int level)
+    {
+        // Level starts at 1
+        if (level <= 1) return 0;
+
+        // Formula: baseExp * (growthRate^(level-1) - 1)
+        return Mathf.RoundToInt(BASE_BLACKSMITH_EXP_GROWTH * Mathf.Pow(EXPO_BLACKSMITH_EXP_GROWTH, level - 1));
+    }
+
+
+
 
     public static int GetStatMaxLevelById(int id)
     {
@@ -102,18 +197,116 @@ public static class UtilsPlayer
             case ID_MINER_SMASHSPEED: return PER_LEVEL_MINER_MAX_SMASHSPEED;
             case ID_MINER_PRECISION: return PER_LEVEL_MINER_MAX_PRECISION;
             case ID_MINER_LUCK: return PER_LEVEL_MINER_MAX_LUCK;
+
+            case ID_BLACKSMITH_CRAFTSPEED: return PER_LEVEL_BLACKSMITH_MAX_CRAFTSPEED;
+            case ID_BLACKSMITH_EFFICIENCY: return PER_LEVEL_BLACKSMITH_MAX_EFFICIENCY;
+            case ID_BLACKSMITH_LUCK: return PER_LEVEL_BLACKSMITH_MAX_LUCK;
         }
     }
 
+    // ------------ MINER ---------------- //
 
     public static float GetMinerWeaponMultiplier(int weaponLevel)
     {
-        float baseMultiplier = 1f;                 // 1× damage at level 1
+        float baseMultiplier = 1f; // 1x damage at level 1
 
         int lv = weaponLevel - 1;
 
         return baseMultiplier
                + MINER_WEAPON_LINEAR_GROWTH * lv
                + MINER_WEAPON_QUADRATIC_GROWTH * lv * lv;
+    }
+
+    // ------------ BLACKSMITH ---------------- //
+
+    public static float GetBlacksmithHelmetMaxHpMultiplier(int level)
+    {
+        float baseMultiplier = 1f; // 1x damage at level 1
+
+        int lv = level - 1;
+
+        return baseMultiplier
+               + BLACKSMITH_HELMET_MAXHP_LINEAR_GROWTH * lv
+               + BLACKSMITH_HELMET_MAXHP_QUADRATIC_GROWTH * lv * lv;
+    }
+
+    public static float GetBlacksmithArmorDefMultiplier(int level)
+    {
+        float baseMultiplier = 1f; // 1x damage at level 1
+
+        int lv = level - 1;
+
+        return baseMultiplier
+               + BLACKSMITH_ARMOR_DEF_LINEAR_GROWTH * lv
+               + BLACKSMITH_ARMOR_DEF_QUADRATIC_GROWTH * lv * lv;
+    }
+
+    public static float GetBlacksmithGlovesAtkSpdMultiplier(int level)
+    {
+        float baseMultiplier = 1f; // 1x damage at level 1
+
+        int lv = level - 1;
+
+        return baseMultiplier
+               + BLACKSMITH_GLOVES_ATKSPD_LINEAR_GROWTH * lv
+               + BLACKSMITH_GLOVES_ATKSPD_QUADRATIC_GROWTH * lv * lv;
+    }
+
+    public static float GetBlacksmithGlovesCritDmgMultiplier(int level)
+    {
+        float baseMultiplier = 1f; // 1x damage at level 1
+
+        int lv = level - 1;
+
+        return baseMultiplier
+               + BLACKSMITH_GLOVES_CRITDGM_LINEAR_GROWTH * lv
+               + BLACKSMITH_GLOVES_CRITDGM_QUADRATIC_GROWTH * lv * lv;
+    }
+
+    public static float GetBlacksmithBootsDefMultiplier(int level)
+    {
+        float baseMultiplier = 1f; // 1x damage at level 1
+
+        int lv = level - 1;
+
+        return baseMultiplier
+               + BLACKSMITH_BOOTS_DEF_LINEAR_GROWTH * lv
+               + BLACKSMITH_BOOTS_DEF_QUADRATIC_GROWTH * lv * lv;
+    }
+
+    public static float GetBlacksmithBootsCritRateMultiplier(int level)
+    {
+        float baseMultiplier = 1f; // 1x damage at level 1
+
+        int lv = level - 1;
+
+        return baseMultiplier
+               + BLACKSMITH_BOOTS_CRITRATE_LINEAR_GROWTH * lv
+               + BLACKSMITH_BOOTS_CRITRATE_QUADRATIC_GROWTH * lv * lv;
+    }
+
+
+    public static string GetStatNameById(int id)
+    {
+        switch (id)
+        {
+            default: return "Error";
+            case ID_WARRIOR_MAXHP: return "Max HP (Warrior)";
+            case ID_WARRIOR_ATK: return "Atk (Warrior)";
+            case ID_WARRIOR_DEF: return "Def (Warrior)";
+            case ID_WARRIOR_ATKSPD: return "Atk Speed (Warrior)";
+            case ID_WARRIOR_CRITRATE: return "Crit Rate (Warrior)";
+            case ID_WARRIOR_CRITDMG: return "Crit Dmg (Warrior)";
+            case ID_WARRIOR_LUCK: return "Luck (Warrior)";
+
+            case ID_MINER_POWER: return "Power (Miner)";
+            case ID_MINER_SMASHSPEED: return "Smash Spd (Miner)";
+            case ID_MINER_PRECISION: return "Precision (Miner)";
+            case ID_MINER_LUCK: return "Luck (Miner)";
+
+            case ID_BLACKSMITH_CRAFTSPEED: return "Craft Speed (Blacksmith)";
+            case ID_BLACKSMITH_EFFICIENCY: return "Efficiency (Blacksmith)";
+            case ID_BLACKSMITH_LUCK: return "Luck (Blacksmith)";
+        }
     }
 }

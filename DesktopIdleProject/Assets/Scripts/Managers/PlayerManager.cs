@@ -6,12 +6,16 @@ public class PlayerManager : MonoBehaviour
 {
     private IDataService saveService;
 
-    // --- QUESTS
-    private Dictionary<string, UtilsQuest.QuestDataProgress> dictQuestsStoryProgress;
-
 
     // --- INVENTORY
     private Inventory inventory;
+
+    // Trigger used for quests
+    public event Action<int> OnItemAdd;
+
+
+    // ------- JOBS -------------
+    private List<UtilsPlayer.PlayerJob> availableJobs;
 
 
     // --- WARRIOR
@@ -20,14 +24,25 @@ public class PlayerManager : MonoBehaviour
     // --- GATHERER
     private PlayerMinerData playerMinerData;
 
+    private PlayerBlacksmithData playerBlacksmithData;
+
+
+
+
 
 
     public Inventory Inventory => inventory;
 
 
+
+    public List<UtilsPlayer.PlayerJob> AvailableJobs => availableJobs;
+
+
     public PlayerFightData PlayerFightData => playerFightData;
 
     public PlayerMinerData PlayerMinerData => playerMinerData;
+
+    public PlayerBlacksmithData PlayerBlacksmithData => playerBlacksmithData;
 
 
 
@@ -35,6 +50,13 @@ public class PlayerManager : MonoBehaviour
     // ---- PLAYER GLOBAL VARIABLES ----
 
     public float WeaponMinerMultiplier => UtilsPlayer.GetMinerWeaponMultiplier(playerMinerData.WeaponLevel);
+
+    public float HelmetMaxHpBlacksmithMultiplier => UtilsPlayer.GetBlacksmithHelmetMaxHpMultiplier(playerBlacksmithData.HelmetLevel);
+    public float ArmorDefBlacksmithMultiplier => UtilsPlayer.GetBlacksmithArmorDefMultiplier(playerBlacksmithData.ArmorLevel);
+    public float GlovesAtkSpdBlacksmithMultiplier => UtilsPlayer.GetBlacksmithGlovesAtkSpdMultiplier(playerBlacksmithData.GlovesLevel);
+    public float GlovesCritDmgBlacksmithMultiplier => UtilsPlayer.GetBlacksmithGlovesCritDmgMultiplier(playerBlacksmithData.GlovesLevel);
+    public float BootsDefBlacksmithMultiplier => UtilsPlayer.GetBlacksmithBootsDefMultiplier(playerBlacksmithData.BootsLevel);
+    public float BootsCritRateBlacksmithMultiplier => UtilsPlayer.GetBlacksmithBootsCritRateMultiplier(playerBlacksmithData.BootsLevel);
 
 
 
@@ -55,52 +77,56 @@ public class PlayerManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void OnDestroy()
+    {
+        if(inventory != null)
+        {
+            inventory.OnItemAdd -= ItemAdd;
+        }
+    }
+
     // Called after Settings Manager setup
     public void Setup(IDataService service)
     {
         saveService = service;
 
-        LoadQuestsData();
+        LoadJobsData();
         LoadInventoryData();
-        LoadFightData();
+
         LoadMinerData();
+        LoadBlacksmithData();
+
+        LoadFightData();
     }
 
-    #region QUESTS
+    #region JOBS DATA
 
-    private void LoadQuestsData()
+    private void LoadJobsData()
     {
-        LoadStoryQuests();
-    }
-
-    private void LoadStoryQuests()
-    {
-        dictQuestsStoryProgress = new Dictionary<string, UtilsQuest.QuestDataProgress>();
-
-        var storyQuestSOs = UtilsQuest.GetAllStoryQuests();
-
-        // used for debug infos
-        int excpetionIndex = 0;
-
         try
         {
-            for (int i = 0; i < storyQuestSOs.Length; i++)
+            PlayerJobsSaveData jobsSaveData = saveService.LoadData<PlayerJobsSaveData>(UtilsSave.GetPlayerJobsFile(), false);
+
+            availableJobs = new List<UtilsPlayer.PlayerJob>();
+
+            foreach (var job in jobsSaveData.availableJobs)
             {
-                excpetionIndex = i;
-
-                // get file for single quest
-                QuestStorySaveData saveData = saveService.LoadData<QuestStorySaveData>(UtilsSave.GetQuestFile(storyQuestSOs[i].UniqueId), false);
-
-                // save in dictionary
-                dictQuestsStoryProgress.Add(saveData.questId, new UtilsQuest.QuestDataProgress(saveData));
+                availableJobs.Add((UtilsPlayer.PlayerJob)job);
             }
         }
-        catch (Exception e)
+        catch
         {
-            Debug.LogError("Can't load quest data id: " + storyQuestSOs[excpetionIndex].UniqueId);
-        }
+            // default available jobs
+            availableJobs = new List<UtilsPlayer.PlayerJob>
+            {
+                UtilsPlayer.PlayerJob.None,
+                UtilsPlayer.PlayerJob.Warrior,
+                UtilsPlayer.PlayerJob.Miner,
+                //UtilsPlayer.PlayerJob.Blacksmith
+            };
 
-        Debug.Log("Dictionary quests counter: " + dictQuestsStoryProgress.Count);
+            SaveJobsData();
+        }
     }
 
     /*
@@ -109,10 +135,10 @@ public class PlayerManager : MonoBehaviour
         inventory = data;
     }*/
 
-    public void SaveQuestsData()
+    public void SaveJobsData()
     {
-        InventorySaveData data = new InventorySaveData(inventory);
-        saveService.SaveData(UtilsSave.GetPlayerInventoryFile(), data, false);
+        PlayerJobsSaveData data = new PlayerJobsSaveData(this);
+        saveService.SaveData(UtilsSave.GetPlayerJobsFile(), data, false);
     }
 
     #endregion
@@ -126,11 +152,13 @@ public class PlayerManager : MonoBehaviour
             InventorySaveData inventorySaveData = saveService.LoadData<InventorySaveData>(UtilsSave.GetPlayerInventoryFile(), false);
             inventory = new Inventory(inventorySaveData);
         }
-        catch (Exception e)
+        catch
         {
             inventory = new Inventory();
             SaveInventoryData();
         }
+
+        inventory.OnItemAdd += ItemAdd;
     }
 
     /*
@@ -145,6 +173,11 @@ public class PlayerManager : MonoBehaviour
         saveService.SaveData(UtilsSave.GetPlayerInventoryFile(), data, false);
     }
 
+    private void ItemAdd(int id)
+    {
+        OnItemAdd?.Invoke(id);
+    }
+
     #endregion
 
     #region FIGHT DATA
@@ -156,7 +189,7 @@ public class PlayerManager : MonoBehaviour
             PlayerFightSaveData fightSaveData = saveService.LoadData<PlayerFightSaveData>(UtilsSave.GetPlayerFightFile(), false);
             playerFightData = new PlayerFightData(fightSaveData);
         }
-        catch (Exception e)
+        catch
         {
             playerFightData = new PlayerFightData();
             SaveFightData();
@@ -167,6 +200,7 @@ public class PlayerManager : MonoBehaviour
     public void UpdateFightData(PlayerFightData data)
     {
         playerFightData = data;
+        SaveFightData();
     }
 
     public void SaveFightData()
@@ -186,7 +220,7 @@ public class PlayerManager : MonoBehaviour
             PlayerMinerSaveData minerSaveData = saveService.LoadData<PlayerMinerSaveData>(UtilsSave.GetPlayerMinerFile(), false);
             playerMinerData = new PlayerMinerData(minerSaveData);
         }
-        catch (Exception e)
+        catch
         {
             playerMinerData = new PlayerMinerData();
             SaveMinerData();
@@ -197,12 +231,44 @@ public class PlayerManager : MonoBehaviour
     public void UpdateMinerData(PlayerMinerData data)
     {
         playerMinerData = data;
+        SaveMinerData();
     }
 
     public void SaveMinerData()
     {
         PlayerMinerSaveData data = new PlayerMinerSaveData(playerMinerData);
         saveService.SaveData(UtilsSave.GetPlayerMinerFile(), data, false);
+    }
+
+    #endregion
+
+    #region BLACKSMITH
+
+    private void LoadBlacksmithData()
+    {
+        try
+        {
+            PlayerBlacksmithSaveData blacksmithSaveData = saveService.LoadData<PlayerBlacksmithSaveData>(UtilsSave.GetPlayerBlacksmithFile(), false);
+            playerBlacksmithData = new PlayerBlacksmithData(blacksmithSaveData);
+        }
+        catch
+        {
+            playerBlacksmithData = new PlayerBlacksmithData();
+            SaveBlacksmithData();
+        }
+
+    }
+
+    public void UpdateBlacksmithData(PlayerBlacksmithData data)
+    {
+        playerBlacksmithData = data;
+        SaveBlacksmithData();
+    }
+
+    public void SaveBlacksmithData()
+    {
+        PlayerBlacksmithSaveData data = new PlayerBlacksmithSaveData(playerBlacksmithData);
+        saveService.SaveData(UtilsSave.GetPlayerBlacksmithFile(), data, false);
     }
 
     #endregion

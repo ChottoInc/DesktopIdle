@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UnityEngine;
 
 public static class UtilsGeneral
@@ -44,6 +45,15 @@ public static class UtilsGeneral
         }
     }
 
+    /// <summary>
+    /// Are there any common values between a and b?
+    /// </summary>
+    public static bool SharesAnyValueWith<T>(this IEnumerable<T> a, IEnumerable<T> b)
+    {
+        return a.Intersect(b).Any();
+    }
+
+    #region GENERAL CHANCES
 
     [System.Serializable]
     public struct GeneralChances<T>
@@ -72,6 +82,7 @@ public static class UtilsGeneral
         return result;
     }
 
+    #endregion
 
 
     #region TUTORIAL
@@ -122,4 +133,18 @@ public static class UtilsGeneral
     };
 
     #endregion
+
+
+
+    public class UIStatMultInfo
+    {
+        public string statName;
+        public float multValue;
+
+        public UIStatMultInfo(string statName, float multValue)
+        {
+            this.statName = statName;
+            this.multValue = multValue;
+        }
+    }
 }

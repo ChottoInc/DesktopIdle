@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class UIPanelItems : MonoBehaviour
 {
-
     [SerializeField] GameObject invItemPrefab;
     [SerializeField] Transform container;
 

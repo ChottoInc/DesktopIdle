@@ -107,10 +107,13 @@ public class InitializerManager : MonoBehaviour
     private void HandleOtherSetups()
     {
         // utils setups
+        UtilsPlayer.Initialize();
         UtilsItem.Initialize();
+        UtilsEnemy.Initialize();
         UtilsCombatMap.Initialize();
         UtilsQuest.Initialize();
         UtilsGather.Initialize();
+        UtilsShop.Initialize();
 
         // load files
         HandleSaves();
@@ -121,7 +124,7 @@ public class InitializerManager : MonoBehaviour
         // set checked files
         hasCheckFiles = true;
 
-        Debug.Log(SettingsManager.Instance.LastSceneSettings.lastSceneName);
+        //Debug.Log(SettingsManager.Instance.LastSceneSettings.lastSceneName);
 
         // check save for last scene - loading scene manager should handle the alpha
     }
@@ -147,6 +150,7 @@ public class InitializerManager : MonoBehaviour
             Directory.CreateDirectory(persistent + UtilsSave.GetSettingsFolder());
             Directory.CreateDirectory(persistent + UtilsSave.GetCombatMapsFolder());
             Directory.CreateDirectory(persistent + UtilsSave.GetQuestsFolder());
+            Directory.CreateDirectory(persistent + UtilsSave.GetShopFolder());
         }
         else
         {
@@ -155,6 +159,8 @@ public class InitializerManager : MonoBehaviour
 
         SettingsManager.Instance.Setup(jsonService);
         PlayerManager.Instance.Setup(jsonService);
+        QuestManager.Instance.Setup(jsonService);
+        ShopManager.Instance.Setup(jsonService);
     }
 
 

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoaderManager : MonoBehaviour
 {
-    public enum SceneType { Home, CombatMap, Miner }
+    public enum SceneType { Home, CombatMap, Miner, Blacksmith }
 
 
     [SerializeField] Material fadeMaterial;
@@ -69,6 +69,7 @@ public class SceneLoaderManager : MonoBehaviour
                 default: Debug.Log("Current scene type isn't allowed"); break;
                 case SceneType.CombatMap: CombatManager.Instance.HandleSwitchScene(); break;
                 case SceneType.Miner: SmashManager.Instance.HandleSwitchScene(); break;
+                case SceneType.Blacksmith: FindFirstObjectByType<PlayerBlacksmith>().HandleSwitchScene(); break;
             }
         }
 
@@ -132,6 +133,11 @@ public class SceneLoaderManager : MonoBehaviour
 
                 case SceneType.Miner:
                     SmashManager.Instance.Setup();
+                    uiManager = FindFirstObjectByType<UIManager>();
+                    break;
+
+                case SceneType.Blacksmith:
+                    FindFirstObjectByType<PlayerBlacksmith>().Setup(PlayerManager.Instance.PlayerBlacksmithData);
                     uiManager = FindFirstObjectByType<UIManager>();
                     break;
             }

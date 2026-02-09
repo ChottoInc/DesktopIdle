@@ -11,11 +11,13 @@ public class UITooltipCard : MonoBehaviour
     [SerializeField] float timeToFade = 1f;
 
     [Space(10)]
+    [SerializeField] Image imageBackground;
     [SerializeField] Image imageCard;
 
     [Space(10)]
     [SerializeField] Image imageRarity;
     [SerializeField] TMP_Text textRarity;
+    [SerializeField] TMP_Text textNumber;
     [SerializeField] TMP_Text textName;
 
     [Space(10)]
@@ -35,10 +37,13 @@ public class UITooltipCard : MonoBehaviour
         this.cardSO = cardSO;
 
         // set card
+        imageBackground.sprite = cardSO.BackgoundSprite;
         imageCard.sprite = cardSO.Sprite;
 
         imageRarity.color = UtilsGeneral.GetColorByRarity(cardSO.CardRarity);
         textRarity.text = $"{cardSO.CardRarity}";
+
+        textNumber.text = $"{cardSO.CardNumber}";
 
         textName.text = cardSO.ItemName;
 

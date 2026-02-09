@@ -1,19 +1,32 @@
 using System;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerFight : Player
 {
     [Header("Movement")]
     [SerializeField] Animator animator;
+    [SerializeField] AnimationClip walkClip;
+    [SerializeField] AnimationClip attackClip;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] bool faceRight;
     [SerializeField] float speed = 5f;
-    [SerializeField] float cooldownIdle = 1.5f;
+
+
+    private const int ATTACK_ANIMATION_FRAMES = 7;
+    private const int ATTACK_FRAME_INDEX = 3;
+
+    private float startingAttackSpeedAnimationDuration;
+
 
 
     [Header("Combat")]
     [SerializeField] Transform checkEnemyPoint;
     [SerializeField] LayerMask enemyLayer;
+
+    [Space(10)]
+    [SerializeField] GameObject swordHitVFXPrefab;
 
     [Space(10)]
     [SerializeField] GenericBar hpBar;
@@ -28,7 +41,6 @@ public class PlayerFight : Player
     private float currentTarget;
 
     private bool isIdling;
-    private float timerIdle;
 
     private bool dirLeft;
 
@@ -47,11 +59,17 @@ public class PlayerFight : Player
     public event Action OnPerformAttack;
 
 
+    public event Action<int, int> OnStatChange;
+
+
 
 
     public PlayerFightData PlayerData => playerData;
 
     public bool IsDead => playerData.CurrentHp <= 0;
+
+
+
 
 
     private void OnDestroy()
@@ -60,13 +78,22 @@ public class PlayerFight : Player
         {
             playerData.OnHpChange -= UpdateHpBarUI;
             playerData.OnLevelUp -= SaveFightData;
+
+            playerData.OnStatChange -= OnStatChangeFight;
         }
+
+        OnPerformAttack -= PlaySwordHit;
     }
 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // Get default speed for animator walk
+        startingAttackSpeedAnimationDuration = attackClip.length;
+
+        OnPerformAttack += PlaySwordHit;
     }
 
     private void Start()
@@ -192,6 +219,8 @@ public class PlayerFight : Player
         {
             playerData.OnHpChange += UpdateHpBarUI;
             playerData.OnLevelUp += SaveFightData;
+
+            playerData.OnStatChange += OnStatChangeFight;
         }
 
         hpBar.Setup(playerData.MaxHp, playerData.CurrentHp);
@@ -218,9 +247,41 @@ public class PlayerFight : Player
         if (!isAttacking)
         {
             isEnemyDetected = false;
+
+            // Stop sword hit VFX
+            StopAllCoroutines();
+        }
+        else
+        {
+            float attackSpeedMultiplier = startingAttackSpeedAnimationDuration / CooldownAttack;
+
+            // Set the animator speed accordingly to Atk Spd
+            animator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier);
+
+            timerAttack = 0;
         }
 
         animator.SetBool("isAttacking", isAttacking);
+    }
+
+    private void PlaySwordHit()
+    {
+        // Time the sowrd VFX with the animation
+        float hitNormalizedTime = (float)ATTACK_FRAME_INDEX / (float)ATTACK_ANIMATION_FRAMES; // Tweak that to make the hit appear sooner or later
+        float timer = CooldownAttack * hitNormalizedTime;
+
+        StartCoroutine(CoPlaySwordHit(timer));
+    }
+
+    private IEnumerator CoPlaySwordHit(float timer)
+    {
+        yield return new WaitForSeconds(timer);
+
+        if(CombatManager.Instance.CurrentEnemy != null)
+        {
+            GameObject hitVFX = Instantiate(swordHitVFXPrefab, CombatManager.Instance.CurrentEnemy.transform.position, Quaternion.identity);
+            hitVFX.transform.parent = null;
+        }
     }
 
     public bool CheckEnemyAtPoint(Vector2 point, float radius, LayerMask enemyMask, out Collider2D hitEnemy)
@@ -235,6 +296,15 @@ public class PlayerFight : Player
     {
         PlayerManager.Instance.UpdateFightData(playerData);
         PlayerManager.Instance.SaveFightData();
+    }
+
+    #endregion
+
+    #region HANDLE EVENTS FROM MINER DATA
+
+    private void OnStatChangeFight(int id, int value)
+    {
+        OnStatChange?.Invoke(id, value);
     }
 
     #endregion

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,11 +8,19 @@ public class CombatManager : MonoBehaviour
 
     private CombatMapSO mapSO;
 
+    private Enemy currentEnemy;
+
+    // Trigger used for quests
+    public event Action<int> OnEnemyKill;
+
 
 
     public CombatMapSO MapSO => mapSO;
 
-    private Enemy currentEnemy;
+    public Enemy CurrentEnemy => currentEnemy;
+
+
+
 
 
 
@@ -111,6 +120,8 @@ public class CombatManager : MonoBehaviour
         if (currentEnemy.IsDead)
         {
             HandleEnemyDeath();
+
+            currentEnemy = null;
         }
     }
 
@@ -129,6 +140,9 @@ public class CombatManager : MonoBehaviour
     private void HandleEnemyDeath()
     {
         //Debug.Log("Enemy dead");
+
+        // Trigger which enemy died, mainly used for quests
+        OnEnemyKill?.Invoke(currentEnemy.EnemyData.EnemySO.Id);
         
         // --- get exp before starting death for safety
         int rewardedExp = UtilsCombatMap.GetEnemyExp(currentEnemy.EnemyData.CurrentLevel, mapSO.MapDifficuty);
@@ -142,6 +156,7 @@ public class CombatManager : MonoBehaviour
 
         // give exp to player
         player.PlayerData.AddExp(rewardedExp);
+        PlayerManager.Instance.UpdateFightData(player.PlayerData);
 
         // --- get card drop, card can be null, it means no drop
         CardSO randCardSO = UtilsGeneral.GetRandomValueFromGeneralChanches(StageManager.Instance.PossibleCards);

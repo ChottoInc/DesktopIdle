@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,8 @@ public class UITabJobMiner : UITabWindow
 
     [Header("Weapon")]
     [SerializeField] Image imageSword;
-    [SerializeField] int changeMinerWeaponEvery = 5;
+    [SerializeField] TMP_Text textLevel;
+    [SerializeField] TMP_Text textStats;
 
     [Header("Buttons")]
     [SerializeField] Button buttonLevelUp;
@@ -36,7 +38,7 @@ public class UITabJobMiner : UITabWindow
 
         UpdateMinerSwordUI();
 
-        panelJob.ChangeCurrentTab(UITabPlayerJob.ID_MINER_TAB);
+        panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_MINER_TAB);
 
         // clear list and refill requirements updated to inventory numbers
         requirementObjs = ClearList(requirementObjs);
@@ -49,7 +51,7 @@ public class UITabJobMiner : UITabWindow
     public void OnButtonBack()
     {
         Close();
-        panelJob.ChangeCurrentTab(-1);
+        panelJob.ChangeCurrentTab(null, -1);
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -107,13 +109,41 @@ public class UITabJobMiner : UITabWindow
     /// </summary>
     private void UpdateMinerSwordUI()
     {
-        int indexMinerWeaponSprite = PlayerManager.Instance.PlayerMinerData.WeaponLevel / changeMinerWeaponEvery;
+        PlayerMinerData data;
+
+        if(player != null)
+        {
+            data = player.PlayerData;
+        }
+        else
+        {
+            data = PlayerManager.Instance.PlayerMinerData;
+        }
+
+        int weaponLevel = data.WeaponLevel;
+        int indexMinerWeaponSprite = weaponLevel / UtilsGather.CHANGE_MINER_WEAPON_EVERY;
 
         Sprite sprite = UtilsGather.GetMinerWeaponSpriteByIndex(indexMinerWeaponSprite);
         if(sprite == null)
         {
             sprite = UtilsGather.GetMinerWeaponSpriteByIndex(UtilsGather.GetAllMinerWeaponSprites().Length - 1);
         }
+
+        if(sprite == null)
+        {
+            Debug.Log("sprite is null");
+        }
+
+        if(data == null)
+        {
+            Debug.Log("data is null");
+        }
+
+        textLevel.text = $"Lv. {weaponLevel}";
+
+        // Multiply by 100 to get percentage, and minus 100 to remove base multiplier
+        float multiplier = UtilsPlayer.GetMinerWeaponMultiplier(data.WeaponLevel);
+        textStats.text = $"Dmg: +{(multiplier * 100f) - 100f}";
 
         imageSword.sprite = sprite;
     }
@@ -122,6 +152,8 @@ public class UITabJobMiner : UITabWindow
 
     public void OnButtonGather()
     {
+        if (player != null) return;
+
         LastSceneSettings settings = new LastSceneSettings();
         settings.lastSceneName = "MinerScene";
         settings.lastSceneType = SceneLoaderManager.SceneType.Miner;

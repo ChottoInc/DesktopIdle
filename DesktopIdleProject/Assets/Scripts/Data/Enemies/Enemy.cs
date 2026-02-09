@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IPoolObject
@@ -13,9 +11,14 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     [Space(10)]
     [SerializeField] Animator animator;
+    [SerializeField] AnimationClip walkClip;
+    [SerializeField] AnimationClip attackClip;
 
+    private float startingAttackSpeedAnimationDuration;
 
-    [Header("Death")]
+    private RuntimeAnimatorController animController;
+
+    [Header("VFXs")]
     [SerializeField] ParticleSystem deathVFX;
 
 
@@ -50,9 +53,10 @@ public class Enemy : MonoBehaviour, IPoolObject
 
 
 
-    // ------- DEATH
+    // ------- VFX
 
     private bool isDeathVFXPlaying;
+    //private bool isHitVFXPlaying;
 
     private SceneLoaderManager.SceneType sceneType;
 
@@ -66,6 +70,10 @@ public class Enemy : MonoBehaviour, IPoolObject
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+
+        // Get default speed for animator walk
+        startingAttackSpeedAnimationDuration = attackClip.length;
     }
 
     private void Start()
@@ -244,8 +252,21 @@ public class Enemy : MonoBehaviour, IPoolObject
 
         CheckFlipOnEnemy(playerDir);
 
-        // reset attacking when change enemy basically
-        timerAttack = CooldownAttack;
+        if (!isAttacking)
+        {
+            // Stop sowrd hit VFX
+            //StopAllCoroutines();
+        }
+        else
+        {
+            float attackSpeedMultiplier = startingAttackSpeedAnimationDuration / CooldownAttack;
+
+            // Set the animator speed accordingly to Atk Spd
+            animator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier);
+
+            timerAttack = 0;
+        }
+
 
         animator.SetBool("IsAttacking", isAttacking);
     }

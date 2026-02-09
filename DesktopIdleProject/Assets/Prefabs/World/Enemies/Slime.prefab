@@ -159,6 +159,8 @@ MonoBehaviour:
   speed: 3
   cooldownIdle: 1.5
   animator: {fileID: 1658527866006396669}
+  walkClip: {fileID: 7400000, guid: 782047255cf447849be9c3f31e1cf4fa, type: 2}
+  attackClip: {fileID: 7400000, guid: 397bbe5edf04c344b8829c2cddef6821, type: 2}
   deathVFX: {fileID: 4391727986682639424}
 --- !u!61 &6840952482080030444
 BoxCollider2D:
@@ -283,6 +285,10 @@ PrefabInstance:
     - target: {fileID: 8498547903935777155, guid: 2f9323ea76be2da418bef4306fa212b3, type: 3}
       propertyPath: m_Name
       value: EnemyDeathVFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 8498547903935777155, guid: 2f9323ea76be2da418bef4306fa212b3, type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

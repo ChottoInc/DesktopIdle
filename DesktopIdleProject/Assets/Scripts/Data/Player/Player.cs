@@ -5,6 +5,7 @@ public class Player : MonoBehaviour
 {
     public event Action<UtilsItem.ItemType> OnItemAdd;
 
+    
     public virtual void AddItem(int id, int quantity)
     {
         PlayerManager.Instance.Inventory.AddItem(id, quantity);

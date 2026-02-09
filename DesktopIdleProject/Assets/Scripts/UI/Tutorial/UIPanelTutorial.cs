@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -50,6 +51,10 @@ public class UIPanelTutorial : MonoBehaviour
 
 
     private int lastShownTutorial;
+
+
+    public event Action<int> OnTutorialEnded;
+
 
     private void Start()
     {
@@ -137,6 +142,9 @@ public class UIPanelTutorial : MonoBehaviour
             content.SetActive(false);
 
             SettingsManager.Instance.SetSeenTutorial(lastShownTutorial, true);
+
+            // trigger last tutorial has been finished
+            OnTutorialEnded?.Invoke(lastShownTutorial);
         }
         else
         {

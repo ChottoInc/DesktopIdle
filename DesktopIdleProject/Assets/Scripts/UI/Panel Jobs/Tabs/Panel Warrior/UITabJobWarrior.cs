@@ -24,7 +24,7 @@ public class UITabJobWarrior : UITabWindow
     {
         base.Open();
 
-        panelJob.ChangeCurrentTab(UITabPlayerJob.ID_WARRIOR_TAB);
+        panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_WARRIOR_TAB);
 
         if(maps == null)
         {
@@ -47,7 +47,7 @@ public class UITabJobWarrior : UITabWindow
     public void OnButtonBack()
     {
         Close();
-        panelJob.ChangeCurrentTab(-1);
+        panelJob.ChangeCurrentTab(null, -1);
     }
 
     private void FillMaps()

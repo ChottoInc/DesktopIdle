@@ -4,7 +4,11 @@ using UnityEngine.UI;
 
 public class UICollectionCard : MonoBehaviour
 {
-    [SerializeField] Sprite spriteLocked;
+    [SerializeField] GameObject panelBack;
+
+    [Space(10)]
+    [SerializeField] GameObject panelFront;
+    [SerializeField] Image imageBackground;
     [SerializeField] Image imageCard;
 
     [Space(10)]
@@ -12,12 +16,16 @@ public class UICollectionCard : MonoBehaviour
     [SerializeField] TMP_Text textRarity;
 
     private UITabJobWarrior panelWarrior;
+
     private CardSO cardSO;
+    private bool hasCard;
 
     public void Setup(UITabJobWarrior panelWarrior, CardSO cardSO)
     {
         this.panelWarrior = panelWarrior;
         this.cardSO = cardSO;
+
+        UpdateCardUI();
 
         imageRarity.color = UtilsGeneral.GetColorByRarity(cardSO.CardRarity);
         textRarity.text = $"{cardSO.CardRarity}";
@@ -25,22 +33,32 @@ public class UICollectionCard : MonoBehaviour
 
     public void Refresh()
     {
-        if (PlayerManager.Instance.Inventory.HasItem(cardSO.Id))
+        UpdateCardUI();
+    }
+
+    private void UpdateCardUI()
+    {
+        panelFront.SetActive(false);
+        panelBack.SetActive(false);
+
+        imageBackground.sprite = cardSO.BackgoundSprite;
+        imageCard.sprite = cardSO.Sprite;
+
+        hasCard = PlayerManager.Instance.Inventory.HasItem(cardSO.Id);
+
+        if (hasCard)
         {
-            if (cardSO != null)
-            {
-                imageCard.sprite = cardSO.Sprite;
-            }
+            panelFront.SetActive(true);
         }
         else
         {
-            imageCard.sprite = spriteLocked;
+            panelBack.SetActive(true);
         }
     }
 
     public void OnPointerEnter()
     {
-        if (cardSO != null)
+        if (cardSO != null && hasCard)
         {
             TooltipManagerData tooltipData = new TooltipManagerData();
             tooltipData.idTooltip = UITooltipManager.ID_SHOW_CARD;
@@ -51,6 +69,8 @@ public class UICollectionCard : MonoBehaviour
 
     public void OnPointerExit()
     {
+        if (!hasCard) return;
+
         UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_CARD, true);
     }
 }
