@@ -15,10 +15,10 @@ MonoBehaviour:
   uniqueId: warrior_01
   isActiveFromStart: 1
   questData:
-    questType: 0
+    questObjectiveType: 0
     questKillSpecific: 1
     monsterId: 0
-    amountKill: 2
+    amountKill: 10
     itemType: 1
     questObtainSpecific: 0
     itemId: 0
@@ -26,6 +26,6 @@ MonoBehaviour:
     questLevelUpSpecific: 0
     statId: 0
     amountStat: 0
-    rewardAmount: 10
+    rewardAmount: 5
   nexts:
   - {fileID: 11400000, guid: 0c6801dda456eb943b62a0c54ab07280, type: 2}

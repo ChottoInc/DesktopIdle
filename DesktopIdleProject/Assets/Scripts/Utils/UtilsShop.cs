@@ -1,10 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class UtilsShop
 {
     public const int ID_SHOP_FILTER_CARDPACKS = 0;
+    public const int ID_SHOP_FILTER_JOBS = 1;
+    public const int ID_SHOP_FILTER_REDEEM = 10;
+
+
+    public const string REDEEM_ERIS_CODE = "85641";
+    public const int ID_REDEEM_ERIS_CODE = 0;
 
 
     public enum ShopItemType { CardPack, Job }
@@ -75,6 +80,26 @@ public static class UtilsShop
     public static List<ShopItemSO> GetAllCardPacks()
     {
         return cardPacks;
+    }
+
+    #endregion
+
+
+    #region CARD PACKS
+
+    public static ShopItemSO GetShopJobById(string id)
+    {
+        foreach (ShopItemSO job in jobs)
+        {
+            if (job.UniqueId == id)
+                return job;
+        }
+        return null;
+    }
+
+    public static List<ShopItemSO> GetAllShopJobs()
+    {
+        return jobs;
     }
 
     #endregion

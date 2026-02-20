@@ -13,27 +13,10 @@ public class PlayerBlacksmith : Player
 
     [Header("Animation")]
     [SerializeField] AnimationClip forgeClip;
-    [SerializeField] float forgeVFXOffset = 0.75f;
     [SerializeField] ParticleSystem forgeVFX;
-
-    private bool hasVFXPlayed;
-    private float cooldownForgeVFX;
-    private float timerForgeVFX;
-    private float timerForgeAnimation;
-
 
 
     private PlayerBlacksmithData playerData;
-
-    // ------ MOVEMENT VARS
-
-    private Vector3 startScale;
-
-    private float currentTarget;
-
-    private bool isIdling;
-
-    private Rigidbody2D rb;
 
     // ------ ATTACK VARS
 
@@ -76,15 +59,11 @@ public class PlayerBlacksmith : Player
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-
         OnPerformSmash += CheckForgeProgress;
     }
 
     private void Start()
     {
-        startScale = spriteRenderer.transform.localScale;
-
         OnTryForge();
     }
 
@@ -93,44 +72,8 @@ public class PlayerBlacksmith : Player
         if (isForging)
         {
             CheckForge();
-
-            //CheckForgeVFX();
         }
     }
-    /*
-    private void CheckForgeVFX()
-    {
-        // Handles the forge VFX
-        if(timerForgeVFX <= 0 && !hasVFXPlayed)
-        {
-            forgeVFX.Play();
-
-            hasVFXPlayed = true;
-        }
-        else
-        {
-            timerForgeVFX -= Time.deltaTime;
-        }
-
-        // Set the timer for the forge VFX to align with the animation
-        if(timerForgeAnimation <= 0)
-        {
-            cooldownForgeVFX = forgeClip.length * forgeVFXOffset;
-            timerForgeVFX = cooldownForgeVFX;
-
-            timerForgeAnimation = forgeClip.length;
-
-            Debug.Log("vfx: " + timerForgeVFX);
-            Debug.Log("anim: " + timerForgeAnimation);
-
-            hasVFXPlayed = false;
-        }
-        else
-        {
-            timerForgeAnimation -= Time.deltaTime;
-        }
-    }
-    */
 
     public void PlayForgeVFX()
     {
@@ -175,30 +118,6 @@ public class PlayerBlacksmith : Player
             timerForge -= Time.deltaTime;
         }
     }
-
-    private void CheckFlip()
-    {
-        // check sprite flip
-        float vx = rb.velocity.x;
-        if (vx > 0.01f && faceRight)
-        {
-            spriteRenderer.transform.localScale = startScale;
-        }
-        else if (vx > 0.01f && !faceRight)
-        {
-            spriteRenderer.transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
-        }
-        else if (vx < -0.01f && faceRight)
-        {
-            spriteRenderer.transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
-        }
-        else if (vx < -0.01f && !faceRight)
-        {
-            spriteRenderer.transform.localScale = startScale;
-        }
-    }
-
-
 
     public void Setup(PlayerBlacksmithData playerData)
     {
@@ -281,10 +200,6 @@ public class PlayerBlacksmith : Player
 
         if (isForging)
         {
-            cooldownForgeVFX = forgeClip.length * forgeVFXOffset;
-            timerForgeVFX = cooldownForgeVFX;
-            timerForgeAnimation = forgeClip.length;
-
             forgingBar.gameObject.SetActive(true);
             SetForgingBarUI();
         }
@@ -329,7 +244,7 @@ public class PlayerBlacksmith : Player
 
     #endregion
 
-    #region HANDLE EVENTS FROM MINER DATA
+    #region HANDLE EVENTS FROM BLACKSMITH DATA
 
     private void OnStatChangeBlacksmith(int id, int value)
     {

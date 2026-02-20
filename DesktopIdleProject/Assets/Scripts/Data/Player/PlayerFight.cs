@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerFight : Player
@@ -31,6 +30,9 @@ public class PlayerFight : Player
     [Space(10)]
     [SerializeField] GenericBar hpBar;
 
+    [Header("Death")]
+    [SerializeField] float timerResetAfterDeath = 2f;
+
 
     private PlayerFightData playerData;
 
@@ -46,6 +48,9 @@ public class PlayerFight : Player
 
     private Rigidbody2D rb;
 
+    private float CurrentSpeed => speed *
+        PlayerManager.Instance.FisherQuickSeriesMultiplier;
+
     // ------ ATTACK VARS
 
     private bool isEnemyDetected;
@@ -60,6 +65,9 @@ public class PlayerFight : Player
 
 
     public event Action<int, int> OnStatChange;
+
+
+    public event Action OnResetAfterDeath;
 
 
 
@@ -113,7 +121,7 @@ public class PlayerFight : Player
 
     private void FixedUpdate()
     {
-        if (!isAttacking)
+        if (!isAttacking && !IsDead)
         {
             HandleMovement();
 
@@ -160,7 +168,7 @@ public class PlayerFight : Player
             Vector2 dir = new Vector2(currentTarget - transform.position.x, 0).normalized;
 
             // move with rb
-            rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
+            rb.velocity = new Vector2(dir.x * CurrentSpeed, rb.velocity.y);
 
             CheckFlip();
         }
@@ -277,10 +285,14 @@ public class PlayerFight : Player
     {
         yield return new WaitForSeconds(timer);
 
-        if(CombatManager.Instance.CurrentEnemy != null)
+        Enemy currentEnemy = CombatManager.Instance.CurrentEnemy;
+
+        if (currentEnemy != null)
         {
             GameObject hitVFX = Instantiate(swordHitVFXPrefab, CombatManager.Instance.CurrentEnemy.transform.position, Quaternion.identity);
             hitVFX.transform.parent = null;
+
+            currentEnemy.UpdateDamageUI();
         }
     }
 
@@ -288,6 +300,30 @@ public class PlayerFight : Player
     {
         hitEnemy = Physics2D.OverlapCircle(point, radius, enemyMask);
         return hitEnemy != null;
+    }
+
+    public void SetDeath(bool isDead)
+    {
+        if(isDead)
+        {
+            isAttacking = false;
+            animator.SetBool("isAttacking", isAttacking);
+
+            animator.SetBool("isDead", true);
+
+            StartCoroutine(CoResetAfterDeath());
+        }
+        else
+        {
+            animator.SetBool("isDead", false);
+        }
+    }
+
+    private IEnumerator CoResetAfterDeath()
+    {
+        yield return new WaitForSeconds(timerResetAfterDeath);
+
+        OnResetAfterDeath?.Invoke();
     }
 
     #region SAVE

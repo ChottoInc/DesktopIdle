@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class UITabJobBlacksmith : UITabWindow
 {
+    private int transparencyAmount = Shader.PropertyToID("_Transparency");
+
+
+
     [SerializeField] UITabPlayerJob panelJob;
 
     [Space(10)]
@@ -21,6 +25,14 @@ public class UITabJobBlacksmith : UITabWindow
     [SerializeField] TMP_Text textLevel;
     [SerializeField] TMP_Text textStats;
 
+    [Space(10)]
+    [SerializeField] float timerChangeTransparency = 0.75f;
+    [SerializeField] float timerChangeTransparencyIdle = 0.5f;
+
+    private int lastWeaponLevel;
+
+    private Material matImageWeapon;
+
     [Header("Buttons")]
     [SerializeField] UIBlacksmithPanelSelectOre panelSelectOre;
 
@@ -35,6 +47,9 @@ public class UITabJobBlacksmith : UITabWindow
     private List<ItemGroup> requirements;
 
 
+    private bool isInitialized;
+
+
     private PlayerBlacksmith player;
 
 
@@ -42,22 +57,52 @@ public class UITabJobBlacksmith : UITabWindow
     {
         base.Open();
 
+        InitializedIfNeeded();
+
         if (player == null)
         {
             player = FindFirstObjectByType<PlayerBlacksmith>();
         }
-        
+
+        // Set current gear level at opening
+        PlayerBlacksmithData data;
+
+        if (player != null)
+        {
+            data = player.PlayerData;
+        }
+        else
+        {
+            data = PlayerManager.Instance.PlayerBlacksmithData;
+        }
+
+        switch (currentGear)
+        {
+            case UtilsGather.ID_BLACKSMITH_HELMET: lastWeaponLevel = data.HelmetLevel; break;
+            case UtilsGather.ID_BLACKSMITH_ARMOR: lastWeaponLevel = data.ArmorLevel; break;
+            case UtilsGather.ID_BLACKSMITH_GLOVES: lastWeaponLevel = data.GlovesLevel; break;
+            case UtilsGather.ID_BLACKSMITH_BOOTS: lastWeaponLevel = data.BootsLevel; break;
+        }
+
+
+        // Update UI
         UpdateSelectedOreUI();
         UpdateBlacksmithGearUI();
 
         panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_BLACKSMITH_TAB);
 
-        // clear list and refill requirements updated to inventory numbers
-        requirementObjs = ClearList(requirementObjs);
-        FillRequirements(currentGear);
+        RefreshRequirements();
+    }
 
-        // check requirements
-        buttonLevelUp.interactable = CheckEnableLevelUp();
+    private void InitializedIfNeeded()
+    {
+        if (isInitialized) return;
+
+        // copy material image ui
+        matImageWeapon = new Material(imageGear.material);
+        imageGear.material = matImageWeapon;
+
+        isInitialized = true;
     }
 
     public override bool CanClose()
@@ -71,6 +116,16 @@ public class UITabJobBlacksmith : UITabWindow
     {
         Close();
         panelJob.ChangeCurrentTab(null, -1);
+    }
+
+    private void RefreshRequirements()
+    {
+        // clear list and refill requirements updated to inventory numbers
+        requirementObjs = ClearList(requirementObjs);
+        FillRequirements(currentGear);
+
+        // check requirements
+        buttonLevelUp.interactable = CheckEnableLevelUp();
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -186,6 +241,9 @@ public class UITabJobBlacksmith : UITabWindow
 
         int indexBlacksmithGearSprite = gearLevel / UtilsGather.CHANGE_BLACKSMITH_GEARS_EVERY;
 
+        // check for different sprite
+        bool isDifferentLevel = lastWeaponLevel != gearLevel;
+
         Sprite sprite = UtilsGather.GetBlacksmithGearSpriteByIndex(currentGear, indexBlacksmithGearSprite);
         if (sprite == null)
         {
@@ -231,12 +289,65 @@ public class UITabJobBlacksmith : UITabWindow
         string result = string.Empty;
         foreach (var info in uiStatsInfos)
         {
-            result += $"{info.statName}: +{(info.multValue * 100f) - 100f}\n";
+            result += $"{info.statName}: +{(info.multValue * 100f) - 100f}%\n";
+            //Debug.Log("stat: " + info.statName + ", mult val: " + info.multValue);
         }
 
         textStats.text = result;
 
-        imageGear.sprite = sprite;
+        // Check if need change
+        if (!isDifferentLevel)
+        {
+            imageGear.sprite = sprite;
+        }
+        else
+        {
+            StartCoroutine(CoChangeWeaponSprite(sprite));
+        }
+
+        lastWeaponLevel = gearLevel;
+    }
+
+    private IEnumerator CoChangeWeaponSprite(Sprite newSprite)
+    {
+        float elapsedTime = 0;
+
+        float lerpedTransparency = 0;
+
+        // lerp from 0 to 1
+        while (elapsedTime < timerChangeTransparency)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+
+            lerpedTransparency = Mathf.Clamp01(elapsedTime / timerChangeTransparency);
+
+            matImageWeapon.SetFloat(transparencyAmount, lerpedTransparency);
+
+            yield return null;
+        }
+
+        // change sprite
+        imageGear.sprite = newSprite;
+
+        // idle
+        yield return new WaitForSecondsRealtime(timerChangeTransparencyIdle);
+
+
+        elapsedTime = 0;
+
+        lerpedTransparency = 1;
+
+        // lerp back from 1 to 0
+        while (elapsedTime < timerChangeTransparency)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+
+            lerpedTransparency = Mathf.Lerp(1f, 0f, elapsedTime / timerChangeTransparency);
+
+            matImageWeapon.SetFloat(transparencyAmount, lerpedTransparency);
+
+            yield return null;
+        }
     }
 
 
@@ -319,17 +430,16 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonLevelUp()
     {
-        // remove requirements
-        // save level and items
-        // update gear ui
-
+        // remove requirements from inventory
         foreach (var requirement in requirements)
         {
             PlayerManager.Instance.Inventory.RemoveItem(requirement.IdItem, requirement.Quantity);
         }
 
+        // save inventory
         PlayerManager.Instance.SaveInventoryData();
 
+        // add level
         if (player == null)
         {
             // update directly from save if not in miner scene
@@ -348,8 +458,13 @@ public class UITabJobBlacksmith : UITabWindow
             PlayerManager.Instance.UpdateBlacksmithData(player.PlayerData);
         }
 
+        // save miner data
         PlayerManager.Instance.SaveBlacksmithData();
 
+        // refresh
         UpdateBlacksmithGearUI();
+
+        // update ui
+        RefreshRequirements();
     }
 }

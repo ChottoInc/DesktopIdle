@@ -5,10 +5,15 @@ using UnityEngine.UI;
 public class UIQuestPrefab : MonoBehaviour
 {
     [SerializeField] TMP_Text textQuest;
+    [SerializeField] GenericBar progressBar;
 
     [Space(10)]
     [SerializeField] GameObject panelButtonClaim;
     [SerializeField] Button buttonClaim;
+
+    [Space(10)]
+    [SerializeField] GameObject panelReward;
+    [SerializeField] TMP_Text textReward;
 
 
     private UITabQuestsStory questStoryWindow;
@@ -35,6 +40,8 @@ public class UIQuestPrefab : MonoBehaviour
         questStoryWindow = questWindow;
 
         SetupQuest(questType, storyQuestId, questData, questDataProgress);
+
+        UpdateProgressBarUI(questData, questDataProgress);
     }
 
     public void Setup(UITabQuestsBounties questWindow, UtilsQuest.QuestType questType, string bountyQuestId, UtilsQuest.QuestData questData, UtilsQuest.QuestDataProgress questDataProgress)
@@ -42,6 +49,8 @@ public class UIQuestPrefab : MonoBehaviour
         questBountiesWindow = questWindow;
 
         SetupQuest(questType, bountyQuestId, questData, questDataProgress);
+
+        UpdateProgressBarUI(questData, questDataProgress);
     }
 
     public void Setup(UITabQuestsDaily questWindow, UtilsQuest.QuestType questType, string storyQuestId, UtilsQuest.QuestData questData, UtilsQuest.QuestDataProgress questDataProgress)
@@ -49,6 +58,8 @@ public class UIQuestPrefab : MonoBehaviour
         questDailyWindow = questWindow;
 
         SetupQuest(questType, storyQuestId, questData, questDataProgress);
+
+        UpdateProgressBarUI(questData, questDataProgress);
     }
 
     private void SetupQuest(UtilsQuest.QuestType questType, string questId, UtilsQuest.QuestData questData, UtilsQuest.QuestDataProgress questDataProgress)
@@ -62,6 +73,7 @@ public class UIQuestPrefab : MonoBehaviour
             case UtilsQuest.QuestType.Daily: 
                 dailyQuestId = questId; 
                 panelButtonClaim.SetActive(false);
+                panelReward.SetActive(false);
                 break;
         }
 
@@ -74,6 +86,8 @@ public class UIQuestPrefab : MonoBehaviour
 
         // set reward
         rewardAmount = questData.rewardAmount;
+
+        textReward.text = rewardAmount.ToString();
     }
 
     private bool CanClaim(UtilsQuest.QuestData data, UtilsQuest.QuestDataProgress progress)
@@ -96,6 +110,25 @@ public class UIQuestPrefab : MonoBehaviour
     {
         if (progress >= counter) return true;
         return false;
+    }
+
+    private void UpdateProgressBarUI(UtilsQuest.QuestData data, UtilsQuest.QuestDataProgress progress)
+    {
+        switch (data.questObjectiveType)
+        {
+            case UtilsQuest.QuestObjectiveType.Kill:
+                progressBar.Setup(data.amountKill, progress.progressCounter);
+                break;
+
+            case UtilsQuest.QuestObjectiveType.Obtain:
+                progressBar.Setup(data.amountObtain, progress.progressCounter);
+                break;
+
+            case UtilsQuest.QuestObjectiveType.LevelUp:
+                progressBar.Setup(data.amountStat, progress.progressCounter);
+                break;
+        }
+        
     }
 
 

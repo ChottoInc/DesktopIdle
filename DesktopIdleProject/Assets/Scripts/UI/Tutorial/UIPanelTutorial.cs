@@ -13,6 +13,7 @@ public class UIPanelTutorial : MonoBehaviour
     [SerializeField] Transform introTutorialPart2Pos;  // level button
     [SerializeField] Transform introTutorialPart3Pos;  // job button
     [SerializeField] Transform introTutorialPart4Pos;  // inventory
+    [SerializeField] Transform introTutorialPart5Pos;  // quests
 
     private List<Transform> tutorialPositions;
     private int tutorialPosIndex;
@@ -29,6 +30,12 @@ public class UIPanelTutorial : MonoBehaviour
     [SerializeField] GameObject buttonLevel;
     [SerializeField] GameObject buttonJob;
     [SerializeField] GameObject buttonInventory;
+    [SerializeField] GameObject buttonQuests;
+
+    [Space(10)]
+    [SerializeField] GameObject buttonShop;
+
+    [Space(10)]
     [SerializeField] GameObject buttonSetting;
     [SerializeField] GameObject panelStage;
     [SerializeField] GameObject panelAutoBattle;
@@ -78,14 +85,16 @@ public class UIPanelTutorial : MonoBehaviour
             introTutorialPart1Pos,
             introTutorialPart2Pos,
             introTutorialPart3Pos,
-            introTutorialPart4Pos
+            introTutorialPart4Pos,
+            introTutorialPart5Pos
         };
 
         uiElementsToHighlight = new List<GameObject>()
         {
             buttonLevel,
             buttonJob,
-            buttonInventory
+            buttonInventory,
+            buttonQuests
         };
 
         
@@ -134,6 +143,9 @@ public class UIPanelTutorial : MonoBehaviour
             ResetLastUIElement();
 
             // active remaining ui elements
+
+            buttonShop.SetActive(true);
+
             buttonSetting.SetActive(true);
             panelStage.SetActive(true);
             panelAutoBattle.SetActive(true);
@@ -230,7 +242,11 @@ public class UIPanelTutorial : MonoBehaviour
         buttonLevel.SetActive(false);
         buttonJob.SetActive(false);
         buttonInventory.SetActive(false);
-        buttonSetting.SetActive(false); ;
+
+        buttonShop.SetActive(false);
+        buttonQuests.SetActive(false);
+
+        buttonSetting.SetActive(false);
         panelStage.SetActive(false);
         panelAutoBattle.SetActive(false);
     }

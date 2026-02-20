@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 
 public static class UtilsPlayer
 {
-    public enum PlayerJob { None, Warrior, Miner, Blacksmith }
+    public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher }
 
     private static PlayerJobSO[] jobs;
 
@@ -29,6 +28,11 @@ public static class UtilsPlayer
     public const int ID_BLACKSMITH_EFFICIENCY = 31;
     public const int ID_BLACKSMITH_LUCK = 32;
 
+    public const int ID_FISHER_CALMNESS = 33;
+    public const int ID_FISHER_REFLEX = 34;
+    public const int ID_FISHER_KNOWLEDGE = 35;
+    public const int ID_FISHER_LUCK = 36;
+
     // ------ FIGHT STATS ------
 
     public const float PER_LEVEL_WARRIOR_GAIN_MAXHP = 20;
@@ -37,7 +41,7 @@ public static class UtilsPlayer
     public const float PER_LEVEL_WARRIOR_GAIN_ATK_SPEED = 0.01f;
     public const float PER_LEVEL_WARRIOR_GAIN_CRIT_RATE = 0.001f;
     public const float PER_LEVEL_WARRIOR_GAIN_CRIT_DMG = 0.02f;
-    public const float PER_LEVEL_WARRIOR_GAIN_LUCK = 0.1f;
+    public const float PER_LEVEL_WARRIOR_GAIN_LUCK = 0.01f;
 
     public const int PER_LEVEL_WARRIOR_MAX_MAXHP = 50;
     public const int PER_LEVEL_WARRIOR_MAX_ATK = 50;
@@ -120,6 +124,24 @@ public static class UtilsPlayer
     private const int BLACKSMITH_BOOTS_MAX_LEVEL = 10;
 
 
+    // ------ FISHER STATS ------
+
+    public const float PER_LEVEL_FISHER_GAIN_CALMNESS = 0.01f;
+    public const float PER_LEVEL_FISHER_GAIN_REFLEX = 0.01f;
+    public const float PER_LEVEL_FISHER_GAIN_KNOWLEDGE = 0.01f;
+    public const float PER_LEVEL_FISHER_GAIN_LUCK = 0.01f;
+
+    public const int PER_LEVEL_FISHER_MAX_CALMNESS = 50;
+    public const int PER_LEVEL_FISHER_MAX_REFLEX = 25;
+    public const int PER_LEVEL_FISHER_MAX_KNOWLEDGE = 30;
+    public const int PER_LEVEL_FISHER_MAX_LUCK = 40;
+
+
+
+    private const float BASE_FISHER_EXP_GROWTH = 50f;
+    private const float EXPO_FISHER_EXP_GROWTH = 1.15f;
+
+
     public static void Initialize()
     {
         jobs = LoadJobs();
@@ -174,6 +196,14 @@ public static class UtilsPlayer
         return Mathf.RoundToInt(BASE_BLACKSMITH_EXP_GROWTH * Mathf.Pow(EXPO_BLACKSMITH_EXP_GROWTH, level - 1));
     }
 
+    public static int RequiredExpForFisherLevel(int level)
+    {
+        // Level starts at 1
+        if (level <= 1) return 0;
+
+        // Formula: baseExp * (growthRate^(level-1) - 1)
+        return Mathf.RoundToInt(BASE_FISHER_EXP_GROWTH * Mathf.Pow(EXPO_FISHER_EXP_GROWTH, level - 1));
+    }
 
 
 
@@ -181,7 +211,7 @@ public static class UtilsPlayer
     {
         switch (id)
         {
-            default: Debug.Log("Increased stat id not correct. " + id); return -1;
+            default: Debug.Log("stat id not correct. " + id); return -1;
 
             // FIGHT DATA
             case ID_WARRIOR_MAXHP: return PER_LEVEL_WARRIOR_MAX_MAXHP;
@@ -201,6 +231,46 @@ public static class UtilsPlayer
             case ID_BLACKSMITH_CRAFTSPEED: return PER_LEVEL_BLACKSMITH_MAX_CRAFTSPEED;
             case ID_BLACKSMITH_EFFICIENCY: return PER_LEVEL_BLACKSMITH_MAX_EFFICIENCY;
             case ID_BLACKSMITH_LUCK: return PER_LEVEL_BLACKSMITH_MAX_LUCK;
+
+            // FISHER DATA
+            case ID_FISHER_CALMNESS: return PER_LEVEL_FISHER_MAX_CALMNESS;
+            case ID_FISHER_REFLEX: return PER_LEVEL_FISHER_MAX_REFLEX;
+            case ID_FISHER_KNOWLEDGE: return PER_LEVEL_FISHER_MAX_KNOWLEDGE;
+            case ID_FISHER_LUCK: return PER_LEVEL_FISHER_MAX_LUCK;
+        }
+    }
+
+    public static int GetStatCurrentLevelById(int id)
+    {
+        switch (id)
+        {
+            default: Debug.Log("stat id not correct. " + id); return -1;
+
+            // FIGHT DATA
+            case ID_WARRIOR_MAXHP: return PlayerManager.Instance.PlayerFightData.LevelStatMaxHp;
+            case ID_WARRIOR_ATK: return PlayerManager.Instance.PlayerFightData.LevelStatAtk;
+            case ID_WARRIOR_DEF: return PlayerManager.Instance.PlayerFightData.LevelStatDef;
+            case ID_WARRIOR_ATKSPD: return PlayerManager.Instance.PlayerFightData.LevelStatAtkSpd;
+            case ID_WARRIOR_CRITRATE: return PlayerManager.Instance.PlayerFightData.LevelStatCritRate;
+            case ID_WARRIOR_CRITDMG: return PlayerManager.Instance.PlayerFightData.LevelStatCritDmg;
+            case ID_WARRIOR_LUCK: return PlayerManager.Instance.PlayerFightData.LevelStatLuck;
+
+            // MINER DATA
+            case ID_MINER_POWER: return PlayerManager.Instance.PlayerMinerData.LevelStatPower;
+            case ID_MINER_SMASHSPEED: return PlayerManager.Instance.PlayerMinerData.LevelStatSmashSpeed;
+            case ID_MINER_PRECISION: return PlayerManager.Instance.PlayerMinerData.LevelStatPrecision;
+            case ID_MINER_LUCK: return PlayerManager.Instance.PlayerMinerData.LevelStatLuck;
+
+            // BLACKSMITH DATA
+            case ID_BLACKSMITH_CRAFTSPEED: return PlayerManager.Instance.PlayerBlacksmithData.LevelStatCraftSpeed;
+            case ID_BLACKSMITH_EFFICIENCY: return PlayerManager.Instance.PlayerBlacksmithData.LevelEfficiency;
+            case ID_BLACKSMITH_LUCK: return PlayerManager.Instance.PlayerBlacksmithData.LevelStatLuck;
+
+            // FISHER DATA
+            //case ID_MINER_POWER: return PlayerManager.Instance.PlayerMinerData.LevelStatPower;
+            //case ID_MINER_SMASHSPEED: return PlayerManager.Instance.PlayerMinerData.LevelStatSmashSpeed;
+            //case ID_MINER_PRECISION: return PlayerManager.Instance.PlayerMinerData.LevelStatPrecision;
+            //case ID_MINER_LUCK: return PlayerManager.Instance.PlayerMinerData.LevelStatLuck;
         }
     }
 
@@ -307,6 +377,11 @@ public static class UtilsPlayer
             case ID_BLACKSMITH_CRAFTSPEED: return "Craft Speed (Blacksmith)";
             case ID_BLACKSMITH_EFFICIENCY: return "Efficiency (Blacksmith)";
             case ID_BLACKSMITH_LUCK: return "Luck (Blacksmith)";
+
+            case ID_FISHER_CALMNESS: return "Calmness (Fisher)";
+            case ID_FISHER_REFLEX: return "Reflex (Fisher)";
+            case ID_FISHER_KNOWLEDGE: return "Knowledge (Fisher)";
+            case ID_FISHER_LUCK: return "Luck (Fisher)";
         }
     }
 }

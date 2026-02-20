@@ -3,7 +3,18 @@ using UnityEngine;
 
 public static class UtilsGather
 {
+    // Miner
     private static RockSO[] rocks;
+
+    public enum RockType { Copper, Iron, Bronze, Silver, Gold }
+
+    // Fisher
+    private static FishGroupSO[] fishGroups;
+
+    // Max hp, Atk, Def, Atk Spd, Crit rate, Crit dmg, Luck, Exp gain, Move spd warrior
+    public enum FishGroupType { Life, Predator, Guardian, Dart, Sharp, Piercing, Golden, Elder, Quick }
+
+
 
     private static Sprite[] minerWeaponSprites;
 
@@ -156,19 +167,28 @@ public static class UtilsGather
     };
 
 
+    // -------------------- FISHER -----------------------
+    public const float FISHER_LIFE_SERIES_COMPLETE_MULTIPLIER = 2f;       // max hp
+    public const float FISHER_PREDATOR_SERIES_COMPLETE_MULTIPLIER = 1.5f;   // atk
+    public const float FISHER_GUARDIAN_SERIES_COMPLETE_MULTIPLIER = 1.3f;   // def
+    public const float FISHER_DART_SERIES_COMPLETE_MULTIPLIER = 1.2f;       // atk spd
+    public const float FISHER_SHARP_SERIES_COMPLETE_MULTIPLIER = 1.2f;      // crit rate
+    public const float FISHER_PIERCING_SERIES_COMPLETE_MULTIPLIER = 1.2f;   // crit dmg
+    public const float FISHER_GOLDEN_SERIES_COMPLETE_MULTIPLIER = 1.1f;     // luck
+    public const float FISHER_ELDER_SERIES_COMPLETE_MULTIPLIER = 1.2f;      // exp mult
+    public const float FISHER_QUICK_SERIES_COMPLETE_MULTIPLIER = 1.2f;      // move spd
 
-    public enum RockType
-    {
-        Copper,
-        Iron,
-        Bronze,
-        Silver,
-        Gold
-    }
+
 
     public static void Initialize()
     {
+        // Miner
         rocks = LoadRocks();
+
+        // Fisher
+        fishGroups = LoadFishGroups();
+
+
 
         minerWeaponSprites = LoadMinerWeaponSprites();
 
@@ -422,6 +442,31 @@ public static class UtilsGather
         }
 
         return -1;
+    }
+
+    #endregion
+
+    #region FISH GROUPS
+
+    private static FishGroupSO[] LoadFishGroups()
+    {
+        return Resources.LoadAll<FishGroupSO>("Data/Gatherer/Fisher");
+    }
+
+
+    public static FishGroupSO[] GetAllFishGroups()
+    {
+        return fishGroups;
+    }
+    
+    public static FishGroupSO GetFishGroupByType(FishGroupType type)
+    {
+        foreach (var group in fishGroups)
+        {
+            if (group.GroupType == type)
+                return group;
+        }
+        return null;
     }
 
     #endregion

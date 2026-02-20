@@ -11,7 +11,7 @@ public class CombatManager : MonoBehaviour
     private Enemy currentEnemy;
 
     // Trigger used for quests
-    public event Action<int> OnEnemyKill;
+    public event Action<EnemySO> OnEnemyKill;
 
 
 
@@ -44,6 +44,7 @@ public class CombatManager : MonoBehaviour
         if (player != null)
         {
             player.OnPerformAttack -= OnPlayerAttack;
+            player.OnResetAfterDeath -= ResetAfterDeath;
         }
 
         if (currentEnemy != null)
@@ -68,6 +69,7 @@ public class CombatManager : MonoBehaviour
         if(player != null)
         {
             player.OnPerformAttack += OnPlayerAttack;
+            player.OnResetAfterDeath += ResetAfterDeath;
         }
     }
 
@@ -142,10 +144,16 @@ public class CombatManager : MonoBehaviour
         //Debug.Log("Enemy dead");
 
         // Trigger which enemy died, mainly used for quests
-        OnEnemyKill?.Invoke(currentEnemy.EnemyData.EnemySO.Id);
+        OnEnemyKill?.Invoke(currentEnemy.EnemyData.EnemySO);
         
         // --- get exp before starting death for safety
         int rewardedExp = UtilsCombatMap.GetEnemyExp(currentEnemy.EnemyData.CurrentLevel, mapSO.MapDifficuty);
+
+        // todo: add addictional exp multipliers here
+        rewardedExp = Mathf.RoundToInt( 
+            (float)rewardedExp *
+            PlayerManager.Instance.FisherPredatorSeriesMultiplier
+            );
 
         // kill enemy
         currentEnemy.PlayDeath(false);
@@ -158,14 +166,20 @@ public class CombatManager : MonoBehaviour
         player.PlayerData.AddExp(rewardedExp);
         PlayerManager.Instance.UpdateFightData(player.PlayerData);
 
-        // --- get card drop, card can be null, it means no drop
-        CardSO randCardSO = UtilsGeneral.GetRandomValueFromGeneralChanches(StageManager.Instance.PossibleCards);
-        if(randCardSO != null)
+        // by default cards drop with 10%, add luck of warrior
+        float baseCardDropRate = 0.1f;
+        if(UnityEngine.Random.value <= baseCardDropRate + player.PlayerData.CurrentLuck)
         {
-            player.AddItem(randCardSO.Id, 1);
+            // get card drop, card can be null, it means no drop
+            CardSO randCardSO = UtilsGeneral.GetRandomValueFromGeneralChanches(StageManager.Instance.PossibleCards);
+            if (randCardSO != null)
+            {
+                player.AddItem(randCardSO.Id, 1);
+            }
         }
 
-        if (StageManager.Instance.CurrentEnemyIndex < StageManager.MAX_ENEMY_INDEX)
+
+        if (StageManager.Instance.CurrentEnemyIndex < mapSO.EnemiesPerStage)
         {
             StageManager.Instance.SpawnNextEnemy();
         }
@@ -174,6 +188,27 @@ public class CombatManager : MonoBehaviour
             if (StageManager.Instance.NextStage())
             {
                 player.PlayerData.ResetAfterStage();
+
+                if(StageManager.Instance.CurrentStage > mapSO.Stages)
+                {
+                    // If stage > maximum, means I'm in autobattle
+                    // Go to next map in this case
+                    // Only works if last map, or reset last stage instead
+                    if(mapSO.NextMap != null)
+                    {
+                        LastSceneSettings settings = new LastSceneSettings();
+                        settings.lastSceneName = mapSO.NextMap.MapSceneName;
+                        settings.lastSceneType = SceneLoaderManager.SceneType.CombatMap;
+                        settings.lastCombatMapId = mapSO.NextMap.IdMap;
+
+                        // Add next map to availables
+                        player.PlayerData.AddAvailableMap(mapSO.NextMap.IdMap);
+                        PlayerManager.Instance.UpdateFightData(player.PlayerData);
+                        PlayerManager.Instance.SaveFightData();
+
+                        SceneLoaderManager.Instance.LoadScene(settings);
+                    }
+                }
             }
         }
     }
@@ -185,12 +220,17 @@ public class CombatManager : MonoBehaviour
 
         EnableFight(false);
 
+        player.SetDeath(true);
+    }
+
+    private void ResetAfterDeath()
+    {
         StageManager.Instance.RestartCurrentStage();
 
         player.PlayerData.ResetAfterStage();
+
+        player.SetDeath(false);
     }
-
-
 
 
 

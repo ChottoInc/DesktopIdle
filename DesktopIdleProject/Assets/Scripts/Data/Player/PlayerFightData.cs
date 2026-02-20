@@ -1,9 +1,15 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static UtilsPlayer;
 
 public class PlayerFightData
 {
+    // ---- VISITABLE MAPS
+
+    private List<int> availableMaps;
+
+
     // ---- BASE STAT VALUES
 
     private float baseMaxHp;
@@ -31,6 +37,9 @@ public class PlayerFightData
     private int levelStatCritDmg = 1;
              
     private int levelStatLuck = 1;
+
+
+    public List<int> AvailableMaps => availableMaps;
 
 
 
@@ -74,7 +83,9 @@ public class PlayerFightData
 
     public float MaxHp => 
         (baseMaxHp + PER_LEVEL_WARRIOR_GAIN_MAXHP * (levelStatMaxHp - 1)) *
-        PlayerManager.Instance.HelmetMaxHpBlacksmithMultiplier;
+        PlayerManager.Instance.HelmetMaxHpBlacksmithMultiplier *
+        PlayerManager.Instance.FisherLifeSeriesMultiplier;
+
     public float CurrentHp => currentHp;
 
     /*
@@ -82,26 +93,35 @@ public class PlayerFightData
      */
     public float CurrentAtk => 
         (baseAtk + PER_LEVEL_WARRIOR_GAIN_ATK * (levelStatAtk - 1)) *
-        PlayerManager.Instance.WeaponMinerMultiplier;
+        PlayerManager.Instance.WeaponMinerMultiplier *
+        PlayerManager.Instance.FisherPredatorSeriesMultiplier;
 
     public float CurrentDef => 
         (baseDef + PER_LEVEL_WARRIOR_GAIN_DEF * (levelStatDef - 1)) *
         PlayerManager.Instance.ArmorDefBlacksmithMultiplier *
-        PlayerManager.Instance.BootsDefBlacksmithMultiplier;
+        PlayerManager.Instance.BootsDefBlacksmithMultiplier *
+        PlayerManager.Instance.FisherGuardianSeriesMultiplier;
 
     // todo: if more mehods will be available to increase atk spd and crit rate, then check if you want those stats to be past the max threshold
     public float CurrentAtkSpd => 
         (baseAtkSpd + PER_LEVEL_WARRIOR_GAIN_ATK_SPEED * (levelStatAtkSpd - 1)) *
-        PlayerManager.Instance.GlovesAtkSpdBlacksmithMultiplier;
+        PlayerManager.Instance.GlovesAtkSpdBlacksmithMultiplier *
+        PlayerManager.Instance.FisherDartSeriesMultiplier;
+
     public float CurrentCritRate => 
         (baseCritRate + PER_LEVEL_WARRIOR_GAIN_CRIT_RATE * (levelStatCritRate - 1)) *
-        PlayerManager.Instance.BootsCritRateBlacksmithMultiplier;
+        PlayerManager.Instance.BootsCritRateBlacksmithMultiplier *
+        PlayerManager.Instance.FisherSharpSeriesMultiplier;
+
     public float CurrentCritDmg => 
         (baseCritDmg + PER_LEVEL_WARRIOR_GAIN_CRIT_DMG * (levelStatCritDmg - 1)) *
-        PlayerManager.Instance.GlovesCritDmgBlacksmithMultiplier;
+        PlayerManager.Instance.GlovesCritDmgBlacksmithMultiplier *
+        PlayerManager.Instance.FisherPiercingSeriesMultiplier;
 
-    // affects drops, crit rolls, rarity
-    public float CurrentLuck => baseLuck + PER_LEVEL_WARRIOR_GAIN_LUCK * (levelStatLuck - 1);
+    // affects card drop rates, and gives a one more chance to crit rate check
+    public float CurrentLuck => 
+        (baseLuck + PER_LEVEL_WARRIOR_GAIN_LUCK * (levelStatLuck - 1)) *
+        PlayerManager.Instance.FisherGoldenSeriesMultiplier;
 
 
 
@@ -124,6 +144,10 @@ public class PlayerFightData
     public PlayerFightData(PlayerFightSaveData saveData)
     {
         GenerateBaseStats();
+
+        availableMaps = new List<int>();
+        availableMaps.AddRange(saveData.availableMaps);
+
 
         levelStatMaxHp = saveData.levelStatMaxHp;
 
@@ -148,6 +172,12 @@ public class PlayerFightData
 
     private void GenerateBaseStats()
     {
+        availableMaps = new List<int>
+        {
+            0 // Woods map by default
+        };
+
+
         currentLevel = 1;
         currentExp = 0;
 
@@ -163,7 +193,7 @@ public class PlayerFightData
         baseCritRate = 0.05f;  // 5%
         baseCritDmg = 1.5f;  // +50%
 
-        baseLuck = 1.0f;
+        baseLuck = 0f;
     }
 
     #region STATS
@@ -251,4 +281,10 @@ public class PlayerFightData
     }
 
     #endregion
+
+
+    public void AddAvailableMap(int id)
+    {
+        availableMaps.Add(id);
+    }
 }

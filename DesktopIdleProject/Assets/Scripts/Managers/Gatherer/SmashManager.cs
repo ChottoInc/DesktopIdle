@@ -9,6 +9,9 @@ public class SmashManager : MonoBehaviour
     private Rock currentRock;
 
 
+    private const int ID_GOLD_ORE = 4;
+
+
 
     public static SmashManager Instance { get; private set; }
 
@@ -123,12 +126,22 @@ public class SmashManager : MonoBehaviour
         if (randPercLoot <= 1f)
         //if (randPercLoot <= thresholdLoot)
         {
-            Debug.Log("Looted!");
+            //Debug.Log("Looted!");
             ItemSO randLoot = UtilsGeneral.GetRandomValueFromGeneralChanches(currentRock.RockData.RockSO.PossibleItems);
 
             if(randLoot != null)
             {
                 player.AddItem(randLoot.Id, 1);
+
+
+                // Check for Blacksmith job unlock
+                if(randLoot.Id == ID_GOLD_ORE)
+                {
+                    if (!PlayerManager.Instance.PlayerJobsData.IsBlacksmithUnlocked)
+                    {
+                        PlayerManager.Instance.PlayerJobsData.AddAvailableJob(UtilsPlayer.PlayerJob.Blacksmith);
+                    }
+                }
             }
         }
     }

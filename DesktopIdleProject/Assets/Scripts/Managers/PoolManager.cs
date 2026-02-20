@@ -13,8 +13,11 @@ public class PoolManager : MonoBehaviour
     {
         if (Instance == null) 
             Instance = this;
-        else 
+        else
+        {
             Destroy(gameObject);
+            return;
+        }
 
         DontDestroyOnLoad(gameObject);
 
@@ -28,7 +31,7 @@ public class PoolManager : MonoBehaviour
         foreach (var pool in pools)
         {
             pool.Initialize(transform);
-            poolLookup.Add(pool.poolName, pool);
+            poolLookup.Add(pool.poolName.ToLower(), pool);
         }
     }
 

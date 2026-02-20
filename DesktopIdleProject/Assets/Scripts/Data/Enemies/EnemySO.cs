@@ -13,13 +13,46 @@ public class EnemySO : ScriptableObject
     [SerializeField] float baseCritDmg = 1.5f;
 
 
-    public string EnemyPoolName => enemyPoolName;
+    public string EnemyPoolName => enemyPoolName.ToLower();
     public int Id => id;
 
     public float BaseMaxHp => baseMaxHp;
     public float BaseAtk => baseAtk;
     public float BaseDef => baseDef;
     public float BaseCritDmg => baseCritDmg;
+
+
+
+    public void SetPoolName(string poolName)
+    {
+        enemyPoolName = poolName;
+    }
+
+    public void SetId(int id)
+    {
+        this.id = id;
+    }
+
+    public void SetBaseMaxhHp(float value)
+    {
+        baseMaxHp = value;
+    }
+
+    public void SetBaseAtk(float value)
+    {
+        baseAtk = value;
+    }
+
+    public void SetBaseDef(float value)
+    {
+        baseDef = value;
+    }
+
+    public void SetBaseCritDmg(float value)
+    {
+        baseCritDmg = value;
+    }
+
 
 
 

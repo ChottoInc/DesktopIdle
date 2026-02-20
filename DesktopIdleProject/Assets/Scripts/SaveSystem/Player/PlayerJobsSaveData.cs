@@ -7,11 +7,11 @@ public class PlayerJobsSaveData
 
     public PlayerJobsSaveData() { }
 
-    public PlayerJobsSaveData(PlayerManager manager)
+    public PlayerJobsSaveData(PlayerJobsData data)
     {
         availableJobs = new List<int>();
 
-        foreach (var job in manager.AvailableJobs)
+        foreach (var job in data.AvailableJobs)
         {
             availableJobs.Add((int)job);
         }

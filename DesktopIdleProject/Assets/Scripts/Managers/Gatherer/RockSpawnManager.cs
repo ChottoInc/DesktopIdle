@@ -100,7 +100,7 @@ public class RockSpawnManager : MonoBehaviour
 
     private void SpawnRock(RockData data, Vector2 spawnPos)
     {
-        GameObject rockObj = PoolManager.Instance.Pull("Rock");
+        GameObject rockObj = PoolManager.Instance.Pull("rock");
         Rock rock = rockObj.GetComponent<Rock>();
         currentRocks.Add(rock);
 

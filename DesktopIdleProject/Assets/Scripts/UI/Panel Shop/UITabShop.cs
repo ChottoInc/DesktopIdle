@@ -3,11 +3,21 @@ using UnityEngine;
 
 public class UITabShop : UITabWindow
 {
+    private const int ID_CARD_ERIS_1 = 83;
+    private const int ID_CARD_ERIS_2 = 84;
+    private const int ID_CARD_ERIS_3 = 85;
+    private const int ID_CARD_ERIS_4 = 86;
+    private const int ID_CARD_ERIS_5 = 87;
+
     [Header("Currencies")]
     [SerializeField] TMP_Text textBits;
 
     [Header("Items")]
     [SerializeField] UIPanelShopItems panelShopItems;
+
+    [Header("Redeem")]
+    [SerializeField] GameObject buttonRedeem;
+    [SerializeField] GameObject panelRedeem;
 
     public override void Open()
     {
@@ -15,13 +25,42 @@ public class UITabShop : UITabWindow
 
         UpdateBitsUI();
 
-        //panelShopItems.ShowPanelInfo(false);
+
+        // Check for redeem filter to appear
+        if( PlayerManager.Instance.Inventory.HasItem(ID_CARD_ERIS_1) &&
+            PlayerManager.Instance.Inventory.HasItem(ID_CARD_ERIS_2) &&
+            PlayerManager.Instance.Inventory.HasItem(ID_CARD_ERIS_3) &&
+            PlayerManager.Instance.Inventory.HasItem(ID_CARD_ERIS_4) &&
+            PlayerManager.Instance.Inventory.HasItem(ID_CARD_ERIS_5))
+        {
+            buttonRedeem.SetActive(true);
+        }
+        else
+        {
+            buttonRedeem.SetActive(false);
+        }
+
+        // By default open scroll shop, and panel redeem is hidden
+        panelShopItems.gameObject.SetActive(true);
+        panelRedeem.SetActive(false);
+
         panelShopItems.Setup(UtilsShop.ID_SHOP_FILTER_CARDPACKS);
     }
 
-    public void OpenInventory(int filter)
+    public void OpenShopWindow(int filter)
     {
-        panelShopItems.Setup(filter);
+        if(filter == UtilsShop.ID_SHOP_FILTER_REDEEM)
+        {
+            panelRedeem.SetActive(true);
+            panelShopItems.gameObject.SetActive(false);
+        }
+        else
+        {
+            panelShopItems.gameObject.SetActive(true);
+            panelRedeem.SetActive(false);
+
+            panelShopItems.Setup(filter);
+        }
     }
 
 

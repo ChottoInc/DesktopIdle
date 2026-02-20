@@ -67,6 +67,7 @@ public class UIShopPanelInfo : MonoBehaviour
             switch (itemSO.ShopItemType)
             {
                 case UtilsShop.ShopItemType.CardPack: needClose = true; break;
+                case UtilsShop.ShopItemType.Job: needClose = false; break;
             }
 
             if (needClose)
@@ -78,6 +79,7 @@ public class UIShopPanelInfo : MonoBehaviour
             switch (itemSO.ShopItemType)
             {
                 case UtilsShop.ShopItemType.CardPack: HandleCardPack(itemSO as ShopCardPackSO); break;
+                case UtilsShop.ShopItemType.Job: HandleShopJob(itemSO as ShopJobSO); break;
             }
         }
     }
@@ -127,5 +129,10 @@ public class UIShopPanelInfo : MonoBehaviour
         };
 
         UITooltipManager.Instance.Show(tooltipData, Vector2.zero, true);
+    }
+
+    private void HandleShopJob(ShopJobSO jobSO)
+    {
+        PlayerManager.Instance.PlayerJobsData.AddAvailableJob(jobSO.ShoppingJob);
     }
 }

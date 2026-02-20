@@ -28,7 +28,12 @@ public class Inventory
         //currentBits = 0;
         itemGroups = new List<ItemGroup>();
 
-        itemGroups.Add(new ItemGroup(0, 35));
+        itemGroups.Add(new ItemGroup(0, 2000));
+        itemGroups.Add(new ItemGroup(1, 2000));
+        itemGroups.Add(new ItemGroup(2, 2000));
+        itemGroups.Add(new ItemGroup(3, 2000));
+        itemGroups.Add(new ItemGroup(4, 2000));
+        itemGroups.Add(new ItemGroup(50, 100));
     }
 
     public Inventory(InventorySaveData saveData)
@@ -136,6 +141,18 @@ public class Inventory
                 return i;
         }
         return -1;
+    }
+
+    public List<ItemGroup> GetAllCards()
+    {
+        List<ItemGroup> result = new List<ItemGroup>();
+        foreach (var group in itemGroups)
+        {
+            ItemSO item = UtilsItem.GetItemById(group.IdItem);
+            if (item.ItemType == UtilsItem.ItemType.Card)
+                result.Add(group);
+        }
+        return result;
     }
 
     #endregion

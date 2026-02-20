@@ -20,6 +20,9 @@ public class SceneLoaderManager : MonoBehaviour
     [Space(10)]
     [SerializeField] float fadeTime = 3f;
 
+    [Space(10)]
+    [SerializeField] ParticleSystem particleVFX;
+
     private bool isInit;
     private bool isSetup;
 
@@ -36,19 +39,71 @@ public class SceneLoaderManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
+        {
             Destroy(gameObject);
+            return;
+        }
 
         DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
     {
+        if (Instance != this) return;
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
+        if (Instance != this) return;
+
         SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    /// <summary>
+    /// Load home and not overwrite last scene, so when you click continue from home actually restarts from correct scene
+    /// </summary>
+    public void LoadHome()
+    {
+        // if the time was stopped before changing scene, resume it
+        UtilsTime.Resume();
+
+        // handle current scene hide objects
+
+        if (SceneManager.GetActiveScene().name == "HomeScene")
+        {
+            HomeWorldManager.Instance.HandleSwitchScene();
+        }
+        else
+        {
+            switch (SettingsManager.Instance.LastSceneSettings.lastSceneType)
+            {
+                default: Debug.Log("Current scene type isn't allowed"); break;
+                case SceneType.CombatMap: CombatManager.Instance.HandleSwitchScene(); break;
+                case SceneType.Miner: SmashManager.Instance.HandleSwitchScene(); break;
+                case SceneType.Blacksmith: FindFirstObjectByType<PlayerBlacksmith>().HandleSwitchScene(); break;
+            }
+        }
+
+        StartCoroutine(CoLoadHome());
+    }
+
+    private IEnumerator CoLoadHome()
+    {
+        // enable scene barrier before loading
+        currentSceneBarrier = FindFirstObjectByType<UIBarrier>();
+        if (currentSceneBarrier != null)
+        {
+            currentSceneBarrier.EnableBarrier(true);
+        }
+
+
+        StartCoroutine(CoFadeOut());
+
+        yield return new WaitForSecondsRealtime(fadeTime + 0.5f);
+
+        SceneManager.LoadScene("HomeScene");
     }
 
     public void LoadScene(LastSceneSettings settings)
@@ -151,6 +206,8 @@ public class SceneLoaderManager : MonoBehaviour
 
     private IEnumerator CoFadeIn()
     {
+        particleVFX.Play();
+
         float elapsed = 0f;
 
         while (elapsed < fadeTime)
@@ -158,18 +215,27 @@ public class SceneLoaderManager : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / fadeTime;
 
-            fadeMaterial.SetFloat(fadeStart, Mathf.Lerp(onFadeInStart, onFadeOutStart, t));
-            fadeMaterial.SetFloat(fadeEnd, Mathf.Lerp(onFadeInEnd, onFadeOutEnd, t));
+            float start = Mathf.Lerp(onFadeInStart, onFadeOutStart, t);
+            fadeMaterial.SetFloat(fadeStart, start);
+
+            float end = Mathf.Lerp(onFadeInEnd, onFadeOutEnd, t);
+            fadeMaterial.SetFloat(fadeEnd, end);
+
+            particleVFX.transform.position = new Vector3(start, particleVFX.transform.position.y, particleVFX.transform.position.z);
 
             yield return null;
         }
 
         fadeMaterial.SetFloat(fadeStart, onFadeOutStart);
         fadeMaterial.SetFloat(fadeEnd, onFadeOutEnd);
+
+        particleVFX.Stop();
     }
 
     private IEnumerator CoFadeOut()
     {
+        particleVFX.Play();
+
         float elapsed = 0f;
 
         while (elapsed < fadeTime)
@@ -177,14 +243,21 @@ public class SceneLoaderManager : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / fadeTime;
 
-            fadeMaterial.SetFloat(fadeStart, Mathf.Lerp(onFadeOutStart, onFadeInStart, t));
-            fadeMaterial.SetFloat(fadeEnd, Mathf.Lerp(onFadeOutEnd, onFadeInEnd, t));
+            float start = Mathf.Lerp(onFadeOutStart, onFadeInStart, t);
+            fadeMaterial.SetFloat(fadeStart, start);
+
+            float end = Mathf.Lerp(onFadeOutEnd, onFadeInEnd, t);
+            fadeMaterial.SetFloat(fadeEnd, end);
+
+            particleVFX.transform.position = new Vector3(end, particleVFX.transform.position.y, particleVFX.transform.position.z);
 
             yield return null;
         }
 
         fadeMaterial.SetFloat(fadeStart, onFadeInStart);
         fadeMaterial.SetFloat(fadeEnd, onFadeInEnd);
+
+        particleVFX.Stop();
     }
 
     public void Setup()

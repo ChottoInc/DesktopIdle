@@ -75,8 +75,7 @@ public class UITabQuestsDaily : UITabWindow
 
     public void OnButtonClaim()
     {
-        //TODO: set a daily claim
-        PlayerManager.Instance.Inventory.AddBits(50);
+        PlayerManager.Instance.Inventory.AddBits(UtilsQuest.DAILY_BITS_REWARD);
         PlayerManager.Instance.SaveInventoryData();
 
 

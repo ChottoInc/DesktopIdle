@@ -2985,7 +2985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: fa58312c2a126294da4b392f9cb951f4, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -3250,6 +3250,7 @@ MonoBehaviour:
   links: []
   barrier: {fileID: 0}
   button: {fileID: 0}
+  showTooltipPosition: {fileID: 0}
 --- !u!1 &1575604301501253083
 GameObject:
   m_ObjectHideFlags: 0
@@ -4277,6 +4278,7 @@ MonoBehaviour:
   links: []
   barrier: {fileID: 0}
   button: {fileID: 0}
+  showTooltipPosition: {fileID: 0}
 --- !u!1 &1976417529805293495
 GameObject:
   m_ObjectHideFlags: 0
@@ -5605,6 +5607,7 @@ MonoBehaviour:
   links: []
   barrier: {fileID: 0}
   button: {fileID: 0}
+  showTooltipPosition: {fileID: 0}
 --- !u!1 &2888278537988500477
 GameObject:
   m_ObjectHideFlags: 0
@@ -8351,6 +8354,8 @@ MonoBehaviour:
   imageSword: {fileID: 4578411916405744176}
   textLevel: {fileID: 2738630733935989101}
   textStats: {fileID: 365624309251493027}
+  timerChangeTransparency: 0.5
+  timerChangeTransparencyIdle: 0.5
   buttonLevelUp: {fileID: 6907847785973403609}
 --- !u!1 &4143096658004108126
 GameObject:
@@ -8513,6 +8518,8 @@ MonoBehaviour:
   imageGear: {fileID: 8726497434000873508}
   textLevel: {fileID: 2256139249420983961}
   textStats: {fileID: 8439830450475109976}
+  timerChangeTransparency: 0.75
+  timerChangeTransparencyIdle: 0.5
   panelSelectOre: {fileID: 6771414328974761320}
   defaultOreIcon: {fileID: 21300000, guid: c883ca3019eb5e4489586e9d51d4f68e, type: 3}
   imageSelectedOre: {fileID: 3638802651993513510}
@@ -10192,6 +10199,7 @@ RectTransform:
   m_Children:
   - {fileID: 4053925011486097096}
   - {fileID: 5561522893825357079}
+  - {fileID: 8526058618302800678}
   m_Father: {fileID: 1369006069694475309}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -13553,6 +13561,41 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!1 &7613399366457764681
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8526058618302800678}
+  m_Layer: 5
+  m_Name: Show Unlock Job Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &8526058618302800678
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7613399366457764681}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5853549796278122529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1198, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7616476637806677665
 GameObject:
   m_ObjectHideFlags: 0
@@ -16585,6 +16628,10 @@ PrefabInstance:
       propertyPath: links.Array.data[0]
       value: 
       objectReference: {fileID: 689865781936877782}
+    - target: {fileID: 3015936793607586808, guid: f5dce3ec9004b4f48a5850f59b593b05, type: 3}
+      propertyPath: showTooltipPosition
+      value: 
+      objectReference: {fileID: 8526058618302800678}
     - target: {fileID: 5061502285214495328, guid: f5dce3ec9004b4f48a5850f59b593b05, type: 3}
       propertyPath: m_Name
       value: Button - Miner
@@ -16741,6 +16788,10 @@ PrefabInstance:
       propertyPath: links.Array.data[0]
       value: 
       objectReference: {fileID: 7221334463641215410}
+    - target: {fileID: 955341543919595089, guid: 2bfef509fb4258a48940444153147460, type: 3}
+      propertyPath: showTooltipPosition
+      value: 
+      objectReference: {fileID: 8526058618302800678}
     - target: {fileID: 2800032107555224805, guid: 2bfef509fb4258a48940444153147460, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -17193,6 +17244,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button - Warrior
       objectReference: {fileID: 0}
+    - target: {fileID: 6200958851976424202, guid: e4a54ad08fcb80a47b6091663ce99c27, type: 3}
+      propertyPath: showTooltipPosition
+      value: 
+      objectReference: {fileID: 8526058618302800678}
     - target: {fileID: 9049846525644650942, guid: e4a54ad08fcb80a47b6091663ce99c27, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -17380,6 +17435,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1433357322633498801, guid: 3337306e1213afc459d34818979b760f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149094468153224919, guid: 3337306e1213afc459d34818979b760f, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7283689087902497254, guid: 3337306e1213afc459d34818979b760f, type: 3}

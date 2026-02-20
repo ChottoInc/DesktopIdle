@@ -14,12 +14,16 @@ public class UIBountyPrefab : MonoBehaviour
         this.panelBounties = panelBounties;
         this.id = id;
 
-        // set description
-        string questDesc = UtilsQuest.GetQuestDescription(data);
-        textBounty.text = questDesc;
-
         // set reward
-        //rewardAmount = questData.rewardAmount;
+        int rewardAmount = data.rewardAmount;
+        string rewardString = string.Format("Reward: {0} bits", rewardAmount);
+
+        // set description
+        string questDesc = string.Format("{0}\n{1}", UtilsQuest.GetQuestDescription(data), rewardString);
+
+        
+
+        textBounty.text = questDesc;
     }
 
     public void OnButtonAccept()

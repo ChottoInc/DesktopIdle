@@ -21,12 +21,20 @@ public class ShopManager : MonoBehaviour
     private long lastDailyCreationDate;
 
 
+    // Redeem codes
+
+    private bool hasRedeemedErisCode;
+
+
 
     public Dictionary<string, ShopItemPurchaseInfo> DictItemPurchaseInfo => dictItemPurchaseInfo;
 
     public List<string> ShopItemsList => shopItemsList;
 
     public long LastDailyCreationDate => lastDailyCreationDate;
+
+
+    public bool HasRedeemedErisCode => hasRedeemedErisCode;
 
 
 
@@ -41,6 +49,7 @@ public class ShopManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
         DontDestroyOnLoad(gameObject);
@@ -78,6 +87,8 @@ public class ShopManager : MonoBehaviour
         lastDailyCreationDate = DateTime.UtcNow.Ticks;
 
         InitializeAllItems();
+
+        InitializeRedeemCodes();
     }
 
     private void InitializeAllItems()
@@ -101,6 +112,11 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    private void InitializeRedeemCodes()
+    {
+        hasRedeemedErisCode = false;
+    }
+
     #endregion
     
     #region FROM FILE
@@ -117,6 +133,9 @@ public class ShopManager : MonoBehaviour
         {
             ResetDailyItems();
         }
+
+
+        hasRedeemedErisCode = saveData.hasRedeemedErisCode;
     }
 
     private void LoadShopItems(List<ShopItemSaveData> datas)
@@ -193,6 +212,17 @@ public class ShopManager : MonoBehaviour
         itemInfo.purchaseCount++;
 
         dictItemPurchaseInfo[itemSO.UniqueId] = itemInfo;
+    }
+
+
+    public void SetRedeemCode(int id)
+    {
+        switch (id)
+        {
+            default: Debug.Log("Invalid redeem code id: " + id); break;
+
+            case ID_REDEEM_ERIS_CODE: hasRedeemedErisCode = true; break;
+        }
     }
 
 

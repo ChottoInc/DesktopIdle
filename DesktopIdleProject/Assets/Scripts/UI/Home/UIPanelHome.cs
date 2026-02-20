@@ -1,11 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIPanelHome : MonoBehaviour
 {
     [SerializeField] Button buttonContinue;
     [SerializeField] Button buttonNew;
     [SerializeField] Button buttonQuit;
+
+    [Space(10)]
+    [SerializeField] Transform messageNewGamePosition;
 
     private bool isInit;
 
@@ -40,22 +44,50 @@ public class UIPanelHome : MonoBehaviour
 
     public void OnButtonContinue()
     {
-        Debug.Log("Load");
+        Debug.Log("Continue Button");
         SceneLoaderManager.Instance.LoadScene(SettingsManager.Instance.LastSceneSettings);
     }
 
-    public void OnButtonNew()
+    public async void OnButtonNew()
     {
-        // last scene setting is initalized by default from initializer
-        // todo, add message if has save file that it will erase the save
-        InitializerManager.Instance.SetHasSaveFile();
+        if(!InitializerManager.Instance.HasSaveFile)
+        {
+            // last scene setting is initalized by default from initializer
+            InitializerManager.Instance.SetHasSaveFile();
 
-        SceneLoaderManager.Instance.LoadScene(SettingsManager.Instance.LastSceneSettings);
+            SceneLoaderManager.Instance.LoadScene(SettingsManager.Instance.LastSceneSettings);
+        }
+        else
+        {
+            string question = $"You already have an adventure in progress, starting a new game will erase your current save files.\nAre you sure you want to continue?";
+
+            TooltipManagerData tooltipData = new TooltipManagerData();
+            tooltipData.idTooltip = UITooltipManager.ID_SHOW_YESNO;
+            tooltipData.text = question;
+
+            bool confirm = await UITooltipManager.Instance.ShowPanelYesNoCallback(tooltipData, messageNewGamePosition.position, true);
+
+            if (confirm)
+            {
+                // erase and recreate default
+                InitializerManager.Instance.EraseAllSaves();
+                InitializerManager.Instance.HandleSaves();
+
+                // switch to first scene
+                InitializerManager.Instance.SetHasSaveFile();
+                SceneLoaderManager.Instance.LoadScene(SettingsManager.Instance.LastSceneSettings);
+            }
+        }
     }
 
     public void OnButtonQuit()
     {
         // todo, add message to close?
         Application.Quit();
+    }
+
+    public void OnButtonTest()
+    {
+        SceneManager.LoadScene("FisherScene");
     }
 }

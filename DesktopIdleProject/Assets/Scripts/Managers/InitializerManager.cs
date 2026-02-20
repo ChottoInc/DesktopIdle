@@ -45,7 +45,10 @@ public class InitializerManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
         else
+        {
             Destroy(gameObject);
+            return;
+        }
 
         DontDestroyOnLoad(gameObject);
 
@@ -55,6 +58,8 @@ public class InitializerManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (Instance != this) return;
+
         // if a save is never created but the game has been opened, delete newly created save files
         if (!hasSaveFile)
         {
@@ -129,7 +134,7 @@ public class InitializerManager : MonoBehaviour
         // check save for last scene - loading scene manager should handle the alpha
     }
 
-    private void HandleSaves()
+    public void HandleSaves()
     {
         string persistent = Application.persistentDataPath + "/";
 
@@ -139,12 +144,6 @@ public class InitializerManager : MonoBehaviour
             hasSaveFile = false;
 
             Directory.CreateDirectory(persistent + UtilsSave.ROOT_FOLDER);
-
-            /*
-             * need
-             * player folder
-             * settings folder
-             * */
 
             Directory.CreateDirectory(persistent + UtilsSave.GetPlayerFolder());
             Directory.CreateDirectory(persistent + UtilsSave.GetSettingsFolder());
@@ -164,6 +163,13 @@ public class InitializerManager : MonoBehaviour
     }
 
 
+    public void EraseAllSaves()
+    {
+        string persistent = Application.persistentDataPath + "/";
+
+        // delete all
+        Directory.Delete(persistent + UtilsSave.ROOT_FOLDER, true);
+    }
 
 
 

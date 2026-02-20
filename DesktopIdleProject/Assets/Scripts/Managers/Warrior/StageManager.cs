@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    //public const int MAX_ENEMY_INDEX = 100;
-    public const int MAX_ENEMY_INDEX = 10;
-
     [Header("Enemies")]
     [SerializeField] UtilsGeneral.GeneralChances<EnemySO>[] possibleEnemies;
     [SerializeField] private int startingEnemies = 20;
@@ -199,17 +196,29 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Is auto attle on: " + SettingsManager.Instance.IsAutoBattleOn);
+            if (!SettingsManager.Instance.IsAutoBattleOn)
+            {
+                //Debug.Log("Is auto attle on: " + SettingsManager.Instance.IsAutoBattleOn);
 
-            Resets();
+                Resets();
 
-            // restart wave
-            StartCoroutine(CoSpawnStartingEnemies());
+                // restart wave
+                StartCoroutine(CoSpawnStartingEnemies());
 
-            // update ui
-            UpdateStageUI();
+                // update ui
+                UpdateStageUI();
 
-            return true;
+                return true;
+            }
+            else
+            {
+                // I'm at the last stage of the map, so I need to go to the next map if auto battle is on
+
+                currentStage++;
+
+                return true;
+            }
+           
         }
     }
 

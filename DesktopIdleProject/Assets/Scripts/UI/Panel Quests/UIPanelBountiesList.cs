@@ -31,7 +31,7 @@ public class UIPanelBountiesList : MonoBehaviour
 
             string currentId = bountySOs[i].UniqueId;
 
-            if (!bountySOs[i].AvailableFor.SharesAnyValueWith(PlayerManager.Instance.AvailableJobs))
+            if (!bountySOs[i].AvailableFor.SharesAnyValueWith(PlayerManager.Instance.PlayerJobsData.AvailableJobs))
                 canShow = false;
 
             if(QuestManager.Instance.IsBountyActiveById(currentId))

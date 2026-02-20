@@ -16,17 +16,17 @@ MonoBehaviour:
   isUnique: 0
   isDaily: 1
   shopItemType: 0
-  itemName: Card Pack 2
-  itemDesc: 10 cards
-  price: 20
-  sprite: {fileID: 21300000, guid: e2407915c2dac2348ab5bd2f87848611, type: 3}
-  size: 10
+  itemName: Iron Pack
+  itemDesc: A humble card pack containing 5 cards. An Uncommon card is guaranteed.
+  price: 120
+  sprite: {fileID: 21300000, guid: 51829f2cb9e577445b63ea12b1176db6, type: 3}
+  size: 5
   rarityChances:
   - value: 0
-    chanches: 80
+    chanches: 85
   - value: 1
-    chanches: 15
+    chanches: 12
   - value: 2
-    chanches: 5
+    chanches: 3
   isGuaranteed: 1
-  guaranteedRarity: 2
+  guaranteedRarity: 1

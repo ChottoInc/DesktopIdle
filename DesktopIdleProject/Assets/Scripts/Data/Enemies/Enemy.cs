@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour, IPoolObject
     [Header("VFXs")]
     [SerializeField] ParticleSystem deathVFX;
 
+    [Header("UI")]
+    [SerializeField] UIPanelDamage panelDamage;
+
 
     private float deathVFXDuration;
     private float timerDeathVFX;
@@ -80,7 +83,7 @@ public class Enemy : MonoBehaviour, IPoolObject
     {
         deathVFXDuration = deathVFX.main.duration;
 
-        startScale = transform.localScale;
+        startScale = spriteRenderer.transform.localScale;
 
         GenerateNewTarget();
     }
@@ -152,19 +155,19 @@ public class Enemy : MonoBehaviour, IPoolObject
         float vx = rb.velocity.x;
         if (vx > 0.01f && faceRight)
         {
-            transform.localScale = startScale;
+            spriteRenderer.transform.localScale = startScale;
         }
         else if (vx > 0.01f && !faceRight)
         {
-            transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
+            spriteRenderer.transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
         }
         else if (vx < -0.01f && faceRight)
         {
-            transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
+            spriteRenderer.transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
         }
         else if (vx < -0.01f && !faceRight)
         {
-            transform.localScale = startScale;
+            spriteRenderer.transform.localScale = startScale;
         }
     }
 
@@ -173,19 +176,19 @@ public class Enemy : MonoBehaviour, IPoolObject
         // check sprite flip
         if (dir.x > 0 && faceRight)
         {
-            transform.localScale = startScale;
+            spriteRenderer.transform.localScale = startScale;
         }
         else if (dir.x > 0f && !faceRight)
         {
-            transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
+            spriteRenderer.transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
         }
         else if (dir.x < 0 && faceRight)
         {
-            transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
+            spriteRenderer.transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
         }
         else if (dir.x < 0 && !faceRight)
         {
-            transform.localScale = startScale;
+            spriteRenderer.transform.localScale = startScale;
         }
     }
 
@@ -230,6 +233,9 @@ public class Enemy : MonoBehaviour, IPoolObject
         this.sceneType = sceneType;
 
         spriteRenderer.sortingOrder = enemyIndex;
+
+        // Setup panel damage ui, after the enemy data has been set
+        panelDamage.Setup();
     }
 
     private void HideSprite(bool hide)
@@ -311,6 +317,11 @@ public class Enemy : MonoBehaviour, IPoolObject
         }
     }
 
+
+    public void UpdateDamageUI()
+    {
+        panelDamage.ShowDamage();
+    }
 
 
 

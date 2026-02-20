@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UtilsGather;
 
 public static class UtilsItem
 {
@@ -9,16 +10,26 @@ public static class UtilsItem
      * Ores ids start from 0
      * Cards ids start from 50
      * Metals ids start from 150
+     * Fishes ids start from 200
      * */
 
-    public enum ItemType { Ore, Card, Metal }
+    public enum ItemType { Ore, Card, Metal, Fish }
 
     public enum CardRarity { Common, Uncommon, Rare }
+
+    public enum FishRarity { Riverfolk, Deepwater, Tideborn, Ancient, Mythic }
 
 
     private static List<ItemSO> ores;
     private static List<ItemSO> cards;
     private static List<ItemSO> metals;
+
+    private static List<ItemSO> fishes;
+    private static List<ItemSO> fishesMorning;
+    private static List<ItemSO> fishesAfternoon;
+    private static List<ItemSO> fishesEvening;
+    private static List<ItemSO> fishesNight;
+
 
     private static List<ItemSO> otherItems;
 
@@ -34,6 +45,13 @@ public static class UtilsItem
         ores = new List<ItemSO>();
         cards = new List<ItemSO>();
         metals = new List<ItemSO>();
+
+        fishes = new List<ItemSO>();
+        fishesMorning = new List<ItemSO>();
+        fishesAfternoon = new List<ItemSO>();
+        fishesEvening = new List<ItemSO>();
+        fishesNight = new List<ItemSO>();
+
         otherItems = new List<ItemSO>();
 
         foreach (ItemSO item in items) 
@@ -44,6 +62,18 @@ public static class UtilsItem
                 case ItemType.Ore: ores.Add(item); break;
                 case ItemType.Card: cards.Add(item); break;
                 case ItemType.Metal: metals.Add(item); break;
+
+                case ItemType.Fish: 
+                    fishes.Add(item); 
+                    FishSO fish = item as FishSO;
+                    switch (fish.SpawnDayMoment)
+                    {
+                        case UtilsGeneral.DayMoment.Morning: fishesMorning.Add(item); break;
+                        case UtilsGeneral.DayMoment.Afternoon: fishesAfternoon.Add(item); break;
+                        case UtilsGeneral.DayMoment.Evening: fishesEvening.Add(item); break;
+                        case UtilsGeneral.DayMoment.Night: fishesNight.Add(item); break;
+                    }
+                    break;
             }
         }
     }
@@ -54,6 +84,7 @@ public static class UtilsItem
         result.AddRange(ores);
         result.AddRange(cards);
         result.AddRange(metals);
+        result.AddRange(fishes);
         result.AddRange(otherItems);
         return result;
     }
@@ -79,7 +110,7 @@ public static class UtilsItem
 
     #endregion
 
-    #region EMTALS
+    #region METALS
 
     public static ItemSO[] GetAllMetals()
     {
@@ -87,7 +118,6 @@ public static class UtilsItem
     }
 
     #endregion
-
 
     #region CARDS
 
@@ -116,6 +146,7 @@ public static class UtilsItem
 
         while (!found && tries < maxTries)
         {
+            found = false;
             int rand = UnityEngine.Random.Range(0, cards.Count);
 
             card = cards[rand] as CardSO;
@@ -160,6 +191,213 @@ public static class UtilsItem
         }
 
         return indexes[UnityEngine.Random.Range(0, indexes.Count)];
+    }
+
+    public static CardSO GetConvertedCard(List<CardSO> converted)
+    {
+        CardSO result = null;
+
+        float commonPerc = 0.90f;
+        float uncommonPerc = 0.07f;
+        float rarePerc = 0.01f;
+
+        foreach (var card in converted)
+        {
+            // If uncommon, +2% to uncommon, and 1% to rare
+            if(card.CardRarity == CardRarity.Uncommon)
+            {
+                commonPerc -= 0.03f;
+                uncommonPerc += 0.02f;
+                rarePerc += 0.01f;
+            }
+            // If rare, +4% uncommon and +2% rare
+            else if(card.CardRarity == CardRarity.Rare)
+            {
+                commonPerc -= 0.06f;
+                uncommonPerc += 0.04f;
+                rarePerc += 0.02f;
+            }
+        }
+
+        UtilsGeneral.GeneralChances<CardRarity>[] balancedArray = new UtilsGeneral.GeneralChances<CardRarity>[3];
+
+        balancedArray[0] = new UtilsGeneral.GeneralChances<CardRarity>
+        {
+            chanches = Mathf.RoundToInt(commonPerc * 100f),
+            value = CardRarity.Common
+        };
+
+        balancedArray[1] = new UtilsGeneral.GeneralChances<CardRarity>
+        {
+            chanches = Mathf.RoundToInt(uncommonPerc * 100f),
+            value = CardRarity.Uncommon
+        };
+
+        balancedArray[2] = new UtilsGeneral.GeneralChances<CardRarity>
+        {
+            chanches = Mathf.RoundToInt(rarePerc * 100f),
+            value = CardRarity.Rare
+        };
+
+        CardRarity selectedRarity = UtilsGeneral.GetRandomValueFromGeneralChanches(balancedArray);
+
+        result = GetRandomCardByRarity(selectedRarity);
+
+        return result;
+    }
+
+
+    public static int GetDismantleValueFromCard(CardSO card)
+    {
+        int result = 0;
+
+        switch (card.CardRarity)
+        {
+            case CardRarity.Common: result = 4; break;
+            case CardRarity.Uncommon: result = 10; break;
+            case CardRarity.Rare: result = 30; break;
+        }
+
+        return result;
+    }
+    #endregion
+
+    #region FISHES
+
+    public static ItemSO[] GetAllFishes()
+    {
+        return fishes.ToArray();
+    }
+
+    public static FishSO GetRandomFish(List<ItemSO> list)
+    {
+        bool found = false;
+        FishSO fish = null;
+
+        int tries = 0;
+        int maxTries = 1000;
+
+        while (!found && tries < maxTries)
+        {
+            found = false;
+            int rand = UnityEngine.Random.Range(0, list.Count);
+
+            fish = list[rand] as FishSO;
+            if (fish != null)
+                found = true;
+
+            tries++;
+        }
+
+        if (found)
+            return fish;
+        return null;
+    }
+
+    public static FishSO GetRandomFishByRarity(FishRarity rarity)
+    {
+        bool found = false;
+        FishSO fish = null;
+
+        int tries = 0;
+        int maxTries = 1000;
+
+        while (!found && tries < maxTries)
+        {
+            found = false;
+            fish = GetRandomFish(fishes);
+
+            if (fish.FishRarity == rarity)
+                found = true;
+
+            tries++;
+        }
+
+        if (found)
+            return fish;
+        return null;
+    }
+
+    
+
+    public static FishSO GetRandomFishByDayMoment(UtilsGeneral.DayMoment dayMoment)
+    {
+        FishSO result = null;
+
+        switch (dayMoment)
+        {
+            case UtilsGeneral.DayMoment.Morning: result = GetRandomFish(fishesMorning); break;
+            case UtilsGeneral.DayMoment.Afternoon: result = GetRandomFish(fishesAfternoon); break;
+            case UtilsGeneral.DayMoment.Evening: result = GetRandomFish(fishesEvening); break;
+            case UtilsGeneral.DayMoment.Night: result = GetRandomFish(fishesNight); break;
+        }
+
+        return result;
+    }
+
+    public static FishSO GetRandomFishByDayMomentAndRarity(UtilsGeneral.DayMoment dayMoment, FishRarity rarity)
+    {
+        FishSO result = null;
+
+        List<ItemSO> selectedFishes;
+
+        switch (dayMoment)
+        {
+            default:
+            case UtilsGeneral.DayMoment.Morning: selectedFishes = fishesMorning; break;
+            case UtilsGeneral.DayMoment.Afternoon: selectedFishes = fishesAfternoon; break;
+            case UtilsGeneral.DayMoment.Evening: selectedFishes = fishesEvening; break;
+            case UtilsGeneral.DayMoment.Night: selectedFishes = fishesNight; break;
+        }
+
+        bool found = false;
+
+        int tries = 0;
+        int maxTries = 1000;
+
+        while (!found && tries < maxTries)
+        {
+            found = false;
+            result = GetRandomFish(selectedFishes);
+
+            if (result.FishRarity == rarity)
+                found = true;
+
+            tries++;
+        }
+
+        if (found)
+            return result;
+        return GetRandomFish(fishes);
+    }
+
+    public static int DismantleFish(FishRarity rarity)
+    {
+        switch(rarity)
+        {
+            default:
+            case FishRarity.Riverfolk: return 2;
+            case FishRarity.Deepwater: return 5;
+            case FishRarity.Tideborn: return 10;
+            case FishRarity.Ancient: return 20;
+            case FishRarity.Mythic: return 40;
+        }
+    }
+
+    /// <summary>
+    /// Exp given by the caught fishes
+    /// </summary>
+    public static int GetFishExp(FishRarity rarity)
+    {
+        switch (rarity)
+        {
+            default:
+            case FishRarity.Riverfolk: return 5;
+            case FishRarity.Deepwater: return 10;
+            case FishRarity.Tideborn: return 20;
+            case FishRarity.Ancient: return 40;
+            case FishRarity.Mythic: return 100;
+        }
     }
 
     #endregion

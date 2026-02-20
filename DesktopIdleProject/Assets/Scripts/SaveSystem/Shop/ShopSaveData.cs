@@ -7,6 +7,11 @@ public class ShopSaveData
 
     public long lastDailyCreationDate;
 
+
+    public bool hasRedeemedErisCode;
+
+
+
     public ShopSaveData() { }
 
     public ShopSaveData(ShopManager manager)
@@ -14,7 +19,11 @@ public class ShopSaveData
         lastDailyCreationDate = manager.LastDailyCreationDate;
 
         SaveShopItems(manager.DictItemPurchaseInfo);
+
+
+        hasRedeemedErisCode = manager.HasRedeemedErisCode;
     }
+
 
     private void SaveShopItems(Dictionary<string, UtilsShop.ShopItemPurchaseInfo> dict)
     {

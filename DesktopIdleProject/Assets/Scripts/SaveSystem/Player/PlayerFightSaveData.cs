@@ -1,6 +1,11 @@
 
+using System.Collections.Generic;
+
 public class PlayerFightSaveData
 {
+    public List<int> availableMaps;
+
+
     // ---- LEVEL STAT POINTS
 
     public int levelStatMaxHp;
@@ -29,6 +34,9 @@ public class PlayerFightSaveData
 
     public PlayerFightSaveData(PlayerFightData data)
     {
+        availableMaps = new List<int>();
+        availableMaps.AddRange(data.AvailableMaps);
+
         levelStatMaxHp = data.LevelStatMaxHp;
 
         levelStatAtk = data.LevelStatAtk;

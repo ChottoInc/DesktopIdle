@@ -6,6 +6,53 @@ using UnityEngine;
 
 public static class UtilsGeneral
 {
+    public enum DayMoment { Morning, Afternoon, Evening, Night }
+
+    public static DayMoment GetDayMoment()
+    {
+        int hour = System.DateTime.Now.Hour;
+
+        if (hour > 0 && hour <= 6)
+        {
+            return DayMoment.Night;
+        }
+        else if (hour > 6 && hour <= 12)
+        {
+            return DayMoment.Morning;
+        }
+        else if (hour > 12 && hour <= 18)
+        {
+            return DayMoment.Afternoon;
+        }
+        else
+        {
+            return DayMoment.Evening;
+        }
+    }
+
+
+    public static List<string> GetFileStrings(string filename)
+    {
+        var dataset = Resources.Load<TextAsset>(filename);
+        var dataLines = dataset.text.Split("\r\n");
+
+        List<string> strings = new List<string>();
+
+        // for every line of file
+        // start from 1, excluding headers
+        for (int i = 1; i < dataLines.Length; i++)
+        {
+            strings.Add(dataLines[i]);
+        }
+
+        return strings;
+    }
+
+
+
+
+
+
     public struct MyColors
     {
         public static Color CommonRarity
@@ -92,9 +139,11 @@ public static class UtilsGeneral
 
     private const string TUTORIAL_INTRO_1 = "This is you.";
     private const string TUTORIAL_INTRO_2 = "Defeat monsters to advance the stages.";
-    private const string TUTORIAL_INTRO_3 = "Here you can increase your job levels.";
-    private const string TUTORIAL_INTRO_4 = "Here you can change your current job.";
-    private const string TUTORIAL_INTRO_5 = "Here you can see your inventory.";
+    private const string TUTORIAL_INTRO_3 = "After the stages are completed, a new map will be unlocked.";
+    private const string TUTORIAL_INTRO_4 = "Click on the STATS icon to increase their level.";
+    private const string TUTORIAL_INTRO_5 = "When you want to select a different job, click on the JOB icon .";
+    private const string TUTORIAL_INTRO_6 = "Check your collection using the INVENTORY icon.";
+    private const string TUTORIAL_INTRO_7 = "Click on QUESTS icon to check your progress and claim rewards.";
 
     /// <summary>
     /// Struct containing the dialogue and if the text panel need to move to next position
@@ -120,9 +169,11 @@ public static class UtilsGeneral
         {
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_1, false),
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_2, false),
-            new TutorialDialogueNeedPos(TUTORIAL_INTRO_3, true),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_3, false),
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_4, true),
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_5, true),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_6, true),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_7, true),
         });
     
 

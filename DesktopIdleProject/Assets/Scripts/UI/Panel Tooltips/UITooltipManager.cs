@@ -11,11 +11,18 @@ public class UITooltipManager : MonoBehaviour
     public const int ID_SHOW_CARDOPENING = 3;
 
 
+    [SerializeField] Transform centerPoint;
 
+    [Space(10)]
     [SerializeField] UITooltipName tooltipName;
     [SerializeField] UITooltipCard tooltipCard;
     [SerializeField] UITooltipYesNo tooltipYesNo;
     [SerializeField] UITooltipCardOpening tooltipCardOpening;
+
+
+
+    public Transform CenterPoint => centerPoint;
+
 
     public bool IsCallbackOpen
     {

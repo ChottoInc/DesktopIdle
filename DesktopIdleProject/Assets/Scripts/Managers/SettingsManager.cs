@@ -86,6 +86,7 @@ public class SettingsManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
         DontDestroyOnLoad(gameObject);
@@ -145,7 +146,7 @@ public class SettingsManager : MonoBehaviour
 
         // last scene
         lastSceneSettings = new LastSceneSettings();
-        lastSceneSettings.lastSceneName = "ForestScene";
+        lastSceneSettings.lastSceneName = "WoodsScene";
         lastSceneSettings.lastSceneType = SceneLoaderManager.SceneType.CombatMap;
         lastSceneSettings.lastCombatMapId = 0;
 

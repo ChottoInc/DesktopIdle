@@ -87,6 +87,7 @@ public class QuestManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
         DontDestroyOnLoad(gameObject);
@@ -94,11 +95,15 @@ public class QuestManager : MonoBehaviour
 
     private void OnEnable()
     {
+        if (Instance != this) return;
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnDisable()
     {
+        if (Instance != this) return;
+
         SceneManager.sceneLoaded -= OnSceneLoaded;
 
         //Called here because is destroyd on scene switch
@@ -115,6 +120,8 @@ public class QuestManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (Instance != this) return;
+
         // Called here because player manager is non destroyable
         if (PlayerManager.Instance != null)
         {
@@ -257,13 +264,31 @@ public class QuestManager : MonoBehaviour
 
                 daily = GetRandomDailyQuest();
 
+                // check if daily quest has already been pulled and added to dailies
                 if (activeDailyQuests.Contains(daily.UniqueId))
                     valid = false;
 
                 if (valid)
                 {
-                    if (!daily.AvailableFor.SharesAnyValueWith(PlayerManager.Instance.AvailableJobs))
+                    // check if player has the job for the quest
+                    if (!daily.AvailableFor.SharesAnyValueWith(PlayerManager.Instance.PlayerJobsData.AvailableJobs))
                         valid = false;
+
+                    // check if daily need to increase a stat level
+                    // if stat is already at max, discard
+                    if(daily.QuestData.questObjectiveType == QuestObjectiveType.LevelUp)
+                    {
+                        if (daily.QuestData.questLevelUpSpecific)
+                        {
+                            int statId = daily.QuestData.statId;
+
+                            int currentLevel = UtilsPlayer.GetStatCurrentLevelById(statId);
+                            int maxLevel = UtilsPlayer.GetStatMaxLevelById(statId);
+
+                            if (currentLevel >= maxLevel)
+                                valid = false;
+                        }
+                    }
                 }
 
                 tries++;
@@ -548,7 +573,7 @@ public class QuestManager : MonoBehaviour
 
     #region EVENT ACTIONS
 
-    private void OnEnemyKilled(int id)
+    private void OnEnemyKilled(EnemySO enemySO)
     {
         bool needSave = false;
 
@@ -558,7 +583,7 @@ public class QuestManager : MonoBehaviour
             // get so
             QuestStorySO so = GetStoryQuestById(quest);
 
-            if(NeedUpdateKillProgress(so.QuestData, id))
+            if(NeedUpdateKillProgress(so.QuestData, enemySO))
             {
                 UpdateKillProgress(QuestType.Story, quest);
                 needSave = true;
@@ -571,7 +596,7 @@ public class QuestManager : MonoBehaviour
             // get so
             QuestBountySO so = GetBountyQuestById(quest);
 
-            if (NeedUpdateKillProgress(so.QuestData, id))
+            if (NeedUpdateKillProgress(so.QuestData, enemySO))
             {
                 UpdateKillProgress(QuestType.Bounties, quest);
                 needSave = true;
@@ -584,7 +609,7 @@ public class QuestManager : MonoBehaviour
             // get so
             QuestDailySO so = GetDailyQuestById(quest);
 
-            if (NeedUpdateKillProgress(so.QuestData, id))
+            if (NeedUpdateKillProgress(so.QuestData, enemySO))
             {
                 UpdateKillProgress(QuestType.Daily, quest);
                 needSave = true;
@@ -597,14 +622,17 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    private bool NeedUpdateKillProgress(QuestData data, int monsterId)
+    private bool NeedUpdateKillProgress(QuestData data, EnemySO enemySO)
     {
         if (data.questObjectiveType == QuestObjectiveType.Kill)
         {
             // check specific
             if (data.questKillSpecific)
             {
-                if (data.monsterId == monsterId)
+                // Check actual pooling name, since the prefabs are identical
+                // If the check is on the id, different monsters data would be compared instead of monster type
+                string enemyName = UtilsEnemy.GetEnemySOById(data.monsterId).EnemyPoolName;
+                if (enemyName == enemySO.EnemyPoolName)
                 {
                     return true;
                 }

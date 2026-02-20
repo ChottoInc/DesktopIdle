@@ -2,6 +2,9 @@ using UnityEngine;
 
 public static class UtilsEnemy
 {
+    //public enum EnemyType { Slime, Orc, Undead, Werewolf, Werebear,  }
+
+
     private static EnemySO[] enemySOs;
 
 

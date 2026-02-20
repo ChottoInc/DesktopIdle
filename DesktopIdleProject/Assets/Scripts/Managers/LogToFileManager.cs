@@ -11,8 +11,19 @@ public class LogToFileManager : MonoBehaviour
     private static string logFilePath;
     private static StreamWriter logWriter;
 
+    public static LogToFileManager Instance { get; private set; }
+
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+
         // Ensure it persists between scene loads
         DontDestroyOnLoad(gameObject);
 
@@ -31,6 +42,19 @@ public class LogToFileManager : MonoBehaviour
         Debug.Log($"[LogToFile] Logging started at: {logFilePath}");
     }
 
+    private void OnDestroy()
+    {
+        if (Instance != this) return;
+
+        Application.logMessageReceived -= HandleLog;
+        if (logWriter != null)
+        {
+            logWriter.Flush();
+            logWriter.Close();
+            logWriter = null;
+        }
+    }
+
     private void HandleLog(string logString, string stackTrace, LogType type)
     {
         string logEntry = $"[{DateTime.Now:HH:mm:ss}] [{type}] {logString}";
@@ -40,14 +64,5 @@ public class LogToFileManager : MonoBehaviour
         logWriter.WriteLine(logEntry);
     }
 
-    private void OnDestroy()
-    {
-        Application.logMessageReceived -= HandleLog;
-        if (logWriter != null)
-        {
-            logWriter.Flush();
-            logWriter.Close();
-            logWriter = null;
-        }
-    }
+    
 }

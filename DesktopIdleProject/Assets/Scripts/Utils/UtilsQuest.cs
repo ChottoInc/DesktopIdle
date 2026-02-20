@@ -73,6 +73,8 @@ public static class UtilsQuest
 
     #region DAILY
 
+    public const int DAILY_BITS_REWARD = 20;
+
     private static QuestDailySO[] LoadDailyQuests()
     {
         return Resources.LoadAll<QuestDailySO>("Data/Quests/Daily");

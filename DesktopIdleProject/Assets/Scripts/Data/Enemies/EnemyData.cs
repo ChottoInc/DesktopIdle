@@ -67,7 +67,7 @@ public class EnemyData
     public float CurrentCritDmg => currentCritDmg;
 
 
-    public event Action OnTakeDamage;
+    public event Action<int> OnTakeDamage;
 
 
 
@@ -119,8 +119,8 @@ public class EnemyData
     {
         // exp growth
         float p = 0.85f;
-        return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
         //return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
+        return enemySO.BaseAtk + 100 * Mathf.Pow(currentLevel - 1, p);
     }
 
     private float CalculateDef()
@@ -211,9 +211,18 @@ public class EnemyData
         float baseDamage = data.CurrentAtk;
         float total;
 
+        // base chance
         if(UnityEngine.Random.value <= data.CurrentCritRate)
         {
             baseDamage *= data.CurrentCritDmg;
+        }
+        else if (UnityEngine.Random.value <= data.CurrentLuck)
+        {
+            // if base crit rate chance doesn't go, check for luck for extra roll on crit rate
+            if (UnityEngine.Random.value <= data.CurrentCritRate)
+            {
+                baseDamage *= data.CurrentCritDmg;
+            }
         }
 
         total = Mathf.Max(0f, baseDamage - currentDef);
@@ -221,7 +230,7 @@ public class EnemyData
         // subtract total to hp
         currentHp -= total;
 
-        OnTakeDamage?.Invoke();
+        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
 
         if(currentHp <= 0f)
         {

@@ -54,7 +54,7 @@ public class UIPanelObtained : MonoBehaviour
         {
             // if queue not empty and no animation is playing, play new animation
             isAnimating = true;
-            Debug.Log("start ani");
+            //Debug.Log("start ani");
             // deque item and set sprite
             UtilsItem.ItemType itemType = queueItems.Dequeue();
             imageObtained.sprite = GetSpriteByType(itemType);
@@ -68,7 +68,7 @@ public class UIPanelObtained : MonoBehaviour
             {
                 objectToMove.SetActive(false);
                 isAnimating = false;
-                Debug.Log("end ani");
+                //Debug.Log("end ani");
             });
         }
     }

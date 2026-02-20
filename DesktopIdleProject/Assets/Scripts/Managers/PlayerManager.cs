@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -15,7 +14,8 @@ public class PlayerManager : MonoBehaviour
 
 
     // ------- JOBS -------------
-    private List<UtilsPlayer.PlayerJob> availableJobs;
+
+    private PlayerJobsData playerJobsData;
 
 
     // --- WARRIOR
@@ -26,6 +26,8 @@ public class PlayerManager : MonoBehaviour
 
     private PlayerBlacksmithData playerBlacksmithData;
 
+    private PlayerFisherData playerFisherData;
+
 
 
 
@@ -35,8 +37,7 @@ public class PlayerManager : MonoBehaviour
 
 
 
-    public List<UtilsPlayer.PlayerJob> AvailableJobs => availableJobs;
-
+    public PlayerJobsData PlayerJobsData => playerJobsData;
 
     public PlayerFightData PlayerFightData => playerFightData;
 
@@ -44,19 +45,34 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerBlacksmithData PlayerBlacksmithData => playerBlacksmithData;
 
+    public PlayerFisherData PlayerFisherData => playerFisherData;
+
 
 
 
     // ---- PLAYER GLOBAL VARIABLES ----
 
+    // Miner
     public float WeaponMinerMultiplier => UtilsPlayer.GetMinerWeaponMultiplier(playerMinerData.WeaponLevel);
 
+    // Blacksmith
     public float HelmetMaxHpBlacksmithMultiplier => UtilsPlayer.GetBlacksmithHelmetMaxHpMultiplier(playerBlacksmithData.HelmetLevel);
     public float ArmorDefBlacksmithMultiplier => UtilsPlayer.GetBlacksmithArmorDefMultiplier(playerBlacksmithData.ArmorLevel);
     public float GlovesAtkSpdBlacksmithMultiplier => UtilsPlayer.GetBlacksmithGlovesAtkSpdMultiplier(playerBlacksmithData.GlovesLevel);
     public float GlovesCritDmgBlacksmithMultiplier => UtilsPlayer.GetBlacksmithGlovesCritDmgMultiplier(playerBlacksmithData.GlovesLevel);
     public float BootsDefBlacksmithMultiplier => UtilsPlayer.GetBlacksmithBootsDefMultiplier(playerBlacksmithData.BootsLevel);
     public float BootsCritRateBlacksmithMultiplier => UtilsPlayer.GetBlacksmithBootsCritRateMultiplier(playerBlacksmithData.BootsLevel);
+
+    //Fisher
+    public float FisherLifeSeriesMultiplier => playerFisherData.IsLifeSeriesCompleted ? UtilsGather.FISHER_LIFE_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherPredatorSeriesMultiplier => playerFisherData.IsPredatorSeriesCompleted ? UtilsGather.FISHER_PREDATOR_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherGuardianSeriesMultiplier => playerFisherData.IsGuardianSeriesCompleted ? UtilsGather.FISHER_GUARDIAN_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherDartSeriesMultiplier => playerFisherData.IsDartSeriesCompleted ? UtilsGather.FISHER_DART_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherSharpSeriesMultiplier => playerFisherData.IsSharpSeriesCompleted ? UtilsGather.FISHER_SHARP_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherPiercingSeriesMultiplier => playerFisherData.IsPiercingSeriesCompleted ? UtilsGather.FISHER_PIERCING_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherGoldenSeriesMultiplier => playerFisherData.IsGoldenSeriesCompleted ? UtilsGather.FISHER_GOLDEN_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherElderSeriesMultiplier => playerFisherData.IsElderSeriesCompleted ? UtilsGather.FISHER_ELDER_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherQuickSeriesMultiplier => playerFisherData.IsQuickSeriesCompleted ? UtilsGather.FISHER_QUICK_SERIES_COMPLETE_MULTIPLIER : 1f;
 
 
 
@@ -72,6 +88,7 @@ public class PlayerManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
         DontDestroyOnLoad(gameObject);
@@ -79,7 +96,9 @@ public class PlayerManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(inventory != null)
+        if (Instance != this) return;
+
+        if (inventory != null)
         {
             inventory.OnItemAdd -= ItemAdd;
         }
@@ -95,6 +114,7 @@ public class PlayerManager : MonoBehaviour
 
         LoadMinerData();
         LoadBlacksmithData();
+        LoadFisherData();
 
         LoadFightData();
     }
@@ -106,25 +126,11 @@ public class PlayerManager : MonoBehaviour
         try
         {
             PlayerJobsSaveData jobsSaveData = saveService.LoadData<PlayerJobsSaveData>(UtilsSave.GetPlayerJobsFile(), false);
-
-            availableJobs = new List<UtilsPlayer.PlayerJob>();
-
-            foreach (var job in jobsSaveData.availableJobs)
-            {
-                availableJobs.Add((UtilsPlayer.PlayerJob)job);
-            }
+            playerJobsData = new PlayerJobsData(jobsSaveData);
         }
         catch
         {
-            // default available jobs
-            availableJobs = new List<UtilsPlayer.PlayerJob>
-            {
-                UtilsPlayer.PlayerJob.None,
-                UtilsPlayer.PlayerJob.Warrior,
-                UtilsPlayer.PlayerJob.Miner,
-                //UtilsPlayer.PlayerJob.Blacksmith
-            };
-
+            playerJobsData = new PlayerJobsData();
             SaveJobsData();
         }
     }
@@ -137,7 +143,7 @@ public class PlayerManager : MonoBehaviour
 
     public void SaveJobsData()
     {
-        PlayerJobsSaveData data = new PlayerJobsSaveData(this);
+        PlayerJobsSaveData data = new PlayerJobsSaveData(playerJobsData);
         saveService.SaveData(UtilsSave.GetPlayerJobsFile(), data, false);
     }
 
@@ -269,6 +275,37 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerBlacksmithSaveData data = new PlayerBlacksmithSaveData(playerBlacksmithData);
         saveService.SaveData(UtilsSave.GetPlayerBlacksmithFile(), data, false);
+    }
+
+    #endregion
+
+    #region FISHER DATA
+
+    private void LoadFisherData()
+    {
+        try
+        {
+            PlayerFisherSaveData fisherSaveData = saveService.LoadData<PlayerFisherSaveData>(UtilsSave.GetPlayerFisherFile(), false);
+            playerFisherData = new PlayerFisherData(fisherSaveData);
+        }
+        catch
+        {
+            playerFisherData = new PlayerFisherData();
+            SaveFisherData();
+        }
+
+    }
+
+    public void UpdateFisherData(PlayerFisherData data)
+    {
+        playerFisherData = data;
+        SaveFisherData();
+    }
+
+    public void SaveFisherData()
+    {
+        PlayerFisherSaveData data = new PlayerFisherSaveData(playerFisherData);
+        saveService.SaveData(UtilsSave.GetPlayerFisherFile(), data, false);
     }
 
     #endregion

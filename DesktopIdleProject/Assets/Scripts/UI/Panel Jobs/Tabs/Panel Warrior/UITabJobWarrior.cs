@@ -108,7 +108,7 @@ public class UITabJobWarrior : UITabWindow
     public void OnMapSelected(string mapName, int idMap)
     {
         LastSceneSettings settings = new LastSceneSettings();
-        settings.lastSceneName = mapName + "Scene";
+        settings.lastSceneName = mapName;
         settings.lastSceneType = SceneLoaderManager.SceneType.CombatMap;
         settings.lastCombatMapId = idMap;
 

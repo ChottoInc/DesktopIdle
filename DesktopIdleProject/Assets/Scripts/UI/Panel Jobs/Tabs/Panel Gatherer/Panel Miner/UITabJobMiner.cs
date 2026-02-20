@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -5,6 +6,10 @@ using UnityEngine.UI;
 
 public class UITabJobMiner : UITabWindow
 {
+    private int transparencyAmount = Shader.PropertyToID("_Transparency");
+
+
+
     [SerializeField] UITabPlayerJob panelJob;
 
     [Space(10)]
@@ -18,10 +23,20 @@ public class UITabJobMiner : UITabWindow
     [SerializeField] TMP_Text textLevel;
     [SerializeField] TMP_Text textStats;
 
+    [Space(10)]
+    [SerializeField] float timerChangeTransparency = 0.75f;
+    [SerializeField] float timerChangeTransparencyIdle = 0.5f;
+
+    private int lastWeaponLevel;
+
     [Header("Buttons")]
     [SerializeField] Button buttonLevelUp;
 
     private List<ItemGroup> requirements;
+
+    private Material matImageWeapon;
+
+    private bool isInitialized;
 
 
     private PlayerMiner player;
@@ -31,27 +46,60 @@ public class UITabJobMiner : UITabWindow
     {
         base.Open();
 
+        InitializedIfNeeded();
+
         if(player == null)
         {
             player = FindFirstObjectByType<PlayerMiner>();
         }
 
+        PlayerMinerData data;
+
+        if (player != null)
+        {
+            data = player.PlayerData;
+        }
+        else
+        {
+            data = PlayerManager.Instance.PlayerMinerData;
+        }
+
+        lastWeaponLevel = data.WeaponLevel;
+
+
+
         UpdateMinerSwordUI();
 
         panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_MINER_TAB);
 
-        // clear list and refill requirements updated to inventory numbers
-        requirementObjs = ClearList(requirementObjs);
-        FillRequirements();
+        RefreshRequirements();
+    }
 
-        // check requirements
-        buttonLevelUp.interactable = CheckEnableLevelUp();
+    private void InitializedIfNeeded()
+    {
+        if (isInitialized) return;
+
+        // copy material image ui
+        matImageWeapon = new Material(imageSword.material);
+        imageSword.material = matImageWeapon;
+
+        isInitialized = true;
     }
 
     public void OnButtonBack()
     {
         Close();
         panelJob.ChangeCurrentTab(null, -1);
+    }
+
+    private void RefreshRequirements()
+    {
+        // clear list and refill requirements updated to inventory numbers
+        requirementObjs = ClearList(requirementObjs);
+        FillRequirements();
+
+        // check requirements
+        buttonLevelUp.interactable = CheckEnableLevelUp();
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -123,18 +171,23 @@ public class UITabJobMiner : UITabWindow
         int weaponLevel = data.WeaponLevel;
         int indexMinerWeaponSprite = weaponLevel / UtilsGather.CHANGE_MINER_WEAPON_EVERY;
 
+        // check for different sprite
+        bool isDifferentLevel = lastWeaponLevel != weaponLevel;
+
         Sprite sprite = UtilsGather.GetMinerWeaponSpriteByIndex(indexMinerWeaponSprite);
         if(sprite == null)
         {
             sprite = UtilsGather.GetMinerWeaponSpriteByIndex(UtilsGather.GetAllMinerWeaponSprites().Length - 1);
         }
 
+        
+
         if(sprite == null)
         {
             Debug.Log("sprite is null");
         }
 
-        if(data == null)
+        if (data == null)
         {
             Debug.Log("data is null");
         }
@@ -143,9 +196,63 @@ public class UITabJobMiner : UITabWindow
 
         // Multiply by 100 to get percentage, and minus 100 to remove base multiplier
         float multiplier = UtilsPlayer.GetMinerWeaponMultiplier(data.WeaponLevel);
-        textStats.text = $"Dmg: +{(multiplier * 100f) - 100f}";
+        textStats.text = $"Dmg: +{(multiplier * 100f) - 100f}%";
+        //Debug.Log("dmg: " + multiplier);
 
-        imageSword.sprite = sprite;
+        // Check if need change
+        if (!isDifferentLevel)
+        {
+            imageSword.sprite = sprite;
+        }
+        else
+        {
+            StartCoroutine(CoChangeWeaponSprite(sprite));
+        }
+
+        lastWeaponLevel = weaponLevel;
+    }
+
+
+    private IEnumerator CoChangeWeaponSprite(Sprite newSprite)
+    {
+        float elapsedTime = 0;
+
+        float lerpedTransparency = 0;
+
+        // lerp from 0 to 1
+        while (elapsedTime < timerChangeTransparency)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+
+            lerpedTransparency = Mathf.Clamp01(elapsedTime / timerChangeTransparency);
+
+            matImageWeapon.SetFloat(transparencyAmount, lerpedTransparency);
+
+            yield return null;
+        }
+
+        // change sprite
+        imageSword.sprite = newSprite;
+
+        // idle
+        yield return new WaitForSecondsRealtime(timerChangeTransparencyIdle);
+
+
+        elapsedTime = 0;
+
+        lerpedTransparency = 1;
+
+        // lerp back from 1 to 0
+        while (elapsedTime < timerChangeTransparency)
+        {
+            elapsedTime += Time.unscaledDeltaTime;
+
+            lerpedTransparency = Mathf.Lerp(1f, 0f, elapsedTime / timerChangeTransparency);
+
+            matImageWeapon.SetFloat(transparencyAmount, lerpedTransparency);
+
+            yield return null;
+        }
     }
 
 
@@ -163,17 +270,16 @@ public class UITabJobMiner : UITabWindow
 
     public void OnButtonLevelUp()
     {
-        // remove requirements
-        // save level and items
-        // update sword ui
-
+        // remove requirements from inventory
         foreach (var requirement in requirements)
         {
             PlayerManager.Instance.Inventory.RemoveItem(requirement.IdItem, requirement.Quantity);
         }
 
+        // save inventory
         PlayerManager.Instance.SaveInventoryData();
 
+        // add level
         if(player == null)
         {
             // update directly from save if not in miner scene
@@ -186,8 +292,13 @@ public class UITabJobMiner : UITabWindow
             PlayerManager.Instance.UpdateMinerData(player.PlayerData);
         }
 
+        // save miner data
         PlayerManager.Instance.SaveMinerData();
 
+        // refresh
+        RefreshRequirements();
+
+        // update ui
         UpdateMinerSwordUI();
     }
 }

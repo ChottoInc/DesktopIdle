@@ -5,6 +5,9 @@ using UnityEngine;
 public class UIPanelItems : MonoBehaviour
 {
     [SerializeField] GameObject invItemPrefab;
+    [SerializeField] GameObject invCardPrefab;
+
+    [Space(10)]
     [SerializeField] Transform container;
 
     private List<GameObject> itemObjs;
@@ -13,7 +16,9 @@ public class UIPanelItems : MonoBehaviour
 
     private int currentInvFilter;
 
+    [Space(10)]
     [SerializeField] UIInventoryPanelInfo panelInfo;
+    [SerializeField] UIPanelDismantle panelDismantle;
 
     public void Setup(int filter)
     {
@@ -48,16 +53,47 @@ public class UIPanelItems : MonoBehaviour
 
         for (int i = 0; i < itemGroups.Count; i++)
         {
+            ItemSO itemSO = UtilsItem.GetItemById(itemGroups[i].IdItem);
+
             switch (currentInvFilter)
             {
-                case UITabInventory.ID_INVENTORY_FILTER_ALL: CreateSinglePrefab(itemGroups[i]); break;
+                case UITabInventory.ID_INVENTORY_FILTER_ALL: CreateSinglePrefab(itemGroups[i], itemSO); break;
+
+                case UITabInventory.ID_INVENTORY_FILTER_ORES: 
+                    if(itemSO.ItemType == UtilsItem.ItemType.Ore)
+                    {
+                        CreateSinglePrefab(itemGroups[i], itemSO); 
+                    }
+                    break;
+
+                case UITabInventory.ID_INVENTORY_FILTER_METALS:
+                    if (itemSO.ItemType == UtilsItem.ItemType.Metal)
+                    {
+                        CreateSinglePrefab(itemGroups[i], itemSO);
+                    }
+                    break;
+
+                case UITabInventory.ID_INVENTORY_FILTER_CARDS:
+                    if (itemSO.ItemType == UtilsItem.ItemType.Card)
+                    {
+                        CreateSinglePrefab(itemGroups[i], itemSO);
+                    }
+                    break;
             }
         }
     }
 
-    private void CreateSinglePrefab(ItemGroup group)
+    private void CreateSinglePrefab(ItemGroup group, ItemSO itemSO)
     {
-        GameObject prefab = Instantiate(invItemPrefab, transform.position, Quaternion.identity);
+        GameObject selected = null;
+
+        switch (itemSO.ItemType)
+        {
+            default: selected = invItemPrefab; break;
+            case UtilsItem.ItemType.Card: selected = invCardPrefab; break;
+        }
+
+        GameObject prefab = Instantiate(selected, transform.position, Quaternion.identity);
         prefab.transform.SetParent(container);
 
         prefab.transform.localScale = new Vector3(1, 1, 1);
@@ -65,7 +101,7 @@ public class UIPanelItems : MonoBehaviour
 
         if (prefab.TryGetComponent(out UIInventoryItem obj))
         {
-            obj.Setup(this, group);
+            obj.Setup(this, group, itemSO);
         }
         itemObjs.Add(prefab);
     }
@@ -78,7 +114,16 @@ public class UIPanelItems : MonoBehaviour
 
     public void ShowDetails(ItemGroup group)
     {
-        panelInfo.Show(true);
-        panelInfo.Setup(group);
+        // If already dismantling, update panel dismantle, else open info item
+        if (!panelDismantle.IsOpen)
+        {
+            panelInfo.Show(true);
+            panelInfo.Setup(group);
+        }
+        else
+        {
+            panelDismantle.Show(true);
+            panelDismantle.Setup(group);
+        }
     }
 }

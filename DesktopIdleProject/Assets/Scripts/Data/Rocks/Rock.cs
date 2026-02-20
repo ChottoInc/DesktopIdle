@@ -109,7 +109,7 @@ public class Rock : MonoBehaviour, IPoolObject
     public void Die()
     {
         RockSpawnManager.Instance.RemoveFromCurrentRocksList(this);
-        PoolManager.Instance.Return(gameObject, "Rock");
+        PoolManager.Instance.Return(gameObject, "rock");
     }
 
 
