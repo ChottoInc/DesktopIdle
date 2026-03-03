@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class UtilsPlayer
 {
-    public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher }
+    public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher, Farmer }
 
     private static PlayerJobSO[] jobs;
 
@@ -19,19 +17,24 @@ public static class UtilsPlayer
     public const int ID_WARRIOR_CRITDMG = 5;
     public const int ID_WARRIOR_LUCK = 6;
 
-    public const int ID_MINER_POWER = 20;
-    public const int ID_MINER_SMASHSPEED = 21;
-    public const int ID_MINER_PRECISION = 22;
-    public const int ID_MINER_LUCK = 23;
+    public const int ID_MINER_POWER = 20;           // damage to rocks
+    public const int ID_MINER_SMASHSPEED = 21;      // atk spd for rocks
+    public const int ID_MINER_PRECISION = 22;       // increase damage on rocks, at max level rocks get full damage
+    public const int ID_MINER_LUCK = 23;            // increase loot chance from rocks
+        
+    public const int ID_BLACKSMITH_CRAFTSPEED = 30; // craft material spd
+    public const int ID_BLACKSMITH_EFFICIENCY = 31; // spare material
+    public const int ID_BLACKSMITH_LUCK = 32;       // double metals if procs
 
-    public const int ID_BLACKSMITH_CRAFTSPEED = 30;
-    public const int ID_BLACKSMITH_EFFICIENCY = 31;
-    public const int ID_BLACKSMITH_LUCK = 32;
+    public const int ID_FISHER_CALMNESS = 33;       // reduce max time to wait for hook
+    public const int ID_FISHER_REFLEX = 34;         // increase success on catch
+    public const int ID_FISHER_KNOWLEDGE = 35;      // increase chance fishes in the pool are different from the ones already caught
+    public const int ID_FISHER_LUCK = 36;           // increase the fish rarity any time it procs
 
-    public const int ID_FISHER_CALMNESS = 33;
-    public const int ID_FISHER_REFLEX = 34;
-    public const int ID_FISHER_KNOWLEDGE = 35;
-    public const int ID_FISHER_LUCK = 36;
+    public const int ID_FARMER_GREENTHUMB = 50;     // increase crop growth
+    public const int ID_FARMER_AGRONOMY = 51;       // increase available seeds every N levels
+    public const int ID_FARMER_KINDNESS = 52;       // increase probability to encounter a companion
+    public const int ID_FARMER_LUCK = 53;           // increase the probability the companion is befriended
 
     // ------ FIGHT STATS ------
 
@@ -267,10 +270,44 @@ public static class UtilsPlayer
             case ID_BLACKSMITH_LUCK: return PlayerManager.Instance.PlayerBlacksmithData.LevelStatLuck;
 
             // FISHER DATA
-            //case ID_MINER_POWER: return PlayerManager.Instance.PlayerMinerData.LevelStatPower;
-            //case ID_MINER_SMASHSPEED: return PlayerManager.Instance.PlayerMinerData.LevelStatSmashSpeed;
-            //case ID_MINER_PRECISION: return PlayerManager.Instance.PlayerMinerData.LevelStatPrecision;
-            //case ID_MINER_LUCK: return PlayerManager.Instance.PlayerMinerData.LevelStatLuck;
+            case ID_FISHER_CALMNESS: return PlayerManager.Instance.PlayerFisherData.LevelStatCalmness;
+            case ID_FISHER_REFLEX: return PlayerManager.Instance.PlayerFisherData.LevelStatReflex;
+            case ID_FISHER_KNOWLEDGE: return PlayerManager.Instance.PlayerFisherData.LevelStatKnowledge;
+            case ID_FISHER_LUCK: return PlayerManager.Instance.PlayerFisherData.LevelStatLuck;
+        }
+    }
+
+    public static string GetStatTooltipById(int id)
+    {
+        switch (id)
+        {
+            default: return "N/A";
+
+            // FIGHT DATA
+            case ID_WARRIOR_MAXHP: return UtilsText.text_tooltip_stat_warrior_maxhp;
+            case ID_WARRIOR_ATK: return UtilsText.text_tooltip_stat_warrior_atk;
+            case ID_WARRIOR_DEF: return UtilsText.text_tooltip_stat_warrior_def;
+            case ID_WARRIOR_ATKSPD: return UtilsText.text_tooltip_stat_warrior_atkspd;
+            case ID_WARRIOR_CRITRATE: return UtilsText.text_tooltip_stat_warrior_critrate;
+            case ID_WARRIOR_CRITDMG: return UtilsText.text_tooltip_stat_warrior_critdmg;
+            case ID_WARRIOR_LUCK: return UtilsText.text_tooltip_stat_warrior_luck;
+
+            // MINER DATA
+            case ID_MINER_POWER: return UtilsText.text_tooltip_stat_miner_power;
+            case ID_MINER_SMASHSPEED: return UtilsText.text_tooltip_stat_miner_smashspeed;
+            case ID_MINER_PRECISION: return UtilsText.text_tooltip_stat_miner_precision;
+            case ID_MINER_LUCK: return UtilsText.text_tooltip_stat_miner_luck;
+
+            // BLACKSMITH DATA
+            case ID_BLACKSMITH_CRAFTSPEED: return UtilsText.text_tooltip_stat_blacksmith_craftspeed;
+            case ID_BLACKSMITH_EFFICIENCY: return UtilsText.text_tooltip_stat_blacksmith_efficiency;
+            case ID_BLACKSMITH_LUCK: return UtilsText.text_tooltip_stat_blacksmith_luck;
+
+            // FISHER DATA
+            case ID_FISHER_CALMNESS: return UtilsText.text_tooltip_stat_fisher_calmness;
+            case ID_FISHER_REFLEX: return UtilsText.text_tooltip_stat_fisher_reflex;
+            case ID_FISHER_KNOWLEDGE: return UtilsText.text_tooltip_stat_fisher_knowledge;
+            case ID_FISHER_LUCK: return UtilsText.text_tooltip_stat_fisher_luck;
         }
     }
 

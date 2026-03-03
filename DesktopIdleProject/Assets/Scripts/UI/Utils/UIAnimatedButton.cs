@@ -13,6 +13,8 @@ public class UIAnimatedButton : Button
     private int animationDirection = 1;
     private int spriteIndex = 0;
 
+
+
     protected override void Awake()
     {
         base.Awake();

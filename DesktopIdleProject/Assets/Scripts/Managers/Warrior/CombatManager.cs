@@ -6,6 +6,12 @@ public class CombatManager : MonoBehaviour
 {
     [SerializeField] PlayerFight player;
 
+    [Header("Cheats")]
+    [SerializeField] bool enemyHighDamageCheat;
+    [SerializeField] bool playerHighDamageCheat;
+    [SerializeField] bool playerHighExpCheat;
+    [SerializeField] bool cardHighDroprateCheat;
+
     private CombatMapSO mapSO;
 
     private Enemy currentEnemy;
@@ -35,6 +41,7 @@ public class CombatManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
     }
 
@@ -117,7 +124,15 @@ public class CombatManager : MonoBehaviour
 
     private void OnPlayerAttack()
     {
-        currentEnemy.EnemyData.TakeDamage(player.PlayerData);
+        if (playerHighDamageCheat)
+        {
+            currentEnemy.EnemyData.TakeDamageCheat(1000f);
+        }
+        else
+        {
+            currentEnemy.EnemyData.TakeDamage(player.PlayerData);
+        }
+            
 
         if (currentEnemy.IsDead)
         {
@@ -129,7 +144,18 @@ public class CombatManager : MonoBehaviour
 
     private void OnEnemyAttack()
     {
-        player.PlayerData.TakeDamage(currentEnemy.EnemyData);
+        if (player == null) return;
+
+        if (player.PlayerData == null) return;
+
+        if (enemyHighDamageCheat)
+        {
+            player.PlayerData.TakeDamageCheat(1000f);
+        }
+        else
+        {
+            player.PlayerData.TakeDamage(currentEnemy.EnemyData);
+        }
 
         if (player.IsDead)
         {
@@ -163,12 +189,20 @@ public class CombatManager : MonoBehaviour
         EnableFight(false);
 
         // give exp to player
-        player.PlayerData.AddExp(rewardedExp);
+        if (playerHighExpCheat)
+        {
+            player.PlayerData.AddExp(2000);
+        }
+        else
+        {
+            player.PlayerData.AddExp(rewardedExp);
+        }
+            
         PlayerManager.Instance.UpdateFightData(player.PlayerData);
 
         // by default cards drop with 10%, add luck of warrior
         float baseCardDropRate = 0.1f;
-        if(UnityEngine.Random.value <= baseCardDropRate + player.PlayerData.CurrentLuck)
+        if (cardHighDroprateCheat)
         {
             // get card drop, card can be null, it means no drop
             CardSO randCardSO = UtilsGeneral.GetRandomValueFromGeneralChanches(StageManager.Instance.PossibleCards);
@@ -177,8 +211,19 @@ public class CombatManager : MonoBehaviour
                 player.AddItem(randCardSO.Id, 1);
             }
         }
-
-
+        else
+        {
+            if (UnityEngine.Random.value <= baseCardDropRate + player.PlayerData.CurrentLuck)
+            {
+                // get card drop, card can be null, it means no drop
+                CardSO randCardSO = UtilsGeneral.GetRandomValueFromGeneralChanches(StageManager.Instance.PossibleCards);
+                if (randCardSO != null)
+                {
+                    player.AddItem(randCardSO.Id, 1);
+                }
+            }
+        }
+        
         if (StageManager.Instance.CurrentEnemyIndex < mapSO.EnemiesPerStage)
         {
             StageManager.Instance.SpawnNextEnemy();
@@ -238,13 +283,11 @@ public class CombatManager : MonoBehaviour
     {
         player.SetAttacking(fight);
 
-        
         if(currentEnemy != null)
         {
             Vector2 playerDir = player.transform.position - currentEnemy.transform.position;
             currentEnemy.SetAttacking(fight, playerDir.normalized);
         }
-            
     }
 
 

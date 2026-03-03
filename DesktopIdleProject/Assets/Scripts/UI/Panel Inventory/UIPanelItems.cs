@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,6 +67,13 @@ public class UIPanelItems : MonoBehaviour
 
                 case UITabInventory.ID_INVENTORY_FILTER_METALS:
                     if (itemSO.ItemType == UtilsItem.ItemType.Metal)
+                    {
+                        CreateSinglePrefab(itemGroups[i], itemSO);
+                    }
+                    break;
+
+                case UITabInventory.ID_INVENTORY_FILTER_FISHES:
+                    if (itemSO.ItemType == UtilsItem.ItemType.Fish)
                     {
                         CreateSinglePrefab(itemGroups[i], itemSO);
                     }

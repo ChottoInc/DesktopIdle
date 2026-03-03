@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,10 +33,62 @@ public class QuestManager : MonoBehaviour
     private Dictionary<int, string> activeBountyQuests;
 
 
+    private bool hasInitBountiesRefresh;
+    private long lastCheckBountiesRefreshDate;
+    private List<string> currentPulledBounties;
+    private List<string> acceptedPulledBounties;
+
+
 
     public Dictionary<string, QuestDataProgress> DictQuestsBountyProgress => dictQuestsBountyProgress;
 
     public Dictionary<int, string> ActiveBountyQuests => activeBountyQuests;
+
+
+
+    public bool HasInitBountiesRefresh => hasInitBountiesRefresh;
+
+    public long LastCheckBountiesRefreshDate => lastCheckBountiesRefreshDate;
+
+    public List<string> CurrentPulledBounties => currentPulledBounties;
+    public List<string> AcceptedPulledBounties => acceptedPulledBounties;
+
+    public bool CanRefreshBounties
+    {
+        get
+        {
+            // only works when game is launched for the first time
+            if(!hasInitBountiesRefresh)
+            {
+                //Debug.Log("refresh first time");
+                return true;
+            }
+            else
+            {
+                // get current ticks
+                long currentCheckBounties = DateTime.UtcNow.Ticks;
+
+                // make the difference
+                TimeSpan difference = new TimeSpan(currentCheckBounties - lastCheckBountiesRefreshDate);
+                //Debug.Log("difference (m): " + difference.Minutes);
+
+                // check for time
+                if (difference.Minutes >= 20)
+                {
+                    // update last check, only in the moment when you can actually refresh
+                    lastCheckBountiesRefreshDate = currentCheckBounties;
+
+                    //Debug.Log("refresh second time");
+                    return true;
+                }
+                else
+                {
+                    //Debug.Log("can't refresh");
+                    return false;
+                }
+            }
+        }
+    }
 
 
 
@@ -66,13 +117,17 @@ public class QuestManager : MonoBehaviour
 
 
 
-
-
-
     private bool isPlayerObserverInit;
+
 
     private PlayerFight playerFight;
     private PlayerMiner playerMiner;
+    private PlayerBlacksmith playerBlacksmith;
+    private PlayerFisher playerFisher;
+
+
+
+    public event Action OnNeedNotication;
 
 
 
@@ -112,10 +167,19 @@ public class QuestManager : MonoBehaviour
             CombatManager.Instance.OnEnemyKill -= OnEnemyKilled;
 
         if (playerFight != null)
+        {
             playerFight.OnStatChange -= OnStatUp;
+            playerFight.OnAddMap -= OnAddMap;
+        }
 
         if (playerMiner != null)
             playerMiner.OnStatChange -= OnStatUp;
+
+        if (playerBlacksmith != null)
+            playerBlacksmith.OnStatChange -= OnStatUp;
+
+        if (playerFisher != null)
+            playerFisher.OnStatChange -= OnStatUp;
     }
 
     private void OnDestroy()
@@ -142,6 +206,7 @@ public class QuestManager : MonoBehaviour
             case SceneLoaderManager.SceneType.CombatMap:
                 playerFight = FindFirstObjectByType<PlayerFight>();
                 playerFight.OnStatChange += OnStatUp;
+                playerFight.OnAddMap += OnAddMap;
 
                 CombatManager.Instance.OnEnemyKill += OnEnemyKilled;
                 break;
@@ -149,6 +214,16 @@ public class QuestManager : MonoBehaviour
             case SceneLoaderManager.SceneType.Miner:
                 playerMiner = FindFirstObjectByType<PlayerMiner>();
                 playerMiner.OnStatChange += OnStatUp;
+                break;
+
+            case SceneLoaderManager.SceneType.Blacksmith:
+                playerBlacksmith = FindFirstObjectByType<PlayerBlacksmith>();
+                playerBlacksmith.OnStatChange += OnStatUp;
+                break;
+
+            case SceneLoaderManager.SceneType.Fisher:
+                playerFisher = FindFirstObjectByType<PlayerFisher>();
+                playerFisher.OnStatChange += OnStatUp;
                 break;
         }
     }
@@ -182,13 +257,19 @@ public class QuestManager : MonoBehaviour
             //Debug.Log("Datas quest: " + dictQuestsStoryProgress.Count);
             //Debug.Log("Datas quest active: " + activeStoryQuests.Count);
         }
+
+        
     }
 
     #region DEFAULT
 
     private void SetupFromDefault()
     {
+        hasInitBountiesRefresh = false;
         lastDailyCreationDate = DateTime.UtcNow.Ticks;
+
+        currentPulledBounties = new List<string>();
+        acceptedPulledBounties = new List<string>();
 
         InitializeStoryQuests();
         InitializeBountyQuests();
@@ -216,16 +297,22 @@ public class QuestManager : MonoBehaviour
                 activeStoryQuests.Add(so.UniqueId);
             }
 
+            questProgress.progressCounter = 0;
+            questProgress.progressCompleted = false;
+
+            /*
             // initialize quest data progress
             switch (so.QuestData.questObjectiveType)
             {
                 case QuestObjectiveType.Kill:
                 case QuestObjectiveType.Obtain:
                 case QuestObjectiveType.LevelUp:
+                case QuestObjectiveType.LevelUp:
                     questProgress.progressCounter = 0;
+                    questProgress.progressCompleted = false;
                     break;
             }
-
+            */
             questProgress.isCleared = false;
 
             // save in dictionary
@@ -302,6 +389,9 @@ public class QuestManager : MonoBehaviour
                 QuestDataProgress questProgress = new QuestDataProgress();
                 questProgress.isActive = true;
 
+                questProgress.progressCounter = 0;
+                questProgress.progressCompleted = false;
+                /*
                 // initialize quest data progress
                 switch (daily.QuestData.questObjectiveType)
                 {
@@ -311,7 +401,7 @@ public class QuestManager : MonoBehaviour
                         questProgress.progressCounter = 0;
                         break;
                 }
-
+                */
                 questProgress.isCleared = false;
 
                 // save in dictionary
@@ -326,7 +416,17 @@ public class QuestManager : MonoBehaviour
 
     private void SetupFromFile(QuestsSaveData saveData)
     {
+        hasInitBountiesRefresh = saveData.hasInitBountiesRefresh;
+        lastCheckBountiesRefreshDate = saveData.lastCheckBountiesRefreshDate;
         lastDailyCreationDate = saveData.lastDailyCreationDate;
+
+        // bounties pulled list
+        currentPulledBounties = new List<string>();
+        currentPulledBounties.AddRange(saveData.currentPulledBounties);
+
+        // bounties pulled list
+        acceptedPulledBounties = new List<string>();
+        acceptedPulledBounties.AddRange(saveData.acceptedPulledBounties);
 
         LoadStoryQuests(saveData.storySaveDatas);
         LoadBountyQuests(saveData.bountySaveDatas);
@@ -415,6 +515,24 @@ public class QuestManager : MonoBehaviour
         return false;
     }
 
+    public void FillPossibleBountiesList(List<string> list)
+    {
+        if (currentPulledBounties == null)
+            currentPulledBounties = new List<string>();
+
+        currentPulledBounties.Clear();
+        currentPulledBounties.AddRange(list);
+    }
+
+    public void FillAcceptedBountiesList(List<string> list)
+    {
+        if (acceptedPulledBounties == null)
+            acceptedPulledBounties = new List<string>();
+
+        acceptedPulledBounties.Clear();
+        acceptedPulledBounties.AddRange(list);
+    }
+
     private void LoadDailyQuests(List<QuestDailySaveData> datas)
     {
         activeDailyQuests = new List<string>();
@@ -477,7 +595,7 @@ public class QuestManager : MonoBehaviour
 
         foreach (var pair in dictQuestsStoryProgress)
         {
-            if (pair.Value.isCleared)
+            if (pair.Value.isCleared && pair.Value.isActive)
             {
                 QuestStorySO so = GetStoryQuestById(pair.Key);
 
@@ -501,6 +619,7 @@ public class QuestManager : MonoBehaviour
                 }
 
                 activeStoryQuests.Remove(pair.Key);
+                //Debug.Log("removed story quest: " + pair.Key);
             }
             else
             {
@@ -558,6 +677,12 @@ public class QuestManager : MonoBehaviour
         SaveQuestsData();
     }
 
+    public void SetHasInitBountyFirstTime()
+    {
+        hasInitBountiesRefresh = true;
+        lastCheckBountiesRefreshDate = DateTime.UtcNow.Ticks;
+    }
+
     #endregion
 
     #region DAILY
@@ -573,9 +698,38 @@ public class QuestManager : MonoBehaviour
 
     #region EVENT ACTIONS
 
+    /// <summary>
+    /// Check the progress and returns if the quest can be claimed
+    /// </summary>
+    private bool CheckNotifications(QuestData data, QuestType questType, string questId)
+    {
+        QuestDataProgress progress;
+
+        switch (questType)
+        {
+            default:
+            case QuestType.Story:
+                progress = dictQuestsStoryProgress[questId];
+                break;
+
+            case QuestType.Bounties:
+                progress = dictQuestsBountyProgress[questId];
+                break;
+
+            case QuestType.Daily:
+                progress = dictQuestsDailyProgress[questId];
+                break;
+        }
+
+        return CanClaim(data, progress);
+    }
+
+
     private void OnEnemyKilled(EnemySO enemySO)
     {
         bool needSave = false;
+
+        bool needNotification = false;
 
         // Story quest checks
         foreach (var quest in activeStoryQuests)
@@ -587,6 +741,12 @@ public class QuestManager : MonoBehaviour
             {
                 UpdateKillProgress(QuestType.Story, quest);
                 needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Story, quest);
+                }
             }
         }
 
@@ -600,8 +760,16 @@ public class QuestManager : MonoBehaviour
             {
                 UpdateKillProgress(QuestType.Bounties, quest);
                 needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Bounties, quest);
+                }
             }
         }
+
+        int counterNotificationDailies = 0;
 
         // Daily quest checks
         foreach (var quest in activeDailyQuests)
@@ -613,7 +781,27 @@ public class QuestManager : MonoBehaviour
             {
                 UpdateKillProgress(QuestType.Daily, quest);
                 needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    // check notification on all dailies
+                    if(CheckNotifications(so.QuestData, QuestType.Daily, quest))
+                    {
+                        counterNotificationDailies++;
+                    }
+                }
             }
+        }
+
+        if(!needNotification && counterNotificationDailies == activeDailyQuests.Count)
+        {
+            needNotification = true;
+        }
+
+        if(needNotification)
+        {
+            OnNeedNotication?.Invoke();
         }
 
         if (needSave)
@@ -681,6 +869,8 @@ public class QuestManager : MonoBehaviour
     {
         bool needSave = false;
 
+        bool needNotification = false;
+
         // Story quest checks
         foreach (var quest in activeStoryQuests)
         {
@@ -691,6 +881,12 @@ public class QuestManager : MonoBehaviour
             {
                 UpdateObtainProgress(QuestType.Story, quest);
                 needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Story, quest);
+                }
             }
         }
 
@@ -704,8 +900,16 @@ public class QuestManager : MonoBehaviour
             {
                 UpdateObtainProgress(QuestType.Bounties, quest);
                 needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Bounties, quest);
+                }
             }
         }
+
+        int counterNotificationDailies = 0;
 
         // Daily quest checks
         foreach (var quest in activeDailyQuests)
@@ -717,7 +921,27 @@ public class QuestManager : MonoBehaviour
             {
                 UpdateObtainProgress(QuestType.Daily, quest);
                 needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    // check notification on all dailies
+                    if (CheckNotifications(so.QuestData, QuestType.Daily, quest))
+                    {
+                        counterNotificationDailies++;
+                    }
+                }
             }
+        }
+
+        if (!needNotification && counterNotificationDailies == activeDailyQuests.Count)
+        {
+            needNotification = true;
+        }
+
+        if (needNotification)
+        {
+            OnNeedNotication?.Invoke();
         }
 
         if (needSave)
@@ -781,6 +1005,8 @@ public class QuestManager : MonoBehaviour
     {
         bool needSave = false;
 
+        bool needNotification = false;
+
         // Story quest checks
         foreach (var quest in activeStoryQuests)
         {
@@ -791,6 +1017,12 @@ public class QuestManager : MonoBehaviour
             {
                 UpdateStatLevelUpProgress(QuestType.Story, quest, amount);
                 needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Story, quest);
+                }
             }
         }
 
@@ -804,8 +1036,16 @@ public class QuestManager : MonoBehaviour
             {
                 UpdateStatLevelUpProgress(QuestType.Bounties, quest, amount);
                 needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Bounties, quest);
+                }
             }
         }
+
+        int counterNotificationDailies = 0;
 
         // Daily quest checks
         foreach (var quest in activeDailyQuests)
@@ -817,7 +1057,27 @@ public class QuestManager : MonoBehaviour
             {
                 UpdateStatLevelUpProgress(QuestType.Daily, quest, amount);
                 needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    // check notification on all dailies
+                    if (CheckNotifications(so.QuestData, QuestType.Daily, quest))
+                    {
+                        counterNotificationDailies++;
+                    }
+                }
             }
+        }
+
+        if (!needNotification && counterNotificationDailies == activeDailyQuests.Count)
+        {
+            needNotification = true;
+        }
+
+        if (needNotification)
+        {
+            OnNeedNotication?.Invoke();
         }
 
         if (needSave)
@@ -871,6 +1131,131 @@ public class QuestManager : MonoBehaviour
                 progress = dictQuestsDailyProgress[questId];
 
                 progress.progressCounter += amount;
+                dictQuestsDailyProgress[questId] = progress;
+                break;
+        }
+    }
+
+    private void OnAddMap(int id)
+    {
+        bool needSave = false;
+
+        bool needNotification = false;
+
+        // Story quest checks
+        foreach (var quest in activeStoryQuests)
+        {
+            // get so
+            QuestStorySO so = GetStoryQuestById(quest);
+
+            if (NeedUpdateUnlockMapProgress(so.QuestData, id))
+            {
+                UpdateUnlockMapProgress(QuestType.Story, quest);
+                needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Story, quest);
+                }
+            }
+        }
+
+        // Bounties quest checks
+        foreach (var quest in activeBountyQuests.Values)
+        {
+            // get so
+            QuestBountySO so = GetBountyQuestById(quest);
+
+            if (NeedUpdateUnlockMapProgress(so.QuestData, id))
+            {
+                UpdateUnlockMapProgress(QuestType.Bounties, quest);
+                needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Bounties, quest);
+                }
+            }
+        }
+
+        int counterNotificationDailies = 0;
+
+        // Daily quest checks
+        foreach (var quest in activeDailyQuests)
+        {
+            // get so
+            QuestDailySO so = GetDailyQuestById(quest);
+
+            if (NeedUpdateUnlockMapProgress(so.QuestData, id))
+            {
+                UpdateUnlockMapProgress(QuestType.Daily, quest);
+                needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    // check notification on all dailies
+                    if (CheckNotifications(so.QuestData, QuestType.Daily, quest))
+                    {
+                        counterNotificationDailies++;
+                    }
+                }
+            }
+        }
+
+        if (!needNotification && counterNotificationDailies == activeDailyQuests.Count)
+        {
+            needNotification = true;
+        }
+
+        if (needNotification)
+        {
+            OnNeedNotication?.Invoke();
+        }
+
+        if (needSave)
+        {
+            SaveQuestsData();
+        }
+    }
+
+    private bool NeedUpdateUnlockMapProgress(QuestData data, int mapId)
+    {
+        if (data.questObjectiveType == QuestObjectiveType.UnlockMap)
+        {
+            if (data.mapId == mapId)
+                return true;
+        }
+        return false;
+    }
+
+    private void UpdateUnlockMapProgress(QuestType questType, string questId)
+    {
+        QuestDataProgress progress;
+
+        switch (questType)
+        {
+            default:
+            case QuestType.Story:
+                progress = dictQuestsStoryProgress[questId];
+
+                progress.progressCompleted = true;
+                dictQuestsStoryProgress[questId] = progress;
+                break;
+
+            case QuestType.Bounties:
+                progress = dictQuestsBountyProgress[questId];
+
+                progress.progressCompleted = true;
+                dictQuestsBountyProgress[questId] = progress;
+                break;
+
+            case QuestType.Daily:
+                progress = dictQuestsDailyProgress[questId];
+
+                progress.progressCompleted = true;
                 dictQuestsDailyProgress[questId] = progress;
                 break;
         }

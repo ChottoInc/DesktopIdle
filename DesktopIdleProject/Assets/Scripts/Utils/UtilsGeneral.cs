@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,11 +11,7 @@ public static class UtilsGeneral
     {
         int hour = System.DateTime.Now.Hour;
 
-        if (hour > 0 && hour <= 6)
-        {
-            return DayMoment.Night;
-        }
-        else if (hour > 6 && hour <= 12)
+        if (hour > 6 && hour <= 12)
         {
             return DayMoment.Morning;
         }
@@ -26,8 +21,26 @@ public static class UtilsGeneral
         }
         else
         {
-            return DayMoment.Evening;
+            return DayMoment.Night;
         }
+    }
+
+    public static string GetDayMomentName(DayMoment dayMoment)
+    {
+        switch(dayMoment)
+        {
+            default:
+            case DayMoment.Morning: return "Morning";
+            case DayMoment.Afternoon: return "Afternoon";
+            case DayMoment.Evening: return "Evening";
+            case DayMoment.Night: return "Night";
+        }
+    }
+
+    public static bool GetRandomSuccessFromValue(float value)
+    {
+        if (Random.value <= value) return true;
+        return false;
     }
 
 

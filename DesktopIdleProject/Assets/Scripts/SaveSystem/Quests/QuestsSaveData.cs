@@ -6,13 +6,26 @@ public class QuestsSaveData
     public List<QuestBountySaveData> bountySaveDatas;
     public List<QuestDailySaveData> dailySaveDatas;
 
+    public bool hasInitBountiesRefresh;
+    public long lastCheckBountiesRefreshDate;
+    public List<string> currentPulledBounties;
+    public List<string> acceptedPulledBounties;
+
     public long lastDailyCreationDate;
 
     public QuestsSaveData() { }
 
     public QuestsSaveData(QuestManager manager)
     {
+        hasInitBountiesRefresh = manager.HasInitBountiesRefresh;
+        lastCheckBountiesRefreshDate = manager.LastCheckBountiesRefreshDate;
         lastDailyCreationDate = manager.LastDailyCreationDate;
+
+        currentPulledBounties = new List<string>();
+        currentPulledBounties.AddRange(manager.CurrentPulledBounties);
+
+        acceptedPulledBounties = new List<string>();
+        acceptedPulledBounties.AddRange(manager.AcceptedPulledBounties);
 
         SaveStoryQuests(manager.DictQuestsStoryProgress);
         SaveBountyQuests(manager.ActiveBountyQuests, manager.DictQuestsBountyProgress);

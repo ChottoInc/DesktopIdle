@@ -1,4 +1,6 @@
 using Kirurobo;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -77,8 +79,10 @@ public class InitializerManager : MonoBehaviour
 
         windowController.windowSize = new Vector2(Screen.currentResolution.width, heightScreen);
 
-        Vector2 usableScreen = GetUsableDesktopSize();
+        Vector2 usableScreen = UtilsWindowsSO.GetUsableDesktopSize(0);
         windowController.windowPosition = new Vector2(0, Screen.currentResolution.height - usableScreen.y);
+
+        //Debug.Log("win init pos: " + windowController.windowPosition);
 
         /*
          * need to check which scene currently in when loading up, and get the correct player data to feed to the manager
@@ -91,19 +95,38 @@ public class InitializerManager : MonoBehaviour
         //Debug.Log("taskbar size: " + usableScreen.y);
     }
 
-    private Vector2 GetUsableDesktopSize()
+    public IEnumerator CoChangeMonitor(int monitorIndex)
     {
-#if UNITY_STANDALONE_WIN
-        Rect taskbar = UtilsWindowsSO.GetTaskbarRect();
-        return new Vector2(Screen.currentResolution.width, taskbar.y);
+        List<DisplayInfo> displays = new List<DisplayInfo>();
+        Screen.GetDisplayLayout(displays);
+        AsyncOperation moveScreenOp = Screen.MoveMainWindowTo(displays[monitorIndex], Vector2Int.zero); //RoundToInt(Vector2.zero)
 
-#elif UNITY_STANDALONE_OSX
-        return UtilsMacOS.GetVisibleFrameSize();
+        yield return moveScreenOp;
 
-#else
-        Rect taskbar = UtilsWindowsSO.GetTaskbarRect();
-        return new Vector2(Screen.currentResolution.width, taskbar.y);
-#endif
+        if(windowController == null)
+        {
+            windowController = FindFirstObjectByType<UniWindowController>();
+        }
+
+        //Debug.Log("win pos after move: " + windowController.windowPosition);
+
+        Vector2 usableScreen = UtilsWindowsSO.GetUsableDesktopSize(monitorIndex);
+
+        // get new window pos
+        Vector2 windowPos = new Vector2(windowController.windowPosition.x, Display.displays[monitorIndex].systemHeight - usableScreen.y);
+        //Debug.Log("expected pos: " + windowPos);
+        
+        // get new window size
+        Vector2 windowSize = new Vector2(Display.displays[monitorIndex].systemWidth, heightScreen);
+        //Debug.Log("expected win size: " + windowSize);
+
+        // set window
+        // should put the window at the start of the monitor
+        windowController.windowSize = windowSize;
+        windowController.windowPosition = windowPos;
+
+        //Debug.Log("actual win pos: " + windowController.windowPosition);
+        //Debug.Log("actual win size: " + windowController.windowSize);
     }
 
 

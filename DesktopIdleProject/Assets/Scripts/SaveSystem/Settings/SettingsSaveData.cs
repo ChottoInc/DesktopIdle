@@ -25,15 +25,23 @@ public class SettingsSaveData
 
     // ------------ GAMEPLAY
 
+    // -- Battle
     public bool isAutoBattleOn;
+
+    // -- Floating HUD
+    public bool isDamageOn;
+    public bool isItemCollectionOn;
     public bool areTooltipsOn;
 
+    // -- Animations
+    public bool areLevelUpEquipmentOn;
 
     // ------------ VIDEO
 
     public bool isAlwaysOnTop;
     public bool isClickThrough;
     public bool is60FPS;
+    public int currentMonitorIndex;
 
 
     // ------------ AUDIO
@@ -64,13 +72,19 @@ public class SettingsSaveData
 
 
         isAutoBattleOn = manager.IsAutoBattleOn;
+
+        isDamageOn = manager.IsDamageOn;
+        isItemCollectionOn = manager.IsItemCollectionOn;
         areTooltipsOn = manager.AreTooltipsOn;
+
+        areLevelUpEquipmentOn = manager.AreLevelUpEquipmentOn;
 
 
 
         isAlwaysOnTop = manager.IsAlwaysOnTop;
         isClickThrough = manager.IsClickThrough;
         is60FPS = manager.Is60FPS;
+        currentMonitorIndex = manager.CurrentMonitorIndex;
 
 
 

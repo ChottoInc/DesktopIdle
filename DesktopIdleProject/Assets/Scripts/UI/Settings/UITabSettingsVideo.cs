@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,9 @@ public class UITabSettingsVideo : UITabWindow
     [Space(10)]
     [SerializeField] Toggle toggle30FPS;
     [SerializeField] Toggle toggle60FPS;
+
+    private int currentMonitorIndex;
+    private int possibleIndexes;
 
     public override void Open()
     {
@@ -26,9 +30,17 @@ public class UITabSettingsVideo : UITabWindow
 
         toggle30FPS.SetIsOnWithoutNotify(!SettingsManager.Instance.Is60FPS);
         toggle60FPS.SetIsOnWithoutNotify(SettingsManager.Instance.Is60FPS);
+
+        currentMonitorIndex = SettingsManager.Instance.CurrentMonitorIndex;
+
+        possibleIndexes = Display.displays.Length;
+
+        // if the saved index is greater than the displays reset to 0
+        if(currentMonitorIndex >= possibleIndexes )
+        {
+            currentMonitorIndex = 0;
+        }
     }
-
-
 
 
     public void OnToggleAlwaysOnTop(bool isOn)
@@ -58,5 +70,31 @@ public class UITabSettingsVideo : UITabWindow
         if (!isOn) return;
 
         SettingsManager.Instance.SetIs60FPS(isOn);
+    }
+
+
+    public void OnButtonChangeMonitor()
+    {
+        // check if more than 1 display is available
+        if (possibleIndexes <= 1) return;
+
+        currentMonitorIndex++;
+
+        // if next display is not available go back to start
+        if(currentMonitorIndex >= possibleIndexes)
+        {
+            currentMonitorIndex = 0;
+        }
+        /*
+        // check if the display is not active, activate it in case
+        if (!Display.displays[currentMonitorIndex].active)
+        {
+            Display.displays[currentMonitorIndex].Activate();
+
+            
+        }
+        */
+        // tell settings manager to swap
+        SettingsManager.Instance.SetCurrentMonitorIndex(currentMonitorIndex, false, true);
     }
 }

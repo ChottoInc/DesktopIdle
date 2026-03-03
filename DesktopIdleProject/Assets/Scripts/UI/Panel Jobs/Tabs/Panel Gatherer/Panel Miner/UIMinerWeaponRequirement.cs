@@ -1,3 +1,4 @@
+using System.Drawing;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,7 +30,16 @@ public class UIMinerWeaponRequirement : MonoBehaviour
             quantityInventory = PlayerManager.Instance.Inventory.ItemGroups[index].Quantity;
         }
 
-        textRequirement.text = $"{quantityInventory}/{requirement.Quantity}";
+        string colorTagOpen = "<color=#FFFFFF>";
+        string colorTagClose = "</color>";
+
+        if (quantityInventory < requirement.Quantity)
+            colorTagOpen = "<color=#878787>";
+
+        //textRequirement.text = $"{quantityInventory}/{requirement.Quantity}";
+
+        string finalRequirement = string.Format("{0}{1}{2}/{3}", colorTagOpen, quantityInventory, colorTagClose, requirement.Quantity);
+        textRequirement.text = finalRequirement;
     }
 
     public void OnPointerEnter()

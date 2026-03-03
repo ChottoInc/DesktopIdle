@@ -1,10 +1,15 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIInventoryFilterButton : MonoBehaviour
 {
     [SerializeField] UITabInventory tabInventory;
     [SerializeField] int filterId;
     [SerializeField] UtilsPlayer.PlayerJob[] showIfAvailableJobs;
+
+    [Header("Highlight")]
+    [SerializeField] Image imageSelected;
+    [SerializeField] Color selectedColor;
 
     public void Refresh()
     {
@@ -24,6 +29,14 @@ public class UIInventoryFilterButton : MonoBehaviour
 
     public void OnButtonClick()
     {
-        tabInventory.OpenInventory(filterId);
+        tabInventory.OpenInventory(this, filterId);
+    }
+
+    public void SelectButton(bool selected)
+    {
+        if (selected)
+            imageSelected.color = selectedColor;
+        else
+            imageSelected.color = Color.white;
     }
 }

@@ -32,6 +32,8 @@ public class UITabJobMiner : UITabWindow
     [Header("Buttons")]
     [SerializeField] Button buttonLevelUp;
 
+    private bool isAnimatingLevelUp;
+
     private List<ItemGroup> requirements;
 
     private Material matImageWeapon;
@@ -206,7 +208,15 @@ public class UITabJobMiner : UITabWindow
         }
         else
         {
-            StartCoroutine(CoChangeWeaponSprite(sprite));
+            // check if Animation is enabled
+            if (SettingsManager.Instance.AreLevelUpEquipmentOn)
+            {
+                StartCoroutine(CoChangeWeaponSprite(sprite));
+            }
+            else
+            {
+                imageSword.sprite = sprite;
+            }
         }
 
         lastWeaponLevel = weaponLevel;
@@ -215,6 +225,8 @@ public class UITabJobMiner : UITabWindow
 
     private IEnumerator CoChangeWeaponSprite(Sprite newSprite)
     {
+        isAnimatingLevelUp = true;
+
         float elapsedTime = 0;
 
         float lerpedTransparency = 0;
@@ -253,6 +265,8 @@ public class UITabJobMiner : UITabWindow
 
             yield return null;
         }
+
+        isAnimatingLevelUp = false;
     }
 
 
@@ -270,6 +284,9 @@ public class UITabJobMiner : UITabWindow
 
     public void OnButtonLevelUp()
     {
+        // check if animations are on and animating right now, so you can't interrupt the animation and bug it
+        if (SettingsManager.Instance.AreLevelUpEquipmentOn && isAnimatingLevelUp) return;
+
         // remove requirements from inventory
         foreach (var requirement in requirements)
         {

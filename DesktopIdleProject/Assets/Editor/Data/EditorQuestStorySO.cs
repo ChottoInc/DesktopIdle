@@ -42,6 +42,10 @@ public class EditorQuestStorySO : Editor
 
     private SerializedProperty s_amountStat;
 
+    // --------- Quest Unlock Map ---------
+
+    private SerializedProperty s_mapId;
+
 
     // --------- Reward ---------
     private SerializedProperty s_rewardAmount;
@@ -69,6 +73,8 @@ public class EditorQuestStorySO : Editor
         s_questLevelUpSpecific = s_questData.FindPropertyRelative("questLevelUpSpecific");
         s_statId = s_questData.FindPropertyRelative("statId");
         s_amountStat = s_questData.FindPropertyRelative("amountStat");
+
+        s_mapId = s_questData.FindPropertyRelative("mapId");
 
         s_rewardAmount = s_questData.FindPropertyRelative("rewardAmount");
     }
@@ -144,6 +150,12 @@ public class EditorQuestStorySO : Editor
 
                     EditorGUILayout.Space();
                     EditorGUILayout.PropertyField(s_amountStat);
+
+                    break;
+
+                case QuestObjectiveType.UnlockMap:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.PropertyField(s_mapId);
 
                     break;
             }

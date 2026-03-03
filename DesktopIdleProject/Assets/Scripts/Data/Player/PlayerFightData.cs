@@ -132,6 +132,7 @@ public class PlayerFightData
 
 
     public event Action<int, int> OnStatChange;
+    public event Action<int> OnAddMap;
 
 
 
@@ -273,6 +274,24 @@ public class PlayerFightData
         OnHpChange?.Invoke();
     }
 
+    /// <summary>
+    /// Used only for testing
+    /// </summary>
+    public void TakeDamageCheat(float damage)
+    {
+        float total = Mathf.Max(0f, damage);
+
+        // subtract total to hp
+        currentHp -= total;
+
+        OnHpChange?.Invoke();
+
+        if (currentHp <= 0f)
+        {
+            currentHp = 0;
+        }
+    }
+
     public void ResetAfterStage()
     {
         currentHp = MaxHp;
@@ -286,5 +305,6 @@ public class PlayerFightData
     public void AddAvailableMap(int id)
     {
         availableMaps.Add(id);
+        OnAddMap?.Invoke(id);
     }
 }

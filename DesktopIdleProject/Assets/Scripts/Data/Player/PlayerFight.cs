@@ -65,6 +65,7 @@ public class PlayerFight : Player
 
 
     public event Action<int, int> OnStatChange;
+    public event Action<int> OnAddMap;
 
 
     public event Action OnResetAfterDeath;
@@ -88,6 +89,7 @@ public class PlayerFight : Player
             playerData.OnLevelUp -= SaveFightData;
 
             playerData.OnStatChange -= OnStatChangeFight;
+            playerData.OnAddMap -= OnAddMapFight;
         }
 
         OnPerformAttack -= PlaySwordHit;
@@ -229,6 +231,7 @@ public class PlayerFight : Player
             playerData.OnLevelUp += SaveFightData;
 
             playerData.OnStatChange += OnStatChangeFight;
+            playerData.OnAddMap += OnAddMapFight;
         }
 
         hpBar.Setup(playerData.MaxHp, playerData.CurrentHp);
@@ -336,11 +339,16 @@ public class PlayerFight : Player
 
     #endregion
 
-    #region HANDLE EVENTS FROM MINER DATA
+    #region HANDLE EVENTS FROM FIGHTER DATA
 
     private void OnStatChangeFight(int id, int value)
     {
         OnStatChange?.Invoke(id, value);
+    }
+
+    private void OnAddMapFight(int id)
+    {
+        OnAddMap?.Invoke(id);
     }
 
     #endregion

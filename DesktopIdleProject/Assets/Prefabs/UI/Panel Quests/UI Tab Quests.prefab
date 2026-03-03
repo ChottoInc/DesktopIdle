@@ -34,10 +34,10 @@ RectTransform:
   - {fileID: 2426821680881395697}
   m_Father: {fileID: 3328782886423787418}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 7, y: -8.5}
-  m_SizeDelta: {x: 5, y: -25.5}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -12.75}
+  m_SizeDelta: {x: 15, y: 0}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &5038750547635676457
 CanvasRenderer:
@@ -3418,7 +3418,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -2, y: 0}
+  m_SizeDelta: {x: -12, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3518155513896102205
 CanvasRenderer:
@@ -3995,6 +3995,7 @@ MonoBehaviour:
   panelQuest: {fileID: 1810794019987141921}
   bountyPrefab: {fileID: 1436521952372760619, guid: ef2360f71b4f2c646bb0b1d0a31085f8, type: 3}
   container: {fileID: 8393731358354383022}
+  maxBounties: 7
 --- !u!1 &6804994133103657473
 GameObject:
   m_ObjectHideFlags: 0
@@ -5999,6 +6000,30 @@ PrefabInstance:
       propertyPath: tabManager
       value: 
       objectReference: {fileID: 1960935104803938447}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: canHighlight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: imageSelected
+      value: 
+      objectReference: {fileID: 3363050005342438851}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.b
+      value: 0.23529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.g
+      value: 0.90588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.r
+      value: 0.14117648
+      objectReference: {fileID: 0}
     - target: {fileID: 7280173131710900138, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
       propertyPath: m_Name
       value: Story
@@ -6008,6 +6033,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+--- !u!114 &3363050005342438851 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2787227170291660160, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+  m_PrefabInstance: {fileID: 578092914832502851}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3429207159748230686 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2851677755421363805, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
@@ -6891,6 +6927,30 @@ PrefabInstance:
       propertyPath: tabManager
       value: 
       objectReference: {fileID: 1960935104803938447}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: canHighlight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: imageSelected
+      value: 
+      objectReference: {fileID: 5794777404898313458}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.b
+      value: 0.23529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.g
+      value: 0.90588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.r
+      value: 0.14117648
+      objectReference: {fileID: 0}
     - target: {fileID: 7280173131710900138, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
       propertyPath: m_Name
       value: Bounties
@@ -6909,6 +6969,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f463e93156d03e4e942243dc4f086c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5794777404898313458 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2787227170291660160, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+  m_PrefabInstance: {fileID: 8558271960266682738}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &5860914632803729199 stripped
@@ -7024,6 +7095,30 @@ PrefabInstance:
       propertyPath: tabManager
       value: 
       objectReference: {fileID: 1960935104803938447}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: canHighlight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: imageSelected
+      value: 
+      objectReference: {fileID: 6349431971479296692}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.b
+      value: 0.23529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.g
+      value: 0.90588236
+      objectReference: {fileID: 0}
+    - target: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: selectedColor.r
+      value: 0.14117648
+      objectReference: {fileID: 0}
     - target: {fileID: 7280173131710900138, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
       propertyPath: m_Name
       value: Daily
@@ -7042,6 +7137,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f463e93156d03e4e942243dc4f086c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6349431971479296692 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2787227170291660160, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+  m_PrefabInstance: {fileID: 9129797983003815732}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &6422343262614528361 stripped

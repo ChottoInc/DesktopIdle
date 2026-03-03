@@ -39,4 +39,14 @@ public class TabManager : MonoBehaviour
             }
         }
     }
+
+    public void CloseCurrentTab()
+    {
+        if (currentTab != null)
+        {
+            currentTab.OnDeselect();
+        }
+
+        currentTab = null;
+    }
 }

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe1df7a8e1ca50244baeb328a238d200, type: 3}
+  m_Name: FishGroupData_1_Predator
+  m_EditorClassIdentifier: 
+  groupType: 1
+  groupName: Predator Series
+  groupDesc: Increase Atk for Warrior Job by 50%.
+  fishes:
+  - {fileID: 11400000, guid: 71c2f171779e2d24e9697075110a61bf, type: 2}
+  - {fileID: 11400000, guid: 2a1f967dcbb954248a0b5f0887426a67, type: 2}
+  - {fileID: 11400000, guid: 473068e39de3a5c4babe286bbbfe9344, type: 2}
+  - {fileID: 11400000, guid: b6fd3ad44bdeb4a45bac5da6303b63ed, type: 2}
+  - {fileID: 11400000, guid: df2fb6fd81d1b5d47a03a53056f10b31, type: 2}
+  - {fileID: 11400000, guid: ad68ad633551535458d0caf702f65f2d, type: 2}
+  - {fileID: 11400000, guid: 5c2109b6d22d3f3428158b7af1f769dc, type: 2}
+  - {fileID: 11400000, guid: 2bba29e7501fce145a45a8031f511c15, type: 2}

@@ -6,7 +6,7 @@ public static class UtilsQuest
 {
     public enum QuestType { Story, Daily, Bounties }
 
-    public enum QuestObjectiveType { Kill, Obtain, LevelUp }
+    public enum QuestObjectiveType { Kill, Obtain, LevelUp, UnlockMap }
 
 
     private static QuestStorySO[] storySOs;
@@ -69,6 +69,12 @@ public static class UtilsQuest
         return null;
     }
 
+    public static QuestBountySO GetRandomBountyQuest()
+    {
+        int rand = Random.Range(0, bountySOs.Length);
+        return bountySOs[rand];
+    }
+
     #endregion
 
     #region DAILY
@@ -123,6 +129,10 @@ public static class UtilsQuest
 
             case QuestObjectiveType.LevelUp:
                 result += string.Format("\n{0}/{1}", progress.progressCounter, data.amountStat);
+                break;
+
+            case QuestObjectiveType.UnlockMap:
+                //result += string.Format("\n{0}/{1}", progress.progressCounter, data.amountStat);
                 break;
         }
 
@@ -187,10 +197,51 @@ public static class UtilsQuest
                     result = string.Format("Level up any stat {0} {1}", data.amountStat, timesString);
                 }
                 break;
+
+            case QuestObjectiveType.UnlockMap:
+
+                CombatMapSO mapSO = UtilsCombatMap.GetMapById(data.mapId);
+                string mapName = mapSO.MapName;
+
+                result = string.Format("Unlock {0} map", mapName);
+
+                break;
         }
 
 
         return result;
+    }
+
+
+    public static bool CanClaim(QuestData data, QuestDataProgress progress)
+    {
+        switch (data.questObjectiveType)
+        {
+            default:
+            case QuestObjectiveType.Kill:
+                return HandleCounterQuestCheck(data.amountKill, progress.progressCounter);
+
+            case QuestObjectiveType.Obtain:
+                return HandleCounterQuestCheck(data.amountObtain, progress.progressCounter);
+
+            case QuestObjectiveType.LevelUp:
+                return HandleCounterQuestCheck(data.amountStat, progress.progressCounter);
+
+            case QuestObjectiveType.UnlockMap:
+                return HandleCompletedQuestCheck(progress.progressCompleted);
+        }
+    }
+
+    private static bool HandleCounterQuestCheck(int counter, int progress)
+    {
+        if (progress >= counter) return true;
+        return false;
+    }
+
+    private static bool HandleCompletedQuestCheck(bool completed)
+    {
+        if (completed) return true;
+        return false;
     }
 
 
@@ -227,6 +278,11 @@ public static class UtilsQuest
 
         public int amountStat;
 
+        // --------- Quest Unlock Map ---------
+
+        // --- Specific
+        public int mapId;
+
 
         // --------- Reward ---------
         public int rewardAmount;
@@ -240,6 +296,7 @@ public static class UtilsQuest
             isActive = saveData.isActive;
 
             progressCounter = saveData.progressCounter;
+            progressCompleted = saveData.progressCompleted;
 
             isCleared = saveData.isCleared;
         }
@@ -249,6 +306,7 @@ public static class UtilsQuest
             isActive = true;
 
             progressCounter = saveData.progressCounter;
+            progressCompleted = saveData.progressCompleted;
 
             isCleared = saveData.isCleared;
         }
@@ -258,13 +316,18 @@ public static class UtilsQuest
             isActive = saveData.isActive;
 
             progressCounter = saveData.progressCounter;
+            progressCompleted = saveData.progressCompleted;
 
             isCleared = saveData.isCleared;
         }
 
         public bool isActive;
 
+        // if need to count something
         public int progressCounter;
+
+        // if need to check if something is completed
+        public bool progressCompleted;
 
         public bool isCleared;
     }

@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UtilsGather;
 
 public static class UtilsItem
 {
@@ -363,6 +361,11 @@ public static class UtilsItem
             if (result.FishRarity == rarity)
                 found = true;
 
+
+            // check if the fish can actually get caught, there are some SOs extra, so the fish wouldn't be in any of the groups
+            if (UtilsGather.GetFishGroupByFish(result) == null)
+                found = false;
+
             tries++;
         }
 
@@ -397,6 +400,32 @@ public static class UtilsItem
             case FishRarity.Tideborn: return 20;
             case FishRarity.Ancient: return 40;
             case FishRarity.Mythic: return 100;
+        }
+    }
+
+    public static string GetFishRarityName(FishRarity rarity)
+    {
+        switch (rarity)
+        {
+            default:
+            case FishRarity.Riverfolk: return "Riverfolk";
+            case FishRarity.Deepwater: return "Deepwater";
+            case FishRarity.Tideborn: return "Tideborn";
+            case FishRarity.Ancient: return "Ancient";
+            case FishRarity.Mythic: return "Mythic";
+        }
+    }
+
+    public static string GetFishRarityColor(FishRarity rarity)
+    {
+        switch (rarity)
+        {
+            default:
+            case FishRarity.Riverfolk: return "D9D9D9";
+            case FishRarity.Deepwater: return "27B95B";
+            case FishRarity.Tideborn: return "273FB9";
+            case FishRarity.Ancient: return "7928BA";
+            case FishRarity.Mythic: return "E0D315";
         }
     }
 

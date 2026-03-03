@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class UtilsGather
@@ -464,6 +465,16 @@ public static class UtilsGather
         foreach (var group in fishGroups)
         {
             if (group.GroupType == type)
+                return group;
+        }
+        return null;
+    }
+
+    public static FishGroupSO GetFishGroupByFish(FishSO fish)
+    {
+        foreach (var group in fishGroups)
+        {
+            if (group.Fishes.Contains(fish))
                 return group;
         }
         return null;

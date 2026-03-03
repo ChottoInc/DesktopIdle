@@ -9,6 +9,7 @@ public class QuestBountySaveData
     public string questId;
 
     public int progressCounter;
+    public bool progressCompleted;
 
     public bool isCleared;
 
@@ -21,6 +22,7 @@ public class QuestBountySaveData
         this.questId = questId;
 
         progressCounter = progress.progressCounter;
+        progressCompleted = progress.progressCompleted;
 
         isCleared = progress.isCleared;
     }

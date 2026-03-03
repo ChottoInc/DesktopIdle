@@ -7,6 +7,7 @@ public class UIPanelObtained : MonoBehaviour
 {
     [SerializeField] Sprite spriteOre;
     [SerializeField] Sprite spriteCard;
+    [SerializeField] Sprite spriteFish;
 
     [Space(10)]
     [SerializeField] Player player;
@@ -78,8 +79,12 @@ public class UIPanelObtained : MonoBehaviour
 
     private void AddItemToQueue(UtilsItem.ItemType itemType)
     {
-        // enqueue new item animation to do
-        queueItems.Enqueue(itemType);
+        // check if Floating is enabled
+        if (SettingsManager.Instance.IsItemCollectionOn)
+        {
+            // enqueue new item animation to do
+            queueItems.Enqueue(itemType);
+        }
     }
 
     private Sprite GetSpriteByType(UtilsItem.ItemType itemType)
@@ -89,6 +94,7 @@ public class UIPanelObtained : MonoBehaviour
             default:
             case UtilsItem.ItemType.Ore: return spriteOre;
             case UtilsItem.ItemType.Card: return spriteCard;
+            case UtilsItem.ItemType.Fish: return spriteFish;
         }
     }
 }

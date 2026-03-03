@@ -6,6 +6,7 @@ public class QuestStorySaveData
     public bool isActive;
 
     public int progressCounter;
+    public bool progressCompleted;
 
     public bool isCleared;
 
@@ -18,6 +19,7 @@ public class QuestStorySaveData
         isActive = progress.isActive;
 
         progressCounter = progress.progressCounter;
+        progressCompleted = progress.progressCompleted;
 
         isCleared = progress.isCleared;
     }

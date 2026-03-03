@@ -3,12 +3,17 @@ using UnityEngine.UI;
 
 public class UITabSettingsGameplay : UITabWindow
 {
-    [Header("Auto-battle")]
+    [Header("Battle")]
     [SerializeField] UIPanelAutoBattle panelAutoBattleSettings;
     [SerializeField] UIPanelAutoBattle panelAutoBattleWorld;
 
-    [Header("Tooltips")]
+    [Header("Floating HUD")]
+    [SerializeField] Toggle toggleDamage;
+    [SerializeField] Toggle toggleItemCollection;
     [SerializeField] Toggle toggleTooltips;
+
+    [Header("Animations")]
+    [SerializeField] Toggle toggleLevelUpEquipmentAnimation;
 
     private void Awake()
     {
@@ -52,9 +57,23 @@ public class UITabSettingsGameplay : UITabWindow
 
 
 
+    public void OnToggleDamage(bool isOn)
+    {
+        SettingsManager.Instance.SetIsDamageOn(isOn);
+    }
+    public void OnToggleItemCollection(bool isOn)
+    {
+        SettingsManager.Instance.SetIsItemCollectionOn(isOn);
+    }
 
     public void OnToggleTooltips(bool isOn)
     {
         SettingsManager.Instance.SetAreTooltipsOn(isOn);
+    }
+
+
+    public void OnToggleLevelUpEquipmentAnimation(bool isOn)
+    {
+        SettingsManager.Instance.SetAreLevelUpEquipmentAnimationOn(isOn);
     }
 }

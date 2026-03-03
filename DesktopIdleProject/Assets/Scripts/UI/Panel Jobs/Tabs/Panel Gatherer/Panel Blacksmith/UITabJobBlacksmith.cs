@@ -9,7 +9,6 @@ public class UITabJobBlacksmith : UITabWindow
     private int transparencyAmount = Shader.PropertyToID("_Transparency");
 
 
-
     [SerializeField] UITabPlayerJob panelJob;
 
     [Space(10)]
@@ -44,6 +43,19 @@ public class UITabJobBlacksmith : UITabWindow
     [Space(10)]
     [SerializeField] Button buttonLevelUp;
 
+    [Space(10)]
+    [SerializeField] Button buttonHelmet;
+    [SerializeField] Button buttonArmor;
+    [SerializeField] Button buttonGloves;
+    [SerializeField] Button buttonBoots;
+    [SerializeField] Color selectedGearColor;
+
+    private Button lastSelectedGearButton;
+
+
+    private bool isAnimatingLevelUp;
+
+
     private List<ItemGroup> requirements;
 
 
@@ -76,14 +88,37 @@ public class UITabJobBlacksmith : UITabWindow
             data = PlayerManager.Instance.PlayerBlacksmithData;
         }
 
-        switch (currentGear)
+        // reset last button gear color
+        if(lastSelectedGearButton != null)
         {
-            case UtilsGather.ID_BLACKSMITH_HELMET: lastWeaponLevel = data.HelmetLevel; break;
-            case UtilsGather.ID_BLACKSMITH_ARMOR: lastWeaponLevel = data.ArmorLevel; break;
-            case UtilsGather.ID_BLACKSMITH_GLOVES: lastWeaponLevel = data.GlovesLevel; break;
-            case UtilsGather.ID_BLACKSMITH_BOOTS: lastWeaponLevel = data.BootsLevel; break;
+            lastSelectedGearButton.image.color = Color.white;
         }
 
+        switch (currentGear)
+        {
+            case UtilsGather.ID_BLACKSMITH_HELMET: 
+                lastWeaponLevel = data.HelmetLevel;
+                lastSelectedGearButton = buttonHelmet;
+                break;
+
+            case UtilsGather.ID_BLACKSMITH_ARMOR: 
+                lastWeaponLevel = data.ArmorLevel;
+                lastSelectedGearButton = buttonArmor;
+                break;
+
+            case UtilsGather.ID_BLACKSMITH_GLOVES:
+                lastWeaponLevel = data.GlovesLevel;
+                lastSelectedGearButton = buttonGloves;
+                break;
+
+            case UtilsGather.ID_BLACKSMITH_BOOTS: 
+                lastWeaponLevel = data.BootsLevel;
+                lastSelectedGearButton = buttonBoots;
+                break;
+        }
+
+        // update selected button color
+        lastSelectedGearButton.image.color = selectedGearColor;
 
         // Update UI
         UpdateSelectedOreUI();
@@ -302,7 +337,15 @@ public class UITabJobBlacksmith : UITabWindow
         }
         else
         {
-            StartCoroutine(CoChangeWeaponSprite(sprite));
+            // check if Animation is enabled
+            if (SettingsManager.Instance.AreLevelUpEquipmentOn)
+            {
+                StartCoroutine(CoChangeWeaponSprite(sprite));
+            }
+            else
+            {
+                imageGear.sprite = sprite;
+            }
         }
 
         lastWeaponLevel = gearLevel;
@@ -310,6 +353,8 @@ public class UITabJobBlacksmith : UITabWindow
 
     private IEnumerator CoChangeWeaponSprite(Sprite newSprite)
     {
+        isAnimatingLevelUp = true;
+
         float elapsedTime = 0;
 
         float lerpedTransparency = 0;
@@ -348,6 +393,8 @@ public class UITabJobBlacksmith : UITabWindow
 
             yield return null;
         }
+
+        isAnimatingLevelUp = false;
     }
 
 
@@ -378,24 +425,28 @@ public class UITabJobBlacksmith : UITabWindow
     public void OnButtonHelmet()
     {
         currentGear = UtilsGather.ID_BLACKSMITH_HELMET;
+        lastSelectedGearButton = buttonHelmet;
         Open();
     }
 
     public void OnButtonArmor()
     {
         currentGear = UtilsGather.ID_BLACKSMITH_ARMOR;
+        lastSelectedGearButton = buttonArmor;
         Open();
     }
 
     public void OnButtonGloves()
     {
         currentGear = UtilsGather.ID_BLACKSMITH_GLOVES;
+        lastSelectedGearButton = buttonGloves;
         Open();
     }
 
     public void OnButtonBoots()
     {
         currentGear = UtilsGather.ID_BLACKSMITH_BOOTS;
+        lastSelectedGearButton = buttonBoots;
         Open();
     }
 
@@ -430,6 +481,9 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonLevelUp()
     {
+        // check if animations are on and animating right now, so you can't interrupt the animation and bug it
+        if (SettingsManager.Instance.AreLevelUpEquipmentOn && isAnimatingLevelUp) return;
+
         // remove requirements from inventory
         foreach (var requirement in requirements)
         {

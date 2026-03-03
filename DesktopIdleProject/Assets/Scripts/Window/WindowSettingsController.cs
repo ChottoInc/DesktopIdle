@@ -1,10 +1,13 @@
 using Kirurobo;
 using UnityEngine;
+using static Kirurobo.UniWindowController;
 
 [RequireComponent(typeof(UniWindowController))]
 public class WindowSettingsController : MonoBehaviour
 {
     private UniWindowController windowController;
+
+    private bool isInitialized;
 
     private void Awake()
     {
@@ -14,9 +17,7 @@ public class WindowSettingsController : MonoBehaviour
         SettingsManager.Instance.OnAlwaysOnTopChange += SetAlwaysOnTop;
         SettingsManager.Instance.OnClickThroughChange += SetClickThrough;
 
-
-        windowController.isTopmost = SettingsManager.Instance.IsAlwaysOnTop;
-        windowController.isHitTestEnabled = SettingsManager.Instance.IsClickThrough;
+        windowController.OnStateChanged += Setup;
     }
 
     private void OnDestroy()
@@ -25,6 +26,16 @@ public class WindowSettingsController : MonoBehaviour
         SettingsManager.Instance.OnClickThroughChange -= SetClickThrough;
     }
 
+    private void Setup(WindowStateEventType type)
+    {
+        if (isInitialized) return;
+
+        // ensure is called after the start
+        isInitialized = true;
+
+        windowController.isTopmost = SettingsManager.Instance.IsAlwaysOnTop;
+        windowController.isHitTestEnabled = SettingsManager.Instance.IsClickThrough;
+    }
 
 
     private void SetAlwaysOnTop(bool isOn)

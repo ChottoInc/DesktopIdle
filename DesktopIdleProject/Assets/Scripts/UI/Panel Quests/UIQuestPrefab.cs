@@ -82,34 +82,12 @@ public class UIQuestPrefab : MonoBehaviour
         textQuest.text = questDesc;
 
         // set claimable
-        buttonClaim.interactable = CanClaim(questData, questDataProgress);
+        buttonClaim.interactable = UtilsQuest.CanClaim(questData, questDataProgress);
 
         // set reward
         rewardAmount = questData.rewardAmount;
 
         textReward.text = rewardAmount.ToString();
-    }
-
-    private bool CanClaim(UtilsQuest.QuestData data, UtilsQuest.QuestDataProgress progress)
-    {
-        switch (data.questObjectiveType)
-        {
-            default:
-            case UtilsQuest.QuestObjectiveType.Kill:
-                return HandleCounterQuestCheck(data.amountKill, progress.progressCounter);
-
-            case UtilsQuest.QuestObjectiveType.Obtain:
-                return HandleCounterQuestCheck(data.amountObtain, progress.progressCounter);
-
-            case UtilsQuest.QuestObjectiveType.LevelUp:
-                return HandleCounterQuestCheck(data.amountStat, progress.progressCounter);
-        }
-    }
-
-    private bool HandleCounterQuestCheck(int counter, int progress)
-    {
-        if (progress >= counter) return true;
-        return false;
     }
 
     private void UpdateProgressBarUI(UtilsQuest.QuestData data, UtilsQuest.QuestDataProgress progress)
@@ -127,6 +105,10 @@ public class UIQuestPrefab : MonoBehaviour
             case UtilsQuest.QuestObjectiveType.LevelUp:
                 progressBar.Setup(data.amountStat, progress.progressCounter);
                 break;
+
+            case UtilsQuest.QuestObjectiveType.UnlockMap:
+                progressBar.gameObject.SetActive(false);
+                break;
         }
         
     }
@@ -141,6 +123,9 @@ public class UIQuestPrefab : MonoBehaviour
         switch (questType)
         {
             case UtilsQuest.QuestType.Story:
+
+                //Debug.Log("claimed story quest: " + storyQuestId);
+
                 // set clear and update new paths
                 QuestManager.Instance.SetStoryQuestCleared(storyQuestId);
                 QuestManager.Instance.UpdateStoryQuests();

@@ -6,6 +6,7 @@ public class UITabInventory : UITabWindow
     public const int ID_INVENTORY_FILTER_ALL = 0;
     public const int ID_INVENTORY_FILTER_ORES = 1;
     public const int ID_INVENTORY_FILTER_METALS = 2;
+    public const int ID_INVENTORY_FILTER_FISHES = 3;
     public const int ID_INVENTORY_FILTER_CARDS = 20;
 
     [Header("Currencies")]
@@ -14,6 +15,8 @@ public class UITabInventory : UITabWindow
     [Header("Filters")]
     [SerializeField]
     UIInventoryFilterButton[] filterButtons;
+
+    private UIInventoryFilterButton currentFilterButton;
 
     [Header("Window Center")]
     [SerializeField] UIPanelItems panelItems;
@@ -31,6 +34,9 @@ public class UITabInventory : UITabWindow
         UpdateFilters();
 
         panelItems.ShowPanelInfo(false);
+
+        currentFilterButton = filterButtons[0];
+        currentFilterButton.SelectButton(true);
         panelItems.Setup(ID_INVENTORY_FILTER_ALL);
     }
 
@@ -42,8 +48,25 @@ public class UITabInventory : UITabWindow
         }
     }
 
-    public void OpenInventory(int filter)
+    public void OpenInventory(UIInventoryFilterButton filterButton, int filter)
     {
+        // deselect current button filter
+        if (currentFilterButton != null)
+        {
+            currentFilterButton.SelectButton(false);
+        }
+
+        if(filterButton != null)
+        {
+            currentFilterButton = filterButton;
+        }
+
+        // select new button filter
+        if (currentFilterButton != null)
+        {
+            currentFilterButton.SelectButton(true);
+        }
+
         panelItems.Setup(filter);
 
         ClosePanelConvert();

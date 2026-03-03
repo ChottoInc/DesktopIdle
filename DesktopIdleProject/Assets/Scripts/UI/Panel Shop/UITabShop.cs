@@ -14,6 +14,9 @@ public class UITabShop : UITabWindow
 
     [Header("Items")]
     [SerializeField] UIPanelShopItems panelShopItems;
+    [SerializeField] UIShopFilterButton firstFilterButton;
+
+    private UIShopFilterButton currentFilterButton;
 
     [Header("Redeem")]
     [SerializeField] GameObject buttonRedeem;
@@ -24,7 +27,6 @@ public class UITabShop : UITabWindow
         base.Open();
 
         UpdateBitsUI();
-
 
         // Check for redeem filter to appear
         if( PlayerManager.Instance.Inventory.HasItem(ID_CARD_ERIS_1) &&
@@ -44,12 +46,29 @@ public class UITabShop : UITabWindow
         panelShopItems.gameObject.SetActive(true);
         panelRedeem.SetActive(false);
 
+        // select first filter by default
+        currentFilterButton = firstFilterButton;
+        currentFilterButton.SelectButton(true);
         panelShopItems.Setup(UtilsShop.ID_SHOP_FILTER_CARDPACKS);
     }
 
-    public void OpenShopWindow(int filter)
+    public void OpenShopWindow(UIShopFilterButton filterButton, int filter)
     {
-        if(filter == UtilsShop.ID_SHOP_FILTER_REDEEM)
+        // deselect current button filter
+        if(currentFilterButton != null)
+        {
+            currentFilterButton.SelectButton(false);
+        }
+
+        currentFilterButton = filterButton;
+
+        // select new button filter
+        if (currentFilterButton != null)
+        {
+            currentFilterButton.SelectButton(true);
+        }
+
+        if (filter == UtilsShop.ID_SHOP_FILTER_REDEEM)
         {
             panelRedeem.SetActive(true);
             panelShopItems.gameObject.SetActive(false);

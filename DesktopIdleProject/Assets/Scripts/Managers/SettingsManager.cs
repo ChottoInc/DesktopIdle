@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
@@ -33,17 +31,34 @@ public class SettingsManager : MonoBehaviour
 
     private long lastLoginDate;
 
+    private bool firstOpen;
+
 
     public long LastLoginDate => lastLoginDate;
+    public bool FirstOpen => firstOpen;
+
 
     // --------- GAMEPLAY
 
+    // -- Battle
     private bool isAutoBattleOn;
+
+    // -- Floating HUD
+    private bool isDamageOn;
+    private bool isItemCollectionOn;
     private bool areTooltipsOn;
+
+    // -- Animations
+    private bool areLevelUpEquipmentOn;
 
 
     public bool IsAutoBattleOn => isAutoBattleOn;
+
+    public bool IsDamageOn => isDamageOn;
+    public bool IsItemCollectionOn => isItemCollectionOn;
     public bool AreTooltipsOn => areTooltipsOn;
+
+    public bool AreLevelUpEquipmentOn => areLevelUpEquipmentOn;
 
 
     // --------- VIDEO
@@ -51,6 +66,7 @@ public class SettingsManager : MonoBehaviour
     private bool isAlwaysOnTop;
     private bool isClickThrough;
     private bool is60FPS;
+    private int currentMonitorIndex;
 
 
 
@@ -61,6 +77,7 @@ public class SettingsManager : MonoBehaviour
     public bool IsAlwaysOnTop => isAlwaysOnTop;
     public bool IsClickThrough => isClickThrough;
     public bool Is60FPS => is60FPS;
+    public int CurrentMonitorIndex => currentMonitorIndex;
 
 
     // --------- AUDIO
@@ -76,6 +93,17 @@ public class SettingsManager : MonoBehaviour
 
 
     public static SettingsManager Instance { get; private set; }
+
+
+    private void OnDestroy()
+    {
+        if(Instance == this)
+        {
+            Save();
+        }
+    }
+
+
 
     private void Awake()
     {
@@ -104,6 +132,7 @@ public class SettingsManager : MonoBehaviour
         catch
         {
             SetupFromDefault();
+            firstOpen = true;
         }
     }
 
@@ -127,12 +156,18 @@ public class SettingsManager : MonoBehaviour
 
         // --- gameplay
         SetIsAutoBattle(saveData.isAutoBattleOn, false);
+
+        SetIsDamageOn(saveData.isDamageOn, false);
+        SetIsItemCollectionOn(saveData.isItemCollectionOn, false);
         SetAreTooltipsOn(saveData.areTooltipsOn, false);
+
+        SetAreLevelUpEquipmentAnimationOn(saveData.areLevelUpEquipmentOn, false);
 
         // --- video
         SetIsAlwaysOnTop(saveData.isAlwaysOnTop, false);
         SetIsClickThrough(saveData.isClickThrough, false);
         SetIs60FPS(saveData.is60FPS, false);
+        SetCurrentMonitorIndex(saveData.currentMonitorIndex, false, false);
 
         // --- audio
         SetMasterVolume(saveData.masterVolume, false);
@@ -166,12 +201,18 @@ public class SettingsManager : MonoBehaviour
 
         // --- gameplay
         SetIsAutoBattle(true, false);
+
+        SetIsDamageOn(true, false);
+        SetIsItemCollectionOn(true, false);
         SetAreTooltipsOn(true, false);
+
+        SetAreLevelUpEquipmentAnimationOn(true, false);
 
         // --- video
         SetIsAlwaysOnTop(false, false);
         SetIsClickThrough(true, false);
         SetIs60FPS(true, false);
+        SetCurrentMonitorIndex(0, true, false);
 
         // --- audio
         SetMasterVolume(1f, false);
@@ -244,6 +285,24 @@ public class SettingsManager : MonoBehaviour
             Save();
     }
 
+
+
+    public void SetIsDamageOn(bool isOn, bool save = true)
+    {
+        isDamageOn = isOn;
+
+        if (save)
+            Save();
+    }
+
+    public void SetIsItemCollectionOn(bool isOn, bool save = true)
+    {
+        isItemCollectionOn = isOn;
+
+        if (save)
+            Save();
+    }
+
     public void SetAreTooltipsOn(bool isOn, bool save = true)
     {
         areTooltipsOn = isOn;
@@ -251,6 +310,16 @@ public class SettingsManager : MonoBehaviour
         if (save)
             Save();
     }
+
+
+    public void SetAreLevelUpEquipmentAnimationOn(bool isOn, bool save = true)
+    {
+        areLevelUpEquipmentOn = isOn;
+
+        if (save)
+            Save();
+    }
+
 
     #endregion
 
@@ -288,7 +357,39 @@ public class SettingsManager : MonoBehaviour
         {
             Application.targetFrameRate = 30;
         }
-        //OnFPSChange?.Invoke(is60FPS);
+
+        if (save)
+            Save();
+    }
+
+    public void SetCurrentMonitorIndex(int index, bool fromDefault, bool save = true)
+    {
+        currentMonitorIndex = index;
+
+        int possibleIndexes = Display.displays.Length;
+
+        // if the saved index is greater than the displays reset to 0
+        if (currentMonitorIndex >= possibleIndexes)
+        {
+            currentMonitorIndex = 0;
+        }
+
+        // check if a setting has been changed from menu or is already saved
+        if (!fromDefault)
+        {
+            /*
+            // ensure the display is activated
+            if (currentMonitorIndex != 0)
+            {
+                // check if the display is not active, activate it in case
+                if (!Display.displays[currentMonitorIndex].active)
+                {
+                    Display.displays[currentMonitorIndex].Activate();
+                }
+            }
+            */
+            StartCoroutine(InitializerManager.Instance.CoChangeMonitor(currentMonitorIndex));
+        }
 
         if (save)
             Save();

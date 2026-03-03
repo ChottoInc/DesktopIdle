@@ -258,12 +258,7 @@ public class Enemy : MonoBehaviour, IPoolObject
 
         CheckFlipOnEnemy(playerDir);
 
-        if (!isAttacking)
-        {
-            // Stop sowrd hit VFX
-            //StopAllCoroutines();
-        }
-        else
+        if (isAttacking)
         {
             float attackSpeedMultiplier = startingAttackSpeedAnimationDuration / CooldownAttack;
 
@@ -272,7 +267,6 @@ public class Enemy : MonoBehaviour, IPoolObject
 
             timerAttack = 0;
         }
-
 
         animator.SetBool("IsAttacking", isAttacking);
     }
@@ -320,7 +314,11 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     public void UpdateDamageUI()
     {
-        panelDamage.ShowDamage();
+        // check if Floating is enabled
+        if (SettingsManager.Instance.IsDamageOn)
+        {
+            panelDamage.ShowDamage();
+        }
     }
 
 

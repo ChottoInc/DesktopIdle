@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,14 @@ public class UIStatusIncreaseStat : MonoBehaviour
     [Space(10)]
     [SerializeField] Button buttonDecrease;
     [SerializeField] Button buttonIncrease;
+
+    [Space(10)]
+    [SerializeField] float showTooltipAfter = 1.5f;
+    [SerializeField] Transform tooltipPosition;
+
+    private bool isShowingTooltip;
+
+
 
     private int currentLevel;
     private int tempLevel;
@@ -99,5 +108,37 @@ public class UIStatusIncreaseStat : MonoBehaviour
 
             CheckEnableButton();
         }
+    }
+
+
+
+    public void OnPointerEnter()
+    {
+        StartCoroutine(CoShowTooltip());
+    }
+
+    public void OnPointerExit()
+    {
+        if (isShowingTooltip)
+        {
+            isShowingTooltip = false;
+            UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_TEXT, true);
+        }
+        else
+        {
+            StopAllCoroutines();
+        }
+    }
+
+    private IEnumerator CoShowTooltip()
+    {
+        yield return new WaitForSecondsRealtime(showTooltipAfter);
+
+        isShowingTooltip = true;
+
+        TooltipManagerData tooltipData = new TooltipManagerData();
+        tooltipData.idTooltip = UITooltipManager.ID_SHOW_TEXT;
+        tooltipData.text = UtilsPlayer.GetStatTooltipById(idStat);
+        UITooltipManager.Instance.Show(tooltipData, tooltipPosition.position, true);
     }
 }

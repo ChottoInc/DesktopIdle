@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +14,8 @@ public class FishSpawnManager : MonoBehaviour
 
     private float CurrentMaxHookTime => Mathf.Max(maxHookTime * player.PlayerData.CurrentCalmness, minHookTime);
 
+    public float AverageHookTime => (minHookTime + CurrentMaxHookTime) /2f;
+
     [Space(10)]
     [SerializeField] UtilsGeneral.GeneralChances<UtilsItem.FishRarity>[] rarityProbabilities;
 
@@ -22,19 +23,56 @@ public class FishSpawnManager : MonoBehaviour
     [Space(10)]
     [SerializeField] PlayerFisher player;
 
+
+    [Header("Cheats")]
+    [SerializeField] bool alwaysCatchFishCheat;
+
+    public bool AlwaysCatchFishCheat => alwaysCatchFishCheat;
+
+
+
     private List<FishSO> currentPool;
+
+    private List<FishSO> caughtFishesSession;
+
+
+
+    public List<FishSO> CaughtFishesSession => caughtFishesSession;
+
 
 
     private bool isInitialized;
 
+
+    public static FishSpawnManager Instance { get; private set; }
+
     private void Awake()
     {
-        currentPool = new List<FishSO>();
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        player.OnFishCaught -= AddFishToCaughtList;
     }
 
 
     private void Start()
     {
+        player.OnFishCaught += AddFishToCaughtList;
+
+
+        currentPool = new List<FishSO>();
+        caughtFishesSession = new List<FishSO>();
+
         FillPool();
 
         timerHook = GetRandomHookTime();
@@ -48,7 +86,9 @@ public class FishSpawnManager : MonoBehaviour
 
         if(timerHook <= 0)
         {
-            HandleHook();
+            //Debug.Log("Attempt catch fish");
+
+            player.HandleHook();
 
             timerHook = GetRandomHookTime();
         }
@@ -58,79 +98,9 @@ public class FishSpawnManager : MonoBehaviour
         }
     }
 
-    private void HandleHook()
-    {
-        // Check knowledge stat success
-        bool successKnowledge = GetRandomSuccessFromValue(player.PlayerData.CurrentKnowledge);
+    
 
-        // Get fish from pool that has been hooked
-        FishSO hookedFish = GetRandomFishFromPool(successKnowledge);
-
-        // Check success hook
-        bool successReflex = GetRandomSuccessFromValue(player.PlayerData.CurrentReflex);
-
-        if (successReflex)
-        {
-            HandleCaughtSuccess(hookedFish);
-        }
-        else
-        {
-            HandleCaughtUnsuccess();
-        }
-
-        // Save fisher data
-        PlayerManager.Instance.UpdateFisherData(player.PlayerData);
-        PlayerManager.Instance.SaveFisherData();
-    }
-
-    private void HandleCaughtSuccess(FishSO hookedFish)
-    {
-        // animate here
-
-        int rewardedExp;
-
-        // Fish caught
-        bool hasAlreadyFish = PlayerManager.Instance.Inventory.HasItem(hookedFish.Id);
-
-        if (!hasAlreadyFish)
-        {
-            // Add fish to caught
-            PlayerManager.Instance.Inventory.AddItem(hookedFish.Id, 1);
-
-            // todo: check for fishgroups
-        }
-        else
-        {
-            // Dismantle fish into bits? for now
-            int bitsToAdd = UtilsItem.DismantleFish(hookedFish.FishRarity);
-            PlayerManager.Instance.Inventory.AddBits(bitsToAdd);
-        }
-
-        // Save ivnentory
-        PlayerManager.Instance.SaveInventoryData();
-
-        // Remove from pool if caught
-        currentPool.Remove(hookedFish);
-
-        // refill pool
-        FillPool();
-
-        // Give player full exp
-        rewardedExp = UtilsItem.GetFishExp(hookedFish.FishRarity);
-        player.PlayerData.AddExp(rewardedExp);
-    }
-
-    private void HandleCaughtUnsuccess()
-    {
-        // animate here
-        // fish go back into pool, nothing happens
-
-        // Give player some exp
-        int rewardedExp = 5;
-        player.PlayerData.AddExp(rewardedExp);
-    }
-
-    private void FillPool()
+    public void FillPool()
     {
         while(currentPool.Count < MAX_FISHES_IN_POOL)
         {
@@ -142,7 +112,7 @@ public class FishSpawnManager : MonoBehaviour
 
             // Get luck and cycle until it fails boost rarity
             float baseLuckPlayer = player.PlayerData.CurrentLuck;
-            while (GetRandomSuccessFromValue(baseLuckPlayer))
+            while (UtilsGeneral.GetRandomSuccessFromValue(baseLuckPlayer))
             {
                 randRarity = UpgradeRarity(randRarity);
                 baseLuckPlayer *= 0.5f;
@@ -156,7 +126,7 @@ public class FishSpawnManager : MonoBehaviour
         }
     }
 
-    private FishSO GetRandomFishFromPool(bool successKnowledge)
+    public FishSO GetRandomFishFromPool(bool successKnowledge)
     {
         bool found;
         FishSO result;
@@ -199,14 +169,23 @@ public class FishSpawnManager : MonoBehaviour
         return (UtilsItem.FishRarity)nextValue;
     }
 
-    private bool GetRandomSuccessFromValue(float value)
+    public void RemoveFishFromPool(FishSO fishSO)
     {
-        if (Random.value <= value) return true;
-        return false;
+        currentPool.Remove(fishSO);
     }
 
     private float GetRandomHookTime()
     {
         return Random.Range(minHookTime, CurrentMaxHookTime);
+
+        // Test
+        //int rand = Random.Range(10, 15);
+        //Debug.Log("Hook time: " + rand);
+        //return rand;
+    }
+
+    private void AddFishToCaughtList(FishSO fishSO)
+    {
+        caughtFishesSession.Add(fishSO);
     }
 }

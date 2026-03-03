@@ -117,11 +117,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1246239151634975886, guid: 0f0361104bef8444f98073ff0ff33780, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 150
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 1246239151634975886, guid: 0f0361104bef8444f98073ff0ff33780, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 150
+      value: 85
       objectReference: {fileID: 0}
     - target: {fileID: 1246239151634975886, guid: 0f0361104bef8444f98073ff0ff33780, type: 3}
       propertyPath: m_LocalPosition.x
@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3920350160799475289, guid: 0f0361104bef8444f98073ff0ff33780, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5244478680253959617, guid: 0f0361104bef8444f98073ff0ff33780, type: 3}
       propertyPath: stopTime
       value: 1
@@ -215,11 +219,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   imageIcon: {fileID: 2173514317088440655}
   iconSettings:
-  - sceneName: ForestScene
-    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
   - sceneName: CaveScene
+    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
+  - sceneName: DesertScene
+    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
+  - sceneName: LakesScene
+    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
+  - sceneName: MountainsScene
+    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
+  - sceneName: RuinedCityScene
+    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
+  - sceneName: RuinedVillageScene
+    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
+  - sceneName: SequoiaScene
+    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
+  - sceneName: ShoreScene
+    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
+  - sceneName: SwampsScene
+    icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
+  - sceneName: WoodsScene
     icon: {fileID: 21300000, guid: ce10959f7cbf71043b1924bacedd7957, type: 3}
   - sceneName: MinerScene
     icon: {fileID: 21300000, guid: 7e4818b9c8ca9e742b0db2941fbec601, type: 3}
   - sceneName: BlacksmithScene
     icon: {fileID: 21300000, guid: 8da23f439bfb8674a9f3d36294fbf8fa, type: 3}
+  - sceneName: FisherScene
+    icon: {fileID: 21300000, guid: 9859b18c72ab16b4693d5844bc27128f, type: 3}

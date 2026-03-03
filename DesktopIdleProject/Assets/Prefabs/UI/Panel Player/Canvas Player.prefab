@@ -196,7 +196,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6654579821228682243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,6 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteOre: {fileID: 21300000, guid: 033f9a56c91bd7d47b4ad1db7c996b3a, type: 3}
   spriteCard: {fileID: 21300000, guid: 172909e9c81177445a797de48f69174d, type: 3}
+  spriteFish: {fileID: 21300000, guid: 4e9a03602455c284981dee3db28e3837, type: 3}
   player: {fileID: 0}
   moveTime: 0.5
   startContentPos: {fileID: 7550450875888107168}

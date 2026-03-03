@@ -119,8 +119,7 @@ public class EnemyData
     {
         // exp growth
         float p = 0.85f;
-        //return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
-        return enemySO.BaseAtk + 100 * Mathf.Pow(currentLevel - 1, p);
+        return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 
     private float CalculateDef()
@@ -233,6 +232,24 @@ public class EnemyData
         OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
 
         if(currentHp <= 0f)
+        {
+            currentHp = 0;
+        }
+    }
+
+    /// <summary>
+    /// Used only for testing
+    /// </summary>
+    public void TakeDamageCheat(float damage)
+    {
+        float total = Mathf.Max(0f, damage);
+
+        // subtract total to hp
+        currentHp -= total;
+
+        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
+
+        if (currentHp <= 0f)
         {
             currentHp = 0;
         }

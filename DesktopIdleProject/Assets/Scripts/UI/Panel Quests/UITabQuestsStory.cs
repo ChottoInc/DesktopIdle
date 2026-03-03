@@ -24,7 +24,8 @@ public class UITabQuestsStory : UITabWindow
 
         for (int i = 0; i < activeQuests.Count; i++)
         {
-            string currentId = activeQuests[i];
+            string currentId = activeQuests[i]; 
+            //Debug.Log("showing story quest: " + currentId);
 
             GameObject prefab = Instantiate(questPrefab, transform.position, Quaternion.identity);
             prefab.transform.SetParent(container);

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using static UtilsPlayer;
 
@@ -16,14 +14,14 @@ public class PlayerFisherData
     // ---- LEVEL STAT POINTS
 
     private int levelStatCalmness = 1;
-    private int levelReflex = 1;
-    private int levelKnowledge = 1;
+    private int levelstatReflex = 1;
+    private int levelstatKnowledge = 1;
     private int levelStatLuck = 1;
 
 
     public int LevelStatCalmness => levelStatCalmness;
-    public int LevelReflex => levelReflex;
-    public int LevelKnowledge => levelKnowledge;
+    public int LevelStatReflex => levelstatReflex;
+    public int LevelStatKnowledge => levelstatKnowledge;
     public int LevelStatLuck => levelStatLuck;
 
 
@@ -64,8 +62,8 @@ public class PlayerFisherData
 
 
     public float CurrentCalmness => baseCalmness + PER_LEVEL_FISHER_GAIN_CALMNESS * (levelStatCalmness - 1);
-    public float CurrentReflex => baseReflex + PER_LEVEL_FISHER_GAIN_REFLEX * (levelReflex - 1);
-    public float CurrentKnowledge => baseKnowledge + PER_LEVEL_FISHER_GAIN_KNOWLEDGE * (levelKnowledge - 1);
+    public float CurrentReflex => baseReflex + PER_LEVEL_FISHER_GAIN_REFLEX * (levelstatReflex - 1);
+    public float CurrentKnowledge => baseKnowledge + PER_LEVEL_FISHER_GAIN_KNOWLEDGE * (levelstatKnowledge - 1);
     public float CurrentLuck => baseLuck + PER_LEVEL_FISHER_GAIN_LUCK * (levelStatLuck - 1);
 
 
@@ -98,8 +96,8 @@ public class PlayerFisherData
         GenerateBaseStats();
 
         levelStatCalmness = saveData.levelStatCalmness;
-        levelReflex = saveData.levelReflex;
-        levelKnowledge = saveData.levelKnowledge;
+        levelstatReflex = saveData.levelReflex;
+        levelstatKnowledge = saveData.levelKnowledge;
         levelStatLuck = saveData.levelStatLuck;
         
         
@@ -125,7 +123,7 @@ public class PlayerFisherData
         baseLuck = 0f; // controls rarity of fish, up to 0.4 - 40%
     }
 
-    private void FillFishGroupsSeriesCompletion()
+    public void FillFishGroupsSeriesCompletion()
     {
         FishGroupSO currentGroup = null;
 
@@ -210,8 +208,8 @@ public class PlayerFisherData
         {
             default: Debug.Log("Increased stat id not correct. " + id); break;
             case ID_FISHER_CALMNESS: levelStatCalmness += amount; break;
-            case ID_FISHER_REFLEX: levelReflex += amount; break;
-            case ID_FISHER_KNOWLEDGE: levelKnowledge += amount; break;
+            case ID_FISHER_REFLEX: levelstatReflex += amount; break;
+            case ID_FISHER_KNOWLEDGE: levelstatKnowledge += amount; break;
             case ID_FISHER_LUCK: levelStatLuck += amount; break;
         }
 

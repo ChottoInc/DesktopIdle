@@ -158,14 +158,22 @@ public class PlayerBlacksmith : Player
             if(UnityEngine.Random.value <= playerData.CurrentEfficiency)
             {
                 // TODO: calculate how much to spare
+                // deafult 20% spare materials?
+
+                needAmount -= Mathf.RoundToInt((float)needAmount * 0.2f);
             }
 
-            // TODO: calculate luck how much to add
+            int amountMetalToAdd = 1;
+            if(UnityEngine.Random.value <= playerData.CurrentLuck)
+            {
+                // if luck procs, dobule material
+                amountMetalToAdd *= 2;
+            }
 
             // Update inventory
             PlayerManager.Instance.Inventory.RemoveItem(id, needAmount);
 
-            PlayerManager.Instance.Inventory.AddItem(metal.Id, 1);
+            PlayerManager.Instance.Inventory.AddItem(metal.Id, amountMetalToAdd);
 
             PlayerManager.Instance.SaveInventoryData();
 

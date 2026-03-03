@@ -5,6 +5,9 @@ public class SmashManager : MonoBehaviour
 {
     [SerializeField] PlayerMiner player;
 
+    [Header("Cheats")]
+    [SerializeField] bool alwaysFindLootCheat;
+
 
     private Rock currentRock;
 
@@ -122,9 +125,12 @@ public class SmashManager : MonoBehaviour
         float randPercLoot = Random.value;
         float thresholdLoot = currentRock.RockData.RockSO.BaseLootChance + player.PlayerData.CurrentLuck;
 
-        // TEST
-        if (randPercLoot <= 1f)
-        //if (randPercLoot <= thresholdLoot)
+        if (alwaysFindLootCheat)
+        {
+            thresholdLoot = 1f;
+        }
+
+        if (randPercLoot <= thresholdLoot)
         {
             //Debug.Log("Looted!");
             ItemSO randLoot = UtilsGeneral.GetRandomValueFromGeneralChanches(currentRock.RockData.RockSO.PossibleItems);

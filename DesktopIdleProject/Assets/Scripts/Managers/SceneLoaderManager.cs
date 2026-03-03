@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoaderManager : MonoBehaviour
 {
-    public enum SceneType { Home, CombatMap, Miner, Blacksmith }
+    public enum SceneType { Home, CombatMap, Miner, Blacksmith, Fisher }
 
 
     [SerializeField] Material fadeMaterial;
@@ -83,6 +83,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.CombatMap: CombatManager.Instance.HandleSwitchScene(); break;
                 case SceneType.Miner: SmashManager.Instance.HandleSwitchScene(); break;
                 case SceneType.Blacksmith: FindFirstObjectByType<PlayerBlacksmith>().HandleSwitchScene(); break;
+                case SceneType.Fisher: break;
             }
         }
 
@@ -125,6 +126,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.CombatMap: CombatManager.Instance.HandleSwitchScene(); break;
                 case SceneType.Miner: SmashManager.Instance.HandleSwitchScene(); break;
                 case SceneType.Blacksmith: FindFirstObjectByType<PlayerBlacksmith>().HandleSwitchScene(); break;
+                case SceneType.Fisher: break;
             }
         }
 
@@ -153,11 +155,17 @@ public class SceneLoaderManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // put into else block whatever needs to be called always but the first time the manager is initialized
         if (!isInit)
         {
             isInit = true;
         }
-
+        else
+        {
+            // set every time you change scene the correct monitor
+            //StartCoroutine(InitializerManager.Instance.CoChangeMonitor(SettingsManager.Instance.CurrentMonitorIndex));
+        }
+            
         // disable scene barrier after loading
         currentSceneBarrier = FindFirstObjectByType<UIBarrier>();
         if (currentSceneBarrier != null)
@@ -193,6 +201,11 @@ public class SceneLoaderManager : MonoBehaviour
 
                 case SceneType.Blacksmith:
                     FindFirstObjectByType<PlayerBlacksmith>().Setup(PlayerManager.Instance.PlayerBlacksmithData);
+                    uiManager = FindFirstObjectByType<UIManager>();
+                    break;
+
+                case SceneType.Fisher:
+                    FindFirstObjectByType<PlayerFisher>().Setup(PlayerManager.Instance.PlayerFisherData);
                     uiManager = FindFirstObjectByType<UIManager>();
                     break;
             }

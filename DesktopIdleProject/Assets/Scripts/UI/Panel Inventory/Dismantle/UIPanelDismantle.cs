@@ -133,6 +133,6 @@ public class UIPanelDismantle : MonoBehaviour
         tabInventory.Open();
 
         // Reopen tab cards
-        tabInventory.OpenInventory(UITabInventory.ID_INVENTORY_FILTER_CARDS);
+        tabInventory.OpenInventory(null, UITabInventory.ID_INVENTORY_FILTER_CARDS);
     }
 }

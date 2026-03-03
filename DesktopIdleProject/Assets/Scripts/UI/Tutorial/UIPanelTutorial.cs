@@ -39,6 +39,7 @@ public class UIPanelTutorial : MonoBehaviour
     [SerializeField] GameObject buttonSetting;
     [SerializeField] GameObject panelStage;
     [SerializeField] GameObject panelAutoBattle;
+    [SerializeField] GameObject panelShrink;
 
     private List<GameObject> uiElementsToHighlight;
     private int elementHighlightedIndex;
@@ -149,6 +150,7 @@ public class UIPanelTutorial : MonoBehaviour
             buttonSetting.SetActive(true);
             panelStage.SetActive(true);
             panelAutoBattle.SetActive(true);
+            panelShrink.SetActive(true);
 
             // hide panel
             content.SetActive(false);
@@ -249,5 +251,7 @@ public class UIPanelTutorial : MonoBehaviour
         buttonSetting.SetActive(false);
         panelStage.SetActive(false);
         panelAutoBattle.SetActive(false);
+
+        panelShrink.SetActive(false);
     }
 }

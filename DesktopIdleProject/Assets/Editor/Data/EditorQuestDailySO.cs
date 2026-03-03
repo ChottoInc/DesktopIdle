@@ -41,6 +41,10 @@ public class EditorQuestDailySO : Editor
 
     private SerializedProperty s_amountStat;
 
+    // --------- Quest Unlock Map ---------
+
+    private SerializedProperty s_mapId;
+
 
 
     private void OnEnable()
@@ -65,6 +69,8 @@ public class EditorQuestDailySO : Editor
         s_questLevelUpSpecific = s_questData.FindPropertyRelative("questLevelUpSpecific");
         s_statId = s_questData.FindPropertyRelative("statId");
         s_amountStat = s_questData.FindPropertyRelative("amountStat");
+
+        s_mapId = s_questData.FindPropertyRelative("mapId");
     }
 
     public override void OnInspectorGUI()
@@ -137,6 +143,12 @@ public class EditorQuestDailySO : Editor
 
                     EditorGUILayout.Space();
                     EditorGUILayout.PropertyField(s_amountStat);
+
+                    break;
+
+                case QuestObjectiveType.UnlockMap:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.PropertyField(s_mapId);
 
                     break;
             }

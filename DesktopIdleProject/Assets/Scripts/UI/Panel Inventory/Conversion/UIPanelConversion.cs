@@ -148,7 +148,7 @@ public class UIPanelConversion : MonoBehaviour
     {
         Close();
 
-        tabInventory.OpenInventory(UITabInventory.ID_INVENTORY_FILTER_CARDS);
+        tabInventory.OpenInventory(null, UITabInventory.ID_INVENTORY_FILTER_CARDS);
     }
 
     public void Close()

@@ -243,7 +243,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tabManager: {fileID: 0}
   tabWindow: {fileID: 0}
+  reclickToClose: 1
   stopTime: 1
+  canHighlight: 1
+  imageSelected: {fileID: 7685505660014104586}
+  selectedColor: {r: 0.14117648, g: 0.90588236, b: 0.23529412, a: 1}
 --- !u!114 &8985481413391949089
 MonoBehaviour:
   m_ObjectHideFlags: 0

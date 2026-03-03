@@ -19,8 +19,8 @@ public class PlayerFisherSaveData
     public PlayerFisherSaveData(PlayerFisherData data)
     {
         levelStatCalmness = data.LevelStatCalmness;
-        levelReflex = data.LevelReflex;
-        levelKnowledge = data.LevelKnowledge;
+        levelReflex = data.LevelStatReflex;
+        levelKnowledge = data.LevelStatKnowledge;
         levelStatLuck = data.LevelStatLuck;
 
         availableStatPoints = data.AvailableStatPoints;

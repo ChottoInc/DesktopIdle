@@ -23,6 +23,7 @@ public class PlayerJobsData
             UtilsPlayer.PlayerJob.None,
             UtilsPlayer.PlayerJob.Warrior,
             UtilsPlayer.PlayerJob.Miner,
+            UtilsPlayer.PlayerJob.Fisher,
             //UtilsPlayer.PlayerJob.Blacksmith
         };
 
