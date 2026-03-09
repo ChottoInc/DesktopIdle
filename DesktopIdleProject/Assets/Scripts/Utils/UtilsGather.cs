@@ -16,6 +16,11 @@ public static class UtilsGather
     public enum FishGroupType { Life, Predator, Guardian, Dart, Sharp, Piercing, Golden, Elder, Quick }
 
 
+    // Fisher
+    private static CropSO[] crops;
+    private static CompanionSO[] companions;
+
+
 
     private static Sprite[] minerWeaponSprites;
 
@@ -169,7 +174,7 @@ public static class UtilsGather
 
 
     // -------------------- FISHER -----------------------
-    public const float FISHER_LIFE_SERIES_COMPLETE_MULTIPLIER = 2f;       // max hp
+    public const float FISHER_LIFE_SERIES_COMPLETE_MULTIPLIER = 2f;         // max hp
     public const float FISHER_PREDATOR_SERIES_COMPLETE_MULTIPLIER = 1.5f;   // atk
     public const float FISHER_GUARDIAN_SERIES_COMPLETE_MULTIPLIER = 1.3f;   // def
     public const float FISHER_DART_SERIES_COMPLETE_MULTIPLIER = 1.2f;       // atk spd
@@ -189,7 +194,9 @@ public static class UtilsGather
         // Fisher
         fishGroups = LoadFishGroups();
 
-
+        // Farmer
+        crops = LoadCrops();
+        companions = LoadCompanions();
 
         minerWeaponSprites = LoadMinerWeaponSprites();
 
@@ -197,7 +204,6 @@ public static class UtilsGather
         blacksmithArmorSprites = LoadBlacksmithGearSprites("Sprites/Blacksmith/Armors");
         blacksmithGlovesSprites = LoadBlacksmithGearSprites("Sprites/Blacksmith/Gloves");
         blacksmithBootsSprites = LoadBlacksmithGearSprites("Sprites/Blacksmith/Boots");
-
     }
 
     #region ROCKS
@@ -476,6 +482,52 @@ public static class UtilsGather
         {
             if (group.Fishes.Contains(fish))
                 return group;
+        }
+        return null;
+    }
+
+    #endregion
+
+    #region FARMER 
+
+    private static CropSO[] LoadCrops()
+    {
+        return Resources.LoadAll<CropSO>("Data/Player/Farmer");
+    }
+
+
+    public static CropSO[] GetAllCrops()
+    {
+        return crops;
+    }
+
+    public static CropSO GetCropById(int id)
+    {
+        foreach (var crop in crops)
+        {
+            if (crop.Id == id)
+                return crop;
+        }
+        return null;
+    }
+
+    private static CompanionSO[] LoadCompanions()
+    {
+        return Resources.LoadAll<CompanionSO>("Data/Player/Farmer");
+    }
+
+
+    public static CompanionSO[] GetAllCompanions()
+    {
+        return companions;
+    }
+
+    public static CompanionSO GetCompanionById(int id)
+    {
+        foreach (var companion in companions)
+        {
+            if (companion.Id == id)
+                return companion;
         }
         return null;
     }

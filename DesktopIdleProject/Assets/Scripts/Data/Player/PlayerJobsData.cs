@@ -24,6 +24,7 @@ public class PlayerJobsData
             UtilsPlayer.PlayerJob.Warrior,
             UtilsPlayer.PlayerJob.Miner,
             UtilsPlayer.PlayerJob.Fisher,
+            UtilsPlayer.PlayerJob.Farmer,
             //UtilsPlayer.PlayerJob.Blacksmith
         };
 

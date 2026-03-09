@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UtilsPlayer;
 
 public class PlayerFightData
 {
@@ -76,13 +75,13 @@ public class PlayerFightData
 
     public int CurrentLevel => currentLevel;
     public int CurrentExp => currentExp;
-    public int ExpToNextLevel => RequiredExpForWarriorLevel(currentLevel + 1) - RequiredExpForWarriorLevel(currentLevel);
-    public int TotalExpToNextLevel => RequiredExpForWarriorLevel(currentLevel + 1);
-    public int TotalExp => RequiredExpForWarriorLevel(currentLevel) + currentExp;
+    public int ExpToNextLevel => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel + 1) - UtilsWarrior.RequiredExpForWarriorLevel(currentLevel);
+    public int TotalExpToNextLevel => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel + 1);
+    public int TotalExp => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel) + currentExp;
 
 
     public float MaxHp => 
-        (baseMaxHp + PER_LEVEL_WARRIOR_GAIN_MAXHP * (levelStatMaxHp - 1)) *
+        (baseMaxHp + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_MAXHP * (levelStatMaxHp - 1)) *
         PlayerManager.Instance.HelmetMaxHpBlacksmithMultiplier *
         PlayerManager.Instance.FisherLifeSeriesMultiplier;
 
@@ -92,35 +91,35 @@ public class PlayerFightData
      * using weapon miner level 
      */
     public float CurrentAtk => 
-        (baseAtk + PER_LEVEL_WARRIOR_GAIN_ATK * (levelStatAtk - 1)) *
+        (baseAtk + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_ATK * (levelStatAtk - 1)) *
         PlayerManager.Instance.WeaponMinerMultiplier *
         PlayerManager.Instance.FisherPredatorSeriesMultiplier;
 
     public float CurrentDef => 
-        (baseDef + PER_LEVEL_WARRIOR_GAIN_DEF * (levelStatDef - 1)) *
+        (baseDef + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_DEF * (levelStatDef - 1)) *
         PlayerManager.Instance.ArmorDefBlacksmithMultiplier *
         PlayerManager.Instance.BootsDefBlacksmithMultiplier *
         PlayerManager.Instance.FisherGuardianSeriesMultiplier;
 
     // todo: if more mehods will be available to increase atk spd and crit rate, then check if you want those stats to be past the max threshold
     public float CurrentAtkSpd => 
-        (baseAtkSpd + PER_LEVEL_WARRIOR_GAIN_ATK_SPEED * (levelStatAtkSpd - 1)) *
+        (baseAtkSpd + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_ATK_SPEED * (levelStatAtkSpd - 1)) *
         PlayerManager.Instance.GlovesAtkSpdBlacksmithMultiplier *
         PlayerManager.Instance.FisherDartSeriesMultiplier;
 
     public float CurrentCritRate => 
-        (baseCritRate + PER_LEVEL_WARRIOR_GAIN_CRIT_RATE * (levelStatCritRate - 1)) *
+        (baseCritRate + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_CRIT_RATE * (levelStatCritRate - 1)) *
         PlayerManager.Instance.BootsCritRateBlacksmithMultiplier *
         PlayerManager.Instance.FisherSharpSeriesMultiplier;
 
     public float CurrentCritDmg => 
-        (baseCritDmg + PER_LEVEL_WARRIOR_GAIN_CRIT_DMG * (levelStatCritDmg - 1)) *
+        (baseCritDmg + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_CRIT_DMG * (levelStatCritDmg - 1)) *
         PlayerManager.Instance.GlovesCritDmgBlacksmithMultiplier *
         PlayerManager.Instance.FisherPiercingSeriesMultiplier;
 
     // affects card drop rates, and gives a one more chance to crit rate check
     public float CurrentLuck => 
-        (baseLuck + PER_LEVEL_WARRIOR_GAIN_LUCK * (levelStatLuck - 1)) *
+        (baseLuck + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_LUCK * (levelStatLuck - 1)) *
         PlayerManager.Instance.FisherGoldenSeriesMultiplier;
 
 
@@ -234,13 +233,13 @@ public class PlayerFightData
         switch (id)
         {
             default: Debug.Log("Increased stat id not correct. " + id); break;
-            case ID_WARRIOR_MAXHP: levelStatMaxHp += amount; break;
-            case ID_WARRIOR_ATK: levelStatAtk += amount; break;
-            case ID_WARRIOR_DEF: levelStatDef += amount; break;
-            case ID_WARRIOR_ATKSPD: levelStatAtkSpd += amount; break;
-            case ID_WARRIOR_CRITRATE: levelStatCritRate += amount; break;
-            case ID_WARRIOR_CRITDMG: levelStatCritDmg += amount; break;
-            case ID_WARRIOR_LUCK: levelStatLuck += amount; break;
+            case UtilsPlayer.ID_WARRIOR_MAXHP: levelStatMaxHp += amount; break;
+            case UtilsPlayer.ID_WARRIOR_ATK: levelStatAtk += amount; break;
+            case UtilsPlayer.ID_WARRIOR_DEF: levelStatDef += amount; break;
+            case UtilsPlayer.ID_WARRIOR_ATKSPD: levelStatAtkSpd += amount; break;
+            case UtilsPlayer.ID_WARRIOR_CRITRATE: levelStatCritRate += amount; break;
+            case UtilsPlayer.ID_WARRIOR_CRITDMG: levelStatCritDmg += amount; break;
+            case UtilsPlayer.ID_WARRIOR_LUCK: levelStatLuck += amount; break;
         }
 
         OnStatChange?.Invoke(id, amount);

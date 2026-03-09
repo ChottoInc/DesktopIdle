@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092ea51638e200b4aade7d4282df60d2, type: 3}
+  m_Name: CropData_1_Lumberry
+  m_EditorClassIdentifier: 
+  id: 1
+  baseGrowthTime: 45
+  cropName: Lumberry
+  spriteSeed: {fileID: 21300000, guid: e426be52e0749434db0063ac888ba5a2, type: 3}
+  spriteCrop:
+  - {fileID: 1330027496, guid: 91fe4d1a4809c4c4281755d2ec52c932, type: 3}
+  - {fileID: 394333282, guid: 91fe4d1a4809c4c4281755d2ec52c932, type: 3}
+  - {fileID: -1243888912, guid: 91fe4d1a4809c4c4281755d2ec52c932, type: 3}
+  - {fileID: -1515217126, guid: 91fe4d1a4809c4c4281755d2ec52c932, type: 3}
+  - {fileID: -251167038, guid: 91fe4d1a4809c4c4281755d2ec52c932, type: 3}
+  attractedCompanions: []

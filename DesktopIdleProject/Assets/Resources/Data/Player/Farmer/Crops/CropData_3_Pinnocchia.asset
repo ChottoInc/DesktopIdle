@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092ea51638e200b4aade7d4282df60d2, type: 3}
+  m_Name: CropData_3_Pinnocchia
+  m_EditorClassIdentifier: 
+  id: 3
+  baseGrowthTime: 100
+  cropName: Pinnocchia
+  spriteSeed: {fileID: 21300000, guid: e5606a51fc58c7e468b5aa4b36d930aa, type: 3}
+  spriteCrop:
+  - {fileID: 1673504085, guid: a21f154a6c710d244b4c6f42e3b5870f, type: 3}
+  - {fileID: -288093380, guid: a21f154a6c710d244b4c6f42e3b5870f, type: 3}
+  - {fileID: -1190551492, guid: a21f154a6c710d244b4c6f42e3b5870f, type: 3}
+  - {fileID: -1951643860, guid: a21f154a6c710d244b4c6f42e3b5870f, type: 3}
+  - {fileID: 1603533899, guid: a21f154a6c710d244b4c6f42e3b5870f, type: 3}
+  attractedCompanions: []

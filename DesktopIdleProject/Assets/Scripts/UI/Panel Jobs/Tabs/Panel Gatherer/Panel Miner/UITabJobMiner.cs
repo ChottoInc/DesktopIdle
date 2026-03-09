@@ -197,7 +197,7 @@ public class UITabJobMiner : UITabWindow
         textLevel.text = $"Lv. {weaponLevel}";
 
         // Multiply by 100 to get percentage, and minus 100 to remove base multiplier
-        float multiplier = UtilsPlayer.GetMinerWeaponMultiplier(data.WeaponLevel);
+        float multiplier = UtilsMiner.GetMinerWeaponMultiplier(data.WeaponLevel);
         textStats.text = $"Dmg: +{(multiplier * 100f) - 100f}%";
         //Debug.Log("dmg: " + multiplier);
 

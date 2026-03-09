@@ -48,15 +48,15 @@ public class PlayerMinerData
 
     public int CurrentLevel => currentLevel;
     public int CurrentExp => currentExp;
-    public int ExpToNextLevel => RequiredExpForMinerLevel(currentLevel + 1) - RequiredExpForMinerLevel(currentLevel);
-    public int TotalExpToNextLevel => RequiredExpForMinerLevel(currentLevel + 1);
-    public int TotalExp => RequiredExpForMinerLevel(currentLevel) + currentExp;
+    public int ExpToNextLevel => UtilsMiner.RequiredExpForMinerLevel(currentLevel + 1) - UtilsMiner.RequiredExpForMinerLevel(currentLevel);
+    public int TotalExpToNextLevel => UtilsMiner.RequiredExpForMinerLevel(currentLevel + 1);
+    public int TotalExp => UtilsMiner.RequiredExpForMinerLevel(currentLevel) + currentExp;
 
 
-    public float CurrentPower => basePower + PER_LEVEL_MINER_GAIN_POWER * (levelStatPower - 1);
-    public float CurrentSmashSpeed => baseSmashSpeed + PER_LEVEL_MINER_GAIN_SMASHSPEED * (levelSmashSpeed - 1);
-    public float CurrentPrecision => basePrecision + PER_LEVEL_MINER_GAIN_PRECISION * (levelPrecision - 1);
-    public float CurrentLuck => baseLuck + PER_LEVEL_MINER_GAIN_LUCK * (levelStatLuck - 1);
+    public float CurrentPower => basePower + UtilsMiner.PER_LEVEL_MINER_GAIN_POWER * (levelStatPower - 1);
+    public float CurrentSmashSpeed => baseSmashSpeed + UtilsMiner.PER_LEVEL_MINER_GAIN_SMASHSPEED * (levelSmashSpeed - 1);
+    public float CurrentPrecision => basePrecision + UtilsMiner.PER_LEVEL_MINER_GAIN_PRECISION * (levelPrecision - 1);
+    public float CurrentLuck => baseLuck + UtilsMiner.PER_LEVEL_MINER_GAIN_LUCK * (levelStatLuck - 1);
 
     public int WeaponLevel => levelWeaponMiner;
 

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3903303991055004720}
   - component: {fileID: 7509904139377428138}
+  - component: {fileID: 8666190977582480852}
   m_Layer: 5
   m_Name: Panel Planted Crop Info
   m_TagString: Untagged
@@ -65,6 +66,25 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &8666190977582480852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363777189907419187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3774192fb58e03c448566552d124cd48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelCrops: {fileID: 0}
+  slot: 0
+  spriteAdd: {fileID: 21300000, guid: c883ca3019eb5e4489586e9d51d4f68e, type: 3}
+  imageCrop: {fileID: 9149263492918404248}
+  textName: {fileID: 5040783599236488615}
+  textGrowth: {fileID: 8492944637095751227}
+  barGrowth: {fileID: 3144897266153210961}
 --- !u!1 &1606736050936082701
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,6 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7796548220056205591}
   - component: {fileID: 4533389454993133366}
+  - component: {fileID: 3144897266153210961}
   m_Layer: 5
   m_Name: Slider Growth
   m_TagString: Untagged
@@ -288,6 +309,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3144897266153210961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3911349880502765029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 568e92ded8788e94ca485c2619157ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 4533389454993133366}
 --- !u!1 &6318894855409451096
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,9 +716,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UITabJobBlacksmith, Assembly-CSharp
-        m_MethodName: OnButtonSelectOre
+      - m_Target: {fileID: 8666190977582480852}
+        m_TargetAssemblyTypeName: UIFarmerPlantedCropInfo, Assembly-CSharp
+        m_MethodName: OnButtonAddCrop
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -712,7 +746,7 @@ GameObject:
   - component: {fileID: 1244167409377310594}
   - component: {fileID: 9149263492918404248}
   m_Layer: 5
-  m_Name: Icon Ore
+  m_Name: Icon Crop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -25,4 +25,9 @@ public static class UtilsText
     public static string text_tooltip_stat_fisher_reflex = "Increase Fisher probability to catch the hooked fish";
     public static string text_tooltip_stat_fisher_knowledge = "Increase Fisher probability to find a never caught fish";
     public static string text_tooltip_stat_fisher_luck = "Increase Fisher probabilty to find a rarer fish";
+
+    public static string text_tooltip_stat_farmer_greenthumb = "Increase Farmer crops growth";
+    public static string text_tooltip_stat_farmer_agronomy = "Unlock a new seed for the Farmer to plant every 5 levels";
+    public static string text_tooltip_stat_farmer_kindness = "Increase Farmer probability to encounter a companion";
+    public static string text_tooltip_stat_farmer_luck = "Increase Farmer probabilty to befriend a companion";
 }

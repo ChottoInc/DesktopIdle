@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoaderManager : MonoBehaviour
 {
-    public enum SceneType { Home, CombatMap, Miner, Blacksmith, Fisher }
+    public enum SceneType { Home, CombatMap, Miner, Blacksmith, Fisher, Farmer }
 
 
     [SerializeField] Material fadeMaterial;
@@ -84,6 +84,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.Miner: SmashManager.Instance.HandleSwitchScene(); break;
                 case SceneType.Blacksmith: FindFirstObjectByType<PlayerBlacksmith>().HandleSwitchScene(); break;
                 case SceneType.Fisher: break;
+                case SceneType.Farmer: FindFirstObjectByType<PlayerFarmer>().HandleSwitchScene(); break;
             }
         }
 
@@ -127,6 +128,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.Miner: SmashManager.Instance.HandleSwitchScene(); break;
                 case SceneType.Blacksmith: FindFirstObjectByType<PlayerBlacksmith>().HandleSwitchScene(); break;
                 case SceneType.Fisher: break;
+                case SceneType.Farmer: FindFirstObjectByType<PlayerFarmer>().HandleSwitchScene(); break;
             }
         }
 
@@ -206,6 +208,11 @@ public class SceneLoaderManager : MonoBehaviour
 
                 case SceneType.Fisher:
                     FindFirstObjectByType<PlayerFisher>().Setup(PlayerManager.Instance.PlayerFisherData);
+                    uiManager = FindFirstObjectByType<UIManager>();
+                    break;
+
+                case SceneType.Farmer:
+                    FindFirstObjectByType<PlayerFarmer>().Setup(PlayerManager.Instance.PlayerFarmerData);
                     uiManager = FindFirstObjectByType<UIManager>();
                     break;
             }

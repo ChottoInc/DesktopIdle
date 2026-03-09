@@ -15,5 +15,5 @@ public class CropSO : ScriptableObject
     public string CropName => cropName;
     public Sprite SpriteSeed => spriteSeed;
     public Sprite[] SpriteCrop => spriteCrop;
-    public CompanionSO[] AttractedCompanion => attractedCompanions;
+    public CompanionSO[] AttractedCompanions => attractedCompanions;
 }

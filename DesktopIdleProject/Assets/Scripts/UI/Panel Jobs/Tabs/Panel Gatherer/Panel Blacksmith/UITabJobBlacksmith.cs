@@ -293,28 +293,28 @@ public class UITabJobBlacksmith : UITabWindow
         switch (currentGear)
         {
             case UtilsGather.ID_BLACKSMITH_HELMET:
-                float maxHp = UtilsPlayer.GetBlacksmithHelmetMaxHpMultiplier(data.HelmetLevel);
+                float maxHp = UtilsBlacksmith.GetBlacksmithHelmetMaxHpMultiplier(data.HelmetLevel);
 
                 uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Max Hp", maxHp));
                 break;
 
             case UtilsGather.ID_BLACKSMITH_ARMOR:
-                float aDef = UtilsPlayer.GetBlacksmithArmorDefMultiplier(data.ArmorLevel);
+                float aDef = UtilsBlacksmith.GetBlacksmithArmorDefMultiplier(data.ArmorLevel);
 
                 uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Def", aDef));
                 break;
 
             case UtilsGather.ID_BLACKSMITH_GLOVES:
-                float atkSpd = UtilsPlayer.GetBlacksmithGlovesAtkSpdMultiplier(data.GlovesLevel);
-                float critDmg = UtilsPlayer.GetBlacksmithGlovesCritDmgMultiplier(data.GlovesLevel);
+                float atkSpd = UtilsBlacksmith.GetBlacksmithGlovesAtkSpdMultiplier(data.GlovesLevel);
+                float critDmg = UtilsBlacksmith.GetBlacksmithGlovesCritDmgMultiplier(data.GlovesLevel);
 
                 uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Atk Speed", atkSpd));
                 uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Crit Dmg", critDmg));
                 break;
 
             case UtilsGather.ID_BLACKSMITH_BOOTS:
-                float bDef = UtilsPlayer.GetBlacksmithBootsDefMultiplier(data.BootsLevel);
-                float critRate = UtilsPlayer.GetBlacksmithBootsCritRateMultiplier(data.BootsLevel);
+                float bDef = UtilsBlacksmith.GetBlacksmithBootsDefMultiplier(data.BootsLevel);
+                float critRate = UtilsBlacksmith.GetBlacksmithBootsCritRateMultiplier(data.BootsLevel);
 
                 uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Def", bDef));
                 uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Crit Rate", critRate));

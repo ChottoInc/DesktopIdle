@@ -56,14 +56,14 @@ public class PlayerBlacksmithData
 
     public int CurrentLevel => currentLevel;
     public int CurrentExp => currentExp;
-    public int ExpToNextLevel => RequiredExpForBlacksmithLevel(currentLevel + 1) - RequiredExpForBlacksmithLevel(currentLevel);
-    public int TotalExpToNextLevel => RequiredExpForBlacksmithLevel(currentLevel + 1);
-    public int TotalExp => RequiredExpForBlacksmithLevel(currentLevel) + currentExp;
+    public int ExpToNextLevel => UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel + 1) - UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel);
+    public int TotalExpToNextLevel => UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel + 1);
+    public int TotalExp => UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel) + currentExp;
 
 
-    public float CurrentCraftSpeed => baseCraftSpeed + PER_LEVEL_BLACKSMITH_GAIN_CRAFTSPEED * (levelStatCraftSpeed - 1);
-    public float CurrentEfficiency => baseEfficiency + PER_LEVEL_BLACKSMITH_GAIN_EFFICIENCY * (levelEfficiency - 1);
-    public float CurrentLuck => baseLuck + PER_LEVEL_BLACKSMITH_GAIN_LUCK * (levelStatLuck - 1);
+    public float CurrentCraftSpeed => baseCraftSpeed + UtilsBlacksmith.PER_LEVEL_BLACKSMITH_GAIN_CRAFTSPEED * (levelStatCraftSpeed - 1);
+    public float CurrentEfficiency => baseEfficiency + UtilsBlacksmith.PER_LEVEL_BLACKSMITH_GAIN_EFFICIENCY * (levelEfficiency - 1);
+    public float CurrentLuck => baseLuck + UtilsBlacksmith.PER_LEVEL_BLACKSMITH_GAIN_LUCK * (levelStatLuck - 1);
 
     public float CurrentCraftTime => 60f / CurrentCraftSpeed;
 

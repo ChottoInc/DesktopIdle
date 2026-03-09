@@ -18,15 +18,15 @@ public class PlayerManager : MonoBehaviour
     private PlayerJobsData playerJobsData;
 
 
-    // --- WARRIOR
     private PlayerFightData playerFightData;
 
-    // --- GATHERER
     private PlayerMinerData playerMinerData;
 
     private PlayerBlacksmithData playerBlacksmithData;
 
     private PlayerFisherData playerFisherData;
+
+    private PlayerFarmerData playerFarmerData;
 
 
 
@@ -47,21 +47,23 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerFisherData PlayerFisherData => playerFisherData;
 
+    public PlayerFarmerData PlayerFarmerData => playerFarmerData;
+
 
 
 
     // ---- PLAYER GLOBAL VARIABLES ----
 
     // Miner
-    public float WeaponMinerMultiplier => UtilsPlayer.GetMinerWeaponMultiplier(playerMinerData.WeaponLevel);
+    public float WeaponMinerMultiplier => UtilsMiner.GetMinerWeaponMultiplier(playerMinerData.WeaponLevel);
 
     // Blacksmith
-    public float HelmetMaxHpBlacksmithMultiplier => UtilsPlayer.GetBlacksmithHelmetMaxHpMultiplier(playerBlacksmithData.HelmetLevel);
-    public float ArmorDefBlacksmithMultiplier => UtilsPlayer.GetBlacksmithArmorDefMultiplier(playerBlacksmithData.ArmorLevel);
-    public float GlovesAtkSpdBlacksmithMultiplier => UtilsPlayer.GetBlacksmithGlovesAtkSpdMultiplier(playerBlacksmithData.GlovesLevel);
-    public float GlovesCritDmgBlacksmithMultiplier => UtilsPlayer.GetBlacksmithGlovesCritDmgMultiplier(playerBlacksmithData.GlovesLevel);
-    public float BootsDefBlacksmithMultiplier => UtilsPlayer.GetBlacksmithBootsDefMultiplier(playerBlacksmithData.BootsLevel);
-    public float BootsCritRateBlacksmithMultiplier => UtilsPlayer.GetBlacksmithBootsCritRateMultiplier(playerBlacksmithData.BootsLevel);
+    public float HelmetMaxHpBlacksmithMultiplier => UtilsBlacksmith.GetBlacksmithHelmetMaxHpMultiplier(playerBlacksmithData.HelmetLevel);
+    public float ArmorDefBlacksmithMultiplier => UtilsBlacksmith.GetBlacksmithArmorDefMultiplier(playerBlacksmithData.ArmorLevel);
+    public float GlovesAtkSpdBlacksmithMultiplier => UtilsBlacksmith.GetBlacksmithGlovesAtkSpdMultiplier(playerBlacksmithData.GlovesLevel);
+    public float GlovesCritDmgBlacksmithMultiplier => UtilsBlacksmith.GetBlacksmithGlovesCritDmgMultiplier(playerBlacksmithData.GlovesLevel);
+    public float BootsDefBlacksmithMultiplier => UtilsBlacksmith.GetBlacksmithBootsDefMultiplier(playerBlacksmithData.BootsLevel);
+    public float BootsCritRateBlacksmithMultiplier => UtilsBlacksmith.GetBlacksmithBootsCritRateMultiplier(playerBlacksmithData.BootsLevel);
 
     //Fisher
     public float FisherLifeSeriesMultiplier => playerFisherData.IsLifeSeriesCompleted ? UtilsGather.FISHER_LIFE_SERIES_COMPLETE_MULTIPLIER : 1f;
@@ -115,6 +117,7 @@ public class PlayerManager : MonoBehaviour
         LoadMinerData();
         LoadBlacksmithData();
         LoadFisherData();
+        LoadFarmerData();
 
         LoadFightData();
     }
@@ -310,10 +313,47 @@ public class PlayerManager : MonoBehaviour
 
     #endregion
 
+    #region FARMER DATA
+
+    private void LoadFarmerData()
+    {
+        try
+        {
+            PlayerFarmerSaveData farmerSaveData = saveService.LoadData<PlayerFarmerSaveData>(UtilsSave.GetPlayerFarmerFile(), false);
+            playerFarmerData = new PlayerFarmerData(farmerSaveData);
+        }
+        catch
+        {
+            playerFarmerData = new PlayerFarmerData();
+            SaveFarmerData();
+        }
+
+    }
+
+    public void UpdateFarmerData(PlayerFarmerData data)
+    {
+        playerFarmerData = data;
+        SaveFarmerData();
+    }
+
+    public void SaveFarmerData()
+    {
+        PlayerFarmerSaveData data = new PlayerFarmerSaveData(playerFarmerData);
+        saveService.SaveData(UtilsSave.GetPlayerFarmerFile(), data, false);
+    }
+
+    #endregion
+
     public void SaveAll()
     {
         SaveInventoryData();
+
         SaveFightData();
         SaveMinerData();
+        SaveBlacksmithData();
+        SaveFisherData();
+        SaveFarmerData();
+
+        SaveJobsData();
     }
 }

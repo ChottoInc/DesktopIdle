@@ -9,6 +9,7 @@ public class UITabPlayerJob : UITabWindow
     public const int ID_MINER_TAB = 1;
     public const int ID_BLACKSMITH_TAB = 2;
     public const int ID_FISHER_TAB = 3;
+    public const int ID_FARMER_TAB = 4;
 
     [SerializeField] ScrollRect panelScroll;
     //[SerializeField] UIButtonJobTab[] jobTabs;
@@ -18,6 +19,7 @@ public class UITabPlayerJob : UITabWindow
     [SerializeField] UITab tabMiner;
     [SerializeField] UITab tabBlacksmith;
     [SerializeField] UITab tabFisher;
+    [SerializeField] UITab tabFarmer;
 
     private List<UIButtonJobTab> jobTabs;
 
@@ -36,7 +38,8 @@ public class UITabPlayerJob : UITabWindow
                 tabWarrior.GetComponent<UIButtonJobTab>(),
                 tabMiner.GetComponent<UIButtonJobTab>(),
                 tabBlacksmith.GetComponent<UIButtonJobTab>(),
-                tabFisher.GetComponent<UIButtonJobTab>()
+                tabFisher.GetComponent<UIButtonJobTab>(),
+                tabFarmer.GetComponent<UIButtonJobTab>()
             };
         }
 
@@ -53,6 +56,7 @@ public class UITabPlayerJob : UITabWindow
             case ID_MINER_TAB: tabMiner.Select(); break;
             case ID_BLACKSMITH_TAB: tabBlacksmith.Select(); break;
             case ID_FISHER_TAB: tabFisher.Select(); break;
+            case ID_FARMER_TAB: tabFarmer.Select(); break;
         }
     }
 
