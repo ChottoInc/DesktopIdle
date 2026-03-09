@@ -68,4 +68,9 @@ public class UIFarmerPanelSelectionCrop : MonoBehaviour
         panelCrops.OnCropSelected(cropSO);
         gameObject.SetActive(false);
     }
+
+    public void OnButtonClose()
+    {
+        panelCrops.Setup();
+    }
 }

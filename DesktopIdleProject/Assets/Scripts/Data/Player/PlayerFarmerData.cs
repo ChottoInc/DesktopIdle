@@ -307,3 +307,16 @@ public struct CompanionSlotData
         this.slot = slot;
     }
 }
+
+[Serializable]
+public struct CropSlotData
+{
+    public CropData cropData;
+    public int slot;
+
+    public CropSlotData(CropData cropData, int slot)
+    {
+        this.cropData = cropData;
+        this.slot = slot;
+    }
+}

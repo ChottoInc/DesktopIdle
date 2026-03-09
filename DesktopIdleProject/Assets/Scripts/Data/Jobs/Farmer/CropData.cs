@@ -43,9 +43,20 @@ public class CropData
     {
         int maxSprites = CropSO.SpriteCrop.Length;
         float percGrowth = currentGrowth / finalGrowthTime;
-        int spriteIndex = Mathf.FloorToInt(percGrowth * maxSprites);
-        spriteIndex = Mathf.Clamp(spriteIndex, 0, maxSprites);
-        return CropSO.SpriteCrop[spriteIndex];
+
+        // set to max - 1, so when the growth is not 100%, the right sprite will be shown
+        int spriteIndex;
+
+        if(percGrowth >= 1f)
+        {
+            spriteIndex = maxSprites - 1;
+            return CropSO.SpriteCrop[spriteIndex];
+        }
+        else
+        {
+            spriteIndex = Mathf.FloorToInt(percGrowth * (maxSprites - 1));
+            return CropSO.SpriteCrop[spriteIndex];
+        }
     }
 
     public void AddGrowth(float t)

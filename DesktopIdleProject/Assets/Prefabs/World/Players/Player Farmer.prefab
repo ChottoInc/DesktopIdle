@@ -50,7 +50,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 3359113176989766241}
   spriteRenderer: {fileID: 3832338421378405058}
-  faceRight: 0
+  faceRight: 1
+  speed: 5
+  cooldownIdle: 3
+  sowClip: {fileID: 7400000, guid: 38c720c22ab96714ba59c643200a30e4, type: 2}
 --- !u!61 &2170933381483632776
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -257,6 +260,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4583345328592467071, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 5297405412955231713}
     - target: {fileID: 5019092027908374915, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0

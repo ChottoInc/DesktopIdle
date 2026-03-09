@@ -6895,9 +6895,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1831470547504074450, guid: 99a65f6718b3a6f44aa8627752f04f75, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 3571909012638661717}
     - target: {fileID: 5108949585038809118, guid: 99a65f6718b3a6f44aa8627752f04f75, type: 3}
       propertyPath: m_Name
       value: Player Farmer
+      objectReference: {fileID: 0}
+    - target: {fileID: 5297405412955231713, guid: 99a65f6718b3a6f44aa8627752f04f75, type: 3}
+      propertyPath: faceRight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8787415503477263841, guid: 99a65f6718b3a6f44aa8627752f04f75, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7768,6 +7776,10 @@ PrefabInstance:
       propertyPath: slot4
       value: 
       objectReference: {fileID: 1380466850}
+    - target: {fileID: 7000263470824527091, guid: 0ee1977df358bb34bbe29cc6b37b4a07, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 3571909012638661717}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

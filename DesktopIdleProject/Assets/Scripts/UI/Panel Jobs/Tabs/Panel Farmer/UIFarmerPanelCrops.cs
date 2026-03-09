@@ -13,6 +13,7 @@ public class UIFarmerPanelCrops : MonoBehaviour
     private int lastSelectedSlotInfo;
 
     [Space(10)]
+    [SerializeField] GameObject panelList;
     [SerializeField] UIFarmerPanelSelectionCrop panelSelectionCrops;
 
     [Header("Companions")]
@@ -23,6 +24,7 @@ public class UIFarmerPanelCrops : MonoBehaviour
     public void Setup()
     {
         gameObject.SetActive(true);
+        panelList.SetActive(true);
         panelSelectionCrops.gameObject.SetActive(false);
 
         lastSelectedSlotInfo = 1;
@@ -52,7 +54,7 @@ public class UIFarmerPanelCrops : MonoBehaviour
     {
         lastSelectedSlotInfo = slot;
 
-        gameObject.SetActive(false);
+        panelList.SetActive(false);
 
         panelSelectionCrops.Setup();
     }
@@ -66,22 +68,22 @@ public class UIFarmerPanelCrops : MonoBehaviour
             default: Debug.Log("Crop slot not selected"); break;
             case 0:
                 cropData = PlayerManager.Instance.PlayerFarmerData.SetCropToSlot(cropSO, 0);
-                crop1Info.Setup(cropData);
+                //crop1Info.Setup(cropData);
                 break;
 
             case 1:
                 cropData = PlayerManager.Instance.PlayerFarmerData.SetCropToSlot(cropSO, 1);
-                crop2Info.Setup(cropData);
+                //crop2Info.Setup(cropData);
                 break;
 
             case 2:
                 cropData = PlayerManager.Instance.PlayerFarmerData.SetCropToSlot(cropSO, 2);
-                crop3Info.Setup(cropData);
+                //crop3Info.Setup(cropData);
                 break;
 
             case 3:
                 cropData = PlayerManager.Instance.PlayerFarmerData.SetCropToSlot(cropSO, 3);
-                crop4Info.Setup(cropData);
+                //crop4Info.Setup(cropData);
                 break;
         }
 
@@ -89,9 +91,17 @@ public class UIFarmerPanelCrops : MonoBehaviour
         {
             PlayerManager.Instance.SaveFarmerData();
 
-            CropsPlantManager.Instance.SetCrop(lastSelectedSlotInfo, cropData);
-            Debug.Log("setted slot " + lastSelectedSlotInfo + ", crop: " + cropData.CropSO.CropName);
+            if(CropsPlantManager.Instance != null)
+            {
+                CropsPlantManager.Instance.SetCrop(lastSelectedSlotInfo, cropData, true);
+            }
+                
+
+            //Debug.Log("setted slot " + lastSelectedSlotInfo + ", crop: " + cropData.CropSO.CropName);
         }
+
+        // refresh
+        Setup();
     }
 
     public void OnButtonCompanions()
