@@ -24,8 +24,13 @@ public class UIFarmerPanelCompanions : MonoBehaviour
         companionObjs = ClearList(companionObjs);
         FillCompanions();
 
+        Debug.Log("Companions: " + PlayerManager.Instance.PlayerFarmerData.Companions.Count);
+        Debug.Log("Companions objs: " + companionObjs.Count);
+
         cropsObjs = ClearList(cropsObjs);
         FillCrops();
+
+        Debug.Log("crops objs: " + cropsObjs.Count);
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -48,6 +53,7 @@ public class UIFarmerPanelCompanions : MonoBehaviour
 
         foreach (var companion in companions)
         {
+            Debug.Log("create companion");
             CreateSingleCompanionPrefab(companion);
         }
     }
@@ -58,20 +64,36 @@ public class UIFarmerPanelCompanions : MonoBehaviour
         {
             CreateSingleCropPrefab(PlayerManager.Instance.PlayerFarmerData.Slot1CropData);
         }
+        else
+        {
+            Debug.Log("slot 1 null: ");
+        }
 
         if (PlayerManager.Instance.PlayerFarmerData.Slot2CropData != null)
         {
             CreateSingleCropPrefab(PlayerManager.Instance.PlayerFarmerData.Slot2CropData);
+        }
+        else
+        {
+            Debug.Log("slot 2 null: ");
         }
 
         if (PlayerManager.Instance.PlayerFarmerData.Slot3CropData != null)
         {
             CreateSingleCropPrefab(PlayerManager.Instance.PlayerFarmerData.Slot3CropData);
         }
+        else
+        {
+            Debug.Log("slot 3 null: ");
+        }
 
         if (PlayerManager.Instance.PlayerFarmerData.Slot4CropData != null)
         {
             CreateSingleCropPrefab(PlayerManager.Instance.PlayerFarmerData.Slot4CropData);
+        }
+        else
+        {
+            Debug.Log("slot 4 null: ");
         }
     }
 

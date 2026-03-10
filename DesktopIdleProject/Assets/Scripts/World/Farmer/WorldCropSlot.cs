@@ -6,6 +6,8 @@ public class WorldCropSlot : MonoBehaviour
 
     public Transform[] CropTransforms { get; private set; }
 
+    public bool CanGrow { get; private set; }
+
     private void Start()
     {
         CropTransforms = new Transform[cropRenderers.Length];
@@ -21,5 +23,10 @@ public class WorldCropSlot : MonoBehaviour
         {
             renderer.sprite = sprite;
         }
+    }
+
+    public void SetCanGrow()
+    {
+        CanGrow = true;
     }
 }

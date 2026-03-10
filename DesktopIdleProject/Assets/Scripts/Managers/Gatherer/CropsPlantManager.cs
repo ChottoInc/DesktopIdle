@@ -109,7 +109,7 @@ public class CropsPlantManager : MonoBehaviour
         {
             CropSlotData cropSlotData = new CropSlotData(data, slot);
 
-            player.SetSow(cropSlotData, selectedSlot.CropTransforms);
+            player.AddSow(cropSlotData, selectedSlot.CropTransforms);
         }
     }
 
@@ -144,6 +144,7 @@ public class CropsPlantManager : MonoBehaviour
         if (selectedSlot != null && currentSprite != null)
         {
             selectedSlot.SetSprite(currentSprite);
+            selectedSlot.SetCanGrow();
         }
     }
 
@@ -160,6 +161,8 @@ public class CropsPlantManager : MonoBehaviour
     private void UpdateWorldCrop(WorldCropSlot slot, CropData data)
     {
         if (data == null) return;
+
+        if (!slot.CanGrow) return;
 
         Sprite currentSprite = data.GetCurrentSprite();
         if (slot != null && currentSprite != null)

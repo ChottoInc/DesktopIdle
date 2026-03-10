@@ -65,6 +65,11 @@ public class UIFarmerCropSelectionPrefab : MonoBehaviour
 
     public void OnCropSelected()
     {
+        if (isShowingTooltip)
+        {
+            UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_TEXT, true);
+        }
+
         panelSelection.OnCropSelected(cropSO);
     }
 }

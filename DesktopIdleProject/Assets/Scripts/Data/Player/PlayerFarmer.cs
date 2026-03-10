@@ -154,7 +154,7 @@ public class PlayerFarmer : Player
     {
         float distance = Mathf.Abs(transform.position.x - currentTarget);
 
-        if (distance > 0.1f && !isIdling)
+        if (distance > 1f && !isIdling)
         {
             // get target dir
             Vector2 dir = new Vector2(currentTarget - transform.position.x, 0).normalized;
@@ -166,14 +166,14 @@ public class PlayerFarmer : Player
         }
         else
         {
+            // stop the player
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+
             // reset to stop the movement
             canSow = false;
 
             isWalking = false;
             animator.SetBool("isWalking", isWalking);
-
-            // tell animator to do the sowing animation
-            animator.SetBool("isSowing", isSowing);
 
             // wait for sow animation and call next farm plot
             StartCoroutine(CoWaitSowAnimation());
@@ -208,10 +208,10 @@ public class PlayerFarmer : Player
         currentTarget = Camera.main.ScreenToWorldPoint(new Vector2(currentTarget, 0)).x;
     }
 
-    public void SetSow(CropSlotData cropSlotData, Transform[] farmPlots)
+    public void AddSow(CropSlotData cropSlotData, Transform[] farmPlots)
     {
         // reset index
-        currentFarmPlot = 0;
+        //currentFarmPlot = 0;
 
         farmPlotsToSow ??= new Queue<Transform>();
         farmPlotsToSowData ??= new Queue<CropSlotData>();
@@ -223,11 +223,15 @@ public class PlayerFarmer : Player
 
         farmPlotsToSowData.Enqueue(cropSlotData);
 
-        // set sowing so a new target isn't generated
-        isSowing = true;
+        // handles if it's not already sowing, or else just add to queues
+        if (!isSowing)
+        {
+            // set sowing so a new target isn't generated
+            isSowing = true;
 
-        // start sow plots
-        NextPlot(farmPlotsToSow.Dequeue());
+            // start sow plots
+            NextPlot(farmPlotsToSow.Dequeue());
+        }
     }
 
     private void NextPlot(Transform farmPlot)
@@ -257,34 +261,30 @@ public class PlayerFarmer : Player
 
     private IEnumerator CoWaitSowAnimation()
     {
+        // tell animator to do the sowing animation
+        animator.SetTrigger("Sow");
+
         yield return new WaitForSeconds(sowClip.length);
 
-        //if(currentFarmPlot < farmPlotsToSow.Length)
-        if(farmPlotsToSow.Count > 0)
+        // every 4 plots reset and dequeue datas to set sprite
+        if (currentFarmPlot == 4)
         {
-            //NextPlot(farmPlotsToSow[currentFarmPlot]);
+            currentFarmPlot = 0;
+            CropSlotData slotData = farmPlotsToSowData.Dequeue();
+
+            CropsPlantManager.Instance.SetCropSprite(slotData.slot, slotData.cropData);
+        }
+
+        if (farmPlotsToSow.Count > 0)
+        {
             NextPlot(farmPlotsToSow.Dequeue());
-
-            // every 4 plots reset and dequeue datas to set sprite
-            if(currentFarmPlot == 4)
-            {
-                currentFarmPlot = 0;
-                CropSlotData slotData = farmPlotsToSowData.Dequeue();
-
-                CropsPlantManager.Instance.SetCropSprite(slotData.slot, slotData.cropData);
-            }
         }
         else
         {
             isSowing = false;
-            animator.SetBool("isSowing", isSowing);
 
             // set new target
             GenerateNewTarget();
-
-            // set animator and walk
-            isWalking = true;
-            animator.SetBool("isWalking", isWalking);
         }
     }
 

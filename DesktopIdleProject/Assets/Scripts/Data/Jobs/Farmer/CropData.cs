@@ -5,7 +5,7 @@ public class CropData
     private CropSO cropSO;
 
 
-    private float finalGrowthTime;
+    private float baseGrowthTime;
     private float currentGrowth;
 
     private int plantedSlot;
@@ -13,7 +13,9 @@ public class CropData
 
     public CropSO CropSO => cropSO;
 
-    public float GrowthTime => finalGrowthTime;
+    public float GrowthTime => 
+        baseGrowthTime -
+        (baseGrowthTime * PlayerManager.Instance.PlayerFarmerData.CurrentGreenthumb);
     public float CurrentGrowth => currentGrowth;
     public int PlantedSlot => plantedSlot;
 
@@ -23,7 +25,7 @@ public class CropData
     {
         this.cropSO = cropSO;
 
-        finalGrowthTime = cropSO.BaseGrowthTime;
+        baseGrowthTime = cropSO.BaseGrowthTime;
         currentGrowth = 0;
 
         this.plantedSlot = plantedSlot;
@@ -33,7 +35,7 @@ public class CropData
     {
         cropSO = UtilsGather.GetCropById(saveData.cropId);
 
-        finalGrowthTime = cropSO.BaseGrowthTime;
+        baseGrowthTime = cropSO.BaseGrowthTime;
         currentGrowth = saveData.currentGrowth;
 
         plantedSlot = saveData.plantedSlot;
@@ -42,7 +44,7 @@ public class CropData
     public Sprite GetCurrentSprite()
     {
         int maxSprites = CropSO.SpriteCrop.Length;
-        float percGrowth = currentGrowth / finalGrowthTime;
+        float percGrowth = currentGrowth / GrowthTime;
 
         // set to max - 1, so when the growth is not 100%, the right sprite will be shown
         int spriteIndex;

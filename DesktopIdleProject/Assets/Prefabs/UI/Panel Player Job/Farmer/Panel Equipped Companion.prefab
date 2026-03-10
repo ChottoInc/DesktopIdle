@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0de795ab23bb21a498029ad17acc5e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteEmpty: {fileID: 21300000, guid: 369646618a4c8674597d3f998bb5b9aa, type: 3}
   imageIconCompanion: {fileID: 336355729651281784}
   textName: {fileID: 4038915410104426534}
   textLevel: {fileID: 1346769234108910808}
@@ -155,7 +156,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8957855251925807642
 RectTransform:
   m_ObjectHideFlags: 0
@@ -631,7 +632,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d6b212440f69efe41b44221aabbd367e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 369646618a4c8674597d3f998bb5b9aa, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

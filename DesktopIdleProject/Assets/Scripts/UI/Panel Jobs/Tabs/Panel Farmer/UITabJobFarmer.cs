@@ -29,7 +29,7 @@ public class UITabJobFarmer : UITabWindow
         panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_FARMER_TAB);
 
         panelCrops.Setup();
-
+        panelCompanions.gameObject.SetActive(false);
     }
 
     public void OnButtonBack()
