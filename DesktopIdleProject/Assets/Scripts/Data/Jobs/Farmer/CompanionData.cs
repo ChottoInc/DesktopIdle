@@ -23,7 +23,7 @@ public class CompanionData
     {
         this.companionSO = companionSO;
 
-        currentSlot = - 1;
+        currentSlot = -1;
     }
 
     public CompanionData(CompanionSaveData saveData)

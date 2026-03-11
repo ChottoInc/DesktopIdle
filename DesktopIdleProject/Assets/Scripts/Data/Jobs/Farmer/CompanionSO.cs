@@ -9,8 +9,13 @@ public class CompanionSO : ScriptableObject
     [Space(10)]
     [SerializeField] Sprite iconCompanion;
 
+    [Space(10)]
+    [SerializeField] GameObject prefab;
+
     public int Id => id;
     public string CompanionName => companionName;
 
     public Sprite IconCompanion => iconCompanion;
+
+    public GameObject Prefab => prefab;
 }

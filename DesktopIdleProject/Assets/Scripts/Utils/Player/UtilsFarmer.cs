@@ -7,7 +7,7 @@ public static class UtilsFarmer
     // for now max 5 companions, so need to unlock just few plants, if companion different from crop, 
     // 4 more seeds are needed, so max 4f, gain 0.2 for level, every 5 level increase seeds, so 5 levels times max 4, 20 max cap
     public const float PER_LEVEL_FARMER_GAIN_AGRONOMY = 0.2f;       
-    public const float PER_LEVEL_FARMER_GAIN_KINDNESS = 0.01f;      // max 35%, base 10%
+    public const float PER_LEVEL_FARMER_GAIN_KINDNESS = 0.01f;      // max 25%, decrease max cooldown lure timer, multiplier
     public const float PER_LEVEL_FARMER_GAIN_LUCK = 0.01f;          // max 25%, base 10%
 
     public const int PER_LEVEL_FARMER_MAX_GREENTHUMB = 25;

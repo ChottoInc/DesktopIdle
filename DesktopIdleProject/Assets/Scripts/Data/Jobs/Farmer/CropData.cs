@@ -16,8 +16,12 @@ public class CropData
     public float GrowthTime => 
         baseGrowthTime -
         (baseGrowthTime * PlayerManager.Instance.PlayerFarmerData.CurrentGreenthumb);
+
     public float CurrentGrowth => currentGrowth;
     public int PlantedSlot => plantedSlot;
+
+
+    public bool IsFullyGrown => currentGrowth >= GrowthTime;
 
 
 

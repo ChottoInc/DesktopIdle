@@ -129,7 +129,7 @@ public class PlayerFarmerData
         baseGreenthumb = 0f; // reduced growth time crops, up to 25%
 
         baseAgronomy = 0f; // unlocks new seeds, check on whole values
-        baseKindness = 0.1f; // increase prob to encounter companions, base 10% up to 35%
+        baseKindness = 0f; // increase prob to encounter companions, base 10% up to 35%
 
         baseLuck = 0.1f; // increase befriend companions, base 10% up to 25%
 

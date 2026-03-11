@@ -43,6 +43,11 @@ public static class UtilsGeneral
         return false;
     }
 
+    public static float GetRandomValueBtwValues(float val1, float val2)
+    {
+        return Random.Range(val1, val2);
+    }
+
 
     public static List<string> GetFileStrings(string filename)
     {

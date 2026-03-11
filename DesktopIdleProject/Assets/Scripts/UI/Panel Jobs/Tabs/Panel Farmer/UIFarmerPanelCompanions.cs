@@ -24,8 +24,8 @@ public class UIFarmerPanelCompanions : MonoBehaviour
         companionObjs = ClearList(companionObjs);
         FillCompanions();
 
-        Debug.Log("Companions: " + PlayerManager.Instance.PlayerFarmerData.Companions.Count);
-        Debug.Log("Companions objs: " + companionObjs.Count);
+        //Debug.Log("Companions: " + PlayerManager.Instance.PlayerFarmerData.Companions.Count);
+        //Debug.Log("Companions objs: " + companionObjs.Count);
 
         cropsObjs = ClearList(cropsObjs);
         FillCrops();
@@ -50,7 +50,8 @@ public class UIFarmerPanelCompanions : MonoBehaviour
     private void FillCompanions()
     {
         var companions = PlayerManager.Instance.PlayerFarmerData.Companions;
-
+        //Debug.Log("Companions: " + PlayerManager.Instance.PlayerFarmerData.Companions.Count);
+        //Debug.Log("Companions 2: " + companions.Count);
         foreach (var companion in companions)
         {
             Debug.Log("create companion");
@@ -114,8 +115,8 @@ public class UIFarmerPanelCompanions : MonoBehaviour
 
     private void CreateSingleCropPrefab(CropData cropData)
     {
-        GameObject prefab = Instantiate(companionInfoPrefab, transform.position, Quaternion.identity);
-        prefab.transform.SetParent(containerCompanions);
+        GameObject prefab = Instantiate(cropInfoPrefab, transform.position, Quaternion.identity);
+        prefab.transform.SetParent(containerCrops);
 
         prefab.transform.localScale = new Vector3(1, 1, 1);
         prefab.SetActive(true);

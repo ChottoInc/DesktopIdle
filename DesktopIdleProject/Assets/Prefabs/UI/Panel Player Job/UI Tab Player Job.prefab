@@ -10184,7 +10184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6669631733204139482
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27435,6 +27435,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Panel Companion Info Prefab
       objectReference: {fileID: 0}
+    - target: {fileID: 8690203086879367014, guid: 01127090cc692424493ae75b2fbdd8a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27582,7 +27586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2062718139719085091, guid: db49ba4c4209b3b4aa53244e29b7230a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3424714949355964448, guid: db49ba4c4209b3b4aa53244e29b7230a, type: 3}
       propertyPath: m_Pivot.x
