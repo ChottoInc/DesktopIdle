@@ -13,8 +13,14 @@ public class UITooltipName : MonoBehaviour
     [Space(10)]
     [SerializeField] RectTransform root;
     [SerializeField] TMP_Text textName;
+
+    [Header("Width")]
     [SerializeField] float minWidth = 80f;
-    [SerializeField] float maxWidth = 600f;
+    [SerializeField] float maxWidth = 2000f;
+
+    [Header("Height")]
+    [SerializeField] float minHeight = 80f;
+    [SerializeField] float maxHeight = 2000f;
 
     private float startHeight;
 
@@ -44,18 +50,14 @@ public class UITooltipName : MonoBehaviour
             textWidth
         );
 
-        /*
-        float finalHeight = startHeight;
+        float textHeight = textName.preferredHeight;
 
-        if(textName.text.Length > 50)
-        {
-            finalHeight *= 1.3f;
-        }
+        textHeight = Mathf.Clamp(textHeight, minHeight, maxHeight);
 
         root.SetSizeWithCurrentAnchors(
             RectTransform.Axis.Vertical,
-            finalHeight
-        );*/
+            textHeight
+        );
     }
 
     public void Show(string text, Vector2 position, bool fade = false)
@@ -92,6 +94,16 @@ public class UITooltipName : MonoBehaviour
 
         Resize();
         FixTMPAnchors();
+    }
+
+    public void ResetAlignment()
+    {
+        textName.alignment = TextAlignmentOptions.Center;
+    }
+
+    public void SetAlignment(TextAlignmentOptions option)
+    {
+        textName.alignment = option;
     }
 
     private void FixTMPAnchors()

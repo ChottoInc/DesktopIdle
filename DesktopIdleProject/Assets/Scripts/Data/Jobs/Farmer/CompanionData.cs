@@ -19,9 +19,16 @@ public class CompanionData
 
 
 
+    public float CurrentAtk => companionSO.BaseAtk;
+    public float CurrentAtkSpd => companionSO.BaseAtkSpd;
+
+
+
     public CompanionData(CompanionSO companionSO)
     {
         this.companionSO = companionSO;
+
+        currentLevel = 1;
 
         currentSlot = -1;
     }

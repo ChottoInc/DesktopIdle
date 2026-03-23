@@ -7,6 +7,8 @@ public class UIShopPanelRedeem : MonoBehaviour
 
     public void OnButtonRedeem()
     {
+        AudioManager.Instance.PlayClickUI();
+
         bool redeemSuccess = false;
 
         switch (inputCode.text)

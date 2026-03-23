@@ -8,12 +8,13 @@ using UnityEngine;
 public class EditorUtilsLoadDataFromFile : Editor
 {
     private const int MAP_ID = 0;
-    private const int POOL_NAME = 1;
-    private const int SO_ID = 2;
-    private const int MAX_HP = 3;
-    private const int ATK = 4;
-    private const int DEF = 5;
-    private const int CRIT_DMG = 6;
+    private const int ENEMY_NAME = 1;
+    private const int POOL_NAME = 2;
+    private const int SO_ID = 3;
+    private const int MAX_HP = 4;
+    private const int ATK = 5;
+    private const int DEF = 6;
+    private const int CRIT_DMG = 7;
 
 
     UtilsLoadDataFromFile m_Script;
@@ -55,6 +56,8 @@ public class EditorUtilsLoadDataFromFile : Editor
                 int idMap = int.Parse(parts[MAP_ID]);
                 string mapName = UtilsCombatMap.GetMapById(idMap).MapName.ToLower();
 
+                string enemyName = parts[ENEMY_NAME];
+
                 string poolName = parts[POOL_NAME].ToLower();
 
                 int idSO = int.Parse(parts[SO_ID]);
@@ -89,6 +92,7 @@ public class EditorUtilsLoadDataFromFile : Editor
                     AssetDatabase.CreateAsset(newSO, fileFullpath);
                 }
 
+                newSO.SetEnemyName(enemyName);
                 newSO.SetPoolName(poolName);
                 newSO.SetId(idSO);
                 newSO.SetBaseMaxhHp(maxHp);

@@ -51,6 +51,7 @@ public class UIFarmerPlantedCropInfo : MonoBehaviour
 
     public void OnButtonAddCrop()
     {
+        AudioManager.Instance.PlayClickUI();
         panelCrops.OpenPanelSelectionCrops(slot);
     }
 }

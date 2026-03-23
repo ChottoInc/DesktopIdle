@@ -64,6 +64,14 @@ public class ShopManager : MonoBehaviour
         try
         {
             ShopSaveData saveData = saveService.LoadData<ShopSaveData>(UtilsSave.GetShopFile(), false);
+
+            // set items progress default values
+            InitializeAllItems();
+
+            // set redeem codes default values
+            InitializeRedeemCodes();
+
+            // update from file
             SetupFromFile(saveData);
         }
         catch
@@ -94,21 +102,31 @@ public class ShopManager : MonoBehaviour
     private void InitializeAllItems()
     {
         // initialize dict and all items
-        shopItemsList = new List<string>();
-        dictItemPurchaseInfo = new Dictionary<string, ShopItemPurchaseInfo>();
+
+        if(shopItemsList == null)
+            shopItemsList = new List<string>();
+
+        if(dictItemPurchaseInfo == null)
+            dictItemPurchaseInfo = new Dictionary<string, ShopItemPurchaseInfo>();
 
         // create default for every item
         ShopItemSO[] allItems = GetAllItems().ToArray();
         for (int i = 0; i < allItems.Length; i++)
         {
+            // get so
             ShopItemSO so = allItems[i];
-            ShopItemPurchaseInfo purchaseInfo = new ShopItemPurchaseInfo();
 
-            purchaseInfo.isPurchased = false;
-            purchaseInfo.purchaseCount = 0;
+            // init if item isn't in dict
+            if (!dictItemPurchaseInfo.ContainsKey(so.UniqueId))
+            {
+                ShopItemPurchaseInfo purchaseInfo = new ShopItemPurchaseInfo();
 
-            // save in dictionary
-            dictItemPurchaseInfo.Add(so.UniqueId, purchaseInfo);
+                purchaseInfo.isPurchased = false;
+                purchaseInfo.purchaseCount = 0;
+
+                // save in dictionary
+                dictItemPurchaseInfo.Add(so.UniqueId, purchaseInfo);
+            }
         }
     }
 
@@ -140,21 +158,26 @@ public class ShopManager : MonoBehaviour
 
     private void LoadShopItems(List<ShopItemSaveData> datas)
     {
-        shopItemsList = new List<string>();
-        dictItemPurchaseInfo = new Dictionary<string, ShopItemPurchaseInfo>();
+        if (shopItemsList == null)
+            shopItemsList = new List<string>();
+
+        if (dictItemPurchaseInfo == null)
+            dictItemPurchaseInfo = new Dictionary<string, ShopItemPurchaseInfo>();
 
         // used for debug infos
         int exceptionIndex = 0;
 
         try
         {
+            // for every save found in file update the progress
             for (int i = 0; i < datas.Count; i++)
             {
                 exceptionIndex = i;
 
                 // save in dictionary
                 ShopItemPurchaseInfo dataProgress = new ShopItemPurchaseInfo(datas[i]);
-                dictItemPurchaseInfo.Add(datas[i].shopItemId, dataProgress);
+                //dictItemPurchaseInfo.Add(datas[i].shopItemId, dataProgress);
+                dictItemPurchaseInfo[datas[i].shopItemId] = dataProgress;
             }
         }
         catch

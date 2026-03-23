@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public class LogToFileManager : MonoBehaviour
 {
+    [SerializeField] bool isEnabled;
+
     private static string logFilePath;
     private static StreamWriter logWriter;
 
@@ -23,6 +25,7 @@ public class LogToFileManager : MonoBehaviour
             return;
         }
 
+        if (!isEnabled) return;
 
         // Ensure it persists between scene loads
         DontDestroyOnLoad(gameObject);

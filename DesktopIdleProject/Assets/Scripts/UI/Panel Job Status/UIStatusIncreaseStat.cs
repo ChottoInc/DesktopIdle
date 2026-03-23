@@ -40,7 +40,7 @@ public class UIStatusIncreaseStat : MonoBehaviour
         panelStatus.OnStatusSave += OnStatusSave;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         // should be called when player is already initialized
 
@@ -90,6 +90,8 @@ public class UIStatusIncreaseStat : MonoBehaviour
     {
         if (panelStatus.IncreaseStatLevel(idStat))
         {
+            AudioManager.Instance.PlayClickUI();
+
             tempLevel++;
 
             UpdateLevelUI();
@@ -102,6 +104,8 @@ public class UIStatusIncreaseStat : MonoBehaviour
     {
         if (panelStatus.DecreaseStatLevel(idStat))
         {
+            AudioManager.Instance.PlayClickUI();
+
             tempLevel--;
 
             UpdateLevelUI();

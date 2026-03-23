@@ -18,6 +18,31 @@ public class PlayerJobsData
 
     public PlayerJobsData()
     {
+        GenerateBaseStats();
+    }
+
+    public PlayerJobsData(PlayerJobsSaveData saveData)
+    {
+        GenerateBaseStats();
+
+        foreach (var job in saveData.availableJobs)
+        {
+            if (!availableJobs.Contains((UtilsPlayer.PlayerJob)job))
+            {
+                availableJobs.Add((UtilsPlayer.PlayerJob)job);
+            }
+        }
+
+        // Add here check on available job to set the unlock, so there is no need to save extra space in memory
+
+        if(availableJobs.Contains(UtilsPlayer.PlayerJob.Blacksmith))
+        {
+            isBlacksmithUnlocked = true;
+        }
+    }
+
+    private void GenerateBaseStats()
+    {
         availableJobs = new List<UtilsPlayer.PlayerJob>
         {
             UtilsPlayer.PlayerJob.None,
@@ -29,23 +54,6 @@ public class PlayerJobsData
         };
 
         isBlacksmithUnlocked = false;
-    }
-
-    public PlayerJobsData(PlayerJobsSaveData saveData)
-    {
-        availableJobs = new List<UtilsPlayer.PlayerJob>();
-
-        foreach (var job in saveData.availableJobs)
-        {
-            availableJobs.Add((UtilsPlayer.PlayerJob)job);
-        }
-
-        // Add here check on available job to set the unlock, so there is no need to save extra space in memory
-
-        if(availableJobs.Contains(UtilsPlayer.PlayerJob.Blacksmith))
-        {
-            isBlacksmithUnlocked = true;
-        }
     }
 
 

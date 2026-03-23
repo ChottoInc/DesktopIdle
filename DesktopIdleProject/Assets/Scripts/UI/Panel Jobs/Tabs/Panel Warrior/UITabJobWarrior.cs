@@ -46,6 +46,8 @@ public class UITabJobWarrior : UITabWindow
 
     public void OnButtonBack()
     {
+        AudioManager.Instance.PlayClickUI();
+
         Close();
         panelJob.ChangeCurrentTab(null, -1);
     }

@@ -127,12 +127,19 @@ public class SettingsManager : MonoBehaviour
         try
         {
             SettingsSaveData saveData = saveService.LoadData<SettingsSaveData>(UtilsSave.GetSettingsFile(), false);
+
+            // call first default to ensure any new variables is updated by default
+            SetupFromDefault();
+
+            // then call from file so any saved variables is overwritten
             SetupFromFile(saveData);
         }
         catch
         {
             SetupFromDefault();
             firstOpen = true;
+
+            Save();
         }
     }
 
@@ -185,15 +192,7 @@ public class SettingsManager : MonoBehaviour
         lastSceneSettings.lastSceneType = SceneLoaderManager.SceneType.CombatMap;
         lastSceneSettings.lastCombatMapId = 0;
 
-
-        // Combat map files
-        // first save for each map
-        CombatMapSO[] maps = UtilsCombatMap.GetAllMaps();
-        for (int i = 0; i < maps.Length; i++)
-        {
-            CombatMapSaveData mapData = new CombatMapSaveData(maps[i].IdMap, 1, 1, 0);
-            saveService.SaveData(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), mapData, false);
-        }
+        RefreshMapSaveDatas();
 
         // settings
 
@@ -216,8 +215,28 @@ public class SettingsManager : MonoBehaviour
 
         // --- audio
         SetMasterVolume(1f, false);
+    }
 
-        Save();
+    /// <summary>
+    /// Refresh and check if map saves are updated
+    /// </summary>
+    private void RefreshMapSaveDatas()
+    {
+        CombatMapSO[] maps = UtilsCombatMap.GetAllMaps();
+        for (int i = 0; i < maps.Length; i++)
+        {
+            try
+            {
+                // if save exists do nothing
+                CombatMapSaveData mapData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), false);
+            }
+            catch
+            {
+                // if it doesn't exists, create new save file for the map
+                CombatMapSaveData mapData = new CombatMapSaveData(maps[i].IdMap, 1, 1, 0);
+                saveService.SaveData(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), mapData, false);
+            }
+        }
     }
 
     #region TUTORIAL

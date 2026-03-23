@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public class InventorySaveData
 {
     public int currentBits;
+
     public List<ItemGroupSaveData> groupSaves;
 
 

@@ -2,31 +2,61 @@ using UnityEngine;
 
 public static class UtilsMiner
 {
-    public const float PER_LEVEL_MINER_GAIN_POWER = 2;
-    public const float PER_LEVEL_MINER_GAIN_SMASHSPEED = 0.02f;
-    public const float PER_LEVEL_MINER_GAIN_PRECISION = 0.01f;
-    public const float PER_LEVEL_MINER_GAIN_LUCK = 0.01f;
+    public static float PER_LEVEL_MINER_GAIN_POWER = 2;
+    public static float PER_LEVEL_MINER_GAIN_SMASHSPEED = 0.02f;
+    public static float PER_LEVEL_MINER_GAIN_PRECISION = 0.01f;
+    public static float PER_LEVEL_MINER_GAIN_LUCK = 0.01f;
+           
+    public static int PER_LEVEL_MINER_MAX_POWER = 50;
+    public static int PER_LEVEL_MINER_MAX_SMASHSPEED = 40;
+    public static int PER_LEVEL_MINER_MAX_PRECISION = 30;
+    public static int PER_LEVEL_MINER_MAX_LUCK = 40;
 
-    public const int PER_LEVEL_MINER_MAX_POWER = 50;
-    public const int PER_LEVEL_MINER_MAX_SMASHSPEED = 40;
-    public const int PER_LEVEL_MINER_MAX_PRECISION = 30;
-    public const int PER_LEVEL_MINER_MAX_LUCK = 40;
 
+    private static float BASE_MINER_EXP_GROWTH = 50f;
+    private static float EXPO_MINER_EXP_GROWTH = 1.15f;
+            
 
-
-    private const float BASE_MINER_EXP_GROWTH = 50f;
-    private const float EXPO_MINER_EXP_GROWTH = 1.15f;
-
-    private const float MINER_WEAPON_LINEAR_GROWTH = 0.35f;
-    private const float MINER_WEAPON_QUADRATIC_GROWTH = 0.05f;
+    private static float MINER_WEAPON_LINEAR_GROWTH = 0.35f;
+    private static float MINER_WEAPON_QUADRATIC_GROWTH = 0.05f;
 
     private const int MINER_WEAPON_MAX_LEVEL = 10;
+
+
+    private static PlayerJobMinerSO jobDataSO;
+
+    public static void Initialize()
+    {
+        jobDataSO = UtilsPlayer.GetJobFromDatabase(UtilsPlayer.PlayerJob.Miner) as PlayerJobMinerSO;
+
+        PER_LEVEL_MINER_GAIN_POWER = jobDataSO.PerLevelGainPower;
+        PER_LEVEL_MINER_GAIN_SMASHSPEED = jobDataSO.PerLevelGainSmashSpeed;
+        PER_LEVEL_MINER_GAIN_PRECISION = jobDataSO.PerLevelGainPrecision;
+        PER_LEVEL_MINER_GAIN_LUCK = jobDataSO.PerLevelGainLuck;
+
+
+        PER_LEVEL_MINER_MAX_POWER = jobDataSO.MaxLevelPower;
+        PER_LEVEL_MINER_MAX_SMASHSPEED = jobDataSO.MaxLevelSmashSpeed;
+        PER_LEVEL_MINER_MAX_PRECISION = jobDataSO.MaxLevelPrecision;
+        PER_LEVEL_MINER_MAX_LUCK = jobDataSO.MaxLevelLuck;
+
+
+        BASE_MINER_EXP_GROWTH = jobDataSO.BaseExpGrowth;
+        EXPO_MINER_EXP_GROWTH = jobDataSO.ExpoExpGrowth;
+
+        MINER_WEAPON_LINEAR_GROWTH = jobDataSO.WeaponLinearGrowth;
+        MINER_WEAPON_QUADRATIC_GROWTH = jobDataSO.WeaponQuadraticGrowth;
+
+        //Debug.Log("base miner exp growth: " + BASE_MINER_EXP_GROWTH);
+        //Debug.Log("expo miner exp growth: " + EXPO_MINER_EXP_GROWTH);
+    }
+
 
     public static int RequiredExpForMinerLevel(int level)
     {
         // Level starts at 1
         if (level <= 1) return 0;
-
+        
         // Formula: baseExp * (growthRate^(level-1) - 1)
         return Mathf.RoundToInt(BASE_MINER_EXP_GROWTH * Mathf.Pow(EXPO_MINER_EXP_GROWTH, level - 1));
     }

@@ -28,6 +28,8 @@ public class UIBountyPrefab : MonoBehaviour
 
     public void OnButtonAccept()
     {
+        AudioManager.Instance.PlayClickUI();
+
         panelBounties.OnBountyAccepted(id);
     }
 }

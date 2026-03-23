@@ -129,6 +129,9 @@ public class PlayerFarmer : Player
             // handles idling timer before move again
             if (!isIdling)
             {
+                // stop the player
+                rb.velocity = new Vector2(0f, rb.velocity.y);
+
                 isWalking = false;
                 animator.SetBool("isWalking", isWalking);
 

@@ -70,6 +70,7 @@ public class UIFarmerCropSelectionPrefab : MonoBehaviour
             UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_TEXT, true);
         }
 
+        AudioManager.Instance.PlayClickUI();
         panelSelection.OnCropSelected(cropSO);
     }
 }

@@ -29,8 +29,6 @@ public class UIFarmerPanelCompanions : MonoBehaviour
 
         cropsObjs = ClearList(cropsObjs);
         FillCrops();
-
-        Debug.Log("crops objs: " + cropsObjs.Count);
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -54,7 +52,6 @@ public class UIFarmerPanelCompanions : MonoBehaviour
         //Debug.Log("Companions 2: " + companions.Count);
         foreach (var companion in companions)
         {
-            Debug.Log("create companion");
             CreateSingleCompanionPrefab(companion);
         }
     }
@@ -67,7 +64,7 @@ public class UIFarmerPanelCompanions : MonoBehaviour
         }
         else
         {
-            Debug.Log("slot 1 null: ");
+            //Debug.Log("slot 1 null: ");
         }
 
         if (PlayerManager.Instance.PlayerFarmerData.Slot2CropData != null)
@@ -76,7 +73,7 @@ public class UIFarmerPanelCompanions : MonoBehaviour
         }
         else
         {
-            Debug.Log("slot 2 null: ");
+            //Debug.Log("slot 2 null: ");
         }
 
         if (PlayerManager.Instance.PlayerFarmerData.Slot3CropData != null)
@@ -85,7 +82,7 @@ public class UIFarmerPanelCompanions : MonoBehaviour
         }
         else
         {
-            Debug.Log("slot 3 null: ");
+            //Debug.Log("slot 3 null: ");
         }
 
         if (PlayerManager.Instance.PlayerFarmerData.Slot4CropData != null)
@@ -94,7 +91,7 @@ public class UIFarmerPanelCompanions : MonoBehaviour
         }
         else
         {
-            Debug.Log("slot 4 null: ");
+            //Debug.Log("slot 4 null: ");
         }
     }
 
@@ -168,6 +165,7 @@ public class UIFarmerPanelCompanions : MonoBehaviour
 
     public void OnButtonCrops()
     {
+        AudioManager.Instance.PlayClickUI();
         tabFarmer.OnButtonCrops();
     }
 }

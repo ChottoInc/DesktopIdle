@@ -81,6 +81,7 @@ public class UITooltipCardOpening : UITooltipBase
 
     public void OnButtonRevealAll()
     {
+        AudioManager.Instance.PlayClickUI();
         foreach (var item in cardObjs)
         {
             if (item.TryGetComponent(out UICardReveal obj))
@@ -92,6 +93,7 @@ public class UITooltipCardOpening : UITooltipBase
 
     public void OnButtonClose()
     {
+        AudioManager.Instance.PlayClickUI();
         Hide(true);
     }
 }

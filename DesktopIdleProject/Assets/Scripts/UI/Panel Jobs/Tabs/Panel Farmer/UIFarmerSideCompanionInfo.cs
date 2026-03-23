@@ -27,7 +27,7 @@ public class UIFarmerSideCompanionInfo : MonoBehaviour
             imageIconCompanion.sprite = companionData.CompanionSO.IconCompanion;
 
             textName.text = companionData.CompanionSO.CompanionName;
-            textLevel.text = companionData.CurrentLevel.ToString();
+            textLevel.text = string.Format("Lv: {0}", companionData.CurrentLevel);
             textLevel.gameObject.SetActive(true);
         }
             

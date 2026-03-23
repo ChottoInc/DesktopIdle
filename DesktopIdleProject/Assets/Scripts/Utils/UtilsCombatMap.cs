@@ -75,7 +75,7 @@ public static class UtilsCombatMap
                     * Mathf.Pow(enemyLevel, 1.03f)
                     * DifficultyExpMultiplier[(int)difficulty];
 
-        //return Mathf.FloorToInt(exp);
-        return Mathf.FloorToInt(exp * 100);
+        return Mathf.FloorToInt(exp);
+        //return Mathf.FloorToInt(exp * 100);
     }
 }

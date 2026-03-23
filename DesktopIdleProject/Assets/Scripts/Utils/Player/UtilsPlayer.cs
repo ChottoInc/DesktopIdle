@@ -6,6 +6,8 @@ public static class UtilsPlayer
 
     private static PlayerJobSO[] jobs;
 
+    private static JobDatabaseSO jobDatabaseSO;
+
 
     // ----- IDS -------
 
@@ -40,6 +42,18 @@ public static class UtilsPlayer
     public static void Initialize()
     {
         jobs = LoadJobs();
+
+        // load database of jobs
+        jobDatabaseSO = LoadJobDatabase();
+        jobDatabaseSO.Initialize();
+
+
+        // Call every static helper for jobs after the load of SOs
+        UtilsWarrior.Initialize();
+        UtilsMiner.Initialize();
+        UtilsBlacksmith.Initialize();
+        UtilsFisher.Initialize();
+        UtilsFarmer.Initialize();
     }
 
     private static PlayerJobSO[] LoadJobs()
@@ -62,7 +76,19 @@ public static class UtilsPlayer
         }
         return null;
     }
-    
+
+
+
+    private static JobDatabaseSO LoadJobDatabase()
+    {
+        return Resources.Load<JobDatabaseSO>("Data/Player/JobDatabase/DatabaseJobData");
+    }
+
+
+    public static AbstractPlayerJobData GetJobFromDatabase(PlayerJob job)
+    {
+        return jobDatabaseSO.Get<AbstractPlayerJobData>((int)job);
+    }
 
 
     public static int GetStatMaxLevelById(int id)

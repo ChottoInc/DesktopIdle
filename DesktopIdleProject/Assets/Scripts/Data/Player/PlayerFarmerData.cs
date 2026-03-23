@@ -79,6 +79,8 @@ public class PlayerFarmerData
     public event Action OnLevelUp;
     public event Action<int, int> OnStatChange;
 
+    public event Action OnCompanionEquipped;
+
     public PlayerFarmerData()
     {
         GenerateBaseStats();
@@ -245,6 +247,9 @@ public class PlayerFarmerData
         {
             int index = GetCompanionIndexList(companion.CompanionSO);
             companions[index].SetSlot(slot);
+
+            OnCompanionEquipped?.Invoke();
+
             return true;
         }
         return false;

@@ -50,11 +50,13 @@ public class UIFarmerPanelCompanionInfoPrefab : MonoBehaviour
 
     public void OnButtonEquip()
     {
+        AudioManager.Instance.PlayClickUI();
         panelCompanions.OnButtonEquip(companionData);
     }
 
     public void OnButtonUnequip()
     {
+        AudioManager.Instance.PlayClickUI();
         panelCompanions.OnButtonUnequip(companionData);
     }
 }

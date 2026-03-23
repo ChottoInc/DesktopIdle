@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Companion : MonoBehaviour
@@ -11,6 +12,11 @@ public class Companion : MonoBehaviour
 
     [Space(10)]
     [SerializeField] Animator animator;
+    [SerializeField] AnimationClip attackClip;
+
+    [Space(10)]
+    [SerializeField] Transform checkEnemyPoint;
+    [SerializeField] LayerMask enemyLayer;
 
 
     private CompanionSO tempSOBefriend;
@@ -41,25 +47,20 @@ public class Companion : MonoBehaviour
 
     // --------- ATTACK VARS
 
+
+    private bool canAttack;
     private bool isAttacking;
-    //private float CooldownAttack => 1f / enemyData.CurrentAtkSpd;
+
+    private float CooldownAttack => 1f / companionData.CurrentAtkSpd;
     private float timerAttack;
 
-    public event Action OnPerformAttack;
-
-
-
-    // ------- VFX
-
-
-    private SceneLoaderManager.SceneType sceneType;
-
-
+    private bool isEnemyDetected;
+    private Enemy currentEnemy;
 
 
     public CompanionData CurrentCompanionData => companionData;
 
-    //public bool IsDead => enemyData.CurrentHp <= 0;
+
 
     private void Awake()
     {
@@ -70,16 +71,13 @@ public class Companion : MonoBehaviour
     {
         startScale = spriteRenderer.transform.localScale;
 
-        //GenerateNewTarget();
+        StartCoroutine(CoSetCanAttack());
     }
 
 
     private void Update()
     {
-        if (isAttacking)
-        {
-            //CheckAttack();
-        }
+        CheckAttack();
     }
 
     private void FixedUpdate()
@@ -88,11 +86,18 @@ public class Companion : MonoBehaviour
         {
             HandleMovement();
         }
-        /*
+        
+        // when in fight scene, check for enemy when not attacking
         if (!isAttacking)
         {
-            HandleMovement();
-        }*/
+            CheckForEnemy();
+        }
+    }
+
+    private IEnumerator CoSetCanAttack()
+    {
+        yield return new WaitForSeconds(2f);
+        canAttack = true;
     }
 
     private void HandleMovement()
@@ -140,13 +145,16 @@ public class Companion : MonoBehaviour
 
         if (!isIdling)
         {
+            // stop the player
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+
             timerIdle = 5f;
             isIdling = true;
 
             isWalking = false;
             animator.SetBool("isWalking", isWalking);
 
-            Debug.Log("arrived at crop");
+            //Debug.Log("arrived at crop");
         }
         else
         {
@@ -158,15 +166,23 @@ public class Companion : MonoBehaviour
                 bool success = UtilsGeneral.GetRandomSuccessFromValue(PlayerManager.Instance.PlayerFarmerData.CurrentLuck);
                 if (success)
                 {
-                    // TODO: handle if companion is already befriended, dismantle it, for now give bits?
-
-                    // add to companions
-                    PlayerManager.Instance.PlayerFarmerData.AddCompanion(tempSOBefriend);
+                    // TODO: balance exp
+                    PlayerManager.Instance.PlayerFarmerData.AddExp(5);
                     PlayerManager.Instance.SaveFarmerData();
 
+                    if (PlayerManager.Instance.PlayerFarmerData.HasCompanion(tempSOBefriend))
+                    {
+                        // TODO: handle if companion is already befriended, dismantle it, for now give bits?
+                    }
+                    else
+                    {
+                        // add to companions
+                        PlayerManager.Instance.PlayerFarmerData.AddCompanion(tempSOBefriend);
+                        PlayerManager.Instance.SaveFarmerData();
+                    }
+                    
                     // walk away
                     SetTargetOutsideScreen();
-                    isWalkingAway = true;
 
                     Debug.Log("Companion befriended");
                 }
@@ -174,7 +190,6 @@ public class Companion : MonoBehaviour
                 {
                     // set the companion to walk away from the screen
                     SetTargetOutsideScreen();
-                    isWalkingAway = true;
 
                     Debug.Log("Companion not befriended");
                 }
@@ -198,6 +213,9 @@ public class Companion : MonoBehaviour
         // handles idling timer before move again when random walking
         if (!isIdling)
         {
+            // stop the player
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+
             timerIdle = cooldownIdle;
             isIdling = true;
 
@@ -216,6 +234,117 @@ public class Companion : MonoBehaviour
                 timerIdle -= Time.fixedDeltaTime;
             }
         }
+    }
+
+    private void CheckForEnemy()
+    {
+        if (!canAttack) return;
+
+        // if already engaged an enemy don't do anything
+        if (isEnemyDetected) return;
+
+        // find the enemy
+        if (CheckEnemyAtPoint(checkEnemyPoint.position, 0.5f, enemyLayer, out Collider2D hit))
+        {
+            Enemy enemy = hit.GetComponent<Enemy>();
+
+            // if the enemy is not dead and can actually attack, perform attack
+            if (!enemy.IsDead && timerAttack <= 0)
+            {
+                // set detected enemy and is attacking so the companion doesn't look for another one
+                isEnemyDetected = true;
+                isAttacking = true;
+
+                // disable walking
+                isRandomWalking = false;
+
+                isWalking = false;
+                animator.SetBool("isWalking", isWalking);
+
+                // stop the player
+                rb.velocity = new Vector2(0f, rb.velocity.y);
+
+                // set the current enemy
+                currentEnemy = enemy;
+
+                PerformAttack();
+            }
+        }
+    }
+
+    private void CheckAttack()
+    {
+        if (timerAttack <= 0) return;
+
+        // keep decreasing the timer for the attack
+        timerAttack -= Time.deltaTime;
+    }
+
+    private void PerformAttack()
+    {
+        // animate
+        animator.SetTrigger("Attack");
+        animator.ResetTrigger("Stop");
+
+        // stop enemy movement to synch animation
+        if(currentEnemy != null)
+        {
+            currentEnemy.SetMove(false);
+        }
+
+        // wait and start resets
+        StartCoroutine(CoStopAttack());
+    }
+
+    /// <summary>
+    /// Called from the animation to align animation and damages
+    /// </summary>
+    public void ExternalAttack()
+    {
+        // damage enemy once
+        currentEnemy.EnemyData.TakeDamage(companionData);
+
+        // make the damage number show
+        currentEnemy.UpdateDamageUI();
+    }
+
+    private IEnumerator CoStopAttack()
+    {
+        yield return new WaitForSeconds(attackClip.length);
+
+        // animate stop
+        animator.SetTrigger("Stop");
+        animator.ResetTrigger("Attack");
+
+        // reset enemy vars
+        isEnemyDetected = false;
+        isAttacking = false;
+
+        // restart enemy movement
+        if (currentEnemy != null)
+        {
+            currentEnemy.SetMove(true);
+        }
+
+        currentEnemy = null;
+
+        // reset attack cooldown
+        timerAttack = CooldownAttack;
+
+        // random movement in direction
+        GenerateNewTarget();
+
+        // re enable walking
+        isRandomWalking = true;
+
+        isWalking = true;
+        animator.SetBool("isWalking", isWalking);
+    }
+
+    public bool CheckEnemyAtPoint(Vector2 point, float radius, LayerMask enemyMask, out Collider2D hitEnemy)
+    {
+        hitEnemy = Physics2D.OverlapCircle(point, radius, enemyMask);
+        return hitEnemy != null;
     }
 
     private void CheckFlip()
@@ -240,35 +369,16 @@ public class Companion : MonoBehaviour
         }
     }
 
-    private void CheckFlipOnEnemy(Vector2 dir)
-    {
-        // check sprite flip
-        if (dir.x > 0 && faceRight)
-        {
-            spriteRenderer.transform.localScale = startScale;
-        }
-        else if (dir.x > 0f && !faceRight)
-        {
-            spriteRenderer.transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
-        }
-        else if (dir.x < 0 && faceRight)
-        {
-            spriteRenderer.transform.localScale = new Vector3(-startScale.x, startScale.y, startScale.z);
-        }
-        else if (dir.x < 0 && !faceRight)
-        {
-            spriteRenderer.transform.localScale = startScale;
-        }
-    }
-
     private void GenerateNewTarget()
     {
         currentTarget = UnityEngine.Random.Range(InitializerManager.Instance.GetScreenOffsetBound(), InitializerManager.GetScreenWidth() - InitializerManager.Instance.GetScreenOffsetBound());
         currentTarget = Camera.main.ScreenToWorldPoint(new Vector2(currentTarget, 0)).x;
     }
 
-    private void SetTargetOutsideScreen()
+    public void SetTargetOutsideScreen()
     {
+        isRandomWalking = false;
+
         float x;
         if (UnityEngine.Random.value < 0.5f)
         {
@@ -283,20 +393,6 @@ public class Companion : MonoBehaviour
         isWalkingAway = true;
     }
 
-    /*
-    private void CheckAttack()
-    {
-        if (timerAttack <= 0)
-        {
-            OnPerformAttack?.Invoke();
-            timerAttack = CooldownAttack;
-        }
-        else
-        {
-            timerAttack -= Time.deltaTime;
-        }
-    }*/
-
     public void SetupBefriend(CompanionSO so, Vector2 cropPos)
     {
         tempSOBefriend = so;
@@ -307,7 +403,7 @@ public class Companion : MonoBehaviour
         // set crop target
         currentTarget = cropPos.x;
 
-        Debug.Log("Setup befriend");
+        //Debug.Log("Setup befriend");
     }
 
     public void SetupRandomWalk()
@@ -316,6 +412,17 @@ public class Companion : MonoBehaviour
         isRandomWalking = true;
 
         GenerateNewTarget();
+    }
+
+    public void SetupFight(CompanionData data)
+    {
+        // set data from farmer save
+        companionData = data;
+
+        // new direction
+        GenerateNewTarget();
+
+        isRandomWalking = true;
     }
 
     private void HideSprite(bool hide)
@@ -327,22 +434,5 @@ public class Companion : MonoBehaviour
             spriteRenderer.color = new Color(spriteColor.r, spriteColor.g, spriteColor.b, 0);
         else
             spriteRenderer.color = new Color(spriteColor.r, spriteColor.g, spriteColor.b, 1);
-    }
-
-
-    public void SetAttacking(bool isAttacking, Vector2 playerDir)
-    {
-        rb.velocity = new Vector2(0, rb.velocity.y);
-
-        this.isAttacking = isAttacking;
-
-        CheckFlipOnEnemy(playerDir);
-
-        if (isAttacking)
-        {
-            timerAttack = 0;
-        }
-
-        animator.SetBool("IsAttacking", isAttacking);
     }
 }

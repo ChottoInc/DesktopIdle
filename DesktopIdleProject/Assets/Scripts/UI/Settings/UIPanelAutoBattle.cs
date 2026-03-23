@@ -52,6 +52,8 @@ public class UIPanelAutoBattle : MonoBehaviour
 
     public void OnToggleAutoBattle(bool isOn)
     {
+        AudioManager.Instance.PlayClickUI();
+
         SettingsManager.Instance.SetIsAutoBattle(isOn);
 
         OnSet?.Invoke(isOn);

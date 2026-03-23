@@ -77,6 +77,8 @@ public class UIPanelConversionList : MonoBehaviour
 
     public void OnButtonQuickSelection()
     {
+        AudioManager.Instance.PlayClickUI();
+
         UIConversionSlot slot = null;
         bool valid;
 

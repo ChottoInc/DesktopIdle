@@ -53,19 +53,25 @@ public class UIPanelDismantle : MonoBehaviour
 
     public void OnButtonCancel()
     {
+        AudioManager.Instance.PlayClickUI();
+
         Show(false);
         panelInfo.Show(true);
     }
 
     public void OnButtonLeast()
     {
+        AudioManager.Instance.PlayClickUI();
+
         selectedAmount = 1;
         RefreshInputAmountUI();
     }
 
     public void OnButtonLess()
     {
-        if(selectedAmount > 1)
+        AudioManager.Instance.PlayClickUI();
+
+        if (selectedAmount > 1)
         {
             selectedAmount--;
             RefreshInputAmountUI();
@@ -74,7 +80,9 @@ public class UIPanelDismantle : MonoBehaviour
 
     public void OnButtonMore()
     {
-        if(selectedAmount < group.Quantity)
+        AudioManager.Instance.PlayClickUI();
+
+        if (selectedAmount < group.Quantity)
         {
             selectedAmount++;
             RefreshInputAmountUI();
@@ -83,6 +91,8 @@ public class UIPanelDismantle : MonoBehaviour
 
     public void OnButtonMost()
     {
+        AudioManager.Instance.PlayClickUI();
+
         selectedAmount = group.Quantity;
         RefreshInputAmountUI();
     }
@@ -108,6 +118,8 @@ public class UIPanelDismantle : MonoBehaviour
 
     public void OnButtonDismantle()
     {
+        AudioManager.Instance.PlayClickUI();
+
         // Update selected amount with input
         OnInputChange(inputAmount.text);
 

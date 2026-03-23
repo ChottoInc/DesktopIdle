@@ -34,6 +34,8 @@ public class UIConvertCardPrefab : MonoBehaviour
 
     public void OnButtonClick()
     {
+        AudioManager.Instance.PlayClickUI();
+
         if (!IsSelected)
             Select();
         else

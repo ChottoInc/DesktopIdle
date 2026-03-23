@@ -65,6 +65,8 @@ public class UITabJobFisher : UITabWindow
 
     public void OnButtonBack()
     {
+        AudioManager.Instance.PlayClickUI();
+
         Close();
         panelJob.ChangeCurrentTab(null, -1);
     }
@@ -125,6 +127,8 @@ public class UITabJobFisher : UITabWindow
     {
         if (player != null) return;
 
+        AudioManager.Instance.PlayClickUI();
+
         LastSceneSettings settings = new LastSceneSettings();
         settings.lastSceneName = "FisherScene";
         settings.lastSceneType = SceneLoaderManager.SceneType.Fisher;
@@ -134,6 +138,8 @@ public class UITabJobFisher : UITabWindow
 
     public void OnButtonLog()
     {
+        AudioManager.Instance.PlayClickUI();
+
         if (!isLogShow)
         {
             panelFishGroup.SetActive(false);

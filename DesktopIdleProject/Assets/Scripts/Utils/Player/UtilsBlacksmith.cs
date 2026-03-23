@@ -2,46 +2,92 @@ using UnityEngine;
 
 public static class UtilsBlacksmith
 {
-    public const float PER_LEVEL_BLACKSMITH_GAIN_CRAFTSPEED = 0.02f;
-    public const float PER_LEVEL_BLACKSMITH_GAIN_EFFICIENCY = 0.01f;
-    public const float PER_LEVEL_BLACKSMITH_GAIN_LUCK = 0.01f;
+    public static float PER_LEVEL_BLACKSMITH_GAIN_CRAFTSPEED = 0.02f;
+    public static float PER_LEVEL_BLACKSMITH_GAIN_EFFICIENCY = 0.01f;
+    public static float PER_LEVEL_BLACKSMITH_GAIN_LUCK = 0.01f;
+           
+    public static int PER_LEVEL_BLACKSMITH_MAX_CRAFTSPEED = 50;
+    public static int PER_LEVEL_BLACKSMITH_MAX_EFFICIENCY = 30;
+    public static int PER_LEVEL_BLACKSMITH_MAX_LUCK = 70;
 
-    public const int PER_LEVEL_BLACKSMITH_MAX_CRAFTSPEED = 50;
-    public const int PER_LEVEL_BLACKSMITH_MAX_EFFICIENCY = 30;
-    public const int PER_LEVEL_BLACKSMITH_MAX_LUCK = 70;
 
 
-
-    private const float BASE_BLACKSMITH_EXP_GROWTH = 10f;
-    private const float EXPO_BLACKSMITH_EXP_GROWTH = 1.15f;
-
+    private static float BASE_BLACKSMITH_EXP_GROWTH = 10f;
+    private static float EXPO_BLACKSMITH_EXP_GROWTH = 1.15f;
+            
     //Helmet
-    private const float BLACKSMITH_HELMET_MAXHP_LINEAR_GROWTH = 0.30f;
-    private const float BLACKSMITH_HELMET_MAXHP_QUADRATIC_GROWTH = 0.05f;
-
+    private static float BLACKSMITH_HELMET_MAXHP_LINEAR_GROWTH = 0.30f;
+    private static float BLACKSMITH_HELMET_MAXHP_QUADRATIC_GROWTH = 0.05f;
+            
     // Armor
-    private const float BLACKSMITH_ARMOR_DEF_LINEAR_GROWTH = 0.25f;
-    private const float BLACKSMITH_ARMOR_DEF_QUADRATIC_GROWTH = 0.04f;
-
+    private static float BLACKSMITH_ARMOR_DEF_LINEAR_GROWTH = 0.25f;
+    private static float BLACKSMITH_ARMOR_DEF_QUADRATIC_GROWTH = 0.04f;
+            
     // Gloves
-    private const float BLACKSMITH_GLOVES_ATKSPD_LINEAR_GROWTH = 0.25f;
-    private const float BLACKSMITH_GLOVES_ATKSPD_QUADRATIC_GROWTH = 0.04f;
-
-    private const float BLACKSMITH_GLOVES_CRITDGM_LINEAR_GROWTH = 0.25f;
-    private const float BLACKSMITH_GLOVES_CRITDGM_QUADRATIC_GROWTH = 0.05f;
-
+    private static float BLACKSMITH_GLOVES_ATKSPD_LINEAR_GROWTH = 0.25f;
+    private static float BLACKSMITH_GLOVES_ATKSPD_QUADRATIC_GROWTH = 0.04f;
+            
+    private static float BLACKSMITH_GLOVES_CRITDGM_LINEAR_GROWTH = 0.25f;
+    private static float BLACKSMITH_GLOVES_CRITDGM_QUADRATIC_GROWTH = 0.05f;
+            
     // Boots
-    private const float BLACKSMITH_BOOTS_DEF_LINEAR_GROWTH = 0.15f;
-    private const float BLACKSMITH_BOOTS_DEF_QUADRATIC_GROWTH = 0.038f;
+    private static float BLACKSMITH_BOOTS_DEF_LINEAR_GROWTH = 0.15f;
+    private static float BLACKSMITH_BOOTS_DEF_QUADRATIC_GROWTH = 0.038f;
+            
+    private static float BLACKSMITH_BOOTS_CRITRATE_LINEAR_GROWTH = 0.25f;
+    private static float BLACKSMITH_BOOTS_CRITRATE_QUADRATIC_GROWTH = 0.05f;
+            
+            
+    private static int BLACKSMITH_HELMET_MAX_LEVEL = 10;
+    private static int BLACKSMITH_ARMOR_MAX_LEVEL = 10;
+    private static int BLACKSMITH_GLOVES_MAX_LEVEL = 10;
+    private static int BLACKSMITH_BOOTS_MAX_LEVEL = 10;
 
-    private const float BLACKSMITH_BOOTS_CRITRATE_LINEAR_GROWTH = 0.25f;
-    private const float BLACKSMITH_BOOTS_CRITRATE_QUADRATIC_GROWTH = 0.05f;
+
+    private static PlayerJobBlacksmithSO jobDataSO;
 
 
-    private const int BLACKSMITH_HELMET_MAX_LEVEL = 10;
-    private const int BLACKSMITH_ARMOR_MAX_LEVEL = 10;
-    private const int BLACKSMITH_GLOVES_MAX_LEVEL = 10;
-    private const int BLACKSMITH_BOOTS_MAX_LEVEL = 10;
+    public static void Initialize()
+    {
+        jobDataSO = UtilsPlayer.GetJobFromDatabase(UtilsPlayer.PlayerJob.Blacksmith) as PlayerJobBlacksmithSO;
+
+        PER_LEVEL_BLACKSMITH_GAIN_CRAFTSPEED = jobDataSO.PerLevelGainCraftSpeed;
+        PER_LEVEL_BLACKSMITH_GAIN_EFFICIENCY = jobDataSO.PerLevelGainEfficiency;
+        PER_LEVEL_BLACKSMITH_GAIN_LUCK = jobDataSO.PerLevelGainLuck;
+
+
+        PER_LEVEL_BLACKSMITH_MAX_CRAFTSPEED = jobDataSO.MaxLevelCraftSpeed;
+        PER_LEVEL_BLACKSMITH_MAX_EFFICIENCY = jobDataSO.MaxLevelEfficiency;
+        PER_LEVEL_BLACKSMITH_MAX_LUCK = jobDataSO.MaxLevelLuck;
+
+
+        BASE_BLACKSMITH_EXP_GROWTH = jobDataSO.BaseExpGrowth;
+        EXPO_BLACKSMITH_EXP_GROWTH = jobDataSO.ExpoExpGrowth;
+
+
+
+        BLACKSMITH_HELMET_MAXHP_LINEAR_GROWTH = jobDataSO.HelmetMaxHpLinearGrowth;
+        BLACKSMITH_HELMET_MAXHP_QUADRATIC_GROWTH = jobDataSO.HelmetMaxHpQuadraticGrowth;
+
+        BLACKSMITH_ARMOR_DEF_LINEAR_GROWTH = jobDataSO.ArmorDefLinearGrowth;
+        BLACKSMITH_ARMOR_DEF_QUADRATIC_GROWTH = jobDataSO.ArmorDefQuadraticGrowth;
+
+
+        BLACKSMITH_GLOVES_ATKSPD_LINEAR_GROWTH = jobDataSO.GlovesAtkSpdLinearGrowth;
+        BLACKSMITH_GLOVES_ATKSPD_QUADRATIC_GROWTH = jobDataSO.GlovesAtkSpdQuadraticGrowth;
+
+        BLACKSMITH_GLOVES_CRITDGM_LINEAR_GROWTH = jobDataSO.GlovesCritDmgLinearGrowth;
+        BLACKSMITH_GLOVES_CRITDGM_QUADRATIC_GROWTH = jobDataSO.GlovesCritDmgQuadraticGrowth;
+
+
+
+        BLACKSMITH_BOOTS_DEF_LINEAR_GROWTH = jobDataSO.BootsDefLinearGrowth;
+        BLACKSMITH_BOOTS_DEF_QUADRATIC_GROWTH = jobDataSO.BootsDefQuadraticGrowth;
+
+        BLACKSMITH_BOOTS_CRITRATE_LINEAR_GROWTH = jobDataSO.BootsCritRateLinearGrowth;
+        BLACKSMITH_BOOTS_CRITRATE_QUADRATIC_GROWTH = jobDataSO.BootsCritRateQuadraticGrowth;
+    }
+
 
     public static int RequiredExpForBlacksmithLevel(int level)
     {

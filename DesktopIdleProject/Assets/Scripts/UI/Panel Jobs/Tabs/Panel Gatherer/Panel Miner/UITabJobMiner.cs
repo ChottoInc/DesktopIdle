@@ -90,6 +90,8 @@ public class UITabJobMiner : UITabWindow
 
     public void OnButtonBack()
     {
+        AudioManager.Instance.PlayClickUI();
+
         Close();
         panelJob.ChangeCurrentTab(null, -1);
     }
@@ -275,6 +277,8 @@ public class UITabJobMiner : UITabWindow
     {
         if (player != null) return;
 
+        AudioManager.Instance.PlayClickUI();
+
         LastSceneSettings settings = new LastSceneSettings();
         settings.lastSceneName = "MinerScene";
         settings.lastSceneType = SceneLoaderManager.SceneType.Miner;
@@ -286,6 +290,8 @@ public class UITabJobMiner : UITabWindow
     {
         // check if animations are on and animating right now, so you can't interrupt the animation and bug it
         if (SettingsManager.Instance.AreLevelUpEquipmentOn && isAnimatingLevelUp) return;
+
+        AudioManager.Instance.PlayClickUI();
 
         // remove requirements from inventory
         foreach (var requirement in requirements)

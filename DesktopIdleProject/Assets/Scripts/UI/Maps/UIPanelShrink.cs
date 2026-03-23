@@ -19,6 +19,8 @@ public class UIPanelShrink : MonoBehaviour
 
     public void OnButtonShrink()
     {
+        AudioManager.Instance.PlayClickUI();
+
         isExpanded = !isExpanded;
 
         foreach (var item in objectsToHide)

@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+using System.ComponentModel;
 
 public class PlayerBlacksmithSaveData
 {
@@ -15,6 +17,7 @@ public class PlayerBlacksmithSaveData
     // ---- STAT VALUES
 
     public int currentLevel;
+
     public int currentExp;
 
     // ---- WEAPON

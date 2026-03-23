@@ -7,6 +7,8 @@ public class UIBountyRequestPrefab : MonoBehaviour
 
     public void OnButtonChoose()
     {
+        AudioManager.Instance.PlayClickUI();
+
         tabBounties.OpenBountiesList(slot);
     }
 }

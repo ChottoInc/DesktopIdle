@@ -90,12 +90,16 @@ public class UITabPlayerJob : UITabWindow
     {
         if(currentTabWindow == null)
         {
+            AudioManager.Instance.PlayClickUI();
             Close();
         }
         else
         {
             if (currentTabWindow.CanClose())
+            {
+                AudioManager.Instance.PlayClickUI();
                 Close();
+            }
         }
     }
 }

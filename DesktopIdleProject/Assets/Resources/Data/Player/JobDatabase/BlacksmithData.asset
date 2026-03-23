@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90271928968b9e749afea95b68d97fd0, type: 3}
+  m_Name: BlacksmithData
+  m_EditorClassIdentifier: 
+  id: 3
+  dataPath: Files/Player/PlayerDatas - Blacksmith
+  <PerLevelGainCraftSpeed>k__BackingField: 0.02
+  <PerLevelGainEfficiency>k__BackingField: 0.01
+  <PerLevelGainLuck>k__BackingField: 0.01
+  <MaxLevelCraftSpeed>k__BackingField: 50
+  <MaxLevelEfficiency>k__BackingField: 30
+  <MaxLevelLuck>k__BackingField: 70
+  <BaseExpGrowth>k__BackingField: 10
+  <ExpoExpGrowth>k__BackingField: 1.15
+  <HelmetMaxHpLinearGrowth>k__BackingField: 0.3
+  <HelmetMaxHpQuadraticGrowth>k__BackingField: 0.05
+  <ArmorDefLinearGrowth>k__BackingField: 0.25
+  <ArmorDefQuadraticGrowth>k__BackingField: 0.04
+  <GlovesAtkSpdLinearGrowth>k__BackingField: 0.25
+  <GlovesAtkSpdQuadraticGrowth>k__BackingField: 0.04
+  <GlovesCritDmgLinearGrowth>k__BackingField: 0.25
+  <GlovesCritDmgQuadraticGrowth>k__BackingField: 0.05
+  <BootsDefLinearGrowth>k__BackingField: 0.15
+  <BootsDefQuadraticGrowth>k__BackingField: 0.038
+  <BootsCritRateLinearGrowth>k__BackingField: 0.25
+  <BootsCritRateQuadraticGrowth>k__BackingField: 0.05

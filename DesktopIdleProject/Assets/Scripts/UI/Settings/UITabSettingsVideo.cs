@@ -45,11 +45,13 @@ public class UITabSettingsVideo : UITabWindow
 
     public void OnToggleAlwaysOnTop(bool isOn)
     {
+        AudioManager.Instance.PlayClickUI();
         SettingsManager.Instance.SetIsAlwaysOnTop(isOn);
     }
 
     public void OnToggleClickThrough(bool isOn)
     {
+        AudioManager.Instance.PlayClickUI();
         SettingsManager.Instance.SetIsClickThrough(isOn);
     }
 
@@ -60,6 +62,8 @@ public class UITabSettingsVideo : UITabWindow
         // do something only if isOn, so only one of the group make changes
         if (!isOn) return;
 
+        AudioManager.Instance.PlayClickUI();
+
         // set to 30 fps if on
         SettingsManager.Instance.SetIs60FPS(!isOn);
     }
@@ -69,6 +73,8 @@ public class UITabSettingsVideo : UITabWindow
         // do something only if isOn, so only one of the group make changes
         if (!isOn) return;
 
+        AudioManager.Instance.PlayClickUI();
+
         SettingsManager.Instance.SetIs60FPS(isOn);
     }
 
@@ -77,6 +83,8 @@ public class UITabSettingsVideo : UITabWindow
     {
         // check if more than 1 display is available
         if (possibleIndexes <= 1) return;
+
+        AudioManager.Instance.PlayClickUI();
 
         currentMonitorIndex++;
 

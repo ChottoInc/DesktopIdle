@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6457041293016576256}
   - component: {fileID: 1024039327803316710}
   - component: {fileID: 7511016602060952059}
-  m_Layer: 7
+  - component: {fileID: 5004112255585731213}
+  m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 7}
+  m_LocalScale: {x: 4.52, y: 4.52, z: 4.52}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4603686198648205258}
@@ -106,6 +107,49 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5004112255585731213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2656576845122861239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c75e5da114ef0a44b83df15bad0b3e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &6644793425520621276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7016066185701956325}
+  m_Layer: 0
+  m_Name: Enemy Checker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7016066185701956325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644793425520621276}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.635, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4603686198648205258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8506325778044164994
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,7 +162,7 @@ GameObject:
   - component: {fileID: 6702606750040899450}
   - component: {fileID: 7364460508878096355}
   - component: {fileID: 928355168236071314}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: Shemoon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,6 +183,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6457041293016576256}
+  - {fileID: 7016066185701956325}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6702606750040899450
@@ -158,6 +203,11 @@ MonoBehaviour:
   speed: 5
   cooldownIdle: 1.5
   animator: {fileID: 7511016602060952059}
+  attackClip: {fileID: 7400000, guid: 3868f1c1c224abd40949918d252a071e, type: 2}
+  checkEnemyPoint: {fileID: 7016066185701956325}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!61 &7364460508878096355
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -190,7 +240,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.027918816, y: 0.049736857}
+  m_Offset: {x: -0.03854227, y: 0.023660421}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -201,7 +251,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3328896, y: 0.93400455}
+  m_Size: {x: 0.8171644, y: 0.584393}
   m_EdgeRadius: 0
 --- !u!50 &928355168236071314
 Rigidbody2D:
@@ -225,7 +275,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2240
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0

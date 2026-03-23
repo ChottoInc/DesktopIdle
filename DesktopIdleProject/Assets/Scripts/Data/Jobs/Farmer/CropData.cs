@@ -68,5 +68,13 @@ public class CropData
     public void AddGrowth(float t)
     {
         currentGrowth += t;
+
+        // reward exp if growth reaches max
+        if(IsFullyGrown)
+        {
+            // TODO: balance exp
+            PlayerManager.Instance.PlayerFarmerData.AddExp(20);
+            PlayerManager.Instance.SaveFarmerData();
+        }
     }
 }

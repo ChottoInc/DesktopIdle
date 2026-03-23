@@ -10,7 +10,6 @@ public class UIFarmerSideCropInfo : MonoBehaviour
 
     public void Setup(CropData cropData)
     {
-        Debug.Log("crea crop");
         // show last sprite of the crop, full growth
         imageCrop.sprite = cropData.CropSO.SpriteCrop[cropData.CropSO.SpriteCrop.Length - 1];
 

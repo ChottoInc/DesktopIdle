@@ -78,7 +78,7 @@ public class CropsPlantManager : MonoBehaviour
 
         HandleUpdateSave();
 
-        if(cropSlot1 != null)
+        if (cropSlot1 != null)
             HandleLureSlot1();
 
         if (cropSlot2 != null)
@@ -105,7 +105,7 @@ public class CropsPlantManager : MonoBehaviour
                 if (reducedLureCooldownCheat)
                 {
                     timerLureSlot1 = 30f;
-                    Debug.Log("started lure slot 1");
+                    //Debug.Log("started lure slot 1");
                 }
                 else
                 {
@@ -145,7 +145,7 @@ public class CropsPlantManager : MonoBehaviour
                 if (reducedLureCooldownCheat)
                 {
                     timerLureSlot2 = 30f;
-                    Debug.Log("started lure slot 2");
+                    //Debug.Log("started lure slot 2");
                 }
                 else
                 {
@@ -185,7 +185,7 @@ public class CropsPlantManager : MonoBehaviour
                 if (reducedLureCooldownCheat)
                 {
                     timerLureSlot3 = 30f;
-                    Debug.Log("started lure slot 3");
+                    //Debug.Log("started lure slot 3");
                 }
                 else
                 {
@@ -225,7 +225,7 @@ public class CropsPlantManager : MonoBehaviour
                 if (reducedLureCooldownCheat)
                 {
                     timerLureSlot4 = 30f;
-                    Debug.Log("started lure slot 4");
+                    //Debug.Log("started lure slot 4");
                 }
                 else
                 {
@@ -253,7 +253,6 @@ public class CropsPlantManager : MonoBehaviour
 
     private void SpawnCompanion(CompanionSO so, WorldCropSlot worldSlot)
     {
-        Debug.Log("Spawning companion");
         // get prefab from so
         GameObject companionPrefab = so.Prefab;
 
@@ -272,7 +271,7 @@ public class CropsPlantManager : MonoBehaviour
         }
 
         spawnPos = Camera.main.ScreenToWorldPoint(spawnPos);
-        Debug.Log("Spawned at: " + spawnPos);
+        
         // spawn
         GameObject prefab = Instantiate(companionPrefab, spawnPos, Quaternion.identity);
         prefab.GetComponent<Companion>().SetupBefriend(so, worldSlot.CropTransforms.First().position);

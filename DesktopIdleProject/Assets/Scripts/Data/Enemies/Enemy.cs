@@ -44,7 +44,12 @@ public class Enemy : MonoBehaviour, IPoolObject
     private bool isIdling;
     private float timerIdle;
 
+    private bool canMove;
+
     private Rigidbody2D rb;
+
+
+    public bool CanMove => canMove;
 
     // --------- ATTACK VARS
 
@@ -59,7 +64,6 @@ public class Enemy : MonoBehaviour, IPoolObject
     // ------- VFX
 
     private bool isDeathVFXPlaying;
-    //private bool isHitVFXPlaying;
 
     private SceneLoaderManager.SceneType sceneType;
 
@@ -69,6 +73,7 @@ public class Enemy : MonoBehaviour, IPoolObject
     public EnemyData EnemyData => enemyData;
 
     public bool IsDead => enemyData.CurrentHp <= 0;
+
 
     private void Awake()
     {
@@ -81,6 +86,8 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     private void Start()
     {
+        canMove = true;
+
         deathVFXDuration = deathVFX.main.duration;
 
         startScale = spriteRenderer.transform.localScale;
@@ -112,6 +119,8 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     private void HandleMovement()
     {
+        if (!canMove) return;
+
         float distance = Mathf.Abs(transform.position.x - currentTarget);
 
         animator.SetFloat("Velocity", Mathf.Abs(rb.velocity.x));
@@ -247,6 +256,11 @@ public class Enemy : MonoBehaviour, IPoolObject
             spriteRenderer.color = new Color(spriteColor.r, spriteColor.g, spriteColor.b, 0);
         else
             spriteRenderer.color = new Color(spriteColor.r, spriteColor.g, spriteColor.b, 1);
+    }
+
+    public void SetMove(bool move)
+    {
+        canMove = move;
     }
 
 

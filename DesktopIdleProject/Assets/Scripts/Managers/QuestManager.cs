@@ -276,47 +276,48 @@ public class QuestManager : MonoBehaviour
         InitializeDailyQuests();
     }
 
+    /// <summary>
+    /// Initialize all story quests, call even when loading from file to check new added quests
+    /// </summary>
     private void InitializeStoryQuests()
     {
         // initialize dict and first actives quests
-        activeStoryQuests = new List<string>();
-        dictQuestsStoryProgress = new Dictionary<string, QuestDataProgress>();
+
+        if(activeStoryQuests == null)
+            activeStoryQuests = new List<string>();
+
+        if(dictQuestsStoryProgress == null)
+            dictQuestsStoryProgress = new Dictionary<string, QuestDataProgress>();
 
         // create default for every story
         QuestStorySO[] storyQuests = GetAllStoryQuests();
         for (int i = 0; i < storyQuests.Length; i++)
         {
+            // get so
             QuestStorySO so = storyQuests[i];
-            QuestDataProgress questProgress = new QuestDataProgress();
 
-            questProgress.isActive = so.IsActiveFromStart;
-
-            // add to active if stom SO
-            if (so.IsActiveFromStart)
+            // check if already in dictionary
+            if(!dictQuestsStoryProgress.ContainsKey(so.UniqueId))
             {
-                activeStoryQuests.Add(so.UniqueId);
+                // create progress
+                QuestDataProgress questProgress = new QuestDataProgress();
+
+                questProgress.isActive = so.IsActiveFromStart;
+
+                // add to active if from start SO
+                if (so.IsActiveFromStart)
+                {
+                    activeStoryQuests.Add(so.UniqueId);
+                }
+
+                questProgress.progressCounter = 0;
+                questProgress.progressCompleted = false;
+
+                questProgress.isCleared = false;
+
+                // save in dictionary
+                dictQuestsStoryProgress.Add(so.UniqueId, questProgress);
             }
-
-            questProgress.progressCounter = 0;
-            questProgress.progressCompleted = false;
-
-            /*
-            // initialize quest data progress
-            switch (so.QuestData.questObjectiveType)
-            {
-                case QuestObjectiveType.Kill:
-                case QuestObjectiveType.Obtain:
-                case QuestObjectiveType.LevelUp:
-                case QuestObjectiveType.LevelUp:
-                    questProgress.progressCounter = 0;
-                    questProgress.progressCompleted = false;
-                    break;
-            }
-            */
-            questProgress.isCleared = false;
-
-            // save in dictionary
-            dictQuestsStoryProgress.Add(so.UniqueId, questProgress);
         }
     }
 
@@ -391,17 +392,7 @@ public class QuestManager : MonoBehaviour
 
                 questProgress.progressCounter = 0;
                 questProgress.progressCompleted = false;
-                /*
-                // initialize quest data progress
-                switch (daily.QuestData.questObjectiveType)
-                {
-                    case QuestObjectiveType.Kill:
-                    case QuestObjectiveType.Obtain:
-                    case QuestObjectiveType.LevelUp:
-                        questProgress.progressCounter = 0;
-                        break;
-                }
-                */
+                
                 questProgress.isCleared = false;
 
                 // save in dictionary
@@ -428,7 +419,11 @@ public class QuestManager : MonoBehaviour
         acceptedPulledBounties = new List<string>();
         acceptedPulledBounties.AddRange(saveData.acceptedPulledBounties);
 
+        // refresh story quests if new ones are added
+        InitializeStoryQuests();
+
         LoadStoryQuests(saveData.storySaveDatas);
+
         LoadBountyQuests(saveData.bountySaveDatas);
 
         // check for daily using date
@@ -445,21 +440,27 @@ public class QuestManager : MonoBehaviour
 
     private void LoadStoryQuests(List<QuestStorySaveData> datas)
     {
-        activeStoryQuests = new List<string>();
-        dictQuestsStoryProgress = new Dictionary<string, QuestDataProgress>();
+        if (activeStoryQuests == null)
+            activeStoryQuests = new List<string>();
+
+        if (dictQuestsStoryProgress == null)
+            dictQuestsStoryProgress = new Dictionary<string, QuestDataProgress>();
 
         // used for debug infos
         int exceptionIndex = 0;
 
         try
         {
+            // for every found save, update dictionary
             for (int i = 0; i < datas.Count; i++)
             {
                 exceptionIndex = i;
 
                 // save in dictionary
                 QuestDataProgress dataProgress = new QuestDataProgress(datas[i]);
-                dictQuestsStoryProgress.Add(datas[i].questId, dataProgress);
+                //dictQuestsStoryProgress.Add(datas[i].questId, dataProgress);
+
+                dictQuestsStoryProgress[datas[i].questId] = dataProgress;
 
                 // set active from reading
                 if (dataProgress.isActive)

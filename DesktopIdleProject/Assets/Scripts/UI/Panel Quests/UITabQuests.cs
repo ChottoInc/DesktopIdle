@@ -10,4 +10,11 @@ public class UITabQuests : UITabWindow
 
         tabManager.SelectFirstTab();
     }
+
+    public void OnButtonClose()
+    {
+        AudioManager.Instance.PlayClickUI();
+
+        base.Close();
+    }
 }

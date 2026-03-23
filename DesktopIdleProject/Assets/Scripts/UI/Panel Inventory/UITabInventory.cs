@@ -97,6 +97,8 @@ public class UITabInventory : UITabWindow
 
     public void OnButtonClose()
     {
+        AudioManager.Instance.PlayClickUI();
+
         Close();
     }
 }

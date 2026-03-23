@@ -41,6 +41,8 @@ public class UIAnimatedButton : Button
     {
         ResetButton();
 
+        AudioManager.Instance.PlayClickUI();
+
         base.OnPointerClick(eventData);
     }
 

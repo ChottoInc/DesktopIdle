@@ -149,6 +149,8 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonBack()
     {
+        AudioManager.Instance.PlayClickUI();
+
         Close();
         panelJob.ChangeCurrentTab(null, -1);
     }
@@ -401,6 +403,8 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonSelectOre()
     {
+        AudioManager.Instance.PlayClickUI();
+
         panelSelectOre.Open();
     }
 
@@ -424,6 +428,8 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonHelmet()
     {
+        AudioManager.Instance.PlayClickUI();
+
         currentGear = UtilsGather.ID_BLACKSMITH_HELMET;
         lastSelectedGearButton = buttonHelmet;
         Open();
@@ -431,6 +437,8 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonArmor()
     {
+        AudioManager.Instance.PlayClickUI();
+
         currentGear = UtilsGather.ID_BLACKSMITH_ARMOR;
         lastSelectedGearButton = buttonArmor;
         Open();
@@ -438,6 +446,8 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonGloves()
     {
+        AudioManager.Instance.PlayClickUI();
+
         currentGear = UtilsGather.ID_BLACKSMITH_GLOVES;
         lastSelectedGearButton = buttonGloves;
         Open();
@@ -445,6 +455,8 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonBoots()
     {
+        AudioManager.Instance.PlayClickUI();
+
         currentGear = UtilsGather.ID_BLACKSMITH_BOOTS;
         lastSelectedGearButton = buttonBoots;
         Open();
@@ -458,6 +470,7 @@ public class UITabJobBlacksmith : UITabWindow
             if (!player.IsForging)
             {
                 // if it's not already forging, start
+                AudioManager.Instance.PlayClickUI();
                 player.OnTryForge();
             }
             else
@@ -465,12 +478,15 @@ public class UITabJobBlacksmith : UITabWindow
                 // if it's already forging, but a different item, stop current and start new
                 if(player.CurrentOreId != player.PlayerData.CurrentForgingOre)
                 {
+                    AudioManager.Instance.PlayClickUI();
                     player.OnTryForge();
                 }
             }
         }
         else
         {
+            AudioManager.Instance.PlayClickUI();
+
             LastSceneSettings settings = new LastSceneSettings();
             settings.lastSceneName = "BlacksmithScene";
             settings.lastSceneType = SceneLoaderManager.SceneType.Blacksmith;
@@ -483,6 +499,8 @@ public class UITabJobBlacksmith : UITabWindow
     {
         // check if animations are on and animating right now, so you can't interrupt the animation and bug it
         if (SettingsManager.Instance.AreLevelUpEquipmentOn && isAnimatingLevelUp) return;
+
+        AudioManager.Instance.PlayClickUI();
 
         // remove requirements from inventory
         foreach (var requirement in requirements)

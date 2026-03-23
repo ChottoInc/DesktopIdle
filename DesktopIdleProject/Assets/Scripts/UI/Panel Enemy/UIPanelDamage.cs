@@ -75,7 +75,7 @@ public class UIPanelDamage : MonoBehaviour
             isAnimating = true;
 
             //Debug.Log("start ani");
-            // deque item and set sprite
+            // dequeue item and set sprite
             int damage = queueDamages.Dequeue();
             //imageObtained.sprite = GetSpriteByType(damage);
             textDamage.text = damage.ToString();
@@ -97,6 +97,10 @@ public class UIPanelDamage : MonoBehaviour
             });
 
             tweenScale = objectToMove.transform.DOScale(0, moveTime).SetEase(Ease.InOutSine);
+        }
+        else if (isAnimating)
+        {
+            queueDamages.Dequeue();
         }
     }
 

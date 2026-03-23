@@ -59,21 +59,26 @@ public class UITabSettingsGameplay : UITabWindow
 
     public void OnToggleDamage(bool isOn)
     {
+        AudioManager.Instance.PlayClickUI();
         SettingsManager.Instance.SetIsDamageOn(isOn);
     }
+
     public void OnToggleItemCollection(bool isOn)
     {
+        AudioManager.Instance.PlayClickUI();
         SettingsManager.Instance.SetIsItemCollectionOn(isOn);
     }
 
     public void OnToggleTooltips(bool isOn)
     {
+        AudioManager.Instance.PlayClickUI();
         SettingsManager.Instance.SetAreTooltipsOn(isOn);
     }
 
 
     public void OnToggleLevelUpEquipmentAnimation(bool isOn)
     {
+        AudioManager.Instance.PlayClickUI();
         SettingsManager.Instance.SetAreLevelUpEquipmentAnimationOn(isOn);
     }
 }

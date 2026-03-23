@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 8998053464766606057}
   - component: {fileID: 450746561835898923}
   - component: {fileID: 2136345042759079552}
-  - component: {fileID: 6044779895863779678}
+  - component: {fileID: 4322448589162718207}
   m_Layer: 5
   m_Name: Button Add
   m_TagString: Untagged
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 3
---- !u!114 &6044779895863779678
+--- !u!114 &4322448589162718207
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -436,7 +436,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3498293632969691287}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: d1dbad8f5a9eab64da48c7715fef7128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 4350337409357686309}
   - component: {fileID: 4998172570781761655}
   - component: {fileID: 9157249939494108420}
-  - component: {fileID: 3344055557856823949}
+  - component: {fileID: 5690025532052983241}
   m_Layer: 5
   m_Name: Button Remove
   m_TagString: Untagged
@@ -560,7 +560,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 3
---- !u!114 &3344055557856823949
+--- !u!114 &5690025532052983241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -569,7 +569,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4268281279409934548}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: d1dbad8f5a9eab64da48c7715fef7128, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -938,8 +938,8 @@ MonoBehaviour:
   panelStatus: {fileID: 0}
   idStat: 0
   textStatLevel: {fileID: 8772101248236763330}
-  buttonDecrease: {fileID: 3344055557856823949}
-  buttonIncrease: {fileID: 6044779895863779678}
+  buttonDecrease: {fileID: 5690025532052983241}
+  buttonIncrease: {fileID: 4322448589162718207}
   showTooltipAfter: 0.75
   tooltipPosition: {fileID: 6331241324893993496}
 --- !u!1 &6881934017167266122
@@ -974,7 +974,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -916.44, y: 0}
+  m_AnchoredPosition: {x: -434, y: 119}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7682571724647246483

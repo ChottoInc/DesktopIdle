@@ -71,6 +71,7 @@ public class UIFarmerPanelSelectionCrop : MonoBehaviour
 
     public void OnButtonClose()
     {
+        AudioManager.Instance.PlayClickUI();
         panelCrops.Setup();
     }
 }

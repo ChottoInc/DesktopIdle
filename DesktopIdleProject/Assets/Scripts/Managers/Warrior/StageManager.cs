@@ -48,6 +48,11 @@ public class StageManager : MonoBehaviour
     public int CurrentEnemyIndex => currentEnemyIndex;
 
 
+    // companions
+
+    private List<GameObject> currentCompanionsObjs;
+
+
     public static StageManager Instance { get; private set; }
 
     private void Awake()
@@ -55,11 +60,23 @@ public class StageManager : MonoBehaviour
         if(Instance == null)
         {
             Instance = this;
+
+            PlayerManager.Instance.PlayerFarmerData.OnCompanionEquipped += SpawnCompanions;
         }
         else
         {
             Destroy(gameObject);
         }
+    }
+
+    private void OnDestroy()
+    {
+        PlayerManager.Instance.PlayerFarmerData.OnCompanionEquipped -= SpawnCompanions;
+    }
+
+    private void Start()
+    {
+        currentCompanionsObjs = new List<GameObject>();
     }
 
 
@@ -86,6 +103,8 @@ public class StageManager : MonoBehaviour
         maxXSpawn = Camera.main.ScreenToWorldPoint(new Vector2(Screen.currentResolution.width - offsetSpawn, 0)).x;
 
         StartCoroutine(CoSpawnStartingEnemies());
+
+        SpawnCompanions();
 
         UpdateStageUI();
     }
@@ -155,6 +174,92 @@ public class StageManager : MonoBehaviour
     public void RemoveFromCurrentEnemiesList(Enemy enemy)
     {
         currentEnemies.Remove(enemy);
+    }
+
+    #endregion
+
+    #region COMPANIONS
+
+    private int GetCompanionSpawnIndex(CompanionData data)
+    {
+        for (int i = 0; i < currentCompanionsObjs.Count; i++)
+        {
+            Companion companion = currentCompanionsObjs[i].GetComponent<Companion>();
+            if (companion.CurrentCompanionData.CompanionSO.Id == data.CompanionSO.Id)
+                return i;
+        }
+        return -1;
+    }
+
+    private void SpawnCompanions()
+    {
+        StartCoroutine(CoSpawnCompanions(1f));
+    }
+
+    private IEnumerator CoSpawnCompanions(float timer = 0f)
+    {
+        yield return new WaitForSeconds(timer);
+
+        List<int> companionIds = new List<int>();
+
+        // get equipped companions
+        var companions = PlayerManager.Instance.PlayerFarmerData.GetEquippedCompanions();
+
+
+        // spawn whatever companion isn't spawned yet
+        for (int i = 0; i < companions.Count; i++)
+        {
+            CompanionData data = companions[i].companionData;
+
+            // get index
+            int index = GetCompanionSpawnIndex(data);
+
+            // if not spawned yet, can spawn it
+            if(index == -1)
+            {
+                // random pos
+                float randX = Random.Range(minXSpawn, maxXSpawn);
+                Vector2 spawnPos = new Vector2(randX, ySpawn);
+
+                // spawn
+                SpawnCompanion(companions[i].companionData, spawnPos);
+            }
+
+            companionIds.Add(data.CompanionSO.Id);
+
+            yield return new WaitForSeconds(1f);
+        }
+
+        // check the spawned and the current companions
+        // if any of current isn't in the list it will be destroyed
+        for (int i = currentCompanionsObjs.Count - 1; i >= 0; i--)
+        {
+            Companion companion = currentCompanionsObjs[i].GetComponent<Companion>();
+
+            if (!companionIds.Contains(companion.CurrentCompanionData.CompanionSO.Id))
+            {
+                currentCompanionsObjs.RemoveAt(i);
+            }
+        }
+
+    }
+
+    private void SpawnCompanion(CompanionData data, Vector2 spawnPos)
+    {
+        GameObject companionObj = Instantiate(data.CompanionSO.Prefab, spawnPos, Quaternion.identity);
+
+        if (companionObj != null)
+        {
+            Companion companion = companionObj.GetComponent<Companion>();
+
+            companion.SetupFight(data);
+
+            currentCompanionsObjs.Add(companionObj);
+        }
+        else
+        {
+            Debug.Log("Object not instatiated, check the companion so");
+        }
     }
 
     #endregion

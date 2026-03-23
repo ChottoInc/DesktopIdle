@@ -36,11 +36,12 @@ public static class UtilsWindowsSO
                         data.rc.right - data.rc.left,
                         data.rc.bottom - data.rc.top);
     }
-
+    /*
     public static Vector2 GetUsableDesktopSize(int monitorIndex)
     {
 #if UNITY_STANDALONE_WIN
         Rect taskbar = GetTaskbarRect();
+        Debug.Log("Taskbar x,y: " + taskbar.x + ", " + taskbar.y);
         return new Vector2(Display.displays[monitorIndex].systemWidth, taskbar.y);
 
 #elif UNITY_STANDALONE_OSX
@@ -50,5 +51,5 @@ public static class UtilsWindowsSO
         Rect taskbar = GetTaskbarRect();
         return new Vector2(monitor.systemWidth, taskbar.y);
 #endif
-    }
+    }*/
 }

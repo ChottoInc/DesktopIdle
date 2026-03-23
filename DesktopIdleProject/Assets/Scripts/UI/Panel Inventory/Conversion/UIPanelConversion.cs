@@ -84,6 +84,8 @@ public class UIPanelConversion : MonoBehaviour
             return;
         }
 
+        AudioManager.Instance.PlayClickUI();
+
         HandleConversion();
     }
 
@@ -146,6 +148,8 @@ public class UIPanelConversion : MonoBehaviour
 
     public void OnButtonClose()
     {
+        AudioManager.Instance.PlayClickUI();
+
         Close();
 
         tabInventory.OpenInventory(null, UITabInventory.ID_INVENTORY_FILTER_CARDS);

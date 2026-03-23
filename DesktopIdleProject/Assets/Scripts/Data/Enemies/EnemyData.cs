@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyData
@@ -9,29 +7,12 @@ public class EnemyData
     private const float PER_ENEMY_GAIN_LEVEL = 0.0202f;
 
 
-    private const float MAXHP_GAIN_PER_LEVEL = 1.5f;
+    private const float MAXHP_GAIN_PER_LEVEL = 2f;
     private const float ATK_GAIN_PER_LEVEL = 0.1f;
     private const float DEF_GAIN_PER_LEVEL = 0.1f;
 
 
     private EnemySO enemySO;
-
-
-
-    /*
-    private const float PER_STAGE_GAIN_MAXHP = 1.12f;
-    private const float PER_STAGE_GAIN_ATK = 1.1f;
-    private const float PER_STAGE_GAIN_DEF = 1.08f;
-
-    private const float PER_SUBSTAGE_MULTIPLIER_MAXHP = 1.05f;
-    private const float PER_SUBSTAGE_MULTIPLIER_ATK = 1.03f;
-    private const float PER_SUBSTAGE_MULTIPLIER_DEF = 1.02f;
-
-
-    private float baseMaxHp = 40;
-    private float baseAtk = 6;
-    private float baseDef = 3;
-    */
 
 
     private int currentLevel;
@@ -118,14 +99,14 @@ public class EnemyData
     private float CalculateAtk()
     {
         // exp growth
-        float p = 0.85f;
+        float p = 1.2f;
         return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 
     private float CalculateDef()
     {
         // exp growth
-        float p = 0.85f;
+        float p = 0.95f;
         return enemySO.BaseDef + DEF_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 
@@ -243,6 +224,26 @@ public class EnemyData
     public void TakeDamageCheat(float damage)
     {
         float total = Mathf.Max(0f, damage);
+
+        // subtract total to hp
+        currentHp -= total;
+
+        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
+
+        if (currentHp <= 0f)
+        {
+            currentHp = 0;
+        }
+    }
+
+    public void TakeDamage(CompanionData data)
+    {
+        // can't take less than 0 or it will cure
+
+        float baseDamage = data.CurrentAtk;
+        float total;
+
+        total = Mathf.Max(0f, baseDamage - currentDef);
 
         // subtract total to hp
         currentHp -= total;

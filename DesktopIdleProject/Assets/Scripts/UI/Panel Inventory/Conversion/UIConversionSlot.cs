@@ -51,6 +51,8 @@ public class UIConversionSlot : MonoBehaviour
     {
         if (!isFilled) return;
 
+        AudioManager.Instance.PlayClickUI();
+
         DeselectCardPrefab();
     }
 

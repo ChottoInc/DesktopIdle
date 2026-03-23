@@ -34,6 +34,8 @@ public class UITabJobFarmer : UITabWindow
 
     public void OnButtonBack()
     {
+        AudioManager.Instance.PlayClickUI();
+
         Close();
         panelJob.ChangeCurrentTab(null, -1);
     }
@@ -41,6 +43,8 @@ public class UITabJobFarmer : UITabWindow
     public void OnButtonFarm()
     {
         if (player != null) return;
+
+        AudioManager.Instance.PlayClickUI();
 
         LastSceneSettings settings = new LastSceneSettings();
         settings.lastSceneName = "FarmerScene";
@@ -51,12 +55,16 @@ public class UITabJobFarmer : UITabWindow
 
     public void OnButtonCompanions()
     {
+        AudioManager.Instance.PlayClickUI();
+
         panelCrops.gameObject.SetActive(false);
         panelCompanions.Setup();
     }
 
     public void OnButtonCrops()
     {
+        AudioManager.Instance.PlayClickUI();
+
         panelCompanions.gameObject.SetActive(false);
         panelCrops.Setup();
     }

@@ -149,7 +149,7 @@ public static class UtilsQuest
                 if (data.questKillSpecific)
                 {
                     EnemySO enemySO = UtilsEnemy.GetEnemySOById(data.monsterId);
-                    result = string.Format("Kill {0} {1}", data.amountKill, enemySO.EnemyPoolName);
+                    result = string.Format("Kill {0} {1}", data.amountKill, enemySO.EnemyName);
                 }
                 else
                 {

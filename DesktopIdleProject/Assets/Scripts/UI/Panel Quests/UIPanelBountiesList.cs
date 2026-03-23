@@ -175,6 +175,8 @@ public class UIPanelBountiesList : MonoBehaviour
 
     public void OnButtonClose()
     {
+        AudioManager.Instance.PlayClickUI();
+
         // back to previous menu
         panelQuest.gameObject.SetActive(true);
         gameObject.SetActive(false);

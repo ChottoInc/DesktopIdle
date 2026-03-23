@@ -4,6 +4,7 @@ using UnityEngine;
 public class EnemySO : ScriptableObject
 {
     [SerializeField] string enemyPoolName;
+    [SerializeField] string enemyName;
     [SerializeField] int id;
 
     [Space(10)]
@@ -14,6 +15,7 @@ public class EnemySO : ScriptableObject
 
 
     public string EnemyPoolName => enemyPoolName.ToLower();
+    public string EnemyName => enemyName;
     public int Id => id;
 
     public float BaseMaxHp => baseMaxHp;
@@ -26,6 +28,11 @@ public class EnemySO : ScriptableObject
     public void SetPoolName(string poolName)
     {
         enemyPoolName = poolName;
+    }
+
+    public void SetEnemyName(string enemyName)
+    {
+        this.enemyName = enemyName;
     }
 
     public void SetId(int id)

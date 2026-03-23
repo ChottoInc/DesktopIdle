@@ -100,4 +100,14 @@ public class UITabShop : UITabWindow
     {
         base.Close();
     }
+
+
+    public void OnButtonClose()
+    {
+        if (UITooltipManager.Instance.IsCallbackOpen) return;
+
+        AudioManager.Instance.PlayClickUI();
+
+        base.Close();
+    }
 }

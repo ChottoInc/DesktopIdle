@@ -2,27 +2,64 @@ using UnityEngine;
 
 public static class UtilsWarrior
 {
-    public const float PER_LEVEL_WARRIOR_GAIN_MAXHP = 20;
-    public const float PER_LEVEL_WARRIOR_GAIN_ATK = 2;
-    public const float PER_LEVEL_WARRIOR_GAIN_DEF = 1;
-    public const float PER_LEVEL_WARRIOR_GAIN_ATK_SPEED = 0.01f;
-    public const float PER_LEVEL_WARRIOR_GAIN_CRIT_RATE = 0.001f;
-    public const float PER_LEVEL_WARRIOR_GAIN_CRIT_DMG = 0.02f;
-    public const float PER_LEVEL_WARRIOR_GAIN_LUCK = 0.01f;
+    public static float PER_LEVEL_WARRIOR_GAIN_MAXHP;
+    public static float PER_LEVEL_WARRIOR_GAIN_ATK;
+    public static float PER_LEVEL_WARRIOR_GAIN_DEF;
+    public static float PER_LEVEL_WARRIOR_GAIN_ATK_SPEED;
+    public static float PER_LEVEL_WARRIOR_GAIN_CRIT_RATE;
+    public static float PER_LEVEL_WARRIOR_GAIN_CRIT_DMG;
+    public static float PER_LEVEL_WARRIOR_GAIN_LUCK;
+                  
+    public static int PER_LEVEL_WARRIOR_MAX_MAXHP;
+    public static int PER_LEVEL_WARRIOR_MAX_ATK;
+    public static int PER_LEVEL_WARRIOR_MAX_DEF;
+    public static int PER_LEVEL_WARRIOR_MAX_ATK_SPEED;
+    public static int PER_LEVEL_WARRIOR_MAX_CRIT_RATE;
+    public static int PER_LEVEL_WARRIOR_MAX_CRIT_DMG;
+    public static int PER_LEVEL_WARRIOR_MAX_LUCK;
+           
+           
+           
+    private static float BASE_FIGHT_EXP_GROWTH;
+    private static float EXPO_FIGHT_EXP_GROWTH;
+    private static float FLAT_FIGHT_EXP_GROWTH;
 
-    public const int PER_LEVEL_WARRIOR_MAX_MAXHP = 50;
-    public const int PER_LEVEL_WARRIOR_MAX_ATK = 50;
-    public const int PER_LEVEL_WARRIOR_MAX_DEF = 50;
-    public const int PER_LEVEL_WARRIOR_MAX_ATK_SPEED = 30;
-    public const int PER_LEVEL_WARRIOR_MAX_CRIT_RATE = 20;
-    public const int PER_LEVEL_WARRIOR_MAX_CRIT_DMG = 30;
-    public const int PER_LEVEL_WARRIOR_MAX_LUCK = 40;
+
+    private static PlayerJobWarriorSO jobDataSO;
 
 
 
-    private const float BASE_FIGHT_EXP_GROWTH = 20f;
-    private const float EXPO_FIGHT_EXP_GROWTH = 1.85f;
-    private const float FLAT_FIGHT_EXP_GROWTH = 50f;
+    public static void Initialize()
+    {
+        jobDataSO = UtilsPlayer.GetJobFromDatabase(UtilsPlayer.PlayerJob.Warrior) as PlayerJobWarriorSO;
+
+        PER_LEVEL_WARRIOR_GAIN_MAXHP = jobDataSO.PerLevelGainMaxHp;
+        PER_LEVEL_WARRIOR_GAIN_ATK = jobDataSO.PerLevelGainAtk;
+        PER_LEVEL_WARRIOR_GAIN_DEF = jobDataSO.PerLevelGainDef;
+        PER_LEVEL_WARRIOR_GAIN_ATK_SPEED = jobDataSO.PerLevelGainAtkSpd;
+        PER_LEVEL_WARRIOR_GAIN_CRIT_RATE = jobDataSO.PerLevelGainCritRate;
+        PER_LEVEL_WARRIOR_GAIN_CRIT_DMG = jobDataSO.PerLevelGainCritDmg;
+        PER_LEVEL_WARRIOR_GAIN_LUCK = jobDataSO.PerLevelGainLuck;
+
+
+        PER_LEVEL_WARRIOR_MAX_MAXHP = jobDataSO.MaxLevelMaxHp;
+        PER_LEVEL_WARRIOR_MAX_ATK = jobDataSO.MaxLevelAtk;
+        PER_LEVEL_WARRIOR_MAX_DEF = jobDataSO.MaxLevelDef;
+        PER_LEVEL_WARRIOR_MAX_ATK_SPEED = jobDataSO.MaxLevelAtkSpd;
+        PER_LEVEL_WARRIOR_MAX_CRIT_RATE = jobDataSO.MaxLevelCritRate;
+        PER_LEVEL_WARRIOR_MAX_CRIT_DMG = jobDataSO.MaxLevelCritDmg;
+        PER_LEVEL_WARRIOR_MAX_LUCK = jobDataSO.MaxLevelLuck;
+
+
+        BASE_FIGHT_EXP_GROWTH = jobDataSO.BaseExpGrowth;
+        EXPO_FIGHT_EXP_GROWTH = jobDataSO.ExpoExpGrowth;
+        FLAT_FIGHT_EXP_GROWTH = jobDataSO.FlatExpGrowth;
+
+
+
+        //Debug.Log("gain max hp: " + PER_LEVEL_WARRIOR_GAIN_MAXHP);
+        //Debug.Log("max level max hp: " + PER_LEVEL_WARRIOR_MAX_MAXHP);
+    }
 
     public static int RequiredExpForWarriorLevel(int level)
     {

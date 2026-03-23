@@ -79,14 +79,13 @@ public class InitializerManager : MonoBehaviour
 
         windowController.windowSize = new Vector2(Screen.currentResolution.width, heightScreen);
 
-        Vector2 usableScreen = UtilsWindowsSO.GetUsableDesktopSize(0);
-        windowController.windowPosition = new Vector2(0, Screen.currentResolution.height - usableScreen.y);
+        // first set
+        List<DisplayInfo> displays = new List<DisplayInfo>();
+        Screen.GetDisplayLayout(displays);
+
+        windowController.windowPosition = new Vector2(0, Display.displays[0].systemHeight - displays[0].workArea.height);
 
         //Debug.Log("win init pos: " + windowController.windowPosition);
-
-        /*
-         * need to check which scene currently in when loading up, and get the correct player data to feed to the manager
-         * */
 
         HandleOtherSetups();
 
@@ -97,24 +96,28 @@ public class InitializerManager : MonoBehaviour
 
     public IEnumerator CoChangeMonitor(int monitorIndex)
     {
+        //Debug.Log("monitor index: " + monitorIndex);
+
         List<DisplayInfo> displays = new List<DisplayInfo>();
         Screen.GetDisplayLayout(displays);
         AsyncOperation moveScreenOp = Screen.MoveMainWindowTo(displays[monitorIndex], Vector2Int.zero); //RoundToInt(Vector2.zero)
 
+        //Debug.Log("working area: " + displays[monitorIndex].workArea.ToString());
+
         yield return moveScreenOp;
 
+        // if null the scene changed from last time
         if(windowController == null)
         {
             windowController = FindFirstObjectByType<UniWindowController>();
         }
 
-        //Debug.Log("win pos after move: " + windowController.windowPosition);
+        //Debug.Log("win pos after default move: " + windowController.windowPosition);
 
-        Vector2 usableScreen = UtilsWindowsSO.GetUsableDesktopSize(monitorIndex);
-
-        // get new window pos
-        Vector2 windowPos = new Vector2(windowController.windowPosition.x, Display.displays[monitorIndex].systemHeight - usableScreen.y);
+        // get new window pos, y set from top to bottom, so the difference is necessary to set at the bottom
+        Vector2 windowPos = new Vector2(windowController.windowPosition.x, Display.displays[monitorIndex].systemHeight - displays[monitorIndex].workArea.height);
         //Debug.Log("expected pos: " + windowPos);
+        //Debug.Log("system h: " + Display.displays[monitorIndex].systemHeight + ", usable screen h: " + displays[monitorIndex].workArea.height + ", pos y: " + windowPos.y);
         
         // get new window size
         Vector2 windowSize = new Vector2(Display.displays[monitorIndex].systemWidth, heightScreen);
@@ -127,6 +130,8 @@ public class InitializerManager : MonoBehaviour
 
         //Debug.Log("actual win pos: " + windowController.windowPosition);
         //Debug.Log("actual win size: " + windowController.windowSize);
+        //
+        //Debug.Log("---------------------------------------------------");
     }
 
 

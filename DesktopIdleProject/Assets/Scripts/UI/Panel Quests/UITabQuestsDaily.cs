@@ -53,7 +53,7 @@ public class UITabQuestsDaily : UITabWindow
         }
 
         // if all daily quests are cleared you can claim the reward
-        buttonClaim.interactable = clearedCounter >= activeQuests.Count;
+        buttonClaim.interactable = clearedCounter >= activeQuests.Count && activeQuests.Count > 0;
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -75,11 +75,16 @@ public class UITabQuestsDaily : UITabWindow
 
     public void OnButtonClaim()
     {
+        AudioManager.Instance.PlayClickUI();
+
         PlayerManager.Instance.Inventory.AddBits(UtilsQuest.DAILY_BITS_REWARD);
         PlayerManager.Instance.SaveInventoryData();
 
 
         QuestManager.Instance.ClearDailyQuests();
         QuestManager.Instance.SaveQuestsData();
+
+        // refresh ui
+        Open();
     }
 }

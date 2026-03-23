@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class UIPanelTutorial : MonoBehaviour
 {
+    [SerializeField] bool skipTutorial;
     [SerializeField] GameObject content;
 
     [Space(10)]
@@ -67,7 +68,7 @@ public class UIPanelTutorial : MonoBehaviour
     private void Start()
     {
         // check if need intro
-        if (SettingsManager.Instance.HasSeenIntroTutorial)
+        if (SettingsManager.Instance.HasSeenIntroTutorial || skipTutorial)
         {
             content.SetActive(false);
             return;
