@@ -7,6 +7,8 @@ public class QuestStorySO : ScriptableObject
 
     [SerializeField] bool isActiveFromStart;
 
+    [SerializeField] UtilsPlayer.PlayerJob[] availableFor;
+
     [SerializeField] UtilsQuest.QuestData questData;
 
     [SerializeField] QuestStorySO[] nexts;
@@ -14,6 +16,7 @@ public class QuestStorySO : ScriptableObject
 
     public string UniqueId => uniqueId;
     public bool IsActiveFromStart => isActiveFromStart;
+    public UtilsPlayer.PlayerJob[] AvailableFor => availableFor;
     public UtilsQuest.QuestData QuestData => questData;
     public QuestStorySO[] Nexts => nexts;
 

@@ -29,6 +29,11 @@ public class PlayerManager : MonoBehaviour
     private PlayerFarmerData playerFarmerData;
 
 
+    // --- COMPANIONS
+
+    // Trigger used for quests
+    public event Action<int> OnCompanionBefriended;
+
 
 
 
@@ -340,6 +345,11 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerFarmerSaveData data = new PlayerFarmerSaveData(playerFarmerData);
         saveService.SaveData(UtilsSave.GetPlayerFarmerFile(), data, false);
+    }
+
+    public void OnBefriendedCompanion(int companion)
+    {
+        OnCompanionBefriended?.Invoke(companion);
     }
 
     #endregion

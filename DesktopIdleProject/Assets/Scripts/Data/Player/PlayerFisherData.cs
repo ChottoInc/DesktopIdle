@@ -35,7 +35,7 @@ public class PlayerFisherData
     // ---- FINAL STAT VALUES
 
     private int currentLevel;
-    private int currentExp;
+    private long currentExp;
 
 
     // ---- FISH GROUPS CHECKS COMPLETION
@@ -55,11 +55,8 @@ public class PlayerFisherData
 
 
     public int CurrentLevel => currentLevel;
-    public int CurrentExp => currentExp;
-    public int ExpToNextLevel => UtilsFisher.RequiredExpForFisherLevel(currentLevel + 1) - UtilsFisher.RequiredExpForFisherLevel(currentLevel);
-    public int TotalExpToNextLevel => UtilsFisher.RequiredExpForFisherLevel(currentLevel + 1);
-    public int TotalExp => UtilsFisher.RequiredExpForFisherLevel(currentLevel) + currentExp;
-
+    public long CurrentExp => currentExp;
+    public long ExpToNextLevel => UtilsFisher.RequiredExpForFisherLevel(currentLevel + 1);
 
     public float CurrentCalmness => baseCalmness + UtilsFisher.PER_LEVEL_FISHER_GAIN_CALMNESS * (levelStatCalmness - 1);
     public float CurrentReflex => baseReflex + UtilsFisher.PER_LEVEL_FISHER_GAIN_REFLEX * (levelstatReflex - 1);
@@ -182,15 +179,23 @@ public class PlayerFisherData
         availableStatPoints -= amount;
     }
 
-    public void AddExp(int amount)
+    public void AddExp(long amount)
     {
+        // check max level
+        if (currentLevel > UtilsFisher.MAX_LEVEL_FISHER)
+        {
+            // set current exp to 0
+            currentExp = 0;
+            return;
+        }
+
         currentExp += amount;
 
         // looping for every level gained
-        while (TotalExp >= TotalExpToNextLevel)
+        while (currentExp >= ExpToNextLevel)
         {
             // recalculate current exp
-            currentExp = TotalExp - TotalExpToNextLevel;
+            currentExp -= ExpToNextLevel;
 
             // give level and stat point
             currentLevel++;

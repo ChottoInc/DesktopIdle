@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public event Action<UtilsItem.ItemType> OnItemAdd;
+    public event Action<ItemSO> OnItemAdd;
 
     
     public virtual void AddItem(int id, int quantity)
@@ -12,11 +12,11 @@ public class Player : MonoBehaviour
         PlayerManager.Instance.SaveInventoryData();
 
         ItemSO itemSO = UtilsItem.GetItemById(id);
-        AddItemEvent(itemSO.ItemType);
+        AddItemEvent(itemSO);
     }
 
-    public virtual void AddItemEvent(UtilsItem.ItemType itemType)
+    public virtual void AddItemEvent(ItemSO itemSO)
     {
-        OnItemAdd?.Invoke(itemType);
+        OnItemAdd?.Invoke(itemSO);
     }
 }

@@ -23,16 +23,16 @@ public class Inventory
 
     public Inventory()
     {
-        currentBits = 100;
-        //currentBits = 0;
+        //currentBits = 100;
+        currentBits = 0;
         itemGroups = new List<ItemGroup>();
-
+        /*
         itemGroups.Add(new ItemGroup(0, 2000));
         itemGroups.Add(new ItemGroup(1, 2000));
         itemGroups.Add(new ItemGroup(2, 2000));
         itemGroups.Add(new ItemGroup(3, 2000));
         itemGroups.Add(new ItemGroup(4, 2000));
-        itemGroups.Add(new ItemGroup(50, 100));
+        itemGroups.Add(new ItemGroup(50, 100));*/
     }
 
     public Inventory(InventorySaveData saveData)
@@ -72,6 +72,7 @@ public class Inventory
 
     public void AddItem(int id, int quantity)
     {
+        //Debug.Log("id: " + id);
         OnItemAdd?.Invoke(id);
 
         if (!HasItem(id))
@@ -84,6 +85,8 @@ public class Inventory
             int index = GetGroupIndex(id);
             itemGroups[index].AddQuantity(quantity);
         }
+
+        itemGroups.Sort();
     }
 
     public bool RemoveItem(int id, int quantity)

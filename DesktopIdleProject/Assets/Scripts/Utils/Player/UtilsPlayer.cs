@@ -210,6 +210,20 @@ public static class UtilsPlayer
         }
     }
 
+    public static bool AreStatsMaxedOut()
+    {
+        if( PlayerManager.Instance.PlayerFightData.CurrentLevel > UtilsWarrior.MAX_LEVEL_WARRIOR &&
+            PlayerManager.Instance.PlayerMinerData.CurrentLevel > UtilsMiner.MAX_LEVEL_MINER &&
+            PlayerManager.Instance.PlayerBlacksmithData.CurrentLevel > UtilsBlacksmith.MAX_LEVEL_BLACKSMITH &&
+            PlayerManager.Instance.PlayerFisherData.CurrentLevel > UtilsFisher.MAX_LEVEL_FISHER &&
+            PlayerManager.Instance.PlayerFarmerData.CurrentLevel > UtilsFarmer.MAX_LEVEL_FARMER)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public static string GetStatNameById(int id)
     {
         switch (id)

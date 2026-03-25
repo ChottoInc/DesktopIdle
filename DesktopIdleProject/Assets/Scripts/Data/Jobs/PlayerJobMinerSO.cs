@@ -17,6 +17,7 @@ public class PlayerJobMinerSO : AbstractPlayerJobData
     [field: Space(10)]
     [field: SerializeField] public float BaseExpGrowth { get; private set; }
     [field: SerializeField] public float ExpoExpGrowth { get; private set; }
+    [field: SerializeField] public float FlatExpGrowth { get; private set; }
 
     [field: Space(10)]
     [field: SerializeField] public float WeaponLinearGrowth { get; private set; }
@@ -74,6 +75,11 @@ public class PlayerJobMinerSO : AbstractPlayerJobData
     public void SetExpoExpGrowth(float value)
     {
         ExpoExpGrowth = value;
+    }
+
+    public void SetFlatExpGrowth(float value)
+    {
+        FlatExpGrowth = value;
     }
 
 

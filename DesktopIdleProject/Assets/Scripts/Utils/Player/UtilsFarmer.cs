@@ -16,9 +16,13 @@ public static class UtilsFarmer
     public static int PER_LEVEL_FARMER_MAX_LUCK = 15;
 
 
+    public static int MAX_LEVEL_FARMER;
+
+
 
     private static float BASE_FARMER_EXP_GROWTH = 50f;
-    private static float EXPO_FARMER_EXP_GROWTH = 1.15f;
+    private static float EXPO_FARMER_EXP_GROWTH = 1.08f;
+    private static float FLAT_FARMER_EXP_GROWTH = 10f;
 
 
     private static PlayerJobFarmerSO jobDataSO;
@@ -38,19 +42,28 @@ public static class UtilsFarmer
         PER_LEVEL_FARMER_MAX_KINDNESS = jobDataSO.MaxLevelKindness;
         PER_LEVEL_FARMER_MAX_LUCK = jobDataSO.MaxLevelLuck;
 
+
+        MAX_LEVEL_FARMER =
+           PER_LEVEL_FARMER_MAX_GREENTHUMB +
+           PER_LEVEL_FARMER_MAX_AGRONOMY +
+           PER_LEVEL_FARMER_MAX_KINDNESS +
+           PER_LEVEL_FARMER_MAX_LUCK;
+
+
         BASE_FARMER_EXP_GROWTH = jobDataSO.BaseExpGrowth;
         EXPO_FARMER_EXP_GROWTH = jobDataSO.ExpoExpGrowth;
+        FLAT_FARMER_EXP_GROWTH = jobDataSO.FlatExpGrowth;
     }
 
 
 
 
-    public static int RequiredExpForFarmerLevel(int level)
+    public static long RequiredExpForFarmerLevel(int level)
     {
         // Level starts at 1
         if (level <= 1) return 0;
 
         // Formula: baseExp * (growthRate^(level-1) - 1)
-        return Mathf.RoundToInt(BASE_FARMER_EXP_GROWTH * Mathf.Pow(EXPO_FARMER_EXP_GROWTH, level - 1));
+        return (long)(BASE_FARMER_EXP_GROWTH * Mathf.Pow(EXPO_FARMER_EXP_GROWTH, level) + FLAT_FARMER_EXP_GROWTH * level);
     }
 }

@@ -83,7 +83,7 @@ public class InitializerManager : MonoBehaviour
         List<DisplayInfo> displays = new List<DisplayInfo>();
         Screen.GetDisplayLayout(displays);
 
-        windowController.windowPosition = new Vector2(0, Display.displays[0].systemHeight - displays[0].workArea.height);
+        windowController.windowPosition = new Vector2(0, Display.displays[0].systemHeight - displays[0].workArea.height - 1);
 
         //Debug.Log("win init pos: " + windowController.windowPosition);
 
@@ -115,7 +115,7 @@ public class InitializerManager : MonoBehaviour
         //Debug.Log("win pos after default move: " + windowController.windowPosition);
 
         // get new window pos, y set from top to bottom, so the difference is necessary to set at the bottom
-        Vector2 windowPos = new Vector2(windowController.windowPosition.x, Display.displays[monitorIndex].systemHeight - displays[monitorIndex].workArea.height);
+        Vector2 windowPos = new Vector2(windowController.windowPosition.x, Display.displays[monitorIndex].systemHeight - displays[monitorIndex].workArea.height - 1);
         //Debug.Log("expected pos: " + windowPos);
         //Debug.Log("system h: " + Display.displays[monitorIndex].systemHeight + ", usable screen h: " + displays[monitorIndex].workArea.height + ", pos y: " + windowPos.y);
         

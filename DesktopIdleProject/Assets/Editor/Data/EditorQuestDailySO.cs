@@ -45,6 +45,14 @@ public class EditorQuestDailySO : Editor
 
     private SerializedProperty s_mapId;
 
+    // --------- Quest Obtain ---------
+    private SerializedProperty s_questBefriendSpecific;
+
+    // --- Specific
+    private SerializedProperty s_companionSO;
+
+    private SerializedProperty s_amountBefriend;
+
 
 
     private void OnEnable()
@@ -71,6 +79,10 @@ public class EditorQuestDailySO : Editor
         s_amountStat = s_questData.FindPropertyRelative("amountStat");
 
         s_mapId = s_questData.FindPropertyRelative("mapId");
+
+        s_questBefriendSpecific = s_questData.FindPropertyRelative("questBefriendSpecific");
+        s_companionSO = s_questData.FindPropertyRelative("companionSO");
+        s_amountBefriend = s_questData.FindPropertyRelative("amountBefriend");
     }
 
     public override void OnInspectorGUI()
@@ -149,6 +161,21 @@ public class EditorQuestDailySO : Editor
                 case QuestObjectiveType.UnlockMap:
                     EditorGUILayout.Space();
                     EditorGUILayout.PropertyField(s_mapId);
+
+                    break;
+
+                case QuestObjectiveType.Befriend:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.PropertyField(s_questBefriendSpecific);
+
+                    if (_quest.QuestData.questBefriendSpecific)
+                    {
+                        EditorGUILayout.Space();
+                        EditorGUILayout.PropertyField(s_companionSO);
+                    }
+
+                    EditorGUILayout.Space();
+                    EditorGUILayout.PropertyField(s_amountBefriend);
 
                     break;
             }

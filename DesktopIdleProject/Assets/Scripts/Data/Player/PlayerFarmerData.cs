@@ -35,15 +35,13 @@ public class PlayerFarmerData
     // ---- FINAL STAT VALUES
 
     private int currentLevel;
-    private int currentExp;
+    private long currentExp;
 
 
 
     public int CurrentLevel => currentLevel;
-    public int CurrentExp => currentExp;
-    public int ExpToNextLevel => UtilsFarmer.RequiredExpForFarmerLevel(currentLevel + 1) - UtilsFarmer.RequiredExpForFarmerLevel(currentLevel);
-    public int TotalExpToNextLevel => UtilsFarmer.RequiredExpForFarmerLevel(currentLevel + 1);
-    public int TotalExp => UtilsFarmer.RequiredExpForFarmerLevel(currentLevel) + currentExp;
+    public long CurrentExp => currentExp;
+    public long ExpToNextLevel => UtilsFarmer.RequiredExpForFarmerLevel(currentLevel + 1);
 
 
     public float CurrentGreenthumb => baseGreenthumb + UtilsFarmer.PER_LEVEL_FARMER_GAIN_GREENTHUMB * (levelStatGreenthumb - 1);
@@ -148,15 +146,23 @@ public class PlayerFarmerData
         availableStatPoints -= amount;
     }
 
-    public void AddExp(int amount)
+    public void AddExp(long amount)
     {
+        // check max level
+        if (currentLevel > UtilsFarmer.MAX_LEVEL_FARMER)
+        {
+            // set current exp to 0
+            currentExp = 0;
+            return;
+        }
+
         currentExp += amount;
 
         // looping for every level gained
-        while (TotalExp >= TotalExpToNextLevel)
+        while (currentExp >= ExpToNextLevel)
         {
             // recalculate current exp
-            currentExp = TotalExp - TotalExpToNextLevel;
+            currentExp -= ExpToNextLevel;
 
             // give level and stat point
             currentLevel++;

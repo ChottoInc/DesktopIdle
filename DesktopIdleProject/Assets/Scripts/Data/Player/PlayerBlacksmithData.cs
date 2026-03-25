@@ -43,7 +43,7 @@ public class PlayerBlacksmithData
     // ---- FINAL STAT VALUES
 
     private int currentLevel;
-    private int currentExp;
+    private long currentExp;
 
 
     // ---- FORGING VARIABLES
@@ -55,10 +55,8 @@ public class PlayerBlacksmithData
 
 
     public int CurrentLevel => currentLevel;
-    public int CurrentExp => currentExp;
-    public int ExpToNextLevel => UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel + 1) - UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel);
-    public int TotalExpToNextLevel => UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel + 1);
-    public int TotalExp => UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel) + currentExp;
+    public long CurrentExp => currentExp;
+    public long ExpToNextLevel => UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel + 1);
 
 
     public float CurrentCraftSpeed => baseCraftSpeed + UtilsBlacksmith.PER_LEVEL_BLACKSMITH_GAIN_CRAFTSPEED * (levelStatCraftSpeed - 1);
@@ -147,15 +145,23 @@ public class PlayerBlacksmithData
         availableStatPoints -= amount;
     }
 
-    public void AddExp(int amount)
+    public void AddExp(long amount)
     {
+        // check max level
+        if (currentLevel > UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
+        {
+            // set current exp to 0
+            currentExp = 0;
+            return;
+        }
+
         currentExp += amount;
 
         // looping for every level gained
-        while (TotalExp >= TotalExpToNextLevel)
+        while (currentExp >= ExpToNextLevel)
         {
             // recalculate current exp
-            currentExp = TotalExp - TotalExpToNextLevel;
+            currentExp -= ExpToNextLevel;
 
             // give level and stat point
             currentLevel++;

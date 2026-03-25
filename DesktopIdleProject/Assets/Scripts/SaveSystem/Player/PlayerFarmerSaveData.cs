@@ -10,7 +10,7 @@ public class PlayerFarmerSaveData
     public int availableStatPoints;
 
     public int currentLevel;
-    public int currentExp;
+    public long currentExp;
 
     public CropSaveData slot1CropSaveData;
     public CropSaveData slot2CropSaveData;

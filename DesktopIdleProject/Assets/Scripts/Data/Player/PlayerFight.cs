@@ -135,6 +135,8 @@ public class PlayerFight : Player
     {
         if (timerAttack <= 0)
         {
+            //Debug.Log("Weapon mult: " + PlayerManager.Instance.WeaponMinerMultiplier);
+            //Debug.Log("Weapon level: " + PlayerManager.Instance.PlayerMinerData.WeaponLevel);
             OnPerformAttack?.Invoke();
             timerAttack = CooldownAttack;
         }

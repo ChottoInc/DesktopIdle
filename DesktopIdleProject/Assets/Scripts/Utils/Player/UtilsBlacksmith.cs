@@ -11,9 +11,13 @@ public static class UtilsBlacksmith
     public static int PER_LEVEL_BLACKSMITH_MAX_LUCK = 70;
 
 
+    public static int MAX_LEVEL_BLACKSMITH;
 
-    private static float BASE_BLACKSMITH_EXP_GROWTH = 10f;
-    private static float EXPO_BLACKSMITH_EXP_GROWTH = 1.15f;
+
+
+    private static float BASE_BLACKSMITH_EXP_GROWTH = 50f;
+    private static float EXPO_BLACKSMITH_EXP_GROWTH = 1.08f;
+    private static float FLAT_BLACKSMITH_EXP_GROWTH = 10f;
             
     //Helmet
     private static float BLACKSMITH_HELMET_MAXHP_LINEAR_GROWTH = 0.30f;
@@ -61,8 +65,16 @@ public static class UtilsBlacksmith
         PER_LEVEL_BLACKSMITH_MAX_LUCK = jobDataSO.MaxLevelLuck;
 
 
+        MAX_LEVEL_BLACKSMITH =
+            PER_LEVEL_BLACKSMITH_MAX_CRAFTSPEED +
+            PER_LEVEL_BLACKSMITH_MAX_EFFICIENCY +
+            PER_LEVEL_BLACKSMITH_MAX_LUCK;
+
+
+
         BASE_BLACKSMITH_EXP_GROWTH = jobDataSO.BaseExpGrowth;
         EXPO_BLACKSMITH_EXP_GROWTH = jobDataSO.ExpoExpGrowth;
+        FLAT_BLACKSMITH_EXP_GROWTH = jobDataSO.FlatExpGrowth;
 
 
 
@@ -89,13 +101,13 @@ public static class UtilsBlacksmith
     }
 
 
-    public static int RequiredExpForBlacksmithLevel(int level)
+    public static long RequiredExpForBlacksmithLevel(int level)
     {
         // Level starts at 1
         if (level <= 1) return 0;
 
         // Formula: baseExp * (growthRate^(level-1) - 1)
-        return Mathf.RoundToInt(BASE_BLACKSMITH_EXP_GROWTH * Mathf.Pow(EXPO_BLACKSMITH_EXP_GROWTH, level - 1));
+        return (long)(BASE_BLACKSMITH_EXP_GROWTH * Mathf.Pow(EXPO_BLACKSMITH_EXP_GROWTH, level) + FLAT_BLACKSMITH_EXP_GROWTH * level);
     }
 
     public static float GetBlacksmithHelmetMaxHpMultiplier(int level)

@@ -26,7 +26,7 @@ public class UIPanelObtained : MonoBehaviour
     //private Vector2 startPos;
     //private Vector2 endPos;
 
-    private Queue<UtilsItem.ItemType> queueItems;
+    private Queue<ItemSO> queueItems;
 
     private Tween tweenMovement;
     private bool isAnimating;
@@ -45,7 +45,7 @@ public class UIPanelObtained : MonoBehaviour
 
     private void Start()
     {
-        queueItems = new Queue<UtilsItem.ItemType>();
+        queueItems = new Queue<ItemSO>();
     }
 
 
@@ -56,9 +56,9 @@ public class UIPanelObtained : MonoBehaviour
             // if queue not empty and no animation is playing, play new animation
             isAnimating = true;
             //Debug.Log("start ani");
-            // deque item and set sprite
-            UtilsItem.ItemType itemType = queueItems.Dequeue();
-            imageObtained.sprite = GetSpriteByType(itemType);
+            // dequeue item and set sprite
+            ItemSO itemSO = queueItems.Dequeue();
+            imageObtained.sprite = GetSpriteByType(itemSO);
 
             // reset obejct pos and show
             objectToMove.transform.position = startContentPos.position;
@@ -77,24 +77,27 @@ public class UIPanelObtained : MonoBehaviour
 
 
 
-    private void AddItemToQueue(UtilsItem.ItemType itemType)
+    private void AddItemToQueue(ItemSO itemSO)
     {
         // check if Floating is enabled
         if (SettingsManager.Instance.IsItemCollectionOn)
         {
             // enqueue new item animation to do
-            queueItems.Enqueue(itemType);
+            queueItems.Enqueue(itemSO);
         }
     }
 
-    private Sprite GetSpriteByType(UtilsItem.ItemType itemType)
+    private Sprite GetSpriteByType(ItemSO itemSO)
     {
-        switch(itemType)
+        switch(itemSO.ItemType)
         {
             default:
-            case UtilsItem.ItemType.Ore: return spriteOre;
             case UtilsItem.ItemType.Card: return spriteCard;
-            case UtilsItem.ItemType.Fish: return spriteFish;
+
+            case UtilsItem.ItemType.Ore:
+            case UtilsItem.ItemType.Fish:
+            case UtilsItem.ItemType.Metal:
+                return itemSO.Sprite;
         }
     }
 }

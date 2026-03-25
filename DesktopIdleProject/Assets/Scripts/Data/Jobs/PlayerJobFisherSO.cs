@@ -19,6 +19,7 @@ public class PlayerJobFisherSO : AbstractPlayerJobData
     [field: Space(10)]
     [field: SerializeField] public float BaseExpGrowth { get; private set; }
     [field: SerializeField] public float ExpoExpGrowth { get; private set; }
+    [field: SerializeField] public float FlatExpGrowth { get; private set; }
 
 
     public void SetPerLevelGainCalmness(float value)
@@ -63,6 +64,7 @@ public class PlayerJobFisherSO : AbstractPlayerJobData
     }
 
 
+
     public void SetBaseExpGrowth(float value)
     {
         BaseExpGrowth = value;
@@ -71,5 +73,10 @@ public class PlayerJobFisherSO : AbstractPlayerJobData
     public void SetExpoExpGrowth(float value)
     {
         ExpoExpGrowth = value;
+    }
+
+    public void SetFlatExpGrowth(float value)
+    {
+        FlatExpGrowth = value;
     }
 }

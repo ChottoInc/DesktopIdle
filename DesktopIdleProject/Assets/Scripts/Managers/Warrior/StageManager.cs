@@ -152,9 +152,9 @@ public class StageManager : MonoBehaviour
             Enemy enemy = enemyObj.GetComponent<Enemy>();
             currentEnemies.Add(enemy);
 
-            enemy.Setup(data, currentEnemyIndex - 1, SceneLoaderManager.SceneType.CombatMap);
-
             enemyObj.transform.position = spawnPos;
+
+            enemy.Setup(data, currentEnemyIndex - 1, SceneLoaderManager.SceneType.CombatMap);
         }
         else
         {

@@ -17,6 +17,7 @@ public class UITabInventory : UITabWindow
     UIInventoryFilterButton[] filterButtons;
 
     private UIInventoryFilterButton currentFilterButton;
+    private int currentFilterId;
 
     [Header("Window Center")]
     [SerializeField] UIPanelItems panelItems;
@@ -38,6 +39,7 @@ public class UITabInventory : UITabWindow
         currentFilterButton = filterButtons[0];
         currentFilterButton.SelectButton(true);
         panelItems.Setup(ID_INVENTORY_FILTER_ALL);
+        currentFilterId = ID_INVENTORY_FILTER_ALL;
     }
 
     private void UpdateFilters()
@@ -46,6 +48,19 @@ public class UITabInventory : UITabWindow
         {
             filter.Refresh();
         }
+    }
+
+    public void RefreshInventory()
+    {
+        base.Open();
+
+        textBits.text = $"x{PlayerManager.Instance.Inventory.CurrentBits}";
+
+        UpdateFilters();
+
+        panelItems.ShowPanelInfo(false);
+
+        panelItems.Setup(currentFilterId);
     }
 
     public void OpenInventory(UIInventoryFilterButton filterButton, int filter)
@@ -68,6 +83,7 @@ public class UITabInventory : UITabWindow
         }
 
         panelItems.Setup(filter);
+        currentFilterId = filter;
 
         ClosePanelConvert();
     }

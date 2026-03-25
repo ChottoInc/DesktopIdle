@@ -40,17 +40,15 @@ public class PlayerMinerData
     // ---- FINAL STAT VALUES
 
     private int currentLevel;
-    private int currentExp;
+    private long currentExp;
 
 
 
 
 
     public int CurrentLevel => currentLevel;
-    public int CurrentExp => currentExp;
-    public int ExpToNextLevel => UtilsMiner.RequiredExpForMinerLevel(currentLevel + 1) - UtilsMiner.RequiredExpForMinerLevel(currentLevel);
-    public int TotalExpToNextLevel => UtilsMiner.RequiredExpForMinerLevel(currentLevel + 1);
-    public int TotalExp => UtilsMiner.RequiredExpForMinerLevel(currentLevel) + currentExp;
+    public long CurrentExp => currentExp;
+    public long ExpToNextLevel => UtilsMiner.RequiredExpForMinerLevel(currentLevel + 1);
 
 
     public float CurrentPower => basePower + UtilsMiner.PER_LEVEL_MINER_GAIN_POWER * (levelStatPower - 1);
@@ -118,15 +116,25 @@ public class PlayerMinerData
         availableStatPoints -= amount;
     }
 
-    public void AddExp(int amount)
+    public void AddExp(long amount)
     {
+        // check max level
+        if (currentLevel > UtilsMiner.MAX_LEVEL_MINER)
+        {
+            // set current exp to 0
+            currentExp = 0;
+            return;
+        }
+
         currentExp += amount;
 
+        
+
         // looping for every level gained
-        while (TotalExp >= TotalExpToNextLevel)
+        while (currentExp >= ExpToNextLevel)
         {
             // recalculate current exp
-            currentExp = TotalExp - TotalExpToNextLevel;
+            currentExp -= ExpToNextLevel;
 
             // give level and stat point
             currentLevel++;
@@ -134,6 +142,9 @@ public class PlayerMinerData
 
             OnLevelUp?.Invoke();
         }
+
+        Debug.Log("current exp: " + currentExp);
+        Debug.Log("next level exp: " + ExpToNextLevel);
 
         OnAddedExp?.Invoke();
     }

@@ -13,8 +13,12 @@ public static class UtilsMiner
     public static int PER_LEVEL_MINER_MAX_LUCK = 40;
 
 
+    public static int MAX_LEVEL_MINER;
+
+
     private static float BASE_MINER_EXP_GROWTH = 50f;
-    private static float EXPO_MINER_EXP_GROWTH = 1.15f;
+    private static float EXPO_MINER_EXP_GROWTH = 1.08f;
+    private static float FLAT_MINER_EXP_GROWTH = 10f;
             
 
     private static float MINER_WEAPON_LINEAR_GROWTH = 0.35f;
@@ -41,8 +45,16 @@ public static class UtilsMiner
         PER_LEVEL_MINER_MAX_LUCK = jobDataSO.MaxLevelLuck;
 
 
+        MAX_LEVEL_MINER =
+            PER_LEVEL_MINER_MAX_POWER +
+            PER_LEVEL_MINER_MAX_SMASHSPEED +
+            PER_LEVEL_MINER_MAX_PRECISION +
+            PER_LEVEL_MINER_MAX_LUCK;
+
+
         BASE_MINER_EXP_GROWTH = jobDataSO.BaseExpGrowth;
         EXPO_MINER_EXP_GROWTH = jobDataSO.ExpoExpGrowth;
+        FLAT_MINER_EXP_GROWTH = jobDataSO.FlatExpGrowth;
 
         MINER_WEAPON_LINEAR_GROWTH = jobDataSO.WeaponLinearGrowth;
         MINER_WEAPON_QUADRATIC_GROWTH = jobDataSO.WeaponQuadraticGrowth;
@@ -52,13 +64,13 @@ public static class UtilsMiner
     }
 
 
-    public static int RequiredExpForMinerLevel(int level)
+    public static long RequiredExpForMinerLevel(int level)
     {
         // Level starts at 1
         if (level <= 1) return 0;
         
         // Formula: baseExp * (growthRate^(level-1) - 1)
-        return Mathf.RoundToInt(BASE_MINER_EXP_GROWTH * Mathf.Pow(EXPO_MINER_EXP_GROWTH, level - 1));
+        return (long)(BASE_MINER_EXP_GROWTH * Mathf.Pow(EXPO_MINER_EXP_GROWTH, level) + FLAT_MINER_EXP_GROWTH * level);
     }
 
     public static float GetMinerWeaponMultiplier(int weaponLevel)

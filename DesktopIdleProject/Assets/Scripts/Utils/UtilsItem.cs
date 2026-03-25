@@ -251,9 +251,9 @@ public static class UtilsItem
 
         switch (card.CardRarity)
         {
-            case CardRarity.Common: result = 4; break;
-            case CardRarity.Uncommon: result = 10; break;
-            case CardRarity.Rare: result = 30; break;
+            case CardRarity.Common: result = 1; break;
+            case CardRarity.Uncommon: result = 2; break;
+            case CardRarity.Rare: result = 5; break;
         }
 
         return result;
@@ -390,7 +390,7 @@ public static class UtilsItem
     /// <summary>
     /// Exp given by the caught fishes
     /// </summary>
-    public static int GetFishExp(FishRarity rarity)
+    public static long GetFishExp(FishRarity rarity)
     {
         switch (rarity)
         {

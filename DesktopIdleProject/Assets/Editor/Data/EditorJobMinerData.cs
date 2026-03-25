@@ -13,9 +13,10 @@ public class EditorJobMinerData : Editor
 
     private const int ID_BASE_EXP = 5;
     private const int ID_EXPO_EXP = 6;
+    private const int ID_FLAT_EXP = 7;
 
-    private const int ID_WEAPON_LINEAR = 8;
-    private const int ID_WEAPON_QUADRATIC = 9;
+    private const int ID_WEAPON_LINEAR = 9;
+    private const int ID_WEAPON_QUADRATIC = 10;
 
 
 
@@ -82,7 +83,7 @@ public class EditorJobMinerData : Editor
             }
         }
 
-        for (int i = 5; i < 7; i++)
+        for (int i = 5; i < 8; i++)
         {
             string[] parts = datas[i].Split(",", System.StringSplitOptions.None);
 
@@ -92,6 +93,7 @@ public class EditorJobMinerData : Editor
             {
                 case ID_BASE_EXP: m_Script.SetBaseExpGrowth(value); break;
                 case ID_EXPO_EXP: m_Script.SetExpoExpGrowth(value); break;
+                case ID_FLAT_EXP: m_Script.SetFlatExpGrowth(value); break;
             }
         }
 

@@ -17,9 +17,12 @@ public static class UtilsWarrior
     public static int PER_LEVEL_WARRIOR_MAX_CRIT_RATE;
     public static int PER_LEVEL_WARRIOR_MAX_CRIT_DMG;
     public static int PER_LEVEL_WARRIOR_MAX_LUCK;
-           
-           
-           
+
+
+    public static int MAX_LEVEL_WARRIOR;
+
+
+
     private static float BASE_FIGHT_EXP_GROWTH;
     private static float EXPO_FIGHT_EXP_GROWTH;
     private static float FLAT_FIGHT_EXP_GROWTH;
@@ -49,6 +52,16 @@ public static class UtilsWarrior
         PER_LEVEL_WARRIOR_MAX_CRIT_RATE = jobDataSO.MaxLevelCritRate;
         PER_LEVEL_WARRIOR_MAX_CRIT_DMG = jobDataSO.MaxLevelCritDmg;
         PER_LEVEL_WARRIOR_MAX_LUCK = jobDataSO.MaxLevelLuck;
+
+
+        MAX_LEVEL_WARRIOR =
+            PER_LEVEL_WARRIOR_MAX_MAXHP +
+            PER_LEVEL_WARRIOR_MAX_ATK +
+            PER_LEVEL_WARRIOR_MAX_DEF +
+            PER_LEVEL_WARRIOR_MAX_ATK_SPEED +
+            PER_LEVEL_WARRIOR_MAX_CRIT_RATE +
+            PER_LEVEL_WARRIOR_MAX_CRIT_DMG +
+            PER_LEVEL_WARRIOR_MAX_LUCK;
 
 
         BASE_FIGHT_EXP_GROWTH = jobDataSO.BaseExpGrowth;

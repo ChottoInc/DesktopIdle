@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static class UtilsQuest
 {
     public enum QuestType { Story, Daily, Bounties }
 
-    public enum QuestObjectiveType { Kill, Obtain, LevelUp, UnlockMap }
+    public enum QuestObjectiveType { Kill, Obtain, LevelUp, UnlockMap, Befriend }
 
 
     private static QuestStorySO[] storySOs;
@@ -134,6 +132,10 @@ public static class UtilsQuest
             case QuestObjectiveType.UnlockMap:
                 //result += string.Format("\n{0}/{1}", progress.progressCounter, data.amountStat);
                 break;
+
+            case QuestObjectiveType.Befriend:
+                result += string.Format("\n{0}/{1}", progress.progressCounter, data.amountObtain);
+                break;
         }
 
         return result;
@@ -169,8 +171,10 @@ public static class UtilsQuest
 
                     switch (data.itemType)
                     {
-                        case UtilsItem.ItemType.Ore: itemType = "Ores"; break;
-                        case UtilsItem.ItemType.Card: itemType = "Cards"; break;
+                        case UtilsItem.ItemType.Ore: itemType = "ores"; break;
+                        case UtilsItem.ItemType.Card: itemType = "cards"; break;
+                        case UtilsItem.ItemType.Metal: itemType = "metals"; break;
+                        case UtilsItem.ItemType.Fish: itemType = "fishes"; break;
                     }
 
                     result = string.Format("Obtain {0} {1}", data.amountObtain, itemType);
@@ -205,6 +209,17 @@ public static class UtilsQuest
 
                 result = string.Format("Unlock {0} map", mapName);
 
+                break;
+
+            case QuestObjectiveType.Befriend:
+                if (data.questBefriendSpecific)
+                {
+                    result = string.Format("Obtain {0} {1}", data.amountObtain, data.companionSO.CompanionName);
+                }
+                else
+                {
+                    result = string.Format("Obtain {0} companions", data.amountObtain);
+                }
                 break;
         }
 
@@ -282,6 +297,15 @@ public static class UtilsQuest
 
         // --- Specific
         public int mapId;
+
+
+        // --------- Quest Befriend ---------
+        public bool questBefriendSpecific;
+
+        // --- Specific
+        public CompanionSO companionSO;
+
+        public int amountBefriend;
 
 
         // --------- Reward ---------

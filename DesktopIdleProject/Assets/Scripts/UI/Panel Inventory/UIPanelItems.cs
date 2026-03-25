@@ -128,8 +128,20 @@ public class UIPanelItems : MonoBehaviour
         }
         else
         {
-            panelDismantle.Show(true);
-            panelDismantle.Setup(group);
+            ItemSO itemSO = UtilsItem.GetItemById(group.IdItem);
+
+            // check if item click is card or not
+            if(itemSO.ItemType == UtilsItem.ItemType.Card)
+            {
+                panelDismantle.Show(true);
+                panelDismantle.Setup(group);
+            }
+            else
+            {
+                panelDismantle.Show(false);
+                panelInfo.Show(true);
+                panelInfo.Setup(group);
+            }
         }
     }
 }

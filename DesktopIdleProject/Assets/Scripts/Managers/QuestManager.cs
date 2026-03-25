@@ -124,6 +124,7 @@ public class QuestManager : MonoBehaviour
     private PlayerMiner playerMiner;
     private PlayerBlacksmith playerBlacksmith;
     private PlayerFisher playerFisher;
+    private PlayerFarmer playerFarmer;
 
 
 
@@ -180,6 +181,9 @@ public class QuestManager : MonoBehaviour
 
         if (playerFisher != null)
             playerFisher.OnStatChange -= OnStatUp;
+
+        if (playerFarmer != null)
+            playerFarmer.OnStatChange -= OnStatUp;
     }
 
     private void OnDestroy()
@@ -190,6 +194,7 @@ public class QuestManager : MonoBehaviour
         if (PlayerManager.Instance != null)
         {
             PlayerManager.Instance.OnItemAdd -= OnItemObtain;
+            PlayerManager.Instance.OnCompanionBefriended -= OnBefriend;
         }
     }
 
@@ -225,6 +230,11 @@ public class QuestManager : MonoBehaviour
                 playerFisher = FindFirstObjectByType<PlayerFisher>();
                 playerFisher.OnStatChange += OnStatUp;
                 break;
+
+            case SceneLoaderManager.SceneType.Farmer:
+                playerFarmer = FindFirstObjectByType<PlayerFarmer>();
+                playerFarmer.OnStatChange += OnStatUp;
+                break;
         }
     }
 
@@ -235,6 +245,7 @@ public class QuestManager : MonoBehaviour
         if(PlayerManager.Instance != null)
         {
             PlayerManager.Instance.OnItemAdd += OnItemObtain;
+            PlayerManager.Instance.OnCompanionBefriended += OnBefriend;
             isPlayerObserverInit = true;
         }
     }
@@ -363,17 +374,23 @@ public class QuestManager : MonoBehaviour
                         valid = false;
 
                     // check if daily need to increase a stat level
-                    // if stat is already at max, discard
                     if(daily.QuestData.questObjectiveType == QuestObjectiveType.LevelUp)
                     {
                         if (daily.QuestData.questLevelUpSpecific)
                         {
+                            // if stat is already at max, discard
                             int statId = daily.QuestData.statId;
 
                             int currentLevel = UtilsPlayer.GetStatCurrentLevelById(statId);
                             int maxLevel = UtilsPlayer.GetStatMaxLevelById(statId);
 
                             if (currentLevel >= maxLevel)
+                                valid = false;
+                        }
+                        else
+                        {
+                            // if stat is not specific, check for all stat maxed out
+                            if (UtilsPlayer.AreStatsMaxedOut())
                                 valid = false;
                         }
                     }
@@ -458,12 +475,17 @@ public class QuestManager : MonoBehaviour
 
                 // save in dictionary
                 QuestDataProgress dataProgress = new QuestDataProgress(datas[i]);
-                //dictQuestsStoryProgress.Add(datas[i].questId, dataProgress);
 
                 dictQuestsStoryProgress[datas[i].questId] = dataProgress;
 
-                // set active from reading
-                if (dataProgress.isActive)
+                // if save is inactive but active by default, remove from list
+                if(!dataProgress.isActive && activeStoryQuests.Contains(datas[i].questId))
+                {
+                    activeStoryQuests.Remove(datas[i].questId);
+                }
+
+                // instead add to active if acrive from save and not active by default
+                if (dataProgress.isActive && !activeStoryQuests.Contains(datas[i].questId))
                 {
                     activeStoryQuests.Add(datas[i].questId);
                 }
@@ -965,7 +987,11 @@ public class QuestManager : MonoBehaviour
             }
             else
             {
-                return true;
+                ItemSO so = UtilsItem.GetItemById(itemId);
+                if(data.itemType == so.ItemType)
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -1257,6 +1283,141 @@ public class QuestManager : MonoBehaviour
                 progress = dictQuestsDailyProgress[questId];
 
                 progress.progressCompleted = true;
+                dictQuestsDailyProgress[questId] = progress;
+                break;
+        }
+    }
+
+    private void OnBefriend(int id)
+    {
+        bool needSave = false;
+
+        bool needNotification = false;
+
+        // Story quest checks
+        foreach (var quest in activeStoryQuests)
+        {
+            // get so
+            QuestStorySO so = GetStoryQuestById(quest);
+
+            if (NeedUpdateBefriendProgress(so.QuestData, id))
+            {
+                UpdateBefriendProgress(QuestType.Story, quest);
+                needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Story, quest);
+                }
+            }
+        }
+
+        // Bounties quest checks
+        foreach (var quest in activeBountyQuests.Values)
+        {
+            // get so
+            QuestBountySO so = GetBountyQuestById(quest);
+
+            if (NeedUpdateBefriendProgress(so.QuestData, id))
+            {
+                UpdateBefriendProgress(QuestType.Bounties, quest);
+                needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    needNotification = CheckNotifications(so.QuestData, QuestType.Bounties, quest);
+                }
+            }
+        }
+
+        int counterNotificationDailies = 0;
+
+        // Daily quest checks
+        foreach (var quest in activeDailyQuests)
+        {
+            // get so
+            QuestDailySO so = GetDailyQuestById(quest);
+
+            if (NeedUpdateBefriendProgress(so.QuestData, id))
+            {
+                UpdateBefriendProgress(QuestType.Daily, quest);
+                needSave = true;
+
+                // even if one notification needs display, do not check again
+                if (!needNotification)
+                {
+                    // check notification on all dailies
+                    if (CheckNotifications(so.QuestData, QuestType.Daily, quest))
+                    {
+                        counterNotificationDailies++;
+                    }
+                }
+            }
+        }
+
+        if (!needNotification && counterNotificationDailies == activeDailyQuests.Count)
+        {
+            needNotification = true;
+        }
+
+        if (needNotification)
+        {
+            OnNeedNotication?.Invoke();
+        }
+
+        if (needSave)
+        {
+            SaveQuestsData();
+        }
+    }
+
+    private bool NeedUpdateBefriendProgress(QuestData data, int companionId)
+    {
+        if (data.questObjectiveType == QuestObjectiveType.Befriend)
+        {
+            // check specific
+            if (data.questBefriendSpecific)
+            {
+                if (data.companionSO.Id == companionId)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void UpdateBefriendProgress(QuestType questType, string questId)
+    {
+        QuestDataProgress progress;
+
+        switch (questType)
+        {
+            default:
+            case QuestType.Story:
+                progress = dictQuestsStoryProgress[questId];
+
+                progress.progressCounter++;
+                dictQuestsStoryProgress[questId] = progress;
+                break;
+
+            case QuestType.Bounties:
+                progress = dictQuestsBountyProgress[questId];
+
+                progress.progressCounter++;
+                dictQuestsBountyProgress[questId] = progress;
+                break;
+
+            case QuestType.Daily:
+                progress = dictQuestsDailyProgress[questId];
+
+                progress.progressCounter++;
                 dictQuestsDailyProgress[questId] = progress;
                 break;
         }

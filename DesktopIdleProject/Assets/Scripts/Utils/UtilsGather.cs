@@ -247,16 +247,16 @@ public static class UtilsGather
     /// <summary>
     /// Exp given by the smashed rocks
     /// </summary>
-    public static int GetRockExp(RockType rockType)
+    public static long GetRockExp(RockType rockType)
     {
         switch (rockType)
         {
             default:
-            case RockType.Copper: return 5;
-            case RockType.Iron: return 10;
-            case RockType.Bronze: return 20;
-            case RockType.Silver: return 40;
-            case RockType.Gold: return 100;
+            case RockType.Copper: return 2;
+            case RockType.Iron: return 6;
+            case RockType.Bronze: return 15;
+            case RockType.Silver: return 38;
+            case RockType.Gold: return 60;
         }
     }
 

@@ -136,5 +136,8 @@ public class UIShopPanelInfo : MonoBehaviour
     private void HandleShopJob(ShopJobSO jobSO)
     {
         PlayerManager.Instance.PlayerJobsData.AddAvailableJob(jobSO.ShoppingJob);
+
+        // save only when added new cards and removed bits
+        PlayerManager.Instance.SaveInventoryData();
     }
 }

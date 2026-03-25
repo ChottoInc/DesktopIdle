@@ -167,6 +167,11 @@ public class CombatManager : MonoBehaviour
 
     private void HandleEnemyDeath()
     {
+        if (currentEnemy != null)
+        {
+            currentEnemy.OnPerformAttack -= OnEnemyAttack;
+        }
+
         //Debug.Log("Enemy dead");
 
         // Trigger which enemy died, mainly used for quests
@@ -261,6 +266,11 @@ public class CombatManager : MonoBehaviour
 
     private void HandlePlayerDeath()
     {
+        if (currentEnemy != null)
+        {
+            currentEnemy.OnPerformAttack -= OnEnemyAttack;
+        }
+
         //Debug.Log("Player dead");
 
         EnableFight(false);

@@ -8,12 +8,14 @@ public class PlayerJobsData
     // ------- CONDITIONS --------- //
 
     private bool isBlacksmithUnlocked;
+    private bool isFarmerUnlocked;
 
 
     public List<UtilsPlayer.PlayerJob> AvailableJobs => availableJobs;
 
 
     public bool IsBlacksmithUnlocked => isBlacksmithUnlocked;
+    public bool IsFarmerUnlocked => isFarmerUnlocked;
 
 
     public PlayerJobsData()
@@ -39,6 +41,11 @@ public class PlayerJobsData
         {
             isBlacksmithUnlocked = true;
         }
+
+        if (availableJobs.Contains(UtilsPlayer.PlayerJob.Farmer))
+        {
+            isFarmerUnlocked = true;
+        }
     }
 
     private void GenerateBaseStats()
@@ -49,7 +56,7 @@ public class PlayerJobsData
             UtilsPlayer.PlayerJob.Warrior,
             UtilsPlayer.PlayerJob.Miner,
             UtilsPlayer.PlayerJob.Fisher,
-            UtilsPlayer.PlayerJob.Farmer,
+            //UtilsPlayer.PlayerJob.Farmer,
             //UtilsPlayer.PlayerJob.Blacksmith
         };
 
@@ -64,6 +71,7 @@ public class PlayerJobsData
         switch(job)
         {
             case UtilsPlayer.PlayerJob.Blacksmith: isBlacksmithUnlocked = true; break;
+            case UtilsPlayer.PlayerJob.Farmer: isFarmerUnlocked = true; break;
         }
 
         PlayerManager.Instance.SaveJobsData();

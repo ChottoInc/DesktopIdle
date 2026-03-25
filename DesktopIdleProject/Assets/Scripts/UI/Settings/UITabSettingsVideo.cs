@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -93,15 +92,7 @@ public class UITabSettingsVideo : UITabWindow
         {
             currentMonitorIndex = 0;
         }
-        /*
-        // check if the display is not active, activate it in case
-        if (!Display.displays[currentMonitorIndex].active)
-        {
-            Display.displays[currentMonitorIndex].Activate();
 
-            
-        }
-        */
         // tell settings manager to swap
         SettingsManager.Instance.SetCurrentMonitorIndex(currentMonitorIndex, false, true);
     }

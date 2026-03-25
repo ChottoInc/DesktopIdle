@@ -170,6 +170,8 @@ public class Companion : MonoBehaviour
                     PlayerManager.Instance.PlayerFarmerData.AddExp(5);
                     PlayerManager.Instance.SaveFarmerData();
 
+                    PlayerManager.Instance.OnBefriendedCompanion(tempSOBefriend.Id);
+
                     if (PlayerManager.Instance.PlayerFarmerData.HasCompanion(tempSOBefriend))
                     {
                         // TODO: handle if companion is already befriended, dismantle it, for now give bits?

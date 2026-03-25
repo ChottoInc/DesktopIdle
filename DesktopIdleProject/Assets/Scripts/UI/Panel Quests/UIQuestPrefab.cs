@@ -109,6 +109,10 @@ public class UIQuestPrefab : MonoBehaviour
             case UtilsQuest.QuestObjectiveType.UnlockMap:
                 progressBar.gameObject.SetActive(false);
                 break;
+
+            case UtilsQuest.QuestObjectiveType.Befriend:
+                progressBar.Setup(data.amountObtain, progress.progressCounter);
+                break;
         }
         
     }

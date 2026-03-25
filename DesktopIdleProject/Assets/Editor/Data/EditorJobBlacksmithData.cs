@@ -12,25 +12,26 @@ public class EditorJobBlacksmithData : Editor
 
     private const int ID_BASE_EXP = 4;
     private const int ID_EXPO_EXP = 5;
+    private const int ID_FLAT_EXP = 6;
 
-    private const int ID_HELMET_MAXHP_LINEAR = 7;
-    private const int ID_HELMET_MAXHP_QUADRATIC = 8;
+    private const int ID_HELMET_MAXHP_LINEAR = 8;
+    private const int ID_HELMET_MAXHP_QUADRATIC = 9;
 
-    private const int ID_ARMOR_DEF_LINEAR = 9;
-    private const int ID_ARMOR_DEF_QUADRATIC = 10;
+    private const int ID_ARMOR_DEF_LINEAR = 10;
+    private const int ID_ARMOR_DEF_QUADRATIC = 11;
 
 
-    private const int ID_GLOVES_ATKSPD_LINEAR = 11;
-    private const int ID_GLOVES_ATKSPD_QUADRATIC = 12;
+    private const int ID_GLOVES_ATKSPD_LINEAR = 12;
+    private const int ID_GLOVES_ATKSPD_QUADRATIC = 13;
 
-    private const int ID_GLOVES_CRITDMG_LINEAR = 13;
-    private const int ID_GLOVES_CRITDMG_QUADRATIC = 14;
+    private const int ID_GLOVES_CRITDMG_LINEAR = 14;
+    private const int ID_GLOVES_CRITDMG_QUADRATIC = 15;
 
-    private const int ID_BOOTS_DEF_LINEAR = 15;
-    private const int ID_BOOTS_DEF_QUADRATIC = 16;
+    private const int ID_BOOTS_DEF_LINEAR = 16;
+    private const int ID_BOOTS_DEF_QUADRATIC = 17;
                          
-    private const int ID_BOOTS_CRITRATE_LINEAR = 17;
-    private const int ID_BOOTS_CRITRATE_QUADRATIC = 18;
+    private const int ID_BOOTS_CRITRATE_LINEAR = 18;
+    private const int ID_BOOTS_CRITRATE_QUADRATIC = 19;
 
 
 
@@ -92,7 +93,7 @@ public class EditorJobBlacksmithData : Editor
             }
         }
 
-        for (int i = 4; i < 6; i++)
+        for (int i = 4; i < 7; i++)
         {
             string[] parts = datas[i].Split(",", System.StringSplitOptions.None);
 
@@ -102,6 +103,7 @@ public class EditorJobBlacksmithData : Editor
             {
                 case ID_BASE_EXP: m_Script.SetBaseExpGrowth(value); break;
                 case ID_EXPO_EXP: m_Script.SetExpoExpGrowth(value); break;
+                case ID_FLAT_EXP: m_Script.SetFlatExpGrowth(value); break;
             }
         }
 

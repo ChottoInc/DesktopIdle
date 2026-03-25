@@ -87,7 +87,7 @@ public class PlayerFisher : Player
         // animation
         animator.SetTrigger("Caught");
 
-        int rewardedExp;
+        long rewardedExp;
 
         // Fish caught
         bool hasAlreadyFish = PlayerManager.Instance.Inventory.HasItem(hookedFish.Id);

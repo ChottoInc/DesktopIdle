@@ -57,6 +57,9 @@ public class UIPanelDismantle : MonoBehaviour
 
         Show(false);
         panelInfo.Show(true);
+
+        // refresh and pass the last group selected
+        panelInfo.Setup(PlayerManager.Instance.Inventory.ItemGroups[PlayerManager.Instance.Inventory.GetGroupIndex(group.IdItem)]);
     }
 
     public void OnButtonLeast()
@@ -142,9 +145,6 @@ public class UIPanelDismantle : MonoBehaviour
         Show(false);
 
         // Refresh tab inventory
-        tabInventory.Open();
-
-        // Reopen tab cards
-        tabInventory.OpenInventory(null, UITabInventory.ID_INVENTORY_FILTER_CARDS);
+        tabInventory.RefreshInventory();
     }
 }

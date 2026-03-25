@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class ItemGroup
+using System;
+
+public class ItemGroup : IComparable<ItemGroup>
 {
     private int idItem;
     private int quantity;
@@ -47,5 +46,14 @@ public class ItemGroup
     public override int GetHashCode()
     {
         return base.GetHashCode();
+    }
+
+    public int CompareTo(ItemGroup other)
+    {
+        if (idItem < other.idItem)
+            return -1;
+        else if (idItem > other.idItem)
+            return 1;
+        return 0;
     }
 }

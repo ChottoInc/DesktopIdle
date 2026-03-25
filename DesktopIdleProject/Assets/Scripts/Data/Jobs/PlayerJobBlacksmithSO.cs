@@ -15,6 +15,7 @@ public class PlayerJobBlacksmithSO : AbstractPlayerJobData
     [field: Space(10)]
     [field: SerializeField] public float BaseExpGrowth { get; private set; }
     [field: SerializeField] public float ExpoExpGrowth { get; private set; }
+    [field: SerializeField] public float FlatExpGrowth { get; private set; }
 
     [field: Space(10)]
     [field: SerializeField] public float HelmetMaxHpLinearGrowth { get; private set; }
@@ -81,6 +82,11 @@ public class PlayerJobBlacksmithSO : AbstractPlayerJobData
     public void SetExpoExpGrowth(float value)
     {
         ExpoExpGrowth = value;
+    }
+
+    public void SetFlatExpGrowth(float value)
+    {
+        FlatExpGrowth = value;
     }
 
 

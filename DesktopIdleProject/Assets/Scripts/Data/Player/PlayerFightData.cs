@@ -75,9 +75,7 @@ public class PlayerFightData
 
     public int CurrentLevel => currentLevel;
     public int CurrentExp => currentExp;
-    public int ExpToNextLevel => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel + 1) - UtilsWarrior.RequiredExpForWarriorLevel(currentLevel);
-    public int TotalExpToNextLevel => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel + 1);
-    public int TotalExp => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel) + currentExp;
+    public int ExpToNextLevel => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel + 1);
 
 
     public float MaxHp => 
@@ -210,13 +208,21 @@ public class PlayerFightData
 
     public void AddExp(int amount)
     {
+        // check max level
+        if (currentLevel > UtilsWarrior.MAX_LEVEL_WARRIOR)
+        {
+            // set current exp to 0
+            currentExp = 0;
+            return;
+        }
+
         currentExp += amount;
 
         // looping for every level gained
-        while(TotalExp >= TotalExpToNextLevel)
+        while(currentExp >= ExpToNextLevel)
         {
             // recalculate current exp
-            currentExp = TotalExp - TotalExpToNextLevel;
+            currentExp -= ExpToNextLevel;
 
             // give level and stat point
             currentLevel++;
@@ -294,6 +300,8 @@ public class PlayerFightData
     public void ResetAfterStage()
     {
         currentHp = MaxHp;
+
+        //Debug.Log("Max hp after death: " + currentHp);
 
         OnHpChange?.Invoke();
     }

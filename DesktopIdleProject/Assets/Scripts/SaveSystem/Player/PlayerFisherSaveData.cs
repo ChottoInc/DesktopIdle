@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerFisherSaveData
 {
     public int levelStatCalmness;
@@ -12,7 +8,7 @@ public class PlayerFisherSaveData
     public int availableStatPoints;
     
     public int currentLevel;
-    public int currentExp;
+    public long currentExp;
 
     public PlayerFisherSaveData() { }
 

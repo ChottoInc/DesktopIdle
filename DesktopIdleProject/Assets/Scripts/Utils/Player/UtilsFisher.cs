@@ -11,11 +11,15 @@ public static class UtilsFisher
     public static int PER_LEVEL_FISHER_MAX_REFLEX = 25;
     public static int PER_LEVEL_FISHER_MAX_KNOWLEDGE = 30;
     public static int PER_LEVEL_FISHER_MAX_LUCK = 40;
+
+
+    public static int MAX_LEVEL_FISHER;
            
            
            
     private static float BASE_FISHER_EXP_GROWTH = 50f;
-    private static float EXPO_FISHER_EXP_GROWTH = 1.15f;
+    private static float EXPO_FISHER_EXP_GROWTH = 1.08f;
+    private static float FLAT_FISHER_EXP_GROWTH = 10f;
 
 
     private static PlayerJobFisherSO jobDataSO;
@@ -35,18 +39,27 @@ public static class UtilsFisher
         PER_LEVEL_FISHER_MAX_KNOWLEDGE = jobDataSO.MaxLevelKnowledge;
         PER_LEVEL_FISHER_MAX_LUCK = jobDataSO.MaxLevelLuck;
 
+
+        MAX_LEVEL_FISHER =
+           PER_LEVEL_FISHER_MAX_CALMNESS +
+           PER_LEVEL_FISHER_MAX_REFLEX +
+           PER_LEVEL_FISHER_MAX_KNOWLEDGE + 
+           PER_LEVEL_FISHER_MAX_LUCK;
+
+
         BASE_FISHER_EXP_GROWTH = jobDataSO.BaseExpGrowth;
         EXPO_FISHER_EXP_GROWTH = jobDataSO.ExpoExpGrowth;
+        FLAT_FISHER_EXP_GROWTH = jobDataSO.FlatExpGrowth;
     }
 
 
 
-    public static int RequiredExpForFisherLevel(int level)
+    public static long RequiredExpForFisherLevel(int level)
     {
         // Level starts at 1
         if (level <= 1) return 0;
 
         // Formula: baseExp * (growthRate^(level-1) - 1)
-        return Mathf.RoundToInt(BASE_FISHER_EXP_GROWTH * Mathf.Pow(EXPO_FISHER_EXP_GROWTH, level - 1));
+        return (long)(BASE_FISHER_EXP_GROWTH * Mathf.Pow(EXPO_FISHER_EXP_GROWTH, level) + FLAT_FISHER_EXP_GROWTH * level);
     }
 }

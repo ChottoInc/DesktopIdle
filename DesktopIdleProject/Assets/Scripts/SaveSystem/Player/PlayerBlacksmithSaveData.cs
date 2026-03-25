@@ -18,7 +18,7 @@ public class PlayerBlacksmithSaveData
 
     public int currentLevel;
 
-    public int currentExp;
+    public long currentExp;
 
     // ---- WEAPON
 

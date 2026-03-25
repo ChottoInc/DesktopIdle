@@ -8,6 +8,7 @@ public class EditorQuestStorySO : Editor
 
     private SerializedProperty s_uniqueId;
     private SerializedProperty s_isActiveFromStart;
+    private SerializedProperty s_availableFor;
     private SerializedProperty s_questData;
     private SerializedProperty s_nexts;
 
@@ -46,6 +47,14 @@ public class EditorQuestStorySO : Editor
 
     private SerializedProperty s_mapId;
 
+    // --------- Quest Obtain ---------
+    private SerializedProperty s_questBefriendSpecific;
+
+    // --- Specific
+    private SerializedProperty s_companionSO;
+
+    private SerializedProperty s_amountBefriend;
+
 
     // --------- Reward ---------
     private SerializedProperty s_rewardAmount;
@@ -55,6 +64,7 @@ public class EditorQuestStorySO : Editor
     {
         s_uniqueId = serializedObject.FindProperty("uniqueId");
         s_isActiveFromStart = serializedObject.FindProperty("isActiveFromStart");
+        s_availableFor = serializedObject.FindProperty("availableFor");
         s_questData = serializedObject.FindProperty("questData");
         s_nexts = serializedObject.FindProperty("nexts");
 
@@ -76,6 +86,10 @@ public class EditorQuestStorySO : Editor
 
         s_mapId = s_questData.FindPropertyRelative("mapId");
 
+        s_questBefriendSpecific = s_questData.FindPropertyRelative("questBefriendSpecific");
+        s_companionSO = s_questData.FindPropertyRelative("companionSO");
+        s_amountBefriend = s_questData.FindPropertyRelative("amountBefriend");
+
         s_rewardAmount = s_questData.FindPropertyRelative("rewardAmount");
     }
 
@@ -89,6 +103,8 @@ public class EditorQuestStorySO : Editor
         EditorGUILayout.PropertyField(s_uniqueId);
 
         EditorGUILayout.PropertyField(s_isActiveFromStart);
+
+        EditorGUILayout.PropertyField(s_availableFor);
 
         showQuestData = EditorGUILayout.Foldout(
             showQuestData,
@@ -156,6 +172,21 @@ public class EditorQuestStorySO : Editor
                 case QuestObjectiveType.UnlockMap:
                     EditorGUILayout.Space();
                     EditorGUILayout.PropertyField(s_mapId);
+
+                    break;
+
+                case QuestObjectiveType.Befriend:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.PropertyField(s_questBefriendSpecific);
+
+                    if (_quest.QuestData.questBefriendSpecific)
+                    {
+                        EditorGUILayout.Space();
+                        EditorGUILayout.PropertyField(s_companionSO);
+                    }
+
+                    EditorGUILayout.Space();
+                    EditorGUILayout.PropertyField(s_amountBefriend);
 
                     break;
             }

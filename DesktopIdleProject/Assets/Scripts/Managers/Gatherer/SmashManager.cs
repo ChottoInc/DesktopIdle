@@ -101,7 +101,7 @@ public class SmashManager : MonoBehaviour
         //Debug.Log("Rock smash");
 
         // get exp before starting death for safety
-        int rewardedExp = UtilsGather.GetRockExp(currentRock.RockData.RockSO.RockType);
+        long rewardedExp = UtilsGather.GetRockExp(currentRock.RockData.RockSO.RockType);
 
         // kill enemy
         currentRock.PlayDeath(false);
@@ -123,12 +123,14 @@ public class SmashManager : MonoBehaviour
     private void GiveLoot()
     {
         float randPercLoot = Random.value;
-        float thresholdLoot = currentRock.RockData.RockSO.BaseLootChance + player.PlayerData.CurrentLuck;
+        float thresholdLoot = (currentRock.RockData.RockSO.BaseLootChance / 100f) + player.PlayerData.CurrentLuck;
 
         if (alwaysFindLootCheat)
         {
             thresholdLoot = 1f;
         }
+
+        //Debug.Log("Threshold: " + thresholdLoot);
 
         if (randPercLoot <= thresholdLoot)
         {

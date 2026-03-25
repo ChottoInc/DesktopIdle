@@ -24,24 +24,34 @@ public class UITabQuestsStory : UITabWindow
 
         for (int i = 0; i < activeQuests.Count; i++)
         {
-            string currentId = activeQuests[i]; 
+            string currentId = activeQuests[i];
             //Debug.Log("showing story quest: " + currentId);
 
-            GameObject prefab = Instantiate(questPrefab, transform.position, Quaternion.identity);
-            prefab.transform.SetParent(container);
+            QuestStorySO so = UtilsQuest.GetStoryQuestById(currentId);
 
-            prefab.transform.localScale = new Vector3(1, 1, 1);
+            bool valid = true;
 
-            if (prefab.TryGetComponent(out UIQuestPrefab obj))
+            if (!so.AvailableFor.SharesAnyValueWith(PlayerManager.Instance.PlayerJobsData.AvailableJobs))
+                valid = false;
+
+            if (valid)
             {
-                QuestStorySO so = UtilsQuest.GetStoryQuestById(currentId);
-                UtilsQuest.QuestData questData = so.QuestData;
+                GameObject prefab = Instantiate(questPrefab, transform.position, Quaternion.identity);
+                prefab.transform.SetParent(container);
 
-                UtilsQuest.QuestDataProgress questDataProgress = QuestManager.Instance.DictQuestsStoryProgress[currentId];
+                prefab.transform.localScale = new Vector3(1, 1, 1);
 
-                obj.Setup(this, UtilsQuest.QuestType.Story, currentId, questData, questDataProgress);
+                if (prefab.TryGetComponent(out UIQuestPrefab obj))
+                {
+                    UtilsQuest.QuestData questData = so.QuestData;
+
+                    UtilsQuest.QuestDataProgress questDataProgress = QuestManager.Instance.DictQuestsStoryProgress[currentId];
+
+                    obj.Setup(this, UtilsQuest.QuestType.Story, currentId, questData, questDataProgress);
+                }
+                questObjs.Add(prefab);
             }
-            questObjs.Add(prefab);
+           
         }
     }
 
