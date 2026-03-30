@@ -7,19 +7,22 @@ public class UITabJobFisher : UITabWindow
     [SerializeField] UITabPlayerJob panelJob;
 
     [Space(10)]
+    [SerializeField] TMP_Text textAvailableFishes;
+
+    [Space(10)]
     [SerializeField] GameObject fishGroupPrefab;
     [SerializeField] Transform container;
 
     private List<GameObject> groupsObjs;
 
     [Space(10)]
-    [SerializeField] GameObject panelFishGroup;
-    [SerializeField] GameObject panelLog;
-    [SerializeField] TMP_Text textButtonLog;
+    //[SerializeField] GameObject panelFishGroup;
+    //[SerializeField] GameObject panelLog;
+    //[SerializeField] TMP_Text textButtonLog;
     [SerializeField] TMP_Text textLog;
 
 
-    private bool isLogShow;
+    //private bool isLogShow;
 
 
 
@@ -43,15 +46,19 @@ public class UITabJobFisher : UITabWindow
         panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_FISHER_TAB);
 
         // resets
-        panelFishGroup.SetActive(true);
-        panelLog.SetActive(false);
+        //panelFishGroup.SetActive(true);
+        //panelLog.SetActive(false);
 
-        textButtonLog.text = "Log";
+        //textButtonLog.text = "Log";
 
-        isLogShow = false;
+        //isLogShow = false;
 
-        // refresh
+        // refreshes
         RefreshGroups();
+
+        FillLog();
+
+        FillAvailables();
     }
 
     private void InitializeIfNeeded()
@@ -76,6 +83,38 @@ public class UITabJobFisher : UITabWindow
         // clear list and refresh groups
         groupsObjs = ClearList(groupsObjs);
         FillGroups();
+    }
+
+    private void FillAvailables()
+    {
+        string result = "";
+
+        // Get day moment
+        UtilsGeneral.DayMoment currentMoment = UtilsGeneral.GetDayMoment();
+
+        // Get available from day moment
+        var availables = UtilsItem.GetFishByDayMoment(currentMoment);
+        Debug.Log("availables: " + availables.Count);
+
+        // fill log with name and rarity of each fish
+        foreach (var fish in availables)
+        {
+            string name = fish.ItemName;
+            string caught;
+
+            if (PlayerManager.Instance.Inventory.HasItem(fish.Id))
+            {
+                caught = string.Format("<color=#24E73C>Caught</color>");
+            }
+            else
+            {
+                caught = string.Format("<color=#EC1616>Not caught</color>", fish.ItemName);
+            }
+
+            result += string.Format("{0}\t{1}\n", name, caught);
+        }
+
+        textAvailableFishes.text = result;
     }
 
     private void RefreshGroups()
@@ -135,7 +174,7 @@ public class UITabJobFisher : UITabWindow
 
         SceneLoaderManager.Instance.LoadScene(settings);
     }
-
+    /*
     public void OnButtonLog()
     {
         AudioManager.Instance.PlayClickUI();
@@ -161,6 +200,7 @@ public class UITabJobFisher : UITabWindow
             isLogShow = false;
         }
     }
+    */
 
     private void FillLog()
     {
@@ -181,7 +221,7 @@ public class UITabJobFisher : UITabWindow
             foreach (var fish in sessionFishes)
             {
                 string singleLine = string.Format(
-                "{0}\t" +                       //name
+                "{0}\t" +                       // name
                 "<color=#{1}>{2}</color>",      // rarity color and rarity name
 
                 fish.ItemName,

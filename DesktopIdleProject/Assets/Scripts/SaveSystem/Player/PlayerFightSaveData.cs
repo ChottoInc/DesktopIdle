@@ -28,7 +28,7 @@ public class PlayerFightSaveData
     // ---- STAT VALUES
 
     public int currentLevel;
-    public int currentExp;
+    public long currentExp;
 
     public PlayerFightSaveData() { }
 

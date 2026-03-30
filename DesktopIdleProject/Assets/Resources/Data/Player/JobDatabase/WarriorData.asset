@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   dataPath: Files/Player/PlayerDatas - Warrior
-  <PerLevelGainMaxHp>k__BackingField: 10
-  <PerLevelGainAtk>k__BackingField: 0.5
-  <PerLevelGainDef>k__BackingField: 0.1
+  <PerLevelGainMaxHp>k__BackingField: 20
+  <PerLevelGainAtk>k__BackingField: 0.75
+  <PerLevelGainDef>k__BackingField: 0.2
   <PerLevelGainAtkSpd>k__BackingField: 0.01
   <PerLevelGainCritRate>k__BackingField: 0.001
   <PerLevelGainCritDmg>k__BackingField: 0.02
-  <PerLevelGainLuck>k__BackingField: 0.01
+  <PerLevelGainLuck>k__BackingField: 0.0005
   <MaxLevelMaxHp>k__BackingField: 50
   <MaxLevelAtk>k__BackingField: 50
   <MaxLevelDef>k__BackingField: 50
   <MaxLevelAtkSpd>k__BackingField: 30
   <MaxLevelCritRate>k__BackingField: 20
   <MaxLevelCritDmg>k__BackingField: 30
-  <MaxLevelLuck>k__BackingField: 40
+  <MaxLevelLuck>k__BackingField: 30
   <BaseExpGrowth>k__BackingField: 20
   <ExpoExpGrowth>k__BackingField: 1.85
   <FlatExpGrowth>k__BackingField: 80

@@ -267,6 +267,18 @@ public static class UtilsItem
         return fishes.ToArray();
     }
 
+    public static List<FishSO> GetFishByDayMoment(UtilsGeneral.DayMoment moment)
+    {
+        List<FishSO> result = new List<FishSO>();
+
+        foreach (var fish in fishes)
+        {
+            if ((fish as FishSO).SpawnDayMoment == moment)
+                result.Add(fish as FishSO);
+        }
+        return result;
+    }
+
     public static FishSO GetRandomFish(List<ItemSO> list)
     {
         bool found = false;

@@ -74,8 +74,8 @@ public static class UtilsWarrior
         //Debug.Log("max level max hp: " + PER_LEVEL_WARRIOR_MAX_MAXHP);
     }
 
-    public static int RequiredExpForWarriorLevel(int level)
+    public static long RequiredExpForWarriorLevel(int level)
     {
-        return Mathf.FloorToInt(BASE_FIGHT_EXP_GROWTH * Mathf.Pow(level, EXPO_FIGHT_EXP_GROWTH) + FLAT_FIGHT_EXP_GROWTH * level);
+        return (long)(BASE_FIGHT_EXP_GROWTH * Mathf.Pow(level, EXPO_FIGHT_EXP_GROWTH) + FLAT_FIGHT_EXP_GROWTH * level);
     }
 }

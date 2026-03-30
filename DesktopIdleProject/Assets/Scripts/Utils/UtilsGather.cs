@@ -252,11 +252,11 @@ public static class UtilsGather
         switch (rockType)
         {
             default:
-            case RockType.Copper: return 2;
-            case RockType.Iron: return 6;
-            case RockType.Bronze: return 15;
-            case RockType.Silver: return 38;
-            case RockType.Gold: return 60;
+            case RockType.Copper: return 4;
+            case RockType.Iron: return 12;
+            case RockType.Bronze: return 30;
+            case RockType.Silver: return 75;
+            case RockType.Gold: return 120;
         }
     }
 

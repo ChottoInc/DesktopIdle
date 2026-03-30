@@ -143,8 +143,8 @@ public class PlayerMinerData
             OnLevelUp?.Invoke();
         }
 
-        Debug.Log("current exp: " + currentExp);
-        Debug.Log("next level exp: " + ExpToNextLevel);
+        //Debug.Log("current exp: " + currentExp);
+        //Debug.Log("next level exp: " + ExpToNextLevel);
 
         OnAddedExp?.Invoke();
     }

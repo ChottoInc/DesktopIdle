@@ -11,6 +11,13 @@ public class PlayerFightData
 
     // ---- BASE STAT VALUES
 
+    private const float BASE_MAXHP = 85f;
+    private const float BASE_ATK = 10f;
+    private const float BASE_DEF = 2.5f;
+    private const float BASE_ATKSPD = 1.2f;
+    private const float BASE_CRITRATE = 0.05f;
+    private const float BASE_CRITDMG = 1.5f;
+
     private float baseMaxHp;
 
     private float baseAtk;
@@ -65,7 +72,7 @@ public class PlayerFightData
     // ---- FINAL STAT VALUES
 
     private int currentLevel;
-    private int currentExp;
+    private long currentExp;
 
     private float currentHp;
 
@@ -74,8 +81,8 @@ public class PlayerFightData
 
 
     public int CurrentLevel => currentLevel;
-    public int CurrentExp => currentExp;
-    public int ExpToNextLevel => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel + 1);
+    public long CurrentExp => currentExp;
+    public long ExpToNextLevel => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel + 1);
 
 
     public float MaxHp => 
@@ -179,17 +186,17 @@ public class PlayerFightData
         currentLevel = 1;
         currentExp = 0;
 
-        baseMaxHp = 120;
+        baseMaxHp = BASE_MAXHP;
         currentHp = MaxHp;
 
-        baseAtk = 10;
-        baseDef = 2.5f;
+        baseAtk = BASE_ATK;
+        baseDef = BASE_DEF;
 
-        baseAtkSpd = 1.2f;   // 1 attack per second
+        baseAtkSpd = BASE_ATKSPD;   // 1 attack per second
         //baseAtkSpd = 5f;   // 1 attack per second
 
-        baseCritRate = 0.05f;  // 5%
-        baseCritDmg = 1.5f;  // +50%
+        baseCritRate = BASE_CRITRATE;  // 5%
+        baseCritDmg = BASE_CRITDMG;  // +50%
 
         baseLuck = 0f;
     }

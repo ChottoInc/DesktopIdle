@@ -70,7 +70,7 @@ public static class UtilsMiner
         if (level <= 1) return 0;
         
         // Formula: baseExp * (growthRate^(level-1) - 1)
-        return (long)(BASE_MINER_EXP_GROWTH * Mathf.Pow(EXPO_MINER_EXP_GROWTH, level) + FLAT_MINER_EXP_GROWTH * level);
+        return (long)(BASE_MINER_EXP_GROWTH * Mathf.Pow(level, EXPO_MINER_EXP_GROWTH) + FLAT_MINER_EXP_GROWTH * level);
     }
 
     public static float GetMinerWeaponMultiplier(int weaponLevel)

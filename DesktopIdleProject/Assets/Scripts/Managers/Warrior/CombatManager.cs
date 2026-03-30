@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
+    private const float BASE_CARD_DROPRATE = 0.005f;
+
+
     [SerializeField] PlayerFight player;
 
     [Header("Cheats")]
@@ -205,8 +208,8 @@ public class CombatManager : MonoBehaviour
             
         PlayerManager.Instance.UpdateFightData(player.PlayerData);
 
-        // by default cards drop with 10%, add luck of warrior
-        float baseCardDropRate = 0.1f;
+        // by default cards drop with 0.5%, add luck of warrior
+        float baseCardDropRate = BASE_CARD_DROPRATE;
         if (cardHighDroprateCheat)
         {
             // get card drop, card can be null, it means no drop
