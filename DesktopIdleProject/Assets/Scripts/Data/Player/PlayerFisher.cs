@@ -56,7 +56,7 @@ public class PlayerFisher : Player
 
         bool successReflex;
 
-        if (FishSpawnManager.Instance.AlwaysCatchFishCheat)
+        if (FishSpawnManager.Instance.AlwaysCatchFishCheat && SettingsManager.Instance.AreCheatsEnabled)
         {
             successReflex = true;
         }
@@ -92,21 +92,20 @@ public class PlayerFisher : Player
         // Fish caught
         bool hasAlreadyFish = PlayerManager.Instance.Inventory.HasItem(hookedFish.Id);
 
-        if (!hasAlreadyFish)
-        {
-            // Add fish to caught
-            PlayerManager.Instance.Inventory.AddItem(hookedFish.Id, 1);
-
-            // check for fishgroups
-            playerData.FillFishGroupsSeriesCompletion();
-        }
-        else
+        // add to inventort even if already hasve, to trigger quest progress
+        if (hasAlreadyFish)
         {
             // Dismantle fish into bits? for now
             // TODO: remake this option?
             int bitsToAdd = UtilsItem.DismantleFish(hookedFish.FishRarity);
             PlayerManager.Instance.Inventory.AddBits(bitsToAdd);
         }
+
+        // Add fish to caught
+        PlayerManager.Instance.Inventory.AddItem(hookedFish.Id, 1);
+
+        // check for fishgroups
+        playerData.FillFishGroupsSeriesCompletion();
 
         // Save ivnentory
         PlayerManager.Instance.SaveInventoryData();

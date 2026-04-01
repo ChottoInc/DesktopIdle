@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,18 +41,19 @@ public class UIFarmerCropSelectionPrefab : MonoBehaviour
 
         string text = string.Format(
             "{0}\n" +
-            "Base growth time: {1}\n" +
+            "Base growth time: {1}m{2}s\n" +
             "Attracts:\n" +
-            "{2}",
+            "{3}",
             cropSO.CropName,
-            cropSO.BaseGrowthTime,
+            Mathf.FloorToInt(cropSO.BaseGrowthTime / 60f),
+            Mathf.FloorToInt(cropSO.BaseGrowthTime % 60f),
             possibleCompanions);
 
 
         TooltipManagerData tooltipData = new TooltipManagerData();
         tooltipData.idTooltip = UITooltipManager.ID_SHOW_TEXT;
         tooltipData.text = text;
-        UITooltipManager.Instance.Show(tooltipData, tooltipPosition.position, true);
+        UITooltipManager.Instance.Show(tooltipData, tooltipPosition.position, true, 35f);
     }
 
     public void OnPointerExit()

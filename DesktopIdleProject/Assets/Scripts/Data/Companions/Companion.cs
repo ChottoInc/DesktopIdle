@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -17,6 +16,10 @@ public class Companion : MonoBehaviour
     [Space(10)]
     [SerializeField] Transform checkEnemyPoint;
     [SerializeField] LayerMask enemyLayer;
+
+    [Header("UI")]
+    [SerializeField] GameObject imageBefriended;
+    [SerializeField] GameObject imageNotBefriended;
 
 
     private CompanionSO tempSOBefriend;
@@ -38,6 +41,7 @@ public class Companion : MonoBehaviour
 
     // setup vars
     private bool isGoingToCrop;
+    private int slotCropIndex;
     private bool isRandomWalking;
 
     // disappear vars
@@ -160,12 +164,19 @@ public class Companion : MonoBehaviour
         {
             if (timerIdle <= 0)
             {
+                // remove crop from plot
+                ResetCrop();
+                
+
                 isGoingToCrop = false;
 
                 // take action befriended or not
                 bool success = UtilsGeneral.GetRandomSuccessFromValue(PlayerManager.Instance.PlayerFarmerData.CurrentLuck);
                 if (success)
                 {
+                    // Animation
+                    imageBefriended.SetActive(true);
+
                     // TODO: balance exp
                     PlayerManager.Instance.PlayerFarmerData.AddExp(5);
                     PlayerManager.Instance.SaveFarmerData();
@@ -186,14 +197,17 @@ public class Companion : MonoBehaviour
                     // walk away
                     SetTargetOutsideScreen();
 
-                    Debug.Log("Companion befriended");
+                    //Debug.Log("Companion befriended");
                 }
                 else
                 {
+                    // Animation
+                    imageNotBefriended.SetActive(true);
+
                     // set the companion to walk away from the screen
                     SetTargetOutsideScreen();
 
-                    Debug.Log("Companion not befriended");
+                    //Debug.Log("Companion not befriended");
                 }
 
                 isIdling = false;
@@ -202,6 +216,25 @@ public class Companion : MonoBehaviour
             {
                 timerIdle -= Time.fixedDeltaTime;
             }
+        }
+    }
+
+    private void ResetCrop()
+    {
+        CropData currentCrop = null;
+
+        switch (slotCropIndex)
+        {
+            case 0: currentCrop = PlayerManager.Instance.PlayerFarmerData.Slot1CropData; break;
+            case 1: currentCrop = PlayerManager.Instance.PlayerFarmerData.Slot2CropData; break;
+            case 2: currentCrop = PlayerManager.Instance.PlayerFarmerData.Slot3CropData; break;
+            case 3: currentCrop = PlayerManager.Instance.PlayerFarmerData.Slot4CropData; break;
+        }
+
+        if (currentCrop != null)
+        {
+            currentCrop.ResetGrowth();
+            CropsPlantManager.Instance.SetCrop(slotCropIndex, currentCrop, false);
         }
     }
 
@@ -303,11 +336,14 @@ public class Companion : MonoBehaviour
     /// </summary>
     public void ExternalAttack()
     {
-        // damage enemy once
-        currentEnemy.EnemyData.TakeDamage(companionData);
+        if (currentEnemy != null)
+        {
+            // damage enemy once
+            currentEnemy.EnemyData.TakeDamage(companionData);
 
-        // make the damage number show
-        currentEnemy.UpdateDamageUI();
+            // make the damage number show
+            currentEnemy.UpdateDamageUI();
+        }
     }
 
     private IEnumerator CoStopAttack()
@@ -382,25 +418,27 @@ public class Companion : MonoBehaviour
         isRandomWalking = false;
 
         float x;
-        if (UnityEngine.Random.value < 0.5f)
+        if (Random.value < 0.5f)
         {
-            x = InitializerManager.Instance.GetScreenOffsetBound() - 20f;
+            x = InitializerManager.Instance.GetScreenOffsetBound() - 200f;
         }
         else
         {
-            x = InitializerManager.GetScreenWidth() - InitializerManager.Instance.GetScreenOffsetBound() + 20f;
+            x = InitializerManager.GetScreenWidth() - InitializerManager.Instance.GetScreenOffsetBound() + 200f;
         }
+
         currentTarget = Camera.main.ScreenToWorldPoint(new Vector2(x, 0)).x;
 
         isWalkingAway = true;
     }
 
-    public void SetupBefriend(CompanionSO so, Vector2 cropPos)
+    public void SetupBefriend(CompanionSO so, Vector2 cropPos, int slotIndex)
     {
         tempSOBefriend = so;
 
         // set going to crop
         isGoingToCrop = true;
+        slotCropIndex = slotIndex;
 
         // set crop target
         currentTarget = cropPos.x;

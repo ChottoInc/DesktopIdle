@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
+    [Header("Cheats")]
+    [SerializeField] bool enableCheats = true;
+
+
+    public bool AreCheatsEnabled => enableCheats;
+
+
+
+
     private IDataService saveService;
 
     // ---- TUTORIAL ----

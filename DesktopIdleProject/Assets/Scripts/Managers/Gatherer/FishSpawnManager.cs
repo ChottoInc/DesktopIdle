@@ -12,7 +12,7 @@ public class FishSpawnManager : MonoBehaviour
 
     private float timerHook;
 
-    private float CurrentMaxHookTime => Mathf.Max(maxHookTime * player.PlayerData.CurrentCalmness, minHookTime);
+    private float CurrentMaxHookTime => Mathf.Max(maxHookTime - (maxHookTime * player.PlayerData.CurrentCalmness), minHookTime);
 
     public float AverageHookTime => (minHookTime + CurrentMaxHookTime) /2f;
 

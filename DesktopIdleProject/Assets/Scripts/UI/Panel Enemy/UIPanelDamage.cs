@@ -2,12 +2,9 @@ using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIPanelDamage : MonoBehaviour
 {
-    //[SerializeField] Sprite spriteDamage;
-
     [Space(10)]
     [SerializeField] Enemy enemy;
 
@@ -18,13 +15,7 @@ public class UIPanelDamage : MonoBehaviour
 
     [Space(10)]
     [SerializeField] GameObject objectToMove;
-    //[SerializeField] Image imageObtained;
     [SerializeField] TMP_Text textDamage;
-
-
-
-    //private Vector2 startPos;
-    //private Vector2 endPos;
 
     private Queue<int> queueDamages;
 
@@ -62,8 +53,6 @@ public class UIPanelDamage : MonoBehaviour
     private void Start()
     {
         queueDamages = new Queue<int>();
-
-        //imageObtained.sprite = spriteDamage;
     }
 
 
@@ -77,7 +66,6 @@ public class UIPanelDamage : MonoBehaviour
             //Debug.Log("start ani");
             // dequeue item and set sprite
             int damage = queueDamages.Dequeue();
-            //imageObtained.sprite = GetSpriteByType(damage);
             textDamage.text = damage.ToString();
 
             // reset obejct pos/scale and show
@@ -109,18 +97,10 @@ public class UIPanelDamage : MonoBehaviour
 
     private void AddDamageToQueue(int damage)
     {
+        if (queueDamages.Count > 0)
+            queueDamages.Clear();
+
         // enqueue new item animation to do
         queueDamages.Enqueue(damage);
     }
-
-    /*
-    private Sprite GetSpriteByType(UtilsItem.ItemType itemType)
-    {
-        switch (itemType)
-        {
-            default:
-            case UtilsItem.ItemType.Ore: return spriteOre;
-            case UtilsItem.ItemType.Card: return spriteCard;
-        }
-    }*/
 }

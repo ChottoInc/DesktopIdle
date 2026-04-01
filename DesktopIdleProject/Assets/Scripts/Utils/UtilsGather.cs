@@ -37,8 +37,8 @@ public static class UtilsGather
 
     // ------------------ MINER -----------------------
 
-    private const float BASE_ROCK_DURABILITY = 20f;
-    private const float ROCK_DURABILITY_SCALE = 1.8f;
+    private const float BASE_ROCK_DURABILITY = 25f;
+    private const float ROCK_DURABILITY_SCALE = 2f;
 
     /*
      * The first requirements for level up the miner weapon are manually set, 
@@ -294,29 +294,29 @@ public static class UtilsGather
             {
                 default:
                 case 2:
-                    result.Add(new ItemGroup(0, 20));
-                    result.Add(new ItemGroup(1, 1));
+                    result.Add(new ItemGroup(0, 60));
+                    result.Add(new ItemGroup(1, 20));
                     break;
 
                 case 3:
-                    result.Add(new ItemGroup(0, 70));
-                    result.Add(new ItemGroup(1, 3));
-                    result.Add(new ItemGroup(2, 1));
+                    result.Add(new ItemGroup(0, 180));
+                    result.Add(new ItemGroup(1, 60));
+                    result.Add(new ItemGroup(2, 20));
                     break;
 
                 case 4:
-                    result.Add(new ItemGroup(0, 200));
-                    result.Add(new ItemGroup(1, 15));
-                    result.Add(new ItemGroup(2, 7));
-                    result.Add(new ItemGroup(3, 1));
+                    result.Add(new ItemGroup(0, 500));
+                    result.Add(new ItemGroup(1, 200));
+                    result.Add(new ItemGroup(2, 60));
+                    result.Add(new ItemGroup(3, 20));
                     break;
 
                 case 5:
-                    result.Add(new ItemGroup(0, 750));
-                    result.Add(new ItemGroup(1, 70));
-                    result.Add(new ItemGroup(2, 20));
-                    result.Add(new ItemGroup(3, 5));
-                    result.Add(new ItemGroup(4, 1));
+                    result.Add(new ItemGroup(0, 1000));
+                    result.Add(new ItemGroup(1, 500));
+                    result.Add(new ItemGroup(2, 150));
+                    result.Add(new ItemGroup(3, 80));
+                    result.Add(new ItemGroup(4, 20));
                     break;
             }
         }
@@ -326,7 +326,7 @@ public static class UtilsGather
             // automatically get items amount after all of them are used manually
             for (int i = 0; i < MAX_ITEM_REQUIREMENTS_FOR_MINER_WEAPON; i++)
             {
-                result.Add(new ItemGroup(i, RequiredMinerItemAmount(level, ids[i])));
+                result.Add(new ItemGroup(ids[i], RequiredMinerItemAmount(level, ids[i])));
             }
         }
 

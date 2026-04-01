@@ -154,7 +154,7 @@ public class PlayerFight : Player
         {
             Enemy enemy = hit.GetComponent<Enemy>();
 
-            if(!enemy.IsDead && !IsDead)
+            if (enemy.CanFight && !enemy.IsDead && !IsDead)
             {
                 isEnemyDetected = true;
                 CombatManager.Instance.StartFight(enemy);
@@ -248,8 +248,8 @@ public class PlayerFight : Player
     private void UpdateHpBarUI()
     {
         hpBar.SetCurrentValue(playerData.CurrentHp);
-        Debug.Log("current: " + playerData.CurrentHp);
-        Debug.Log("max hp: " + playerData.MaxHp);
+        //Debug.Log("current: " + playerData.CurrentHp);
+        //Debug.Log("max hp: " + playerData.MaxHp);
     }
 
     public void SetAttacking(bool isAttacking)

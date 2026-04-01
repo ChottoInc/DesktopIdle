@@ -77,4 +77,11 @@ public class CropData
             PlayerManager.Instance.SaveFarmerData();
         }
     }
+
+    public void ResetGrowth()
+    {
+        currentGrowth = 0;
+
+        PlayerManager.Instance.SaveFarmerData();
+    }
 }

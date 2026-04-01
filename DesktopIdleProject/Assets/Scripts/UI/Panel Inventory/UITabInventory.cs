@@ -117,4 +117,13 @@ public class UITabInventory : UITabWindow
 
         Close();
     }
+
+    public void OnButtonAddBits()
+    {
+        if (!SettingsManager.Instance.AreCheatsEnabled) return;
+
+        PlayerManager.Instance.Inventory.AddBits(500);
+        PlayerManager.Instance.SaveInventoryData();
+        textBits.text = $"x{PlayerManager.Instance.Inventory.CurrentBits}";
+    }
 }

@@ -60,7 +60,7 @@ public class UITooltipName : MonoBehaviour
         );
     }
 
-    public void Show(string text, Vector2 position, bool fade = false)
+    public void Show(string text, Vector2 position, bool fade = false, float fontMaxSize = 50f)
     {
         if (!SettingsManager.Instance.AreTooltipsOn) return;
 
@@ -69,6 +69,9 @@ public class UITooltipName : MonoBehaviour
 
         // set text
         textName.text = text;
+
+        // set max font size
+        textName.fontSizeMax = fontMaxSize;
 
         gameObject.SetActive(true);
 

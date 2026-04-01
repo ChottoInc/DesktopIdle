@@ -25,8 +25,8 @@ public class WorldCropSlot : MonoBehaviour
         }
     }
 
-    public void SetCanGrow()
+    public void SetCanGrow(bool canGrow)
     {
-        CanGrow = true;
+        CanGrow = canGrow;
     }
 }

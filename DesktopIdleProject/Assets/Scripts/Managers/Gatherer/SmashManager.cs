@@ -125,7 +125,7 @@ public class SmashManager : MonoBehaviour
         float randPercLoot = Random.value;
         float thresholdLoot = (currentRock.RockData.RockSO.BaseLootChance / 100f) + player.PlayerData.CurrentLuck;
 
-        if (alwaysFindLootCheat)
+        if (alwaysFindLootCheat && SettingsManager.Instance.AreCheatsEnabled)
         {
             thresholdLoot = 1f;
         }

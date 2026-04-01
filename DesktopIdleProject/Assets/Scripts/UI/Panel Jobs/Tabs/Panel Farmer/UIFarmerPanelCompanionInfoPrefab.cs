@@ -18,7 +18,6 @@ public class UIFarmerPanelCompanionInfoPrefab : MonoBehaviour
 
     public void Setup(UIFarmerPanelCompanions panelCompanions, CompanionData companionData)
     {
-        Debug.Log("create companion info");
         this.panelCompanions = panelCompanions;
         this.companionData = companionData;
 

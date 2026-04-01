@@ -94,24 +94,21 @@ public class UITabJobFisher : UITabWindow
 
         // Get available from day moment
         var availables = UtilsItem.GetFishByDayMoment(currentMoment);
-        Debug.Log("availables: " + availables.Count);
+        //Debug.Log("availables: " + availables.Count);
 
         // fill log with name and rarity of each fish
         foreach (var fish in availables)
         {
             string name = fish.ItemName;
-            string caught;
 
             if (PlayerManager.Instance.Inventory.HasItem(fish.Id))
             {
-                caught = string.Format("<color=#24E73C>Caught</color>");
+                result += string.Format("<color=#FFFFFF>{0}</color>\n", name);
             }
             else
             {
-                caught = string.Format("<color=#EC1616>Not caught</color>", fish.ItemName);
+                result += string.Format("<color=#878787>{0}</color>\n", name);
             }
-
-            result += string.Format("{0}\t{1}\n", name, caught);
         }
 
         textAvailableFishes.text = result;
@@ -221,12 +218,10 @@ public class UITabJobFisher : UITabWindow
             foreach (var fish in sessionFishes)
             {
                 string singleLine = string.Format(
-                "{0}\t" +                       // name
-                "<color=#{1}>{2}</color>",      // rarity color and rarity name
+                "<color=#{0}>{1}</color>",      // name and rarity
 
-                fish.ItemName,
                 UtilsItem.GetFishRarityColor(fish.FishRarity),
-                UtilsItem.GetFishRarityName(fish.FishRarity)
+                fish.ItemName
                 );
                 result += singleLine + "\n";
             }

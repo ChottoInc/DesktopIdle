@@ -127,7 +127,7 @@ public class CombatManager : MonoBehaviour
 
     private void OnPlayerAttack()
     {
-        if (playerHighDamageCheat)
+        if (playerHighDamageCheat && SettingsManager.Instance.AreCheatsEnabled)
         {
             currentEnemy.EnemyData.TakeDamageCheat(1000f);
         }
@@ -151,7 +151,7 @@ public class CombatManager : MonoBehaviour
 
         if (player.PlayerData == null) return;
 
-        if (enemyHighDamageCheat)
+        if (enemyHighDamageCheat && SettingsManager.Instance.AreCheatsEnabled)
         {
             player.PlayerData.TakeDamageCheat(1000f);
         }
@@ -197,7 +197,7 @@ public class CombatManager : MonoBehaviour
         EnableFight(false);
 
         // give exp to player
-        if (playerHighExpCheat)
+        if (playerHighExpCheat && SettingsManager.Instance.AreCheatsEnabled)
         {
             player.PlayerData.AddExp(2000);
         }
@@ -210,7 +210,7 @@ public class CombatManager : MonoBehaviour
 
         // by default cards drop with 0.5%, add luck of warrior
         float baseCardDropRate = BASE_CARD_DROPRATE;
-        if (cardHighDroprateCheat)
+        if (cardHighDroprateCheat && SettingsManager.Instance.AreCheatsEnabled)
         {
             // get card drop, card can be null, it means no drop
             CardSO randCardSO = UtilsGeneral.GetRandomValueFromGeneralChanches(StageManager.Instance.PossibleCards);

@@ -112,7 +112,7 @@ public class PlayerFisherData
         currentExp = 0;
 
         // multiplier
-        baseCalmness = 1f; // reduced max time for spawn fish, up to 0.5f - 50%
+        baseCalmness = 0f; // reduced max time for spawn fish, up to 0.5f - 50%
 
         baseReflex = 0.5f; // stat contrlling if the fish is caught, up to 0.75 - 25%
         baseKnowledge = 0f; // reduce chances of same species, up to 0.3 - 30%

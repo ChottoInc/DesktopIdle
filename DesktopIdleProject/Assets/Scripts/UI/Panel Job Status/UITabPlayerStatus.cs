@@ -31,6 +31,8 @@ public class UITabPlayerStatus : UITabWindow
     {
         base.Close();
 
+        AudioManager.Instance.PlayClickUI();
+
         Resets();
     }
 

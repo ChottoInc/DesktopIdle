@@ -8,8 +8,8 @@ public class EnemyData
 
 
     private const float MAXHP_GAIN_PER_LEVEL = 2f;
-    private const float ATK_GAIN_PER_LEVEL = 0.1f;
-    private const float DEF_GAIN_PER_LEVEL = 0.1f;
+    private const float ATK_GAIN_PER_LEVEL = 0.08f;
+    private const float DEF_GAIN_PER_LEVEL = 0.06f;
 
 
     private EnemySO enemySO;
@@ -99,14 +99,14 @@ public class EnemyData
     private float CalculateAtk()
     {
         // exp growth
-        float p = 1.2f;
+        float p = 0.9f;
         return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 
     private float CalculateDef()
     {
         // exp growth
-        float p = 0.95f;
+        float p = 0.9f;
         return enemySO.BaseDef + DEF_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 

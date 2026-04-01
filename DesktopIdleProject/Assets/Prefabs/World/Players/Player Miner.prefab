@@ -52,7 +52,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 7255071826316726164}
   faceRight: 1
   speed: 4
-  cooldownIdle: 1.5
   checkRockPoint: {fileID: 4694128961953293564}
   rockLayer:
     serializedVersion: 2
@@ -204,12 +203,12 @@ SpriteRenderer:
   m_SortingLayerID: 2032254287
   m_SortingLayer: 2
   m_SortingOrder: 10
-  m_Sprite: {fileID: -1369889730, guid: 02fa31128228f8140b533861bcd71b58, type: 3}
+  m_Sprite: {fileID: -1234881013, guid: 02fa31128228f8140b533861bcd71b58, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3, y: 2}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

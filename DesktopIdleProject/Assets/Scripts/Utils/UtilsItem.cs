@@ -391,11 +391,11 @@ public static class UtilsItem
         switch(rarity)
         {
             default:
-            case FishRarity.Riverfolk: return 2;
-            case FishRarity.Deepwater: return 5;
-            case FishRarity.Tideborn: return 10;
-            case FishRarity.Ancient: return 20;
-            case FishRarity.Mythic: return 40;
+            case FishRarity.Riverfolk: return 1;
+            case FishRarity.Deepwater: return 2;
+            case FishRarity.Tideborn: return 3;
+            case FishRarity.Ancient: return 5;
+            case FishRarity.Mythic: return 8;
         }
     }
 

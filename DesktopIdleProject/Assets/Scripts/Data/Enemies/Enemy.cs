@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IPoolObject
@@ -57,8 +58,13 @@ public class Enemy : MonoBehaviour, IPoolObject
     private float CooldownAttack => 1f / enemyData.CurrentAtkSpd;
     private float timerAttack;
 
+    private bool canFight;
+
     public event Action OnPerformAttack;
 
+
+
+    public bool CanFight => canFight;
 
 
     // ------- VFX
@@ -245,6 +251,16 @@ public class Enemy : MonoBehaviour, IPoolObject
 
         // Setup panel damage ui, after the enemy data has been set
         panelDamage.Setup();
+
+        StartCoroutine(CoStartingIdle());
+    }
+
+    private IEnumerator CoStartingIdle()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        // set the enemy can fight
+        canFight = true;
     }
 
     private void HideSprite(bool hide)

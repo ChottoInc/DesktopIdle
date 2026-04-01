@@ -50,11 +50,11 @@ public class UITooltipManager : MonoBehaviour
         }
     }
 
-    public void Show(TooltipManagerData tooltipData, Vector2 position, bool fade = false)
+    public void Show(TooltipManagerData tooltipData, Vector2 position, bool fade = false, float fontMaxSize = 50f)
     {
         switch(tooltipData.idTooltip)
         {
-            case ID_SHOW_TEXT: tooltipName.Show(tooltipData.text, position, fade); break;
+            case ID_SHOW_TEXT: tooltipName.Show(tooltipData.text, position, fade, fontMaxSize); break;
             case ID_SHOW_CARD: tooltipCard.Show(tooltipData.cardSO, fade); break;
             case ID_SHOW_CARDOPENING: tooltipCardOpening.Show(tooltipData.openingCards, fade); break;
         }

@@ -42,7 +42,7 @@ public class UIFarmerPlantedCropInfo : MonoBehaviour
             textName.text = cropData.CropSO.CropName;
 
             textGrowth.gameObject.SetActive(true);
-            textGrowth.text = string.Format("Growth: {0}%", (cropData.CurrentGrowth/cropData.GrowthTime) * 100f);
+            textGrowth.text = string.Format("Growth: {0:0}%", (cropData.CurrentGrowth/cropData.GrowthTime) * 100f);
 
             barGrowth.gameObject.SetActive(true);
             barGrowth.Setup(cropData.GrowthTime, cropData.CurrentGrowth);

@@ -35,7 +35,9 @@ public class UIPanelAverageHookTime : MonoBehaviour
     private void UpdateUI()
     {
         float average = FishSpawnManager.Instance.AverageHookTime;
-        textAverage.text = string.Format("Average time: ~{0}s", average);
+        textAverage.text = string.Format("Average time: ~{0}m{1}s", 
+            Mathf.FloorToInt(average / 60f),
+            Mathf.FloorToInt(average % 60f));
     }
 
     private void CheckStatChange(int id, int amount)
