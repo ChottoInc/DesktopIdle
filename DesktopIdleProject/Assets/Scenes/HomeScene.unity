@@ -2253,6 +2253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333f4b071b8e9241868c7ced5f7034d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableCheats: 1
 --- !u!4 &903364526
 Transform:
   m_ObjectHideFlags: 0
@@ -5854,6 +5855,8 @@ MonoBehaviour:
   buttonContinue: {fileID: 1645956558881021804}
   buttonNew: {fileID: 2143782918}
   buttonQuit: {fileID: 349671831}
+  textContinue: {fileID: 786978387}
+  disableColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
   messageNewGamePosition: {fileID: 753341369}
 --- !u!1 &7979569765715523627
 GameObject:

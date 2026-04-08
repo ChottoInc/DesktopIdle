@@ -177,23 +177,25 @@ public class Companion : MonoBehaviour
                     // Animation
                     imageBefriended.SetActive(true);
 
-                    // TODO: balance exp
-                    PlayerManager.Instance.PlayerFarmerData.AddExp(5);
-                    PlayerManager.Instance.SaveFarmerData();
+                    // add exp, might tweak
+                    PlayerManager.Instance.PlayerFarmerData.AddExp(500);
 
                     PlayerManager.Instance.OnBefriendedCompanion(tempSOBefriend.Id);
 
                     if (PlayerManager.Instance.PlayerFarmerData.HasCompanion(tempSOBefriend))
                     {
                         // TODO: handle if companion is already befriended, dismantle it, for now give bits?
+                        PlayerManager.Instance.Inventory.AddBits(2);
+                        PlayerManager.Instance.SaveInventoryData();
                     }
                     else
                     {
                         // add to companions
                         PlayerManager.Instance.PlayerFarmerData.AddCompanion(tempSOBefriend);
-                        PlayerManager.Instance.SaveFarmerData();
                     }
-                    
+
+                    PlayerManager.Instance.SaveFarmerData();
+
                     // walk away
                     SetTargetOutsideScreen();
 
@@ -201,6 +203,10 @@ public class Companion : MonoBehaviour
                 }
                 else
                 {
+                    // add exp, might tweak
+                    PlayerManager.Instance.PlayerFarmerData.AddExp(50);
+                    PlayerManager.Instance.SaveFarmerData();
+
                     // Animation
                     imageNotBefriended.SetActive(true);
 

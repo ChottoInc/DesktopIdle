@@ -3,6 +3,7 @@ using UnityEngine;
 public class WorldCropSlot : MonoBehaviour
 {
     [SerializeField] SpriteRenderer[] cropRenderers;
+    [SerializeField] WorldSingleCrop[] singleCrops;
 
     public Transform[] CropTransforms { get; private set; }
 
@@ -28,5 +29,13 @@ public class WorldCropSlot : MonoBehaviour
     public void SetCanGrow(bool canGrow)
     {
         CanGrow = canGrow;
+    }
+
+    public void PlayEmptyVFX()
+    {
+        foreach (var crop in singleCrops)
+        {
+            crop.PlayVFX();
+        }
     }
 }

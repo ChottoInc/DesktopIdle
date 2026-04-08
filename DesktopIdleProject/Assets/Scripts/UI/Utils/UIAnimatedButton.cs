@@ -39,6 +39,9 @@ public class UIAnimatedButton : Button
 
     public override void OnPointerClick(PointerEventData eventData)
     {
+        //TODO: check if this breaks something
+        if (!interactable) return;
+
         ResetButton();
 
         AudioManager.Instance.PlayClickUI();

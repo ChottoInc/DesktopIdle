@@ -275,7 +275,10 @@ public class UITabJobMiner : UITabWindow
 
     public void OnButtonGather()
     {
-        if (player != null) return;
+        if (player != null)
+        {
+            panelJob.OnButtonClose();
+        }
 
         AudioManager.Instance.PlayClickUI();
 

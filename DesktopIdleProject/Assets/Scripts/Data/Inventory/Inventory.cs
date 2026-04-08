@@ -82,8 +82,12 @@ public class Inventory
         }
         else
         {
-            int index = GetGroupIndex(id);
-            itemGroups[index].AddQuantity(quantity);
+            ItemSO itemSO = UtilsItem.GetItemById(id);
+            if(itemSO.ItemType != UtilsItem.ItemType.Fish)
+            {
+                int index = GetGroupIndex(id);
+                itemGroups[index].AddQuantity(quantity);
+            }
         }
 
         itemGroups.Sort();

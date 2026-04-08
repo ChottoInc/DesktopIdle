@@ -72,8 +72,7 @@ public class CropData
         // reward exp if growth reaches max
         if(IsFullyGrown)
         {
-            // TODO: balance exp
-            PlayerManager.Instance.PlayerFarmerData.AddExp(20);
+            PlayerManager.Instance.PlayerFarmerData.AddExp(cropSO.RewardedExp);
             PlayerManager.Instance.SaveFarmerData();
         }
     }

@@ -2826,7 +2826,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You havveee ttoo fight all those eneemies by yourself
+  m_text: You have to fight all those eneemies by yourself
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d84c0cc5ab8f8a048904ad938e7cf1aa, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 04828deb82e644f48a3b9aa20dad7254, type: 2}
@@ -4793,6 +4793,7 @@ RectTransform:
   - {fileID: 224857256}
   - {fileID: 1778316124}
   - {fileID: 1657985094}
+  - {fileID: 2027612130}
   - {fileID: 425545989}
   m_Father: {fileID: 1816697457}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5918,13 +5919,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8602adf506bd8ba40a2d135b26cad70a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skipTutorial: 1
+  skipTutorial: 0
   content: {fileID: 1587771648}
   introTutorialPart1Pos: {fileID: 1460071557}
   introTutorialPart2Pos: {fileID: 1405213402}
   introTutorialPart3Pos: {fileID: 224857256}
   introTutorialPart4Pos: {fileID: 1778316124}
   introTutorialPart5Pos: {fileID: 1657985094}
+  introTutorialPart6Pos: {fileID: 2027612130}
   player: {fileID: 1606471235}
   buttonLevel: {fileID: 1113804080917672484}
   buttonJob: {fileID: 279059875}
@@ -7124,6 +7126,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b19351b7eb9b844baaed23c7354879, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2027612129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2027612130}
+  m_Layer: 5
+  m_Name: Shop Dialogue Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2027612130
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2027612129}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1587771649}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1186, y: -360.61}
+  m_SizeDelta: {x: 193.12, y: 123.57}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2067813638
 PrefabInstance:
   m_ObjectHideFlags: 0

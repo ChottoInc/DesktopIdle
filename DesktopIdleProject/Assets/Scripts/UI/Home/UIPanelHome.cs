@@ -1,12 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class UIPanelHome : MonoBehaviour
 {
     [SerializeField] Button buttonContinue;
     [SerializeField] Button buttonNew;
     [SerializeField] Button buttonQuit;
+
+    [Space(10)]
+    [SerializeField] TMP_Text textContinue;
+    [SerializeField] Color disableColor;
 
     [Space(10)]
     [SerializeField] Transform messageNewGamePosition;
@@ -36,6 +41,15 @@ public class UIPanelHome : MonoBehaviour
     {
         buttonContinue.interactable = InitializerManager.Instance.HasSaveFile;
 
+        if (buttonContinue.interactable)
+        {
+            textContinue.color = Color.white;
+        }
+        else
+        {
+            textContinue.color = disableColor;
+        }
+
         buttonNew.interactable = true;
         buttonQuit.interactable = true;
 
@@ -44,7 +58,6 @@ public class UIPanelHome : MonoBehaviour
 
     public void OnButtonContinue()
     {
-        Debug.Log("Continue Button");
         SceneLoaderManager.Instance.LoadScene(SettingsManager.Instance.LastSceneSettings);
     }
 

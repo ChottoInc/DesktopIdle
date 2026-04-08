@@ -155,13 +155,21 @@ public static class UtilsGeneral
     public const int ID_INTRO_TUTORIAL = 0;
 
 
-    private const string TUTORIAL_INTRO_1 = "This is you.";
-    private const string TUTORIAL_INTRO_2 = "Defeat monsters to advance the stages.";
-    private const string TUTORIAL_INTRO_3 = "After the stages are completed, a new map will be unlocked.";
-    private const string TUTORIAL_INTRO_4 = "Click on the STATS icon to increase their level.";
-    private const string TUTORIAL_INTRO_5 = "When you want to select a different job, click on the JOB icon .";
-    private const string TUTORIAL_INTRO_6 = "Check your collection using the INVENTORY icon.";
-    private const string TUTORIAL_INTRO_7 = "Click on QUESTS icon to check your progress and claim rewards.";
+    private const string TUTORIAL_INTRO_1 = "This is the background Warrior.";
+    private const string TUTORIAL_INTRO_2 = "He will keep fighting even when you are not looking.";
+    private const string TUTORIAL_INTRO_3 = "Defeat monsters to advance the stages.";
+    private const string TUTORIAL_INTRO_4 = "Once all the stages are cleared, a new map will be unlocked.";
+
+    private const string TUTORIAL_INTRO_5 = "On the right side of the screen you will find various menus.";
+    private const string TUTORIAL_INTRO_6 = "Click on the STATS icon to increase stats level.";
+
+    private const string TUTORIAL_INTRO_7 = "If you want to select a different job, click on JOB icon.";
+
+    private const string TUTORIAL_INTRO_8 = "Check your items using INVENTORY icon.";
+
+    private const string TUTORIAL_INTRO_9 = "Click on QUESTS icon to check your progress and claim your rewards.";
+
+    private const string TUTORIAL_INTRO_10 = "Spend Bits in the shop to purchase cards and jobs.";
 
     /// <summary>
     /// Struct containing the dialogue and if the text panel need to move to next position
@@ -188,10 +196,18 @@ public static class UtilsGeneral
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_1, false),
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_2, false),
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_3, false),
-            new TutorialDialogueNeedPos(TUTORIAL_INTRO_4, true),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_4, false),
+
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_5, true),
-            new TutorialDialogueNeedPos(TUTORIAL_INTRO_6, true),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_6, false),
+
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_7, true),
+
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_8, true),
+
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_9, true),
+
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_10, true),
         });
     
 

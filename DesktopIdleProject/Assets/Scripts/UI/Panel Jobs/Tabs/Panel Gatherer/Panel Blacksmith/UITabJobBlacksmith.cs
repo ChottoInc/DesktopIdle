@@ -36,6 +36,7 @@ public class UITabJobBlacksmith : UITabWindow
     [SerializeField] UIBlacksmithPanelSelectOre panelSelectOre;
 
     [Space(10)]
+    [SerializeField] TMP_Text textRequired;
     [SerializeField] Sprite defaultOreIcon;
     [SerializeField] Image imageSelectedOre;
     [SerializeField] Image imageRefinedMetal;
@@ -239,9 +240,21 @@ public class UITabJobBlacksmith : UITabWindow
         if (data.CurrentForgingOre != -1)
         {
             OreSO ore = UtilsItem.GetItemById(data.CurrentForgingOre) as OreSO;
+
             imageSelectedOre.sprite = ore.Sprite;
             imageRefinedMetal.sprite = ore.RefinedMetal.Sprite;
             imageRefinedMetal.gameObject.SetActive(true);
+
+            int groupIndex = PlayerManager.Instance.Inventory.GetGroupIndex(ore.Id);
+            ItemGroup oreGroup = PlayerManager.Instance.Inventory.ItemGroups[groupIndex];
+
+            string colorString = "FFFFFF";
+            if(oreGroup.Quantity < ore.RefinedMetal.RequiredOres)
+            {
+                colorString = "878787";
+            }
+
+            textRequired.text = string.Format("<color=#{0}>{1}</color> ({2})", colorString, oreGroup.Quantity, ore.RefinedMetal.RequiredOres);
         }
         else
         {
@@ -482,6 +495,8 @@ public class UITabJobBlacksmith : UITabWindow
                     player.OnTryForge();
                 }
             }
+
+            panelJob.OnButtonClose();
         }
         else
         {

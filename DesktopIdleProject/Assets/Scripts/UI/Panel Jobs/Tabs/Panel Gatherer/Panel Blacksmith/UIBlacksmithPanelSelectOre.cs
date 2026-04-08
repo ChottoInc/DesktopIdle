@@ -55,7 +55,6 @@ public class UIBlacksmithPanelSelectOre : MonoBehaviour
         for (int i = 0; i < ores.Length; i++)
         {
             // check if the player has the ore to refine
-            // TODO: also chekc if more than 1 ore are required to forge the metal
             if (PlayerManager.Instance.Inventory.HasItem(ores[i].Id))
             {
                 GameObject prefab = Instantiate(oreSelectionPrefab, transform.position, Quaternion.identity);
@@ -95,12 +94,16 @@ public class UIBlacksmithPanelSelectOre : MonoBehaviour
 
     public void OnButtonCancel()
     {
+        AudioManager.Instance.PlayClickUI();
+
         Close();
     }
 
     public void OnButtonConfirm()
     {
-        if(selectedOre != null)
+        AudioManager.Instance.PlayClickUI();
+
+        if (selectedOre != null)
             tabBlacksmith.OnSelectedOre(selectedOre);
 
         Close();

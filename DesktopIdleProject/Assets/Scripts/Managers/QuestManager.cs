@@ -7,6 +7,8 @@ using static UtilsQuest;
 
 public class QuestManager : MonoBehaviour
 {
+    private const int TOT_DAILY_QUEST = 3;
+
     private IDataService saveService;
 
     // --- STORY QUESTS
@@ -349,7 +351,7 @@ public class QuestManager : MonoBehaviour
         dictQuestsDailyProgress = new Dictionary<string, QuestDataProgress>();
 
         //TODO:  change 3 with const value or random one between values
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < TOT_DAILY_QUEST; i++)
         {
             int tries = 0;
             int MAX_TRIES = 1000;
@@ -445,9 +447,14 @@ public class QuestManager : MonoBehaviour
 
         // check for daily using date
         DateTime lastDailyDate = new DateTime(lastDailyCreationDate, DateTimeKind.Utc);
-        if(DateTime.UtcNow.Date != lastDailyDate)
+        if(DateTime.UtcNow.Date != lastDailyDate.Date)
         {
+            // save new date
+            lastDailyCreationDate = DateTime.UtcNow.Ticks;
+
+            // refresh dailies
             InitializeDailyQuests();
+            SaveQuestsData();
         }
         else
         {

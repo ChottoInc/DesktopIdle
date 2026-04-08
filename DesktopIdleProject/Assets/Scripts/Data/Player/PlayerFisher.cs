@@ -9,6 +9,9 @@ public class PlayerFisher : Player
     [SerializeField] bool faceRight;
 
 
+    private float timer5Mins;
+
+
     private PlayerFisherData playerData;
 
 
@@ -31,6 +34,28 @@ public class PlayerFisher : Player
             playerData.OnLevelUp -= SaveFisherData;
 
             playerData.OnStatChange -= OnStatChangeFisher;
+        }
+    }
+
+    private void Start()
+    {
+        timer5Mins = 300f;
+    }
+
+    private void Update()
+    {
+        // every 5 mins give some exp to the player
+        // 80 is a rough esteem, probably need to tweak it
+        if(timer5Mins <= 0)
+        {
+            playerData.AddExp(80);
+            timer5Mins = 300f;
+            PlayerManager.Instance.UpdateFisherData(playerData);
+            PlayerManager.Instance.SaveFisherData();
+        }
+        else
+        {
+            timer5Mins -= Time.deltaTime;
         }
     }
 
@@ -74,7 +99,7 @@ public class PlayerFisher : Player
         }
         else
         {
-            HandleCaughtUnsuccess();
+            HandleCaughtUnsuccess(hookedFish);
         }
 
         // Save fisher data
@@ -123,15 +148,15 @@ public class PlayerFisher : Player
         OnFishCaught?.Invoke(hookedFish);
     }
 
-    private void HandleCaughtUnsuccess()
+    private void HandleCaughtUnsuccess(FishSO hookedFish)
     {
         // animation
         animator.SetTrigger("Fled");
 
         // fish go back into pool, nothing happens
 
-        // Give player some exp
-        int rewardedExp = 5;
+        // Give player some exp, half of the minimum rarity, might tweak it later
+        long rewardedExp = 1500;
         playerData.AddExp(rewardedExp);
     }
 

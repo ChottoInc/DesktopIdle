@@ -323,7 +323,7 @@ public class CropsPlantManager : MonoBehaviour
         {
             case 0:
                 if (cropSlot1 != null)
-                    wasEmpty = true;
+                    wasEmpty = false;
 
                 cropSlot1 = data;
                 selectedSlot = slot1;
@@ -332,7 +332,7 @@ public class CropsPlantManager : MonoBehaviour
 
             case 1:
                 if (cropSlot2 != null)
-                    wasEmpty = true;
+                    wasEmpty = false;
 
                 cropSlot2 = data;
                 selectedSlot = slot2;
@@ -341,7 +341,7 @@ public class CropsPlantManager : MonoBehaviour
 
             case 2:
                 if (cropSlot3 != null)
-                    wasEmpty = true;
+                    wasEmpty = false;
 
                 cropSlot3 = data;
                 selectedSlot = slot3;
@@ -350,7 +350,7 @@ public class CropsPlantManager : MonoBehaviour
 
             case 3:
                 if (cropSlot4 != null)
-                    wasEmpty = true;
+                    wasEmpty = false;
 
                 cropSlot4 = data;
                 selectedSlot = slot4;
@@ -367,7 +367,7 @@ public class CropsPlantManager : MonoBehaviour
             // if the crop was full, animate vfx disappear
             if (!wasEmpty)
             {
-
+                selectedSlot.PlayEmptyVFX();
             }
 
             selectedSlot.SetSprite(null);

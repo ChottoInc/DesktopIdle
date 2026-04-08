@@ -88,7 +88,8 @@ public class UIPanelDamage : MonoBehaviour
         }
         else if (isAnimating)
         {
-            queueDamages.Dequeue();
+            if(queueDamages.Count > 0)
+                queueDamages.Dequeue();
         }
     }
 

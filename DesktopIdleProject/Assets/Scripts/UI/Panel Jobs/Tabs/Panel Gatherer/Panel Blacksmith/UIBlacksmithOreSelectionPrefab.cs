@@ -30,6 +30,8 @@ public class UIBlacksmithOreSelectionPrefab : MonoBehaviour
 
     public void OnButtonSelect()
     {
+        AudioManager.Instance.PlayClickUI();
+
         imageSelectBorder.gameObject.SetActive(true);
         panelSelection.OnSelectOre(this, itemSO);
     }

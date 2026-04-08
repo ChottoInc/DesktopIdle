@@ -19,10 +19,17 @@ public class UITabJobWarrior : UITabWindow
     private ItemSO[] cards;
     private List<GameObject> cardObjs;
 
+    private PlayerFight player;
+
 
     public override void Open()
     {
         base.Open();
+
+        if (player == null)
+        {
+            player = FindFirstObjectByType<PlayerFight>();
+        }
 
         panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_WARRIOR_TAB);
 
@@ -115,5 +122,27 @@ public class UITabJobWarrior : UITabWindow
         settings.lastCombatMapId = idMap;
 
         SceneLoaderManager.Instance.LoadScene(settings);
+
+
+        /*
+        if(player != null)
+        {
+            // if already in the scene do not load
+            if(SettingsManager.Instance.LastSceneSettings.lastSceneName == mapName)
+            {
+
+            }
+        }
+        else
+        {
+            // 100% not in a fight scene
+            LastSceneSettings settings = new LastSceneSettings();
+            settings.lastSceneName = mapName;
+            settings.lastSceneType = SceneLoaderManager.SceneType.CombatMap;
+            settings.lastCombatMapId = idMap;
+
+            SceneLoaderManager.Instance.LoadScene(settings);
+        }
+        */
     }
 }

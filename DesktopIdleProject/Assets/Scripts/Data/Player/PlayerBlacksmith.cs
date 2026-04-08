@@ -178,8 +178,10 @@ public class PlayerBlacksmith : Player
             PlayerManager.Instance.SaveInventoryData();
 
             // Give exp to blacksmith job
-            playerData.AddExp(1); // TODO: check balance
-            PlayerManager.Instance.UpdateBlacksmithData(playerData);
+            long rewardedExp = UtilsItem.GetMetalExp(metal);
+            playerData.AddExp(rewardedExp);
+
+            SaveBlacksmithData();
 
             // Recheck for next batch, or idle
             OnTryForge();

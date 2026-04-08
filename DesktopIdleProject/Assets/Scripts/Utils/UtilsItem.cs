@@ -115,6 +115,25 @@ public static class UtilsItem
         return metals.ToArray();
     }
 
+    /// <summary>
+    /// Exp given by the smashed rocks
+    /// </summary>
+    public static long GetMetalExp(MetalSO metalSO)
+    {
+        int multiplier = 2;
+        int result;
+        switch (metalSO.RockType)
+        {
+            default:
+            case UtilsGather.RockType.Copper: result = 4; break;
+            case UtilsGather.RockType.Iron: result = 12; break;
+            case UtilsGather.RockType.Bronze: result = 30; break;
+            case UtilsGather.RockType.Silver: result = 75; break;
+            case UtilsGather.RockType.Gold: result = 120; break;
+        }
+        return result * metalSO.RequiredOres * multiplier;
+    }
+
     #endregion
 
     #region CARDS
@@ -407,11 +426,11 @@ public static class UtilsItem
         switch (rarity)
         {
             default:
-            case FishRarity.Riverfolk: return 5;
-            case FishRarity.Deepwater: return 10;
-            case FishRarity.Tideborn: return 20;
-            case FishRarity.Ancient: return 40;
-            case FishRarity.Mythic: return 100;
+            case FishRarity.Riverfolk: return 1500;
+            case FishRarity.Deepwater: return 2500;
+            case FishRarity.Tideborn: return 4000;
+            case FishRarity.Ancient: return 6000;
+            case FishRarity.Mythic: return 10000;
         }
     }
 

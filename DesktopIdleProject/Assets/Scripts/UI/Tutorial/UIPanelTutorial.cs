@@ -15,6 +15,7 @@ public class UIPanelTutorial : MonoBehaviour
     [SerializeField] Transform introTutorialPart3Pos;  // job button
     [SerializeField] Transform introTutorialPart4Pos;  // inventory
     [SerializeField] Transform introTutorialPart5Pos;  // quests
+    [SerializeField] Transform introTutorialPart6Pos;  // shop
 
     private List<Transform> tutorialPositions;
     private int tutorialPosIndex;
@@ -32,8 +33,6 @@ public class UIPanelTutorial : MonoBehaviour
     [SerializeField] GameObject buttonJob;
     [SerializeField] GameObject buttonInventory;
     [SerializeField] GameObject buttonQuests;
-
-    [Space(10)]
     [SerializeField] GameObject buttonShop;
 
     [Space(10)]
@@ -88,7 +87,8 @@ public class UIPanelTutorial : MonoBehaviour
             introTutorialPart2Pos,
             introTutorialPart3Pos,
             introTutorialPart4Pos,
-            introTutorialPart5Pos
+            introTutorialPart5Pos,
+            introTutorialPart6Pos
         };
 
         uiElementsToHighlight = new List<GameObject>()
@@ -96,7 +96,8 @@ public class UIPanelTutorial : MonoBehaviour
             buttonLevel,
             buttonJob,
             buttonInventory,
-            buttonQuests
+            buttonQuests,
+            buttonShop
         };
 
         
@@ -145,8 +146,6 @@ public class UIPanelTutorial : MonoBehaviour
             ResetLastUIElement();
 
             // active remaining ui elements
-
-            buttonShop.SetActive(true);
 
             buttonSetting.SetActive(true);
             panelStage.SetActive(true);

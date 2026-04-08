@@ -42,7 +42,10 @@ public class UITabJobFarmer : UITabWindow
 
     public void OnButtonFarm()
     {
-        if (player != null) return;
+        if (player != null)
+        {
+            panelJob.OnButtonClose();
+        }
 
         AudioManager.Instance.PlayClickUI();
 

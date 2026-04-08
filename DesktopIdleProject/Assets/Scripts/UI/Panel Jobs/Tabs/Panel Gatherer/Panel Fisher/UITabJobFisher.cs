@@ -161,7 +161,10 @@ public class UITabJobFisher : UITabWindow
 
     public void OnButtonFish()
     {
-        if (player != null) return;
+        if (player != null)
+        {
+            panelJob.OnButtonClose();
+        }
 
         AudioManager.Instance.PlayClickUI();
 

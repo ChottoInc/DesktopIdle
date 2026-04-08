@@ -238,6 +238,7 @@ public class StageManager : MonoBehaviour
 
             if (!companionIds.Contains(companion.CurrentCompanionData.CompanionSO.Id))
             {
+                Destroy(currentCompanionsObjs[i]);
                 currentCompanionsObjs.RemoveAt(i);
             }
         }
