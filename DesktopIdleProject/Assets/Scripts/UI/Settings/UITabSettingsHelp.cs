@@ -3,6 +3,7 @@ using UnityEngine;
 public class UITabSettingsHelp : UITabWindow
 {
     [SerializeField] UIHelpJobFilter[] filters;
+    [SerializeField] TabManager tabManager;
 
     public override void Open()
     {
@@ -17,5 +18,7 @@ public class UITabSettingsHelp : UITabWindow
         {
             filter.gameObject.SetActive(PlayerManager.Instance.PlayerJobsData.AvailableJobs.Contains(filter.Job));
         }
+
+        tabManager.SelectFirstTab();
     }
 }

@@ -30,8 +30,35 @@ public class UITabPlayerJob : UITabWindow
     {
         base.Open();
 
-        // Init tabs
-        if(jobTabs == null)
+        InitTabs();
+
+        // Refresh to check if the job is available now
+        foreach (var tab in jobTabs)
+        {
+            tab.Refresh();
+        }
+
+        if(currentTab == -1)
+        {
+            switch (SettingsManager.Instance.LastSceneSettings.lastSceneType)
+            {
+                case SceneLoaderManager.SceneType.CombatMap: currentTab = ID_WARRIOR_TAB; break;
+                case SceneLoaderManager.SceneType.Miner: currentTab = ID_MINER_TAB; break;
+                case SceneLoaderManager.SceneType.Blacksmith: currentTab = ID_BLACKSMITH_TAB; break;
+                case SceneLoaderManager.SceneType.Fisher: currentTab = ID_FISHER_TAB; break;
+                case SceneLoaderManager.SceneType.Farmer: currentTab = ID_FARMER_TAB; break;
+            }
+            ChangeCurrentTab(currentTab);
+        }
+        else
+        {
+            ChangeCurrentTab(currentTab);
+        }
+    }
+
+    private void InitTabs()
+    {
+        if (jobTabs == null)
         {
             jobTabs = new List<UIButtonJobTab>
             {
@@ -42,16 +69,13 @@ public class UITabPlayerJob : UITabWindow
                 tabFarmer.GetComponent<UIButtonJobTab>()
             };
         }
+    }
 
-        // Refresh to check if the job is available now
-        foreach (var tab in jobTabs)
+    public void ChangeCurrentTab(int tab)
+    {
+        switch (tab)
         {
-            tab.Refresh();
-        }
-
-        switch (currentTab)
-        {
-            default: ResetScrollUI(); break;
+            default: ResetScrollUI(); break;        // show job tree
             case ID_WARRIOR_TAB: tabWarrior.Select(); break;
             case ID_MINER_TAB: tabMiner.Select(); break;
             case ID_BLACKSMITH_TAB: tabBlacksmith.Select(); break;
@@ -73,7 +97,6 @@ public class UITabPlayerJob : UITabWindow
             ResetScrollUI();
         }
 
-        
         currentTab = id;
     }
 

@@ -162,8 +162,12 @@ public class UITabJobBlacksmith : UITabWindow
         requirementObjs = ClearList(requirementObjs);
         FillRequirements(currentGear);
 
-        // check requirements
+        // check max level
         buttonLevelUp.interactable = CheckEnableLevelUp();
+
+        // if can level up show requirements
+        if (!IsGearMaxLevel())
+            FillRequirementsUI();
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -193,7 +197,10 @@ public class UITabJobBlacksmith : UITabWindow
         }
 
         requirements = UtilsGather.GetRequirementsForBlacksmithGearLevel(idGear, gearLevel);
+    }
 
+    private void FillRequirementsUI()
+    {
         for (int i = 0; i < requirements.Count; i++)
         {
             GameObject prefab = Instantiate(requirementPrefab, transform.position, Quaternion.identity);
@@ -221,7 +228,37 @@ public class UITabJobBlacksmith : UITabWindow
             if (!PlayerManager.Instance.Inventory.HasEnough(requirement.IdItem, requirement.Quantity))
                 return false;
         }
+
+        if (IsGearMaxLevel()) return false;
+
         return true;
+    }
+
+    private bool IsGearMaxLevel()
+    {
+        switch (currentGear)
+        {
+            case UtilsGather.ID_BLACKSMITH_HELMET:
+                if (lastWeaponLevel >= UtilsBlacksmith.BLACKSMITH_HELMET_MAX_LEVEL)
+                    return true;
+                break;
+
+            case UtilsGather.ID_BLACKSMITH_ARMOR:
+                if (lastWeaponLevel >= UtilsBlacksmith.BLACKSMITH_ARMOR_MAX_LEVEL)
+                    return true;
+                break;
+
+            case UtilsGather.ID_BLACKSMITH_GLOVES:
+                if (lastWeaponLevel >= UtilsBlacksmith.BLACKSMITH_GLOVES_MAX_LEVEL)
+                    return true;
+                break;
+
+            case UtilsGather.ID_BLACKSMITH_BOOTS:
+                if (lastWeaponLevel >= UtilsBlacksmith.BLACKSMITH_BOOTS_MAX_LEVEL)
+                    return true;
+                break;
+        }
+        return false;
     }
 
     private void UpdateSelectedOreUI()
@@ -496,7 +533,7 @@ public class UITabJobBlacksmith : UITabWindow
                 }
             }
 
-            panelJob.OnButtonClose();
+            //panelJob.OnButtonClose();
         }
         else
         {

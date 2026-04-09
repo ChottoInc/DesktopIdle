@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerBlacksmith : Player
 {
@@ -10,6 +11,7 @@ public class PlayerBlacksmith : Player
 
     [Header("UI")]
     [SerializeField] GenericBar forgingBar;
+    [SerializeField] Image imageOutOfOrder;
 
     [Header("Animation")]
     [SerializeField] AnimationClip forgeClip;
@@ -98,8 +100,14 @@ public class PlayerBlacksmith : Player
 
             if(PlayerManager.Instance.Inventory.HasEnough(ore.Id, needAmount))
             {
+                imageOutOfOrder.gameObject.SetActive(false);
+
                 currentOreId = id;
                 return true;
+            }
+            else
+            {
+                imageOutOfOrder.gameObject.SetActive(true);
             }
         }
 

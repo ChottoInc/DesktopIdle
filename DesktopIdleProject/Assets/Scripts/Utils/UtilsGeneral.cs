@@ -163,11 +163,12 @@ public static class UtilsGeneral
     private const string TUTORIAL_INTRO_5 = "On the right side of the screen you will find various menus.";
     private const string TUTORIAL_INTRO_6 = "Click on the STATS icon to increase stats level.";
 
-    private const string TUTORIAL_INTRO_7 = "If you want to select a different job, click on JOB icon.";
+    private const string TUTORIAL_INTRO_7 = "If you want to select a different job, click on the JOB icon.";
 
-    private const string TUTORIAL_INTRO_8 = "Check your items using INVENTORY icon.";
 
-    private const string TUTORIAL_INTRO_9 = "Click on QUESTS icon to check your progress and claim your rewards.";
+    private const string TUTORIAL_INTRO_8 = "Check your items using the INVENTORY icon.";
+
+    private const string TUTORIAL_INTRO_9 = "Click on the QUESTS icon to check your progress and claim your rewards.";
 
     private const string TUTORIAL_INTRO_10 = "Spend Bits in the shop to purchase cards and jobs.";
 

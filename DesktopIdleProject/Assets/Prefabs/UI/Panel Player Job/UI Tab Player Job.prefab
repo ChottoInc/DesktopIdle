@@ -5717,7 +5717,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <- Miner
+  m_text: <- Job Tree
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d84c0cc5ab8f8a048904ad938e7cf1aa, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 04828deb82e644f48a3b9aa20dad7254, type: 2}
@@ -5936,7 +5936,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <- Blacksmith
+  m_text: <- Job Tree
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d84c0cc5ab8f8a048904ad938e7cf1aa, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 04828deb82e644f48a3b9aa20dad7254, type: 2}
@@ -7103,7 +7103,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5092834995423074489}
   m_HandleRect: {fileID: 7310477328856143368}
   m_Direction: 0
-  m_Value: 0.00000010448007
+  m_Value: 0.5
   m_Size: 0.54519415
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7229,7 +7229,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5827573891179063188}
   m_HandleRect: {fileID: 854837324941917709}
   m_Direction: 2
-  m_Value: 0.5391124
+  m_Value: 0.5
   m_Size: 0.36950046
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7618,7 +7618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 469.86563}
+  m_AnchoredPosition: {x: -622.7359, y: 469.86563}
   m_SizeDelta: {x: 1168.36, y: 1616.94}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &2801148986582244999
@@ -11800,7 +11800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <- Fisher
+  m_text: <- Job Tree
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d84c0cc5ab8f8a048904ad938e7cf1aa, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 04828deb82e644f48a3b9aa20dad7254, type: 2}
@@ -15661,7 +15661,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <- Farmer
+  m_text: <- Job Tree
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d84c0cc5ab8f8a048904ad938e7cf1aa, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 04828deb82e644f48a3b9aa20dad7254, type: 2}
@@ -21305,8 +21305,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6042860880170302193}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.00000004751815, y: 0}
-  m_AnchorMax: {x: 0.5451942, y: 1}
+  m_AnchorMin: {x: 0.24241155, y: 0}
+  m_AnchorMax: {x: 0.78760564, y: 1}
   m_AnchoredPosition: {x: 0, y: -0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -25077,7 +25077,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <- Warrior
+  m_text: <- Job Tree
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d84c0cc5ab8f8a048904ad938e7cf1aa, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 04828deb82e644f48a3b9aa20dad7254, type: 2}

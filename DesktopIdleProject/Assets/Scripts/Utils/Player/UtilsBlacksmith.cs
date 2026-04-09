@@ -42,10 +42,10 @@ public static class UtilsBlacksmith
     private static float BLACKSMITH_BOOTS_CRITRATE_QUADRATIC_GROWTH = 0.05f;
             
             
-    private static int BLACKSMITH_HELMET_MAX_LEVEL = 10;
-    private static int BLACKSMITH_ARMOR_MAX_LEVEL = 10;
-    private static int BLACKSMITH_GLOVES_MAX_LEVEL = 10;
-    private static int BLACKSMITH_BOOTS_MAX_LEVEL = 10;
+    public static int BLACKSMITH_HELMET_MAX_LEVEL = 15;
+    public static int BLACKSMITH_ARMOR_MAX_LEVEL = 15;
+    public static int BLACKSMITH_GLOVES_MAX_LEVEL = 15;
+    public static int BLACKSMITH_BOOTS_MAX_LEVEL = 15;
 
 
     private static PlayerJobBlacksmithSO jobDataSO;

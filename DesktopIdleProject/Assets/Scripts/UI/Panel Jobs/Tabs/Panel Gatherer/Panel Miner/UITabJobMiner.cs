@@ -102,8 +102,12 @@ public class UITabJobMiner : UITabWindow
         requirementObjs = ClearList(requirementObjs);
         FillRequirements();
 
-        // check requirements
+        // check max level
         buttonLevelUp.interactable = CheckEnableLevelUp();
+
+        // if can level up show requirements
+        if(!IsWeaponMaxLevel())
+            FillRequirementsUI();
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -125,7 +129,10 @@ public class UITabJobMiner : UITabWindow
         requirementObjs = new List<GameObject>();
 
         requirements = UtilsGather.GetRequirementsForMinerWeaponLevel(PlayerManager.Instance.PlayerMinerData.WeaponLevel + 1);
+    }
 
+    private void FillRequirementsUI()
+    {
         for (int i = 0; i < requirements.Count; i++)
         {
             GameObject prefab = Instantiate(requirementPrefab, transform.position, Quaternion.identity);
@@ -153,7 +160,15 @@ public class UITabJobMiner : UITabWindow
             if (!PlayerManager.Instance.Inventory.HasEnough(requirement.IdItem, requirement.Quantity))
                 return false;
         }
+
+        if (IsWeaponMaxLevel()) return false;
+
         return true;
+    }
+
+    private bool IsWeaponMaxLevel()
+    {
+        return lastWeaponLevel >= UtilsMiner.MINER_WEAPON_MAX_LEVEL ? true : false;
     }
 
     /// <summary>
