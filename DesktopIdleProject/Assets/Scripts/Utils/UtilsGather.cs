@@ -49,13 +49,15 @@ public static class UtilsGather
      * 
      * */
 
+    private const int MAX_MANUAL_WEAPON_REQUIREMENT = 5;
+
     private const int MAX_ITEM_REQUIREMENTS_FOR_MINER_WEAPON = 5;
 
-    private const float BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_COPPER_ORE = 1f;
-    private const float BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_IRON_ORE = 1.2f;
-    private const float BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_BRONZE_ORE = 0.8f;
-    private const float BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_SILVER_ORE = 0.6f;
-    private const float BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_GOLD_ORE = 0.3f;
+    private const int BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_COPPER_ORE = 900;
+    private const int BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_IRON_ORE = 500;
+    private const int BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_BRONZE_ORE = 200;
+    private const int BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_SILVER_ORE = 50;
+    private const int BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_GOLD_ORE = 20;
 
     private static readonly float[] BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE =
     {
@@ -67,11 +69,11 @@ public static class UtilsGather
     };
 
 
-    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_COPPER_ORE = 2.2f;
-    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_IRON_ORE = 1.9f;
-    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_BRONZE_ORE = 1.5f;
-    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_SILVER_ORE = 1.25f;
-    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_GOLD_ORE = 1.15f;
+    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_COPPER_ORE = 1.5f;
+    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_IRON_ORE = 1.4f;
+    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_BRONZE_ORE = 1.3f;
+    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_SILVER_ORE = 1.2f;
+    private const float GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_GOLD_ORE = 1.1f;
 
 
     private static readonly float[] GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE =
@@ -95,11 +97,11 @@ public static class UtilsGather
 
     private const int MAX_ITEM_REQUIREMENTS_FOR_BLACKSMITH_GEARS = 5;
 
-    private const float BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_COPPER = 1f;
-    private const float BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_IRON = 1.2f;
-    private const float BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_BRONZE = 0.8f;
-    private const float BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_SILVER = 0.6f;
-    private const float BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_GOLD = 0.3f;
+    private const int BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_COPPER = 360;
+    private const int BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_IRON = 200;
+    private const int BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_BRONZE = 120;
+    private const int BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_SILVER = 70;
+    private const int BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_GOLD = 20;
 
     private static readonly float[] BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL =
     {
@@ -111,15 +113,15 @@ public static class UtilsGather
     };
 
 
-    private const float GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_COPPER = 2f;
-    private const float GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_IRON = 1.7f;
-    private const float GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_BRONZE = 1.4f;
+    private const float GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_COPPER = 1.6f;
+    private const float GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_IRON = 1.4f;
+    private const float GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_BRONZE = 1.3f;
     private const float GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_SILVER = 1.2f;
-    private const float GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_GOLD = 1.05f;
+    private const float GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_GOLD = 1.1f;
 
-    private const float GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_COPPER = 2.1f;
-    private const float GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_IRON = 1.75f;
-    private const float GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_BRONZE = 1.5f;
+    private const float GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_COPPER = 1.7f;
+    private const float GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_IRON = 1.5f;
+    private const float GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_BRONZE = 1.4f;
     private const float GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_SILVER = 1.3f;
     private const float GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_GOLD = 1.2f;
 
@@ -288,34 +290,34 @@ public static class UtilsGather
     {
         List<ItemGroup> result = new List<ItemGroup>();
 
-        if (level <= 5)
+        if (level <= MAX_MANUAL_WEAPON_REQUIREMENT)
         {
             switch (level)
             {
                 default:
                 case 2:
-                    result.Add(new ItemGroup(0, 60));
-                    result.Add(new ItemGroup(1, 20));
+                    result.Add(new ItemGroup(0, 30));
+                    result.Add(new ItemGroup(1, 15));
                     break;
 
                 case 3:
-                    result.Add(new ItemGroup(0, 180));
-                    result.Add(new ItemGroup(1, 60));
-                    result.Add(new ItemGroup(2, 20));
+                    result.Add(new ItemGroup(0, 90));
+                    result.Add(new ItemGroup(1, 50));
+                    result.Add(new ItemGroup(2, 15));
                     break;
 
                 case 4:
-                    result.Add(new ItemGroup(0, 500));
+                    result.Add(new ItemGroup(0, 350));
                     result.Add(new ItemGroup(1, 200));
-                    result.Add(new ItemGroup(2, 60));
-                    result.Add(new ItemGroup(3, 20));
+                    result.Add(new ItemGroup(2, 50));
+                    result.Add(new ItemGroup(3, 15));
                     break;
 
                 case 5:
-                    result.Add(new ItemGroup(0, 1000));
+                    result.Add(new ItemGroup(0, 900));
                     result.Add(new ItemGroup(1, 500));
-                    result.Add(new ItemGroup(2, 150));
-                    result.Add(new ItemGroup(3, 80));
+                    result.Add(new ItemGroup(2, 200));
+                    result.Add(new ItemGroup(3, 50));
                     result.Add(new ItemGroup(4, 20));
                     break;
             }
@@ -326,7 +328,7 @@ public static class UtilsGather
             // automatically get items amount after all of them are used manually
             for (int i = 0; i < MAX_ITEM_REQUIREMENTS_FOR_MINER_WEAPON; i++)
             {
-                result.Add(new ItemGroup(ids[i], RequiredMinerItemAmount(level, ids[i])));
+                result.Add(new ItemGroup(ids[i], RequiredMinerItemAmount(level, i)));
             }
         }
 
@@ -335,7 +337,10 @@ public static class UtilsGather
 
     private static int RequiredMinerItemAmount(int level, int itemIndex)
     {
-        return Mathf.FloorToInt(BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE[itemIndex]));
+        //return Mathf.FloorToInt(BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE[itemIndex]));
+        return 
+            Mathf.FloorToInt(BASE_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE[itemIndex] * 
+            Mathf.Pow(GROWTH_AMOUNT_MINER_WEAPON_PER_LEVEL_ORE[itemIndex], level - MAX_MANUAL_WEAPON_REQUIREMENT));
     }
 
     #endregion
@@ -389,35 +394,35 @@ public static class UtilsGather
         List<ItemGroup> result = new List<ItemGroup>();
 
         // For simplicity, the first 5 levels are shared between gears
-        if (level <= 5)
+        if (level <= MAX_MANUAL_WEAPON_REQUIREMENT)
         {
             switch (level)
             {
                 default:
                 case 2:
-                    result.Add(new ItemGroup(150, 20));
-                    result.Add(new ItemGroup(151, 1));
+                    result.Add(new ItemGroup(150, 45));
+                    result.Add(new ItemGroup(151, 20));
                     break;
 
                 case 3:
-                    result.Add(new ItemGroup(150, 70));
-                    result.Add(new ItemGroup(151, 3));
-                    result.Add(new ItemGroup(152, 1));
+                    result.Add(new ItemGroup(150, 90));
+                    result.Add(new ItemGroup(151, 70));
+                    result.Add(new ItemGroup(152, 20));
                     break;
 
                 case 4:
-                    result.Add(new ItemGroup(150, 200));
-                    result.Add(new ItemGroup(151, 15));
-                    result.Add(new ItemGroup(152, 7));
-                    result.Add(new ItemGroup(153, 1));
+                    result.Add(new ItemGroup(150, 180));
+                    result.Add(new ItemGroup(151, 110));
+                    result.Add(new ItemGroup(152, 70));
+                    result.Add(new ItemGroup(153, 20));
                     break;
 
                 case 5:
-                    result.Add(new ItemGroup(150, 750));
-                    result.Add(new ItemGroup(151, 70));
-                    result.Add(new ItemGroup(152, 20));
-                    result.Add(new ItemGroup(153, 5));
-                    result.Add(new ItemGroup(154, 1));
+                    result.Add(new ItemGroup(150, 360));
+                    result.Add(new ItemGroup(151, 200));
+                    result.Add(new ItemGroup(152, 120));
+                    result.Add(new ItemGroup(153, 70));
+                    result.Add(new ItemGroup(154, 20));
                     break;
             }
         }
@@ -428,7 +433,7 @@ public static class UtilsGather
             // automatically get items amount after all of them are used manually
             for (int i = 0; i < MAX_ITEM_REQUIREMENTS_FOR_BLACKSMITH_GEARS; i++)
             {
-                int amount = RequiredBlacksmithItemAmount(idGear, level, ids[i]);
+                int amount = RequiredBlacksmithItemAmount(idGear, level, i);
 
                 if(amount != -1)
                     result.Add(new ItemGroup(ids[i], amount));
@@ -442,10 +447,29 @@ public static class UtilsGather
     {
         switch (idGear)
         {
-            case ID_BLACKSMITH_HELMET: return Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_METAL[itemIndex]));
-            case ID_BLACKSMITH_ARMOR: return Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_METAL[itemIndex]));
-            case ID_BLACKSMITH_GLOVES: return Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_BLACKSMITH_GLOVES_PER_LEVEL_METAL[itemIndex]));
-            case ID_BLACKSMITH_BOOTS: return Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_BLACKSMITH_BOOTS_PER_LEVEL_METAL[itemIndex]));
+            case ID_BLACKSMITH_HELMET: 
+                //return Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_METAL[itemIndex]));
+                return 
+                    Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] *
+                    Mathf.Pow(GROWTH_AMOUNT_BLACKSMITH_HELMET_PER_LEVEL_METAL[itemIndex], level - MAX_MANUAL_WEAPON_REQUIREMENT));
+
+            case ID_BLACKSMITH_ARMOR: 
+                //return Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_METAL[itemIndex]));
+                return 
+                    Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] *
+                    Mathf.Pow(GROWTH_AMOUNT_BLACKSMITH_ARMOR_PER_LEVEL_METAL[itemIndex], level - MAX_MANUAL_WEAPON_REQUIREMENT));
+
+            case ID_BLACKSMITH_GLOVES: 
+                //return Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_BLACKSMITH_GLOVES_PER_LEVEL_METAL[itemIndex]));
+                return 
+                    Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] *
+                    Mathf.Pow(GROWTH_AMOUNT_BLACKSMITH_GLOVES_PER_LEVEL_METAL[itemIndex], level - MAX_MANUAL_WEAPON_REQUIREMENT));
+
+            case ID_BLACKSMITH_BOOTS: 
+                //return Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] * Mathf.Pow(level, GROWTH_AMOUNT_BLACKSMITH_BOOTS_PER_LEVEL_METAL[itemIndex]));
+                return 
+                    Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] *
+                    Mathf.Pow(GROWTH_AMOUNT_BLACKSMITH_BOOTS_PER_LEVEL_METAL[itemIndex], level - MAX_MANUAL_WEAPON_REQUIREMENT));
         }
 
         return -1;

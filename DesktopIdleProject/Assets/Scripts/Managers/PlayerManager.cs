@@ -133,7 +133,7 @@ public class PlayerManager : MonoBehaviour
     {
         try
         {
-            PlayerJobsSaveData jobsSaveData = saveService.LoadData<PlayerJobsSaveData>(UtilsSave.GetPlayerJobsFile(), false);
+            PlayerJobsSaveData jobsSaveData = saveService.LoadData<PlayerJobsSaveData>(UtilsSave.GetPlayerJobsFile(), SettingsManager.Instance.FileEncryption);
             playerJobsData = new PlayerJobsData(jobsSaveData);
         }
         catch
@@ -152,7 +152,7 @@ public class PlayerManager : MonoBehaviour
     public void SaveJobsData()
     {
         PlayerJobsSaveData data = new PlayerJobsSaveData(playerJobsData);
-        saveService.SaveData(UtilsSave.GetPlayerJobsFile(), data, false);
+        saveService.SaveData(UtilsSave.GetPlayerJobsFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
     #endregion
@@ -163,7 +163,7 @@ public class PlayerManager : MonoBehaviour
     {
         try
         {
-            InventorySaveData inventorySaveData = saveService.LoadData<InventorySaveData>(UtilsSave.GetPlayerInventoryFile(), false);
+            InventorySaveData inventorySaveData = saveService.LoadData<InventorySaveData>(UtilsSave.GetPlayerInventoryFile(), SettingsManager.Instance.FileEncryption);
             inventory = new Inventory(inventorySaveData);
         }
         catch
@@ -184,7 +184,7 @@ public class PlayerManager : MonoBehaviour
     public void SaveInventoryData()
     {
         InventorySaveData data = new InventorySaveData(inventory);
-        saveService.SaveData(UtilsSave.GetPlayerInventoryFile(), data, false);
+        saveService.SaveData(UtilsSave.GetPlayerInventoryFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
     private void ItemAdd(int id)
@@ -200,7 +200,7 @@ public class PlayerManager : MonoBehaviour
     {
         try
         {
-            PlayerFightSaveData fightSaveData = saveService.LoadData<PlayerFightSaveData>(UtilsSave.GetPlayerFightFile(), false);
+            PlayerFightSaveData fightSaveData = saveService.LoadData<PlayerFightSaveData>(UtilsSave.GetPlayerFightFile(), SettingsManager.Instance.FileEncryption);
             playerFightData = new PlayerFightData(fightSaveData);
         }
         catch
@@ -220,7 +220,7 @@ public class PlayerManager : MonoBehaviour
     public void SaveFightData()
     {
         PlayerFightSaveData data = new PlayerFightSaveData(playerFightData);
-        saveService.SaveData(UtilsSave.GetPlayerFightFile(), data, false);
+        saveService.SaveData(UtilsSave.GetPlayerFightFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
     #endregion
@@ -231,7 +231,7 @@ public class PlayerManager : MonoBehaviour
     {
         try
         {
-            PlayerMinerSaveData minerSaveData = saveService.LoadData<PlayerMinerSaveData>(UtilsSave.GetPlayerMinerFile(), false);
+            PlayerMinerSaveData minerSaveData = saveService.LoadData<PlayerMinerSaveData>(UtilsSave.GetPlayerMinerFile(), SettingsManager.Instance.FileEncryption);
             playerMinerData = new PlayerMinerData(minerSaveData);
         }
         catch
@@ -251,7 +251,7 @@ public class PlayerManager : MonoBehaviour
     public void SaveMinerData()
     {
         PlayerMinerSaveData data = new PlayerMinerSaveData(playerMinerData);
-        saveService.SaveData(UtilsSave.GetPlayerMinerFile(), data, false);
+        saveService.SaveData(UtilsSave.GetPlayerMinerFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
     #endregion
@@ -262,7 +262,7 @@ public class PlayerManager : MonoBehaviour
     {
         try
         {
-            PlayerBlacksmithSaveData blacksmithSaveData = saveService.LoadData<PlayerBlacksmithSaveData>(UtilsSave.GetPlayerBlacksmithFile(), false);
+            PlayerBlacksmithSaveData blacksmithSaveData = saveService.LoadData<PlayerBlacksmithSaveData>(UtilsSave.GetPlayerBlacksmithFile(), SettingsManager.Instance.FileEncryption);
             playerBlacksmithData = new PlayerBlacksmithData(blacksmithSaveData);
         }
         catch
@@ -282,7 +282,7 @@ public class PlayerManager : MonoBehaviour
     public void SaveBlacksmithData()
     {
         PlayerBlacksmithSaveData data = new PlayerBlacksmithSaveData(playerBlacksmithData);
-        saveService.SaveData(UtilsSave.GetPlayerBlacksmithFile(), data, false);
+        saveService.SaveData(UtilsSave.GetPlayerBlacksmithFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
     #endregion
@@ -293,7 +293,7 @@ public class PlayerManager : MonoBehaviour
     {
         try
         {
-            PlayerFisherSaveData fisherSaveData = saveService.LoadData<PlayerFisherSaveData>(UtilsSave.GetPlayerFisherFile(), false);
+            PlayerFisherSaveData fisherSaveData = saveService.LoadData<PlayerFisherSaveData>(UtilsSave.GetPlayerFisherFile(), SettingsManager.Instance.FileEncryption);
             playerFisherData = new PlayerFisherData(fisherSaveData);
         }
         catch
@@ -313,7 +313,7 @@ public class PlayerManager : MonoBehaviour
     public void SaveFisherData()
     {
         PlayerFisherSaveData data = new PlayerFisherSaveData(playerFisherData);
-        saveService.SaveData(UtilsSave.GetPlayerFisherFile(), data, false);
+        saveService.SaveData(UtilsSave.GetPlayerFisherFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
     #endregion
@@ -324,7 +324,7 @@ public class PlayerManager : MonoBehaviour
     {
         try
         {
-            PlayerFarmerSaveData farmerSaveData = saveService.LoadData<PlayerFarmerSaveData>(UtilsSave.GetPlayerFarmerFile(), false);
+            PlayerFarmerSaveData farmerSaveData = saveService.LoadData<PlayerFarmerSaveData>(UtilsSave.GetPlayerFarmerFile(), SettingsManager.Instance.FileEncryption);
             playerFarmerData = new PlayerFarmerData(farmerSaveData);
         }
         catch
@@ -344,7 +344,7 @@ public class PlayerManager : MonoBehaviour
     public void SaveFarmerData()
     {
         PlayerFarmerSaveData data = new PlayerFarmerSaveData(playerFarmerData);
-        saveService.SaveData(UtilsSave.GetPlayerFarmerFile(), data, false);
+        saveService.SaveData(UtilsSave.GetPlayerFarmerFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
     public void OnBefriendedCompanion(int companion)

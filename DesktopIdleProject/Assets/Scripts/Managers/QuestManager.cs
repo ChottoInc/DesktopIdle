@@ -259,7 +259,7 @@ public class QuestManager : MonoBehaviour
 
         try
         {
-            QuestsSaveData saveData = saveService.LoadData<QuestsSaveData>(UtilsSave.GetQuestFile(), false);
+            QuestsSaveData saveData = saveService.LoadData<QuestsSaveData>(UtilsSave.GetQuestFile(), SettingsManager.Instance.FileEncryption);
             SetupFromFile(saveData);
         }
         catch
@@ -1437,6 +1437,6 @@ public class QuestManager : MonoBehaviour
     public void SaveQuestsData()
     {
         QuestsSaveData data = new QuestsSaveData(this);
-        saveService.SaveData(UtilsSave.GetQuestFile(), data, false);
+        saveService.SaveData(UtilsSave.GetQuestFile(), data, SettingsManager.Instance.FileEncryption);
     }
 }

@@ -53,7 +53,7 @@ public class PlayerMiner : Player
     {
         if (playerData != null)
         {
-            playerData.OnLevelUp -= SaveMinerData;
+            playerData.OnLevelUp -= LevelUp;
 
             playerData.OnStatChange -= OnStatChangeMiner;
         }
@@ -187,7 +187,7 @@ public class PlayerMiner : Player
 
         if (playerData != null)
         {
-            playerData.OnLevelUp += SaveMinerData;
+            playerData.OnLevelUp += LevelUp;
 
             playerData.OnStatChange += OnStatChangeMiner;
         }
@@ -239,6 +239,13 @@ public class PlayerMiner : Player
     #endregion
 
     #region HANDLE EVENTS FROM MINER DATA
+
+    protected override void LevelUp()
+    {
+        base.LevelUp();
+
+        SaveMinerData();
+    }
 
     private void OnStatChangeMiner(int id, int value)
     {

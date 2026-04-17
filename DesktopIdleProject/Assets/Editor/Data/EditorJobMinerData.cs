@@ -97,7 +97,7 @@ public class EditorJobMinerData : Editor
             }
         }
 
-        for (int i = 8; i < 10; i++)
+        for (int i = 9; i < 11; i++)
         {
             string[] parts = datas[i].Split(",", System.StringSplitOptions.None);
 

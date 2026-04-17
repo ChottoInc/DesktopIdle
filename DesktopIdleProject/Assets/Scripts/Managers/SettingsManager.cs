@@ -5,9 +5,11 @@ public class SettingsManager : MonoBehaviour
 {
     [Header("Cheats")]
     [SerializeField] bool enableCheats = true;
+    [SerializeField] bool fileEncryption;
 
 
     public bool AreCheatsEnabled => enableCheats;
+    public bool FileEncryption => fileEncryption;
 
 
 
@@ -52,6 +54,9 @@ public class SettingsManager : MonoBehaviour
     // -- Battle
     private bool isAutoBattleOn;
 
+    // -- HUD
+    private bool isInvertedHUDOn;
+
     // -- Floating HUD
     private bool isDamageOn;
     private bool isItemCollectionOn;
@@ -60,14 +65,26 @@ public class SettingsManager : MonoBehaviour
     // -- Animations
     private bool areLevelUpEquipmentOn;
 
+    // -- Fisher
+    private bool isInvertedFishingSpot;
+
+
+    public event Action<bool> OnInvertedHUDChange;
+    public event Action<bool> OnInvertedFishingSpotChange;
+
 
     public bool IsAutoBattleOn => isAutoBattleOn;
+
+    public bool IsInvertedHudOn => isInvertedHUDOn;
 
     public bool IsDamageOn => isDamageOn;
     public bool IsItemCollectionOn => isItemCollectionOn;
     public bool AreTooltipsOn => areTooltipsOn;
 
     public bool AreLevelUpEquipmentOn => areLevelUpEquipmentOn;
+
+
+    public bool IsInvertedFishingSpot => isInvertedFishingSpot;
 
 
     // --------- VIDEO
@@ -135,7 +152,7 @@ public class SettingsManager : MonoBehaviour
 
         try
         {
-            SettingsSaveData saveData = saveService.LoadData<SettingsSaveData>(UtilsSave.GetSettingsFile(), false);
+            SettingsSaveData saveData = saveService.LoadData<SettingsSaveData>(UtilsSave.GetSettingsFile(), FileEncryption);
 
             // call first default to ensure any new variables is updated by default
             SetupFromDefault();
@@ -173,11 +190,15 @@ public class SettingsManager : MonoBehaviour
         // --- gameplay
         SetIsAutoBattle(saveData.isAutoBattleOn, false);
 
+        SetIsInvertedHUDOn(saveData.isInvertedHUDOn, false);
+
         SetIsDamageOn(saveData.isDamageOn, false);
         SetIsItemCollectionOn(saveData.isItemCollectionOn, false);
         SetAreTooltipsOn(saveData.areTooltipsOn, false);
 
         SetAreLevelUpEquipmentAnimationOn(saveData.areLevelUpEquipmentOn, false);
+
+        SetIsInvertedFishingSpotOn(saveData.isInvertedFishingSpot, false);
 
         // --- video
         SetIsAlwaysOnTop(saveData.isAlwaysOnTop, false);
@@ -210,11 +231,15 @@ public class SettingsManager : MonoBehaviour
         // --- gameplay
         SetIsAutoBattle(true, false);
 
+        SetIsInvertedHUDOn(false, false);
+
         SetIsDamageOn(true, false);
         SetIsItemCollectionOn(true, false);
         SetAreTooltipsOn(true, false);
 
         SetAreLevelUpEquipmentAnimationOn(true, false);
+
+        SetIsInvertedFishingSpotOn(false, false);
 
         // --- video
         SetIsAlwaysOnTop(false, false);
@@ -237,13 +262,13 @@ public class SettingsManager : MonoBehaviour
             try
             {
                 // if save exists do nothing
-                CombatMapSaveData mapData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), false);
+                CombatMapSaveData mapData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), FileEncryption);
             }
             catch
             {
                 // if it doesn't exists, create new save file for the map
                 CombatMapSaveData mapData = new CombatMapSaveData(maps[i].IdMap, 1, 1, 0);
-                saveService.SaveData(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), mapData, false);
+                saveService.SaveData(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), mapData, FileEncryption);
             }
         }
     }
@@ -279,7 +304,7 @@ public class SettingsManager : MonoBehaviour
     {
         try
         {
-            CombatMapSaveData saveData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), false);
+            CombatMapSaveData saveData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), FileEncryption);
             return saveData;
         }
         catch
@@ -292,12 +317,12 @@ public class SettingsManager : MonoBehaviour
     public void SaveCombatMapData(CombatMapSO mapSO, int currentStage, int reachedStage, int reachedPrestige)
     {
         CombatMapSaveData mapData = new CombatMapSaveData(mapSO.IdMap, currentStage, reachedStage, reachedPrestige);
-        saveService.SaveData(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), mapData, false);
+        saveService.SaveData(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), mapData, FileEncryption);
     }
 
     public void SaveCombatMapData(CombatMapSO mapSO, CombatMapSaveData combatMapSaveData)
     {
-        saveService.SaveData(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), combatMapSaveData, false);
+        saveService.SaveData(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), combatMapSaveData, FileEncryption);
     }
 
     #endregion
@@ -313,6 +338,15 @@ public class SettingsManager : MonoBehaviour
             Save();
     }
 
+
+    public void SetIsInvertedHUDOn(bool isOn, bool save = true)
+    {
+        isInvertedHUDOn = isOn;
+        OnInvertedHUDChange?.Invoke(isOn);
+
+        if (save)
+            Save();
+    }
 
 
     public void SetIsDamageOn(bool isOn, bool save = true)
@@ -349,11 +383,19 @@ public class SettingsManager : MonoBehaviour
     }
 
 
+    public void SetIsInvertedFishingSpotOn(bool isOn, bool save = true)
+    {
+        isInvertedFishingSpot = isOn;
+        OnInvertedFishingSpotChange?.Invoke(isOn);
+
+        if (save)
+            Save();
+    }
+
+
     #endregion
 
     #region VIDEO
-
-    //TODO -  Call events to trigger changes
 
     public void SetIsAlwaysOnTop(bool isOn, bool save = true)
     {
@@ -445,6 +487,6 @@ public class SettingsManager : MonoBehaviour
         lastLoginDate = DateTime.UtcNow.Ticks;
 
         SettingsSaveData data = new SettingsSaveData(this);
-        saveService.SaveData(UtilsSave.GetSettingsFile(), data, false);
+        saveService.SaveData(UtilsSave.GetSettingsFile(), data, FileEncryption);
     }
 }

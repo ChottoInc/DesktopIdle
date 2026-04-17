@@ -91,6 +91,7 @@ MonoBehaviour:
     m_Bits: 128
   swordHitVFXPrefab: {fileID: 8588506279805518995, guid: 99d8f4d1e54d8ab4f89cc668b6647ca9, type: 3}
   hpBar: {fileID: 5052471557200108800}
+  timerResetAfterDeath: 2
 --- !u!61 &4276897723236361461
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -282,6 +283,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1290641715356645574, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
+      propertyPath: m_fontSize
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 2251514908916543166, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -297,6 +302,14 @@ PrefabInstance:
     - target: {fileID: 2569401526418615640, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3661463567613504807, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 5950147349660842820}
+    - target: {fileID: 4508980488032821153, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 4583345328592467071, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: player
@@ -329,6 +342,14 @@ PrefabInstance:
     - target: {fileID: 6353959934172476320, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -0.649
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470028890212986705, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8470028890212986705, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8957772293559954643, guid: 3959b16b42d57ee45b11fe1571a0041c, type: 3}
       propertyPath: m_Pivot.x

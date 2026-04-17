@@ -63,7 +63,7 @@ public class ShopManager : MonoBehaviour
 
         try
         {
-            ShopSaveData saveData = saveService.LoadData<ShopSaveData>(UtilsSave.GetShopFile(), false);
+            ShopSaveData saveData = saveService.LoadData<ShopSaveData>(UtilsSave.GetShopFile(), SettingsManager.Instance.FileEncryption);
 
             // set items progress default values
             InitializeAllItems();
@@ -253,6 +253,6 @@ public class ShopManager : MonoBehaviour
     public void SaveShopData()
     {
         ShopSaveData data = new ShopSaveData(this);
-        saveService.SaveData(UtilsSave.GetShopFile(), data, false);
+        saveService.SaveData(UtilsSave.GetShopFile(), data, SettingsManager.Instance.FileEncryption);
     }
 }

@@ -7,6 +7,9 @@ public class UITabSettingsGameplay : UITabWindow
     [SerializeField] UIPanelAutoBattle panelAutoBattleSettings;
     [SerializeField] UIPanelAutoBattle panelAutoBattleWorld;
 
+    [Header("HUD")]
+    [SerializeField] Toggle toggleInvertedHUD;
+
     [Header("Floating HUD")]
     [SerializeField] Toggle toggleDamage;
     [SerializeField] Toggle toggleItemCollection;
@@ -15,16 +18,23 @@ public class UITabSettingsGameplay : UITabWindow
     [Header("Animations")]
     [SerializeField] Toggle toggleLevelUpEquipmentAnimation;
 
+    [Header("Fisher")]
+    [SerializeField] Toggle toggleInvertedFishingSpot;
+
     private void Awake()
     {
         panelAutoBattleSettings.OnSet += OnToggleAutoBattleSettings;
-        panelAutoBattleWorld.OnSet += OnToggleAutoBattleWorld;
+
+        if(panelAutoBattleWorld != null)
+            panelAutoBattleWorld.OnSet += OnToggleAutoBattleWorld;
     }
 
     private void OnDestroy()
     {
         panelAutoBattleSettings.OnSet -= OnToggleAutoBattleSettings;
-        panelAutoBattleWorld.OnSet -= OnToggleAutoBattleWorld;
+
+        if (panelAutoBattleWorld != null)
+            panelAutoBattleWorld.OnSet -= OnToggleAutoBattleWorld;
     }
 
     public override void Open()
@@ -38,21 +48,49 @@ public class UITabSettingsGameplay : UITabWindow
     {
         panelAutoBattleSettings.Setup();
 
+
+        if (toggleInvertedHUD != null)
+            toggleInvertedHUD.SetIsOnWithoutNotify(SettingsManager.Instance.IsInvertedHudOn);
+
+
+        if (toggleDamage != null)
+            toggleDamage.SetIsOnWithoutNotify(SettingsManager.Instance.IsDamageOn);
+
+        if (toggleItemCollection != null)
+            toggleItemCollection.SetIsOnWithoutNotify(SettingsManager.Instance.IsItemCollectionOn);
+
         if (toggleTooltips != null)
             toggleTooltips.SetIsOnWithoutNotify(SettingsManager.Instance.AreTooltipsOn);
-        else
-            Debug.Log("Settings panel does not have auto battle world panel linked");
+
+
+
+        if (toggleLevelUpEquipmentAnimation != null)
+            toggleLevelUpEquipmentAnimation.SetIsOnWithoutNotify(SettingsManager.Instance.AreLevelUpEquipmentOn);
+
+
+
+        if (toggleInvertedFishingSpot != null)
+            toggleInvertedFishingSpot.SetIsOnWithoutNotify(SettingsManager.Instance.IsInvertedFishingSpot);
     }
 
 
     private void OnToggleAutoBattleSettings(bool isOn)
     {
-        panelAutoBattleWorld.SetToggleWithoutNotify(isOn);
+        if (panelAutoBattleWorld != null)
+            panelAutoBattleWorld.SetToggleWithoutNotify(isOn);
     }
 
     private void OnToggleAutoBattleWorld(bool isOn)
     {
         panelAutoBattleSettings.SetToggleWithoutNotify(isOn);
+    }
+
+
+
+    public void OnToggleInvertedHUD(bool isOn)
+    {
+        AudioManager.Instance.PlayClickUI();
+        SettingsManager.Instance.SetIsInvertedHUDOn(isOn);
     }
 
 
@@ -80,5 +118,12 @@ public class UITabSettingsGameplay : UITabWindow
     {
         AudioManager.Instance.PlayClickUI();
         SettingsManager.Instance.SetAreLevelUpEquipmentAnimationOn(isOn);
+    }
+
+
+    public void OnToggleInvertedFishingSpot(bool isOn)
+    {
+        AudioManager.Instance.PlayClickUI();
+        SettingsManager.Instance.SetIsInvertedFishingSpotOn(isOn);
     }
 }

@@ -278,6 +278,10 @@ public class PlayerFightData
         // subtract total to hp
         currentHp -= total;
 
+        //Debug.Log("damage: " + total);
+        //Debug.Log("current hp: " + currentHp);
+        //Debug.Log("max hp: " + MaxHp);
+
         if (currentHp <= 0f)
         {
             currentHp = 0;

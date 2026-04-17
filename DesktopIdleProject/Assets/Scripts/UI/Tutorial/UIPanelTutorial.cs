@@ -138,6 +138,8 @@ public class UIPanelTutorial : MonoBehaviour
         // barrier on the click to skip if dialogue not ended
         if (!isCurrentDialogueEnded) return;
 
+        AudioManager.Instance.PlayClickUI();
+
         if(currentDialogueIndex >= currentDialogues.Count)
         {
             // ended dialogues

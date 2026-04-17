@@ -57,7 +57,7 @@ public class PlayerFarmer : Player
     {
         if (playerData != null)
         {
-            playerData.OnLevelUp -= SaveFarmerData;
+            playerData.OnLevelUp -= LevelUp;
 
             playerData.OnStatChange -= OnStatChangeFarmer;
         }
@@ -74,7 +74,7 @@ public class PlayerFarmer : Player
 
         if (playerData != null)
         {
-            playerData.OnLevelUp += SaveFarmerData;
+            playerData.OnLevelUp += LevelUp;
 
             playerData.OnStatChange += OnStatChangeFarmer;
         }
@@ -309,6 +309,13 @@ public class PlayerFarmer : Player
     #endregion
 
     #region HANDLE EVENTS FROM FISHER DATA
+
+    protected override void LevelUp()
+    {
+        base.LevelUp();
+
+        SaveFarmerData();
+    }
 
     private void OnStatChangeFarmer(int id, int value)
     {

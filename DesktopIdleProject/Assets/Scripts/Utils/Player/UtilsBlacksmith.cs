@@ -20,32 +20,32 @@ public static class UtilsBlacksmith
     private static float FLAT_BLACKSMITH_EXP_GROWTH = 10f;
             
     //Helmet
-    private static float BLACKSMITH_HELMET_MAXHP_LINEAR_GROWTH = 0.30f;
+    private static float BLACKSMITH_HELMET_MAXHP_LINEAR_GROWTH = 0.20f;
     private static float BLACKSMITH_HELMET_MAXHP_QUADRATIC_GROWTH = 0.05f;
             
     // Armor
-    private static float BLACKSMITH_ARMOR_DEF_LINEAR_GROWTH = 0.25f;
+    private static float BLACKSMITH_ARMOR_DEF_LINEAR_GROWTH = 0.2f;
     private static float BLACKSMITH_ARMOR_DEF_QUADRATIC_GROWTH = 0.04f;
             
     // Gloves
-    private static float BLACKSMITH_GLOVES_ATKSPD_LINEAR_GROWTH = 0.25f;
+    private static float BLACKSMITH_GLOVES_ATKSPD_LINEAR_GROWTH = 0.2f;
     private static float BLACKSMITH_GLOVES_ATKSPD_QUADRATIC_GROWTH = 0.04f;
             
-    private static float BLACKSMITH_GLOVES_CRITDGM_LINEAR_GROWTH = 0.25f;
+    private static float BLACKSMITH_GLOVES_CRITDGM_LINEAR_GROWTH = 0.2f;
     private static float BLACKSMITH_GLOVES_CRITDGM_QUADRATIC_GROWTH = 0.05f;
             
     // Boots
     private static float BLACKSMITH_BOOTS_DEF_LINEAR_GROWTH = 0.15f;
     private static float BLACKSMITH_BOOTS_DEF_QUADRATIC_GROWTH = 0.038f;
             
-    private static float BLACKSMITH_BOOTS_CRITRATE_LINEAR_GROWTH = 0.25f;
+    private static float BLACKSMITH_BOOTS_CRITRATE_LINEAR_GROWTH = 0.2f;
     private static float BLACKSMITH_BOOTS_CRITRATE_QUADRATIC_GROWTH = 0.05f;
             
             
-    public static int BLACKSMITH_HELMET_MAX_LEVEL = 15;
-    public static int BLACKSMITH_ARMOR_MAX_LEVEL = 15;
-    public static int BLACKSMITH_GLOVES_MAX_LEVEL = 15;
-    public static int BLACKSMITH_BOOTS_MAX_LEVEL = 15;
+    public static int BLACKSMITH_HELMET_MAX_LEVEL = 10;
+    public static int BLACKSMITH_ARMOR_MAX_LEVEL = 10;
+    public static int BLACKSMITH_GLOVES_MAX_LEVEL = 10;
+    public static int BLACKSMITH_BOOTS_MAX_LEVEL = 10;
 
 
     private static PlayerJobBlacksmithSO jobDataSO;

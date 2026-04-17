@@ -19,6 +19,10 @@ public class Enemy : MonoBehaviour, IPoolObject
 
     private RuntimeAnimatorController animController;
 
+    [Header("Chek Player")]
+    [SerializeField] float hitRadius;
+    [SerializeField] LayerMask playerMask;
+
     [Header("VFXs")]
     [SerializeField] ParticleSystem deathVFX;
 
@@ -301,6 +305,16 @@ public class Enemy : MonoBehaviour, IPoolObject
         animator.SetBool("IsAttacking", isAttacking);
     }
 
+    private void CheckPlayerPos(EnemySO so)
+    {
+        Collider2D hit = Physics2D.OverlapCircle(transform.position, hitRadius, playerMask);
+        if (hit)
+        {
+            // set new direction towards the player
+            currentTarget = hit.transform.position.x;
+        }
+    }
+
     public void PlayDeath(bool setDead)
     {
         if (setDead)
@@ -323,11 +337,19 @@ public class Enemy : MonoBehaviour, IPoolObject
     public void OnSpawn()
     {
         HideSprite(false);
+
+        // attach combat manager OnEnemyKill event, to check nearby player
+        if(CombatManager.Instance != null)
+            CombatManager.Instance.OnEnemyKill += CheckPlayerPos;
     }
 
     public void OnDespawn()
     {
-        
+        canFight = false;
+
+        // detach combat manager OnEnemyKill event
+        if (CombatManager.Instance != null)
+            CombatManager.Instance.OnEnemyKill -= CheckPlayerPos;
     }
 
     public void Die() 

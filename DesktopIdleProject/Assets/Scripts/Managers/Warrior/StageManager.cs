@@ -319,7 +319,6 @@ public class StageManager : MonoBehaviour
             else
             {
                 // I'm at the last stage of the map, so I need to go to the next map if auto battle is on
-
                 currentStage++;
 
                 return true;

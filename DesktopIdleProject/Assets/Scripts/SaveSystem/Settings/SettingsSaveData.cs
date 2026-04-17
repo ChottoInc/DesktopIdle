@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+
 
 public class SettingsSaveData
 {
@@ -28,6 +26,9 @@ public class SettingsSaveData
     // -- Battle
     public bool isAutoBattleOn;
 
+    // -- HUD
+    public bool isInvertedHUDOn;
+
     // -- Floating HUD
     public bool isDamageOn;
     public bool isItemCollectionOn;
@@ -35,6 +36,9 @@ public class SettingsSaveData
 
     // -- Animations
     public bool areLevelUpEquipmentOn;
+
+    // -- Fisher
+    public bool isInvertedFishingSpot;
 
     // ------------ VIDEO
 
@@ -73,11 +77,15 @@ public class SettingsSaveData
 
         isAutoBattleOn = manager.IsAutoBattleOn;
 
+        isInvertedHUDOn = manager.IsInvertedHudOn;
+
         isDamageOn = manager.IsDamageOn;
         isItemCollectionOn = manager.IsItemCollectionOn;
         areTooltipsOn = manager.AreTooltipsOn;
 
         areLevelUpEquipmentOn = manager.AreLevelUpEquipmentOn;
+
+        isInvertedFishingSpot = manager.IsInvertedFishingSpot;
 
 
 

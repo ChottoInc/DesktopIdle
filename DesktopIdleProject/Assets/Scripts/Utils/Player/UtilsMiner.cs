@@ -24,7 +24,7 @@ public static class UtilsMiner
     private static float MINER_WEAPON_LINEAR_GROWTH = 0.35f;
     private static float MINER_WEAPON_QUADRATIC_GROWTH = 0.05f;
 
-    public const int MINER_WEAPON_MAX_LEVEL = 15;
+    public const int MINER_WEAPON_MAX_LEVEL = 10;
 
 
     private static PlayerJobMinerSO jobDataSO;

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class CompanionData
 {
@@ -19,7 +16,7 @@ public class CompanionData
 
 
 
-    public float CurrentAtk => companionSO.BaseAtk;
+    public float CurrentAtkPerc => companionSO.BaseAtkPerc;
     public float CurrentAtkSpd => companionSO.BaseAtkSpd;
 
 

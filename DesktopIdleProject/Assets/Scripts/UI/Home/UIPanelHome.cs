@@ -16,6 +16,9 @@ public class UIPanelHome : MonoBehaviour
     [Space(10)]
     [SerializeField] Transform messageNewGamePosition;
 
+    [Space(10)]
+    [SerializeField] UIPanelAdd panelAdd;
+
     private bool isInit;
 
 
@@ -99,8 +102,11 @@ public class UIPanelHome : MonoBehaviour
         Application.Quit();
     }
 
-    public void OnButtonTest()
+    public void OnButtonAdd()
     {
-        SceneManager.LoadScene("FisherScene");
+        Debug.Log("culo");
+        if (!SettingsManager.Instance.AreCheatsEnabled) return;
+
+        panelAdd.gameObject.SetActive(true);
     }
 }

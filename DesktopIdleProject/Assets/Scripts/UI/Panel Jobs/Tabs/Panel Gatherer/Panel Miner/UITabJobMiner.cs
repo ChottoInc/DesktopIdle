@@ -215,7 +215,7 @@ public class UITabJobMiner : UITabWindow
 
         // Multiply by 100 to get percentage, and minus 100 to remove base multiplier
         float multiplier = UtilsMiner.GetMinerWeaponMultiplier(data.WeaponLevel);
-        textStats.text = $"Dmg: +{(multiplier * 100f) - 100f}%";
+        textStats.text = $"Dmg: +{(multiplier * 100f) - 100f:.#}%";
         //Debug.Log("dmg: " + multiplier);
 
         // Check if need change
@@ -325,12 +325,14 @@ public class UITabJobMiner : UITabWindow
         {
             // update directly from save if not in miner scene
             PlayerManager.Instance.PlayerMinerData.AddMinerWeaponLevel(1);
+            lastWeaponLevel = PlayerManager.Instance.PlayerMinerData.WeaponLevel;
         }
         else
         {
             // or update from temp data if in miner scene, and update from there
             player.AddMinerWeaponLevel(1);
             PlayerManager.Instance.UpdateMinerData(player.PlayerData);
+            lastWeaponLevel = player.PlayerData.WeaponLevel;
         }
 
         // save miner data

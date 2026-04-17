@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIButtonLongPress : Button
 {
-    private float cooldownLongPress = 0.5f;
+    private float cooldownLongPress = 0.4f;
 
     private float timerLongPress;
 

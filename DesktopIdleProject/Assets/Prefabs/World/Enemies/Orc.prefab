@@ -162,6 +162,10 @@ MonoBehaviour:
   animator: {fileID: 8308406918941629040}
   walkClip: {fileID: 7400000, guid: 046bb9b96dfcd7e41a097f5bec88bad5, type: 2}
   attackClip: {fileID: 7400000, guid: d3fffcb96fffbb0448a6cbdb37fbd3e8, type: 2}
+  hitRadius: 3
+  playerMask:
+    serializedVersion: 2
+    m_Bits: 64
   deathVFX: {fileID: 791422652709489674}
   panelDamage: {fileID: 1486768529617709758}
 --- !u!61 &7262531907017081913

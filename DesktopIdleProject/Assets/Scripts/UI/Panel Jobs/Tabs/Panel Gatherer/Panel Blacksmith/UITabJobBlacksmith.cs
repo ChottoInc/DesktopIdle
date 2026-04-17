@@ -90,7 +90,7 @@ public class UITabJobBlacksmith : UITabWindow
         }
 
         // reset last button gear color
-        if(lastSelectedGearButton != null)
+        if (lastSelectedGearButton != null)
         {
             lastSelectedGearButton.image.color = Color.white;
         }
@@ -240,7 +240,10 @@ public class UITabJobBlacksmith : UITabWindow
         {
             case UtilsGather.ID_BLACKSMITH_HELMET:
                 if (lastWeaponLevel >= UtilsBlacksmith.BLACKSMITH_HELMET_MAX_LEVEL)
+                {
+                    //Debug.Log("gear level: " + lastWeaponLevel);
                     return true;
+                }
                 break;
 
             case UtilsGather.ID_BLACKSMITH_ARMOR:
@@ -376,7 +379,7 @@ public class UITabJobBlacksmith : UITabWindow
         string result = string.Empty;
         foreach (var info in uiStatsInfos)
         {
-            result += $"{info.statName}: +{(info.multValue * 100f) - 100f}%\n";
+            result += $"{info.statName}: +{(info.multValue * 100f) - 100f:.#}%\n";
             //Debug.Log("stat: " + info.statName + ", mult val: " + info.multValue);
         }
 
@@ -481,7 +484,6 @@ public class UITabJobBlacksmith : UITabWindow
         AudioManager.Instance.PlayClickUI();
 
         currentGear = UtilsGather.ID_BLACKSMITH_HELMET;
-        lastSelectedGearButton = buttonHelmet;
         Open();
     }
 
@@ -490,7 +492,6 @@ public class UITabJobBlacksmith : UITabWindow
         AudioManager.Instance.PlayClickUI();
 
         currentGear = UtilsGather.ID_BLACKSMITH_ARMOR;
-        lastSelectedGearButton = buttonArmor;
         Open();
     }
 
@@ -499,7 +500,6 @@ public class UITabJobBlacksmith : UITabWindow
         AudioManager.Instance.PlayClickUI();
 
         currentGear = UtilsGather.ID_BLACKSMITH_GLOVES;
-        lastSelectedGearButton = buttonGloves;
         Open();
     }
 
@@ -508,7 +508,6 @@ public class UITabJobBlacksmith : UITabWindow
         AudioManager.Instance.PlayClickUI();
 
         currentGear = UtilsGather.ID_BLACKSMITH_BOOTS;
-        lastSelectedGearButton = buttonBoots;
         Open();
     }
 
@@ -550,7 +549,11 @@ public class UITabJobBlacksmith : UITabWindow
     public void OnButtonLevelUp()
     {
         // check if animations are on and animating right now, so you can't interrupt the animation and bug it
-        if (SettingsManager.Instance.AreLevelUpEquipmentOn && isAnimatingLevelUp) return;
+        if (SettingsManager.Instance.AreLevelUpEquipmentOn && isAnimatingLevelUp)
+        {
+            Debug.Log("animation error");
+            return;
+        }
 
         AudioManager.Instance.PlayClickUI();
 
@@ -566,7 +569,7 @@ public class UITabJobBlacksmith : UITabWindow
         // add level
         if (player == null)
         {
-            // update directly from save if not in miner scene
+            // update directly from save if not in blacksmith scene
             switch (currentGear)
             {
                 case UtilsGather.ID_BLACKSMITH_HELMET: PlayerManager.Instance.PlayerBlacksmithData.AddBlacksmithHelmetLevel(1); break;
@@ -577,7 +580,7 @@ public class UITabJobBlacksmith : UITabWindow
         }
         else
         {
-            // or update from temp data if in miner scene, and update from there
+            // or update from temp data if in blacksmith scene, and update from there
             player.AddBlacksmithGearLevel(currentGear, 1);
             PlayerManager.Instance.UpdateBlacksmithData(player.PlayerData);
         }
@@ -590,5 +593,13 @@ public class UITabJobBlacksmith : UITabWindow
 
         // update ui
         RefreshRequirements();
+    }
+
+
+    public override void Close()
+    {
+        isAnimatingLevelUp = false;
+
+        base.Close();
     }
 }

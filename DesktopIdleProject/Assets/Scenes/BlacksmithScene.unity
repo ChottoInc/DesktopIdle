@@ -1403,6 +1403,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8003c83999143394bb8a924862365d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hud: {fileID: 1361116666}
+  rightButtonsContainer: {fileID: 216079496}
+  selectedTabContent: {fileID: 1208493001}
   playerExpBar: {fileID: 2590446676757654874}
 --- !u!1 &619394800
 GameObject:
@@ -2459,6 +2462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1208492999}
   - component: {fileID: 1208493000}
+  - component: {fileID: 1208493001}
   m_Layer: 5
   m_Name: UI Selected Tab Content
   m_TagString: Untagged
@@ -2512,6 +2516,25 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &1208493001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208492998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7a2a317f7adc6344b7f2ddec882a74a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tabs:
+  - {fileID: 1164685740}
+  - {fileID: 994877641}
+  - {fileID: 320782616}
+  - {fileID: 1418824710}
+  - {fileID: 1477846007}
+  - {fileID: 8684464306230703201}
 --- !u!1 &1211361964
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ public class PlayerBlacksmith : Player
     {
         if (playerData != null)
         {
-            playerData.OnLevelUp -= SaveBlacksmithData;
+            playerData.OnLevelUp -= LevelUp;
 
             playerData.OnStatChange -= OnStatChangeBlacksmith;
         }
@@ -133,7 +133,7 @@ public class PlayerBlacksmith : Player
 
         if (playerData != null)
         {
-            playerData.OnLevelUp += SaveBlacksmithData;
+            playerData.OnLevelUp += LevelUp;
 
             playerData.OnStatChange += OnStatChangeBlacksmith;
         }
@@ -263,6 +263,13 @@ public class PlayerBlacksmith : Player
     #endregion
 
     #region HANDLE EVENTS FROM BLACKSMITH DATA
+
+    protected override void LevelUp()
+    {
+        base.LevelUp();
+
+        SaveBlacksmithData();
+    }
 
     private void OnStatChangeBlacksmith(int id, int value)
     {

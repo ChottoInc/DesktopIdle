@@ -92,21 +92,21 @@ public class EnemyData
     private float CalculateMaxHp()
     {
         // exp growth
-        float p = 0.85f;
+        float p = 1.1f;
         return enemySO.BaseMaxHp + MAXHP_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 
     private float CalculateAtk()
     {
         // exp growth
-        float p = 0.9f;
+        float p = 1.3f;
         return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 
     private float CalculateDef()
     {
         // exp growth
-        float p = 0.9f;
+        float p = 1.15f;
         return enemySO.BaseDef + DEF_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
     }
 
@@ -239,11 +239,9 @@ public class EnemyData
     public void TakeDamage(CompanionData data)
     {
         // can't take less than 0 or it will cure
+        float total = maxHp * data.CurrentAtkPerc;
 
-        float baseDamage = data.CurrentAtk;
-        float total;
-
-        total = Mathf.Max(0f, baseDamage - currentDef);
+        total = Mathf.Max(0f, total);
 
         // subtract total to hp
         currentHp -= total;

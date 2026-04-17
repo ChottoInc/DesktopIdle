@@ -13,7 +13,8 @@ public class CompanionSO : ScriptableObject
     [SerializeField] GameObject prefab;
 
     [Header("Combat")]
-    [SerializeField] float baseAtk;
+    [Range(0,1)]
+    [SerializeField] float baseAtkPerc;
     [SerializeField] float baseAtkSpd;
 
     public int Id => id;
@@ -23,6 +24,6 @@ public class CompanionSO : ScriptableObject
 
     public GameObject Prefab => prefab;
 
-    public float BaseAtk => baseAtk;
+    public float BaseAtkPerc => baseAtkPerc;
     public float BaseAtkSpd => baseAtkSpd;
 }

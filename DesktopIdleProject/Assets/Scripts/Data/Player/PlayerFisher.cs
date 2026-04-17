@@ -31,7 +31,7 @@ public class PlayerFisher : Player
     {
         if (playerData != null)
         {
-            playerData.OnLevelUp -= SaveFisherData;
+            playerData.OnLevelUp -= LevelUp;
 
             playerData.OnStatChange -= OnStatChangeFisher;
         }
@@ -65,7 +65,7 @@ public class PlayerFisher : Player
 
         if (playerData != null)
         {
-            playerData.OnLevelUp += SaveFisherData;
+            playerData.OnLevelUp += LevelUp;
 
             playerData.OnStatChange += OnStatChangeFisher;
         }
@@ -177,6 +177,13 @@ public class PlayerFisher : Player
     #endregion
 
     #region HANDLE EVENTS FROM FISHER DATA
+
+    protected override void LevelUp()
+    {
+        base.LevelUp();
+
+        SaveFisherData();
+    }
 
     private void OnStatChangeFisher(int id, int value)
     {

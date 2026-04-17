@@ -208,6 +208,14 @@ public class CombatManager : MonoBehaviour
             
         PlayerManager.Instance.UpdateFightData(player.PlayerData);
 
+        // handle card drop
+        GiveCard();
+
+        HandleNextEnemy();
+    }
+
+    private void GiveCard()
+    {
         // by default cards drop with 0.5%, add luck of warrior
         float baseCardDropRate = BASE_CARD_DROPRATE;
         if (cardHighDroprateCheat && SettingsManager.Instance.AreCheatsEnabled)
@@ -231,7 +239,10 @@ public class CombatManager : MonoBehaviour
                 }
             }
         }
-        
+    }
+
+    private void HandleNextEnemy()
+    {
         if (StageManager.Instance.CurrentEnemyIndex < mapSO.EnemiesPerStage)
         {
             StageManager.Instance.SpawnNextEnemy();
@@ -242,12 +253,12 @@ public class CombatManager : MonoBehaviour
             {
                 player.PlayerData.ResetAfterStage();
 
-                if(StageManager.Instance.CurrentStage > mapSO.Stages)
+                if (StageManager.Instance.CurrentStage > mapSO.Stages)
                 {
                     // If stage > maximum, means I'm in autobattle
                     // Go to next map in this case
                     // Only works if last map, or reset last stage instead
-                    if(mapSO.NextMap != null)
+                    if (mapSO.NextMap != null)
                     {
                         LastSceneSettings settings = new LastSceneSettings();
                         settings.lastSceneName = mapSO.NextMap.MapSceneName;
@@ -260,6 +271,15 @@ public class CombatManager : MonoBehaviour
                         PlayerManager.Instance.SaveFightData();
 
                         SceneLoaderManager.Instance.LoadScene(settings);
+                    }
+                    else
+                    {
+
+                        // reset last map
+                        PlayerManager.Instance.UpdateFightData(player.PlayerData);
+                        PlayerManager.Instance.SaveFightData();
+
+                        SceneLoaderManager.Instance.LoadScene(SettingsManager.Instance.LastSceneSettings);
                     }
                 }
             }

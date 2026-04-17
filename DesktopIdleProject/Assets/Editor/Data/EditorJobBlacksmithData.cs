@@ -108,7 +108,7 @@ public class EditorJobBlacksmithData : Editor
         }
 
         // Helmet
-        for (int i = 7; i < 9; i++)
+        for (int i = 8; i < 10; i++)
         {
             string[] parts = datas[i].Split(",", System.StringSplitOptions.None);
 
@@ -122,7 +122,7 @@ public class EditorJobBlacksmithData : Editor
         }
 
         // Armor
-        for (int i = 9; i < 11; i++)
+        for (int i = 10; i < 12; i++)
         {
             string[] parts = datas[i].Split(",", System.StringSplitOptions.None);
 
@@ -136,7 +136,7 @@ public class EditorJobBlacksmithData : Editor
         }
 
         // Gloves
-        for (int i = 11; i < 15; i++)
+        for (int i = 12; i < 16; i++)
         {
             string[] parts = datas[i].Split(",", System.StringSplitOptions.None);
 
@@ -152,7 +152,7 @@ public class EditorJobBlacksmithData : Editor
         }
 
         // Boots
-        for (int i = 15; i < 19; i++)
+        for (int i = 16; i < 20; i++)
         {
             string[] parts = datas[i].Split(",", System.StringSplitOptions.None);
 

@@ -86,7 +86,7 @@ public class PlayerFight : Player
         if(playerData != null)
         {
             playerData.OnHpChange -= UpdateHpBarUI;
-            playerData.OnLevelUp -= SaveFightData;
+            playerData.OnLevelUp -= LevelUp;
 
             playerData.OnStatChange -= OnStatChangeFight;
             playerData.OnAddMap -= OnAddMapFight;
@@ -118,6 +118,27 @@ public class PlayerFight : Player
         if (isAttacking)
         {
             CheckAttack();
+        }
+
+        CheckSpeedMult();
+    }
+
+    private void CheckSpeedMult()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (Time.timeScale == 1f)
+            {
+                Time.timeScale = 2f;
+            }
+            else if (Time.timeScale == 2f)
+            {
+                Time.timeScale = 4f;
+            }
+            else if (Time.timeScale == 4f)
+            {
+                Time.timeScale = 1f;
+            }
         }
     }
 
@@ -230,7 +251,7 @@ public class PlayerFight : Player
         if (playerData != null)
         {
             playerData.OnHpChange += UpdateHpBarUI;
-            playerData.OnLevelUp += SaveFightData;
+            playerData.OnLevelUp += LevelUp;
 
             playerData.OnStatChange += OnStatChangeFight;
             playerData.OnAddMap += OnAddMapFight;
@@ -344,6 +365,13 @@ public class PlayerFight : Player
     #endregion
 
     #region HANDLE EVENTS FROM FIGHTER DATA
+
+    protected override void LevelUp()
+    {
+        base.LevelUp();
+
+        SaveFightData();
+    }
 
     private void OnStatChangeFight(int id, int value)
     {
