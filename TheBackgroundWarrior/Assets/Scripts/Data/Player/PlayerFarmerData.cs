@@ -109,15 +109,15 @@ public class PlayerFarmerData : IBasePlayerData
         currentExp = saveData.currentExp;
 
         int sumLevels =
-            levelStatGreenthumb + levelstatAgronomy + levelstatKindness + levelStatLuck -
-            startLevelGreenthumb - startLevelAgronomy - startLevelKindness - startLevelLuck +
+            levelStatGreenthumb + levelstatAgronomy + levelstatKindness + levelStatLuck +
+            //startLevelGreenthumb + startLevelAgronomy + startLevelKindness + startLevelLuck +
             availableStatPoints +
             1;
 
         currentLevel = Math.Min(currentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if (currentLevel > UtilsFarmer.MAX_LEVEL_FARMER)
+        if (currentLevel >= UtilsFarmer.MAX_LEVEL_FARMER)
         {
             availableStatPoints = 0;
             currentExp = 0;
@@ -190,7 +190,7 @@ public class PlayerFarmerData : IBasePlayerData
     public void AddExp(long amount)
     {
         // check max level
-        if (currentLevel > UtilsFarmer.MAX_LEVEL_FARMER)
+        if (currentLevel >= UtilsFarmer.MAX_LEVEL_FARMER)
         {
             // set current exp to 0
             currentExp = 0;

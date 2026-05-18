@@ -129,15 +129,15 @@ public class PlayerBlacksmithData : IBasePlayerData
         currentExp = saveData.currentExp;
 
         int sumLevels = 
-            levelStatCraftSpeed + levelEfficiency + levelStatLuck + levelStatMetallurgy -
-            startLevelCraftSpeed - startLevelEfficiency - startLevelStatLuck - startLevelMetallurgy +
+            levelStatCraftSpeed + levelEfficiency + levelStatLuck + levelStatMetallurgy +
+            //startLevelCraftSpeed + startLevelEfficiency + startLevelStatLuck + startLevelMetallurgy +
             availableStatPoints +
             1;
 
         currentLevel = Math.Min(currentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if(currentLevel > UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
+        if(currentLevel >= UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
         {
             availableStatPoints = 0;
             currentExp = 0;
@@ -209,7 +209,7 @@ public class PlayerBlacksmithData : IBasePlayerData
     public void AddExp(long amount)
     {
         // check max level
-        if (currentLevel > UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
+        if (currentLevel >= UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
         {
             // set current exp to 0
             currentExp = 0;

@@ -204,7 +204,8 @@ public static class UtilsBlacksmith
             PER_LEVEL_BLACKSMITH_MAX_CRAFTSPEED +
             PER_LEVEL_BLACKSMITH_MAX_EFFICIENCY +
             PER_LEVEL_BLACKSMITH_MAX_LUCK +
-            PER_LEVEL_BLACKSMITH_MAX_METALLURGY;
+            PER_LEVEL_BLACKSMITH_MAX_METALLURGY +
+            1;
 
 
 
@@ -253,7 +254,7 @@ public static class UtilsBlacksmith
         if (level <= 1) return 0;
 
         // Formula: baseExp * (growthRate^(level-1) - 1)
-        return (long)(BASE_BLACKSMITH_EXP_GROWTH * Mathf.Pow(EXPO_BLACKSMITH_EXP_GROWTH, level) + FLAT_BLACKSMITH_EXP_GROWTH * level);
+        return (long)(BASE_BLACKSMITH_EXP_GROWTH * Mathf.Pow(level, EXPO_BLACKSMITH_EXP_GROWTH) + FLAT_BLACKSMITH_EXP_GROWTH * level);
     }
 
     // ---------------- GEAR STATS --------------- //

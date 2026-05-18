@@ -101,9 +101,6 @@ public class PlayerFightData : IBasePlayerData
 
     public float CurrentHp => currentHp;
 
-    /*
-     * using weapon miner level 
-     */
     public float CurrentAtk => 
         (baseAtk + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_ATK * (levelStatAtk - 1)) *
         PlayerManager.Instance.WeaponMinerMultiplier *
@@ -192,15 +189,15 @@ public class PlayerFightData : IBasePlayerData
         currentExp = saveData.currentExp;
 
         int sumLevels =
-            levelStatMaxHp + levelStatAtk + levelStatDef + levelStatAtkSpd + levelStatCritRate + levelStatCritDmg + levelStatLuck -
-            startLevelMaxHp - startLevelAtk - startLevelDef - startLevelAtkSpd - startLevelCritRate - startLevelCritDmg - startLevelLuck +
+            levelStatMaxHp + levelStatAtk + levelStatDef + levelStatAtkSpd + levelStatCritRate + levelStatCritDmg + levelStatLuck +
+            //startLevelMaxHp + startLevelAtk + startLevelDef + startLevelAtkSpd + startLevelCritRate + startLevelCritDmg + startLevelLuck +
             availableStatPoints +
             1;
 
         currentLevel = Math.Min(currentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if (currentLevel > UtilsWarrior.MAX_LEVEL_WARRIOR)
+        if (currentLevel >= UtilsWarrior.MAX_LEVEL_WARRIOR)
         {
             availableStatPoints = 0;
             currentExp = 0;
@@ -274,7 +271,7 @@ public class PlayerFightData : IBasePlayerData
     public void AddExp(int amount)
     {
         // check max level
-        if (currentLevel > UtilsWarrior.MAX_LEVEL_WARRIOR)
+        if (currentLevel >= UtilsWarrior.MAX_LEVEL_WARRIOR)
         {
             // set current exp to 0
             currentExp = 0;

@@ -115,15 +115,15 @@ public class PlayerFisherData : IBasePlayerData
         currentExp = saveData.currentExp;
 
         int sumLevels =
-            levelStatCalmness + levelstatReflex + levelstatKnowledge + levelStatLuck -
-            startLevelCalmness - startLevelReflex - startLevelKnowledge - startLevelLuck +
+            levelStatCalmness + levelstatReflex + levelstatKnowledge + levelStatLuck +
+            //startLevelCalmness + startLevelReflex + startLevelKnowledge + startLevelLuck +
             availableStatPoints +
             1;
 
         currentLevel = Math.Min(currentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if (currentLevel > UtilsFisher.MAX_LEVEL_FISHER)
+        if (currentLevel >= UtilsFisher.MAX_LEVEL_FISHER)
         {
             availableStatPoints = 0;
             currentExp = 0;
@@ -223,7 +223,7 @@ public class PlayerFisherData : IBasePlayerData
     public void AddExp(long amount)
     {
         // check max level
-        if (currentLevel > UtilsFisher.MAX_LEVEL_FISHER)
+        if (currentLevel >= UtilsFisher.MAX_LEVEL_FISHER)
         {
             // set current exp to 0
             currentExp = 0;

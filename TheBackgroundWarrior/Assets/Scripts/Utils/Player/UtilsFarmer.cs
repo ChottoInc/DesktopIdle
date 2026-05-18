@@ -50,7 +50,8 @@ public static class UtilsFarmer
            PER_LEVEL_FARMER_MAX_GREENTHUMB +
            PER_LEVEL_FARMER_MAX_AGRONOMY +
            PER_LEVEL_FARMER_MAX_KINDNESS +
-           PER_LEVEL_FARMER_MAX_LUCK;
+           PER_LEVEL_FARMER_MAX_LUCK +
+           1;
 
 
         BASE_FARMER_EXP_GROWTH = jobDataSO.BaseExpGrowth;
@@ -67,6 +68,6 @@ public static class UtilsFarmer
         if (level <= 1) return 0;
 
         // Formula: baseExp * (growthRate^(level-1) - 1)
-        return (long)(BASE_FARMER_EXP_GROWTH * Mathf.Pow(EXPO_FARMER_EXP_GROWTH, level) + FLAT_FARMER_EXP_GROWTH * level);
+        return (long)(BASE_FARMER_EXP_GROWTH * Mathf.Pow(level, EXPO_FARMER_EXP_GROWTH) + FLAT_FARMER_EXP_GROWTH * level);
     }
 }

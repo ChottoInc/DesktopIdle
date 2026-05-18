@@ -61,7 +61,8 @@ public static class UtilsWarrior
             PER_LEVEL_WARRIOR_MAX_ATK_SPEED +
             PER_LEVEL_WARRIOR_MAX_CRIT_RATE +
             PER_LEVEL_WARRIOR_MAX_CRIT_DMG +
-            PER_LEVEL_WARRIOR_MAX_LUCK;
+            PER_LEVEL_WARRIOR_MAX_LUCK +
+            1;
 
 
         BASE_FIGHT_EXP_GROWTH = jobDataSO.BaseExpGrowth;

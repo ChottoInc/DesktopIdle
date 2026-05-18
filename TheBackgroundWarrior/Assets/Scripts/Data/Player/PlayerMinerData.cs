@@ -96,15 +96,15 @@ public class PlayerMinerData : IBasePlayerData
         currentExp = saveData.currentExp;
 
         int sumLevels =
-            levelStatPower + levelSmashSpeed + levelShockwave + levelStatLuck -
-            startLevelPower - startLevelSmashSpeed - startLevelShockwave - startLevelLuck +
+            levelStatPower + levelSmashSpeed + levelShockwave + levelStatLuck +
+            //startLevelPower + startLevelSmashSpeed + startLevelShockwave + startLevelLuck +
             availableStatPoints +
             1;
 
         currentLevel = Math.Min(currentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if (currentLevel > UtilsMiner.MAX_LEVEL_MINER)
+        if (currentLevel >= UtilsMiner.MAX_LEVEL_MINER)
         {
             availableStatPoints = 0;
             currentExp = 0;
@@ -161,7 +161,7 @@ public class PlayerMinerData : IBasePlayerData
     public void AddExp(long amount)
     {
         // check max level
-        if (currentLevel > UtilsMiner.MAX_LEVEL_MINER)
+        if (currentLevel >= UtilsMiner.MAX_LEVEL_MINER)
         {
             // set current exp to 0
             currentExp = 0;

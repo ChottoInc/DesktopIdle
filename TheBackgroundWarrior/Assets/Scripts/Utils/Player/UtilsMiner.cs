@@ -49,7 +49,8 @@ public static class UtilsMiner
             PER_LEVEL_MINER_MAX_POWER +
             PER_LEVEL_MINER_MAX_SMASHSPEED +
             PER_LEVEL_MINER_MAX_SHOCKWAVE +
-            PER_LEVEL_MINER_MAX_LUCK;
+            PER_LEVEL_MINER_MAX_LUCK +
+            1;
 
 
         BASE_MINER_EXP_GROWTH = jobDataSO.BaseExpGrowth;

@@ -81,11 +81,11 @@ public static class UtilsCombatMap
     // Used to calculate from base exp given
     public static float[] DifficultyExpMultiplier = 
     {
-        1.0f,   // VeryEasy
-        1.5f,  // Easy
-        2.0f,   // Normal
-        2.5f,   // Hard
-        3.0f    // VeryHard
+        0.85f,   // VeryEasy
+        0.95f,   // Easy
+        1.25f,   // Normal
+        1.55f,   // Hard
+        2.0f    // VeryHard
     };
 
     // Used to calculate actual stats
@@ -104,9 +104,9 @@ public static class UtilsCombatMap
     /// </summary>
     public static int GetEnemyExp(int enemyLevel, MapDifficulty difficulty)
     {
-        float baseExp = 8f;
+        float baseExp = 7f;
         float exp = baseExp
-                    * Mathf.Pow(enemyLevel, 1.05f)
+                    * Mathf.Pow(enemyLevel, 1.035f)
                     * DifficultyExpMultiplier[(int)difficulty];
 
         return Mathf.FloorToInt(exp);

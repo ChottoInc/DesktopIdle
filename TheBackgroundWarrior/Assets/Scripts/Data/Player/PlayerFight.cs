@@ -115,7 +115,7 @@ public class PlayerFight : Player, IDamageable
 
     private IEnumerator CoSpawned()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         // change rb type
         rb.bodyType = RigidbodyType2D.Kinematic;
@@ -264,6 +264,7 @@ public class PlayerFight : Player, IDamageable
             playerData.OnAddMap += OnAddMapFight;
         }
 
+        playerData.ResetAfterStage();
         hpBar.Setup(playerData.MaxHp, playerData.CurrentHp);
     }
 

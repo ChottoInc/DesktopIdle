@@ -51,7 +51,8 @@ public static class UtilsFisher
            PER_LEVEL_FISHER_MAX_CALMNESS +
            PER_LEVEL_FISHER_MAX_REFLEX +
            PER_LEVEL_FISHER_MAX_KNOWLEDGE + 
-           PER_LEVEL_FISHER_MAX_LUCK;
+           PER_LEVEL_FISHER_MAX_LUCK +
+           1;
 
 
         BASE_FISHER_EXP_GROWTH = jobDataSO.BaseExpGrowth;
@@ -67,6 +68,6 @@ public static class UtilsFisher
         if (level <= 1) return 0;
 
         // Formula: baseExp * (growthRate^(level-1) - 1)
-        return (long)(BASE_FISHER_EXP_GROWTH * Mathf.Pow(EXPO_FISHER_EXP_GROWTH, level) + FLAT_FISHER_EXP_GROWTH * level);
+        return (long)(BASE_FISHER_EXP_GROWTH * Mathf.Pow(level, EXPO_FISHER_EXP_GROWTH) + FLAT_FISHER_EXP_GROWTH * level);
     }
 }
