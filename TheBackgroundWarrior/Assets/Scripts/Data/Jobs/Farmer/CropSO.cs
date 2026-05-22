@@ -9,6 +9,7 @@ public class CropSO : ScriptableObject
     [SerializeField] float baseGrowthTime;
 
     [Space(10)]
+    [SerializeField] string itemNameTextId;
     [SerializeField] string cropName;
 
     [Space(10)]
@@ -25,7 +26,14 @@ public class CropSO : ScriptableObject
 
     public float BaseGrowthTime => baseGrowthTime;
 
-    public string CropName => cropName;
+    public string CropName
+    {
+        get
+        {
+            string res = UtilsText.ItemNamesTextDictionary[itemNameTextId];
+            if (res != null) return res; else return cropName;
+        }
+    }
 
     public Sprite SpriteSeed => spriteSeed;
     public Sprite[] SpriteCrop => spriteCrop;

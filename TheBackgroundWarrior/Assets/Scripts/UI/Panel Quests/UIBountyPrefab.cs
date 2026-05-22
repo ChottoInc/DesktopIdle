@@ -4,6 +4,7 @@ using UnityEngine;
 public class UIBountyPrefab : MonoBehaviour
 {
     [SerializeField] TMP_Text textBounty;
+    [SerializeField] TMP_Text textAccept;
 
     private UIPanelBountiesList panelBounties;
 
@@ -16,7 +17,7 @@ public class UIBountyPrefab : MonoBehaviour
 
         // set reward
         int rewardAmount = data.rewardAmount;
-        string rewardString = string.Format("Reward: {0} bits", rewardAmount);
+        string rewardString = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_reward_bounty], rewardAmount);
 
         // set description
         string questDesc = string.Format("{0}\n{1}", UtilsQuest.GetQuestDescription(data), rewardString);
@@ -24,6 +25,8 @@ public class UIBountyPrefab : MonoBehaviour
         
 
         textBounty.text = questDesc;
+
+        textAccept.text = UtilsText.AllTextDictionary[UtilsText.text_button_accept];
     }
 
     public void OnButtonAccept()

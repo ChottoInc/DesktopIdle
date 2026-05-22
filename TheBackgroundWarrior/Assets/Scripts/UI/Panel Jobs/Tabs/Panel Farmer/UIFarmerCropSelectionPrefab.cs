@@ -41,8 +41,8 @@ public class UIFarmerCropSelectionPrefab : MonoBehaviour
 
         string text = string.Format(
             "{0}\n" +
-            "Base growth time: {1}m{2}s\n" +
-            "Attracts:\n" +
+            UtilsText.AllTextDictionary[UtilsText.text_job_farmer_crop_basegrowthtime],
+            UtilsText.AllTextDictionary[UtilsText.text_job_farmer_crop_attracts],
             "{3}",
             cropSO.CropName,
             Mathf.FloorToInt(cropSO.BaseGrowthTime / 60f),

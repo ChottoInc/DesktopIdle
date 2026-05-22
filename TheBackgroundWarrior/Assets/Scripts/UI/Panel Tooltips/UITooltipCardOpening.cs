@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UITooltipCardOpening : UITooltipBase
@@ -10,6 +11,9 @@ public class UITooltipCardOpening : UITooltipBase
     private List<CardSO> cards;
 
     private List<GameObject> cardObjs;
+
+    [Header("Texts")]
+    [SerializeField] TMP_Text textButtonrevealAll;
 
     
 
@@ -26,6 +30,13 @@ public class UITooltipCardOpening : UITooltipBase
         Setup();
 
         Appear(fade);
+
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textButtonrevealAll.text = UtilsText.AllTextDictionary[UtilsText.text_button_revealall];
     }
 
     public void Hide(bool fade = false)

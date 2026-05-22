@@ -66,6 +66,14 @@ public class UITabJobBlacksmith : UITabWindow
 
     private List<ItemGroup> requirements;
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textTitle;
+    [SerializeField] TMP_Text textJobDescription;
+    [SerializeField] TMP_Text textRequirementsLevelUp;
+    [SerializeField] TMP_Text textButtonLevelUp;
+    [SerializeField] TMP_Text textButtonForge;
+
+
 
     private bool isInitialized;
 
@@ -139,6 +147,17 @@ public class UITabJobBlacksmith : UITabWindow
         panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_BLACKSMITH_TAB);
 
         RefreshRequirements();
+
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_jobs_back];
+        textJobDescription.text = UtilsText.HelpTextDictionary[UtilsText.text_description_blacksmith];
+        textRequirementsLevelUp.text = UtilsText.AllTextDictionary[UtilsText.text_job_blacksmith_requirements_levelup];
+        textButtonLevelUp.text = UtilsText.AllTextDictionary[UtilsText.text_button_levelup];
+        textButtonForge.text = UtilsText.AllTextDictionary[UtilsText.text_button_forge];
     }
 
     private void InitializedIfNeeded()

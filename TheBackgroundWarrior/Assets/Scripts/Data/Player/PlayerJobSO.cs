@@ -8,6 +8,7 @@ public class PlayerJobSO : ScriptableObject
 
     [Space(10)]
     [SerializeField] string jobName;
+    [SerializeField] string unlockConditionsTextId;
     [SerializeField] string unlockConditions;
 
 
@@ -15,5 +16,12 @@ public class PlayerJobSO : ScriptableObject
     public UtilsPlayer.PlayerJob[] RequiredJobs => requiredJobs;
 
     public string JobName => jobName;
-    public string JobUnlockConditions => unlockConditions;
+    public string JobUnlockConditions
+    {
+        get
+        {
+            string res = UtilsText.ItemNamesTextDictionary[unlockConditionsTextId];
+            if (res != null) return res; else return unlockConditions;
+        }
+    }
 }

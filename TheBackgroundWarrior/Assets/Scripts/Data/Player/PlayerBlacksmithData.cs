@@ -139,7 +139,8 @@ public class PlayerBlacksmithData : IBasePlayerData
         // reset available points to 0 if previous bugs occured, and set exp to 0
         if(currentLevel >= UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
         {
-            availableStatPoints = 0;
+            availableStatPoints = UtilsBlacksmith.MAX_LEVEL_BLACKSMITH - 1 -
+                levelStatCraftSpeed - levelEfficiency - levelStatLuck - levelStatMetallurgy;
             currentExp = 0;
         }
 

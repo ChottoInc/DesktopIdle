@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using static UtilsText;
+
 public static class UtilsPlayer
 {
     public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher, Farmer }
@@ -229,38 +231,73 @@ public static class UtilsPlayer
         return false;
     }
 
+    public static string GetQuestStatNameById(int id)
+    {
+        switch (id)
+        {
+            default: return "Error";
+            case ID_WARRIOR_MAXHP: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_warrior]);
+            case ID_WARRIOR_ATK: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_warrior]);
+            case ID_WARRIOR_DEF: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_warrior]);
+            case ID_WARRIOR_ATKSPD: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_warrior]);
+            case ID_WARRIOR_CRITRATE: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_warrior]);
+            case ID_WARRIOR_CRITDMG: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_warrior]);
+            case ID_WARRIOR_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_warrior]);
+
+            case ID_MINER_POWER: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_miner]);
+            case ID_MINER_SMASHSPEED: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_miner]);
+            case ID_MINER_SHOCKWAVE: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_miner]);
+            case ID_MINER_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_miner]);
+
+            case ID_BLACKSMITH_CRAFTSPEED: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_blacksmith]);
+            case ID_BLACKSMITH_EFFICIENCY: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_blacksmith]);
+            case ID_BLACKSMITH_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_blacksmith]);
+            case ID_BLACKSMITH_METALLURGY: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_blacksmith]);
+
+            case ID_FISHER_CALMNESS: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_fisher]);
+            case ID_FISHER_REFLEX: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_fisher]);
+            case ID_FISHER_KNOWLEDGE: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_fisher]);
+            case ID_FISHER_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_fisher]);
+
+            case ID_FARMER_GREENTHUMB: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_farmer]);
+            case ID_FARMER_AGRONOMY: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_farmer]);
+            case ID_FARMER_KINDNESS: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_farmer]);
+            case ID_FARMER_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllTextDictionary[text_name_class_farmer]);
+        }
+    }
+    
     public static string GetStatNameById(int id)
     {
         switch (id)
         {
             default: return "Error";
-            case ID_WARRIOR_MAXHP: return "Max HP (Warrior)";
-            case ID_WARRIOR_ATK: return "Atk (Warrior)";
-            case ID_WARRIOR_DEF: return "Def (Warrior)";
-            case ID_WARRIOR_ATKSPD: return "Atk Speed (Warrior)";
-            case ID_WARRIOR_CRITRATE: return "Crit Rate (Warrior)";
-            case ID_WARRIOR_CRITDMG: return "Crit Dmg (Warrior)";
-            case ID_WARRIOR_LUCK: return "Luck (Warrior)";
+            case ID_WARRIOR_MAXHP: return AllTextDictionary[text_name_warrior_stat_maxhp];
+            case ID_WARRIOR_ATK: return AllTextDictionary[text_name_warrior_stat_atk];
+            case ID_WARRIOR_DEF: return AllTextDictionary[text_name_warrior_stat_def];
+            case ID_WARRIOR_ATKSPD: return AllTextDictionary[text_name_warrior_stat_atkspd];
+            case ID_WARRIOR_CRITRATE: return AllTextDictionary[text_name_warrior_stat_critrate];
+            case ID_WARRIOR_CRITDMG: return AllTextDictionary[text_name_warrior_stat_critdmg];
+            case ID_WARRIOR_LUCK: return AllTextDictionary[text_name_warrior_stat_luck];
 
-            case ID_MINER_POWER: return "Power (Miner)";
-            case ID_MINER_SMASHSPEED: return "Smash Spd (Miner)";
-            case ID_MINER_SHOCKWAVE: return "Shockwave (Miner)";
-            case ID_MINER_LUCK: return "Luck (Miner)";
+            case ID_MINER_POWER: return AllTextDictionary[text_name_miner_stat_power];
+            case ID_MINER_SMASHSPEED: return AllTextDictionary[text_name_miner_stat_smashspeed];
+            case ID_MINER_SHOCKWAVE: return AllTextDictionary[text_name_miner_stat_shockwave];
+            case ID_MINER_LUCK: return AllTextDictionary[text_name_miner_stat_luck];
 
-            case ID_BLACKSMITH_CRAFTSPEED: return "Craft Speed (Blacksmith)";
-            case ID_BLACKSMITH_EFFICIENCY: return "Efficiency (Blacksmith)";
-            case ID_BLACKSMITH_LUCK: return "Luck (Blacksmith)";
-            case ID_BLACKSMITH_METALLURGY: return "Metallurgy (Blacksmith)";
+            case ID_BLACKSMITH_CRAFTSPEED: return AllTextDictionary[text_name_blacksmith_stat_craftspeed];
+            case ID_BLACKSMITH_EFFICIENCY: return AllTextDictionary[text_name_blacksmith_stat_efficiency];
+            case ID_BLACKSMITH_LUCK: return AllTextDictionary[text_name_blacksmith_stat_luck];
+            case ID_BLACKSMITH_METALLURGY: return AllTextDictionary[text_name_blacksmith_stat_metallurgy];
 
-            case ID_FISHER_CALMNESS: return "Calmness (Fisher)";
-            case ID_FISHER_REFLEX: return "Reflex (Fisher)";
-            case ID_FISHER_KNOWLEDGE: return "Knowledge (Fisher)";
-            case ID_FISHER_LUCK: return "Luck (Fisher)";
+            case ID_FISHER_CALMNESS: return AllTextDictionary[text_name_fisher_stat_calmness];
+            case ID_FISHER_REFLEX: return AllTextDictionary[text_name_fisher_stat_reflex];
+            case ID_FISHER_KNOWLEDGE: return AllTextDictionary[text_name_fisher_stat_knowledge];
+            case ID_FISHER_LUCK: return AllTextDictionary[text_name_fisher_stat_luck];
 
-            case ID_FARMER_GREENTHUMB: return "Green Thumb (Farmer)";
-            case ID_FARMER_AGRONOMY: return "Agronomy (Farmer)";
-            case ID_FARMER_KINDNESS: return "Kindness (Farmer)";
-            case ID_FARMER_LUCK: return "Luck (Farmer)";
+            case ID_FARMER_GREENTHUMB: return AllTextDictionary[text_name_farmer_stat_greenthumb];
+            case ID_FARMER_AGRONOMY: return AllTextDictionary[text_name_farmer_stat_agronomy];
+            case ID_FARMER_KINDNESS: return AllTextDictionary[text_name_farmer_stat_kindness];
+            case ID_FARMER_LUCK: return AllTextDictionary[text_name_farmer_stat_luck];
         }
     }
 }

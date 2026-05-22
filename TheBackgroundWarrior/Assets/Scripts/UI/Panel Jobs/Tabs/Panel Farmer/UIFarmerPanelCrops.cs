@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class UIFarmerPanelCrops : MonoBehaviour
@@ -20,6 +21,12 @@ public class UIFarmerPanelCrops : MonoBehaviour
     [SerializeField] UIFarmerSideCompanionInfo equipped1Info;
     [SerializeField] UIFarmerSideCompanionInfo equipped2Info;
     [SerializeField] UIFarmerSideCompanionInfo equipped3Info;
+
+    [Header("Texts")]
+    [SerializeField] TMP_Text textJobDescription;
+    [SerializeField] TMP_Text textCompanionDesc;
+    [SerializeField] TMP_Text textButtonFarm;
+    [SerializeField] TMP_Text textButtonCompanions;
 
     public void Setup()
     {
@@ -48,6 +55,16 @@ public class UIFarmerPanelCrops : MonoBehaviour
                 case 2: equipped3Info.Setup(equipped.companionData); break;
             }
         }
+
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textJobDescription.text = UtilsText.HelpTextDictionary[UtilsText.text_description_farmer_crops];
+        textCompanionDesc.text = UtilsText.AllTextDictionary[UtilsText.text_job_farmer_crop_companiondesc];
+        textButtonFarm.text = UtilsText.AllTextDictionary[UtilsText.text_button_farm];
+        textButtonCompanions.text = UtilsText.AllTextDictionary[UtilsText.text_button_companions];
     }
 
     public void OpenPanelSelectionCrops(int slot)

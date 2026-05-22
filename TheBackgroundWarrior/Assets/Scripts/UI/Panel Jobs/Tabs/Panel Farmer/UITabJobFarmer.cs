@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class UITabJobFarmer : UITabWindow
@@ -8,6 +9,9 @@ public class UITabJobFarmer : UITabWindow
     [SerializeField] UIFarmerPanelCrops panelCrops;
     [SerializeField] UIFarmerPanelCompanions panelCompanions;
 
+
+    [Header("Texts")]
+    [SerializeField] TMP_Text textTitle;
 
 
     private PlayerFarmer player;
@@ -30,6 +34,13 @@ public class UITabJobFarmer : UITabWindow
 
         panelCrops.Setup();
         panelCompanions.gameObject.SetActive(false);
+
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_jobs_back];
     }
 
     public void OnButtonBack()

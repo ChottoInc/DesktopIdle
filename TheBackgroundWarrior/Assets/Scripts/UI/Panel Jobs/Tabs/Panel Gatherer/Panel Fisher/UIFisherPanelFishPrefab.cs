@@ -37,8 +37,8 @@ public class UIFisherPanelFishPrefab : MonoBehaviour
         {
             itemName = string.Format(
                 "{0}\n" +                       //name
-                "<color=#{1}>{2}</color>\n" +   // rarity color and rarity name
-                "Spawn time: {3}",              // spawn moment in day
+                UtilsText.AllTextDictionary[UtilsText.text_job_fisher_raritytooltip] +   // rarity color and rarity name
+                UtilsText.AllTextDictionary[UtilsText.text_job_fisher_spawntime],              // spawn moment in day
                 
                 fishSO.ItemName,
                 UtilsItem.GetFishRarityColor(fishSO.FishRarity),

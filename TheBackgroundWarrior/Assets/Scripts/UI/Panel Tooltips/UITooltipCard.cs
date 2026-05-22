@@ -41,13 +41,13 @@ public class UITooltipCard : MonoBehaviour
         imageCard.sprite = cardSO.Sprite;
 
         imageRarity.color = UtilsGeneral.GetColorByRarity(cardSO.CardRarity);
-        textRarity.text = $"{cardSO.CardRarity}";
+        textRarity.text = cardSO.CardRarityName;
 
         textNumber.text = $"{cardSO.CardNumber}";
 
         textName.text = cardSO.ItemName;
 
-        textDesc.text = cardSO.CardDescription;
+        textDesc.text = cardSO.ItemDesc;
 
         gameObject.SetActive(true);
 

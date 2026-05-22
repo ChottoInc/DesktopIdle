@@ -112,29 +112,12 @@ public class UITabPlayerJob : UITabWindow
     {
         switch (idTab)
         {
-            default:
-                textJob.text = "Jobs";
-                break;
-
-            case ID_WARRIOR_TAB:
-                textJob.text = "Warrior";
-                break;
-
-            case ID_MINER_TAB:
-                textJob.text = "Miner";
-                break;
-
-            case ID_BLACKSMITH_TAB:
-                textJob.text = "Blacksmith";
-                break;
-
-            case ID_FISHER_TAB:
-                textJob.text = "Fisher";
-                break;
-
-            case ID_FARMER_TAB:
-                textJob.text = "Farmer";
-                break;
+            default: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_title_jobs]; break;
+            case ID_WARRIOR_TAB: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_warrior]; break;
+            case ID_MINER_TAB: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_miner]; break;
+            case ID_BLACKSMITH_TAB: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_blacksmith]; break;
+            case ID_FISHER_TAB: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_fisher]; break;
+            case ID_FARMER_TAB: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_farmer]; break;
         }
     }
 

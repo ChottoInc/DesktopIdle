@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,20 @@ public class UITabSettingsGameplay : UITabWindow
     [SerializeField] Toggle toggleInvertedFishingSpot;
     [SerializeField] Toggle toggleHideFishingBar;
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textTitleBattle;
+    [SerializeField] TMP_Text textTitleHUD;
+    [SerializeField] TMP_Text textInvertedHUD;
+    [SerializeField] TMP_Text textTitleFloatingHUD;
+    [SerializeField] TMP_Text textDamage;
+    [SerializeField] TMP_Text textItemCollected;
+    [SerializeField] TMP_Text textTooltips;
+    [SerializeField] TMP_Text textTitleAnimations;
+    [SerializeField] TMP_Text textEquipmentLevelUp;
+    [SerializeField] TMP_Text textTitleFisher;
+    [SerializeField] TMP_Text textInvertFishingSpot;
+    [SerializeField] TMP_Text textHideFishingBar;
+
     private void Awake()
     {
         panelAutoBattleSettings.OnSet += OnToggleAutoBattleSettings;
@@ -43,6 +58,8 @@ public class UITabSettingsGameplay : UITabWindow
         base.Open();
 
         Setup();
+
+        RefreshTexts();
     }
 
     private void Setup()
@@ -75,6 +92,22 @@ public class UITabSettingsGameplay : UITabWindow
 
         if (toggleHideFishingBar != null)
             toggleHideFishingBar.SetIsOnWithoutNotify(SettingsManager.Instance.IsHiddenFishingBar);
+    }
+
+    private void RefreshTexts()
+    {
+        textTitleBattle.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_titlebattle];
+        textTitleHUD.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_titlehud];
+        textInvertedHUD.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_option_invertedhud];
+        textTitleFloatingHUD.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_titlefloatinghud];
+        textDamage.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_option_damage];
+        textItemCollected.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_option_itemcollected];
+        textTooltips.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_option_tooltips];
+        textTitleAnimations.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_titleanimations];
+        textEquipmentLevelUp.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_option_equipmentlevelup];
+        textTitleFisher.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_titlefisher];
+        textInvertFishingSpot.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_option_invertfishingspot];
+        textHideFishingBar.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_option_hidefishingbar];
     }
 
 

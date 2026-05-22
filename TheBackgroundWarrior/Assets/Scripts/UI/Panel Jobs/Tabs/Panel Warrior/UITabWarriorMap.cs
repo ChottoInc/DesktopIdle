@@ -25,6 +25,11 @@ public class UITabWarriorMap : MonoBehaviour
 
     private bool isShowingTooltip;
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textFight;
+
+
+
     private UITabJobWarrior uiTabWarrior;
     private CombatMapSO mapSO;
     private ScrollRect scroll;
@@ -43,7 +48,7 @@ public class UITabWarriorMap : MonoBehaviour
         textMapName.text = mapSO.MapName;
 
         CombatMapSaveData mapData = SettingsManager.Instance.GetCombatMapSaveData(mapSO);
-        textMapStage.text = string.Format("Stage: {0}/{1}", mapData.currentStage, mapSO.Stages);
+        textMapStage.text = string.Format(UtilsText.AllTextDictionary[UtilsText.text_job_warrior_mapstage], mapData.currentStage, mapSO.Stages);
 
         if (PlayerManager.Instance.PlayerFightData.AvailableMaps.Contains(mapSO.IdMap))
         {
@@ -58,6 +63,13 @@ public class UITabWarriorMap : MonoBehaviour
 
             buttonMap.interactable = false;
         }
+
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textFight.text = UtilsText.AllTextDictionary[UtilsText.text_button_fight];
     }
 
     public void OnButtonClick()
@@ -107,7 +119,7 @@ public class UITabWarriorMap : MonoBehaviour
         }
 
         string text = string.Format(
-            "Possible monsters:\n" +
+            UtilsText.AllTextDictionary[UtilsText.text_job_warrior_possiblemonsters] +
             "{0}",
             possibleMonsters);
 

@@ -125,7 +125,8 @@ public class PlayerFisherData : IBasePlayerData
         // reset available points to 0 if previous bugs occured, and set exp to 0
         if (currentLevel >= UtilsFisher.MAX_LEVEL_FISHER)
         {
-            availableStatPoints = 0;
+            availableStatPoints = UtilsFisher.MAX_LEVEL_FISHER - 1 -
+               levelStatCalmness - levelstatReflex - levelstatKnowledge - levelStatLuck;
             currentExp = 0;
         }
 

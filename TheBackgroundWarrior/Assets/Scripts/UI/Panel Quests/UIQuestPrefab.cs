@@ -15,6 +15,9 @@ public class UIQuestPrefab : MonoBehaviour
     [SerializeField] GameObject panelReward;
     [SerializeField] TMP_Text textReward;
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textClaim;
+
 
     private UITabQuestsStory questStoryWindow;
     private UITabQuestsBounties questBountiesWindow;
@@ -42,6 +45,8 @@ public class UIQuestPrefab : MonoBehaviour
         SetupQuest(questType, storyQuestId, questData, questDataProgress);
 
         UpdateProgressBarUI(questData, questDataProgress);
+
+        RefreshTexts();
     }
 
     public void Setup(UITabQuestsBounties questWindow, UtilsQuest.QuestType questType, string bountyQuestId, UtilsQuest.QuestData questData, UtilsQuest.QuestDataProgress questDataProgress)
@@ -51,6 +56,8 @@ public class UIQuestPrefab : MonoBehaviour
         SetupQuest(questType, bountyQuestId, questData, questDataProgress);
 
         UpdateProgressBarUI(questData, questDataProgress);
+
+        RefreshTexts();
     }
 
     public void Setup(UITabQuestsDaily questWindow, UtilsQuest.QuestType questType, string storyQuestId, UtilsQuest.QuestData questData, UtilsQuest.QuestDataProgress questDataProgress)
@@ -60,6 +67,8 @@ public class UIQuestPrefab : MonoBehaviour
         SetupQuest(questType, storyQuestId, questData, questDataProgress);
 
         UpdateProgressBarUI(questData, questDataProgress);
+
+        RefreshTexts();
     }
 
     private void SetupQuest(UtilsQuest.QuestType questType, string questId, UtilsQuest.QuestData questData, UtilsQuest.QuestDataProgress questDataProgress)
@@ -88,6 +97,12 @@ public class UIQuestPrefab : MonoBehaviour
         rewardAmount = questData.rewardAmount;
 
         textReward.text = rewardAmount.ToString();
+    }
+
+
+    private void RefreshTexts()
+    {
+        textClaim.text = UtilsText.AllTextDictionary[UtilsText.text_button_claim];
     }
 
     private void UpdateProgressBarUI(UtilsQuest.QuestData data, UtilsQuest.QuestDataProgress progress)

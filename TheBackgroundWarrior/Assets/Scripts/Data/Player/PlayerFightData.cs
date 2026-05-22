@@ -199,7 +199,8 @@ public class PlayerFightData : IBasePlayerData
         // reset available points to 0 if previous bugs occured, and set exp to 0
         if (currentLevel >= UtilsWarrior.MAX_LEVEL_WARRIOR)
         {
-            availableStatPoints = 0;
+            availableStatPoints = UtilsWarrior.MAX_LEVEL_WARRIOR - 1 -
+                levelStatMaxHp - levelStatAtk - levelStatDef - levelStatAtkSpd - levelStatCritRate - levelStatCritDmg - levelStatLuck;
             currentExp = 0;
         }
 

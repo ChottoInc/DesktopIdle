@@ -12,6 +12,7 @@ public class UIStatusIncreaseStat : MonoBehaviour
 
     [Space(10)]
     [SerializeField] TMP_Text textStatLevel;
+    [SerializeField] TMP_Text textStatName;
 
     [Space(10)]
     [SerializeField] Button buttonDecrease;
@@ -50,6 +51,13 @@ public class UIStatusIncreaseStat : MonoBehaviour
         CheckEnableButton();
 
         UpdateLevelUI();
+
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textStatName.text = UtilsPlayer.GetStatNameById(idStat);
     }
 
 
@@ -58,11 +66,11 @@ public class UIStatusIncreaseStat : MonoBehaviour
         if(tempLevel != currentLevel)
         {
             // show old and new level if there have been changes
-            textStatLevel.text = $"Lv. {currentLevel} >> Lv. {tempLevel}";
+            textStatLevel.text = string.Format(UtilsText.AllTextDictionary[UtilsText.text_job_change_stat_level], currentLevel, tempLevel);
         }
         else
         {
-            textStatLevel.text = $"Lv. {currentLevel}";
+            textStatLevel.text = string.Format(UtilsText.AllTextDictionary[UtilsText.text_job_current_stat_level], currentLevel);
         }
     }
 

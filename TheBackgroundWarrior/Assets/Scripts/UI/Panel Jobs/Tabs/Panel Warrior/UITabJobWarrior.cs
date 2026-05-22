@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,11 @@ public class UITabJobWarrior : UITabWindow
 
     private ItemSO[] cards;
     private List<GameObject> cardObjs;
+
+    [Header("Texts")]
+    [SerializeField] TMP_Text textTitle;
+    [SerializeField] TMP_Text textTitleMaps;
+    [SerializeField] TMP_Text textJobDescription;
 
     private PlayerFight player;
 
@@ -52,6 +58,15 @@ public class UITabJobWarrior : UITabWindow
         {
             RefreshCards();
         }
+
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_jobs_back];
+        textTitleMaps.text = UtilsText.AllTextDictionary[UtilsText.text_title_jobs_warrior_maps];
+        textJobDescription.text = UtilsText.HelpTextDictionary[UtilsText.text_description_warrior];
     }
 
     public void OnButtonBack()

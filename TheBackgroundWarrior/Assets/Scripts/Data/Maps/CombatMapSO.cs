@@ -4,6 +4,7 @@ using UnityEngine;
 public class CombatMapSO : ScriptableObject
 {
     [SerializeField] int idMap;
+    [SerializeField] string mapNameId;
     [SerializeField] string mapName;
     [SerializeField] string mapSceneName;
 
@@ -17,7 +18,15 @@ public class CombatMapSO : ScriptableObject
     [SerializeField] CombatMapSO nextMap;
 
     public int IdMap => idMap;
-    public string MapName => mapName;
+    public string MapName
+    {
+        get
+        {
+            string res = UtilsText.AllTextDictionary[mapNameId];
+            if (res != null) return res; else return mapName;
+        }
+    }
+
     public string MapSceneName => mapSceneName;
 
     public UtilsCombatMap.MapDifficulty MapDifficuty => mapDifficulty;

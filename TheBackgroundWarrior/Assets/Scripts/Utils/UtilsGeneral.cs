@@ -10,6 +10,27 @@ public static class UtilsGeneral
 
     public enum DayMoment { Morning, Afternoon, Evening, Night }
 
+
+
+
+    public static void Initialize()
+    {
+        TUTORIAL_INTRO_1 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_1];
+        TUTORIAL_INTRO_2 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_2];
+        TUTORIAL_INTRO_3 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_3];
+        TUTORIAL_INTRO_4 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_4];
+        TUTORIAL_INTRO_5 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_5];
+        TUTORIAL_INTRO_6 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_6];
+        TUTORIAL_INTRO_7 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_7];
+        TUTORIAL_INTRO_8 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_8];
+        TUTORIAL_INTRO_9 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_9];
+        TUTORIAL_INTRO_10 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_10];
+        TUTORIAL_INTRO_11 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_11];
+    }
+
+
+
+
     public static DayMoment GetDayMoment()
     {
         int hour = System.DateTime.Now.Hour;
@@ -33,10 +54,10 @@ public static class UtilsGeneral
         switch(dayMoment)
         {
             default:
-            case DayMoment.Morning: return "Morning";
-            case DayMoment.Afternoon: return "Afternoon";
-            case DayMoment.Evening: return "Evening";
-            case DayMoment.Night: return "Night";
+            case DayMoment.Morning: return UtilsText.AllTextDictionary[UtilsText.text_name_daymoment_morning];
+            case DayMoment.Afternoon: return UtilsText.AllTextDictionary[UtilsText.text_name_daymoment_afternoon];
+            case DayMoment.Evening: return UtilsText.AllTextDictionary[UtilsText.text_name_daymoment_evening];
+            case DayMoment.Night: return UtilsText.AllTextDictionary[UtilsText.text_name_daymoment_night];
         }
     }
 
@@ -158,23 +179,23 @@ public static class UtilsGeneral
     public const int ID_INTRO_TUTORIAL = 0;
 
 
-    private const string TUTORIAL_INTRO_1 = "This is the background Warrior.";
-    private const string TUTORIAL_INTRO_2 = "He will keep fighting even when you are not looking.";
-    private const string TUTORIAL_INTRO_3 = "Defeat monsters to advance the stages.";
-    private const string TUTORIAL_INTRO_4 = "Once all the stages are cleared, a new map will be unlocked.";
-
-    private const string TUTORIAL_INTRO_5 = "On the right side of the screen you will find various menus.";
-    private const string TUTORIAL_INTRO_6 = "Click on the STATS icon to increase stats level.";
-
-    private const string TUTORIAL_INTRO_7 = "If you want to select a different job, click on the JOB icon.";
-    private const string TUTORIAL_INTRO_8 = "You can find more informations about jobs in the HELP section of the SETTINGS menu.";
-
-
-    private const string TUTORIAL_INTRO_9 = "Check your items using the INVENTORY icon.";
-
-    private const string TUTORIAL_INTRO_10 = "Click on the QUESTS icon to check your progress and claim your rewards.";
-
-    private const string TUTORIAL_INTRO_11 = "Spend Bits in the shop to purchase cards and jobs.";
+    private static string TUTORIAL_INTRO_1 = "This is the background Warrior.";
+    private static string TUTORIAL_INTRO_2 = "He will keep fighting even when you are not looking.";
+    private static string TUTORIAL_INTRO_3 = "Defeat monsters to advance the stages.";
+    private static string TUTORIAL_INTRO_4 = "Once all the stages are cleared, a new map will be unlocked.";
+            
+    private static string TUTORIAL_INTRO_5 = "On the right side of the screen you will find various menus.";
+    private static string TUTORIAL_INTRO_6 = "Click on the STATS icon to increase stats level.";
+            
+    private static string TUTORIAL_INTRO_7 = "If you want to select a different job, click on the JOB icon.";
+    private static string TUTORIAL_INTRO_8 = "You can find more informations about jobs in the HELP section of the SETTINGS menu.";
+            
+            
+    private static string TUTORIAL_INTRO_9 = "Check your items using the INVENTORY icon.";
+            
+    private static string TUTORIAL_INTRO_10 = "Click on the QUESTS icon to check your progress and claim your rewards.";
+            
+    private static string TUTORIAL_INTRO_11 = "Spend Bits in the shop to purchase cards and jobs.";
 
     /// <summary>
     /// Struct containing the dialogue and if the text panel need to move to next position

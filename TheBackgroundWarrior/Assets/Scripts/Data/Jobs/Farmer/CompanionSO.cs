@@ -4,6 +4,7 @@ using UnityEngine;
 public class CompanionSO : ScriptableObject
 {
     [SerializeField] int id;
+    [SerializeField] string itemNameTextId;
     [SerializeField] string companionName;
 
     [Space(10)]
@@ -18,7 +19,14 @@ public class CompanionSO : ScriptableObject
     [SerializeField] float baseAtkSpd;
 
     public int Id => id;
-    public string CompanionName => companionName;
+    public string CompanionName
+    {
+        get
+        {
+            string res = UtilsText.ItemNamesTextDictionary[itemNameTextId];
+            if (res != null) return res; else return companionName;
+        }
+    }
 
     public Sprite IconCompanion => iconCompanion;
 

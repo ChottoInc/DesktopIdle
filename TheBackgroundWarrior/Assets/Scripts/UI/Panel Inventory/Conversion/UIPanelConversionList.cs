@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIPanelConversionList : MonoBehaviour
@@ -16,6 +17,10 @@ public class UIPanelConversionList : MonoBehaviour
 
     private List<ItemGroup> cardGroups;
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textTitle;
+    [SerializeField] TMP_Text textQuickSelect;
+
     public void Setup()
     {
         itemObjs = ClearList(itemObjs);
@@ -23,6 +28,14 @@ public class UIPanelConversionList : MonoBehaviour
         FillWindow();
 
         gameObject.SetActive(true);
+
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_inventory_convertlist];
+        textQuickSelect.text = UtilsText.AllTextDictionary[UtilsText.text_button_quickselect];
     }
 
     private List<GameObject> ClearList(List<GameObject> list)

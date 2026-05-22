@@ -26,6 +26,14 @@ public class UITabInventory : UITabWindow
     [Header("Window Right")]
     [SerializeField] UIPanelConversionList panelConvertList;
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textTitle;
+    [SerializeField] TMP_Text textFilterAll;
+    [SerializeField] TMP_Text textFilterOres;
+    [SerializeField] TMP_Text textFilterMetals;
+    [SerializeField] TMP_Text textFilterFishes;
+    [SerializeField] TMP_Text textFilterCards;
+
     public override void Open()
     {
         base.Open();
@@ -40,6 +48,18 @@ public class UITabInventory : UITabWindow
         currentFilterButton.SelectButton(true);
         panelItems.Setup(ID_INVENTORY_FILTER_ALL);
         currentFilterId = ID_INVENTORY_FILTER_ALL;
+
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_inventory];
+        textFilterAll.text = UtilsText.AllTextDictionary[UtilsText.text_button_inventory_filter_all];
+        textFilterOres.text = UtilsText.AllTextDictionary[UtilsText.text_button_inventory_filter_ores];
+        textFilterMetals.text = UtilsText.AllTextDictionary[UtilsText.text_button_inventory_filter_metals];
+        textFilterFishes.text = UtilsText.AllTextDictionary[UtilsText.text_button_inventory_filter_fishes];
+        textFilterCards.text = UtilsText.AllTextDictionary[UtilsText.text_button_inventory_filter_cards];
     }
 
     private void UpdateFilters()

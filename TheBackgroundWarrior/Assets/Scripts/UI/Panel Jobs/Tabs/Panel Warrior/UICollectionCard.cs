@@ -32,7 +32,7 @@ public class UICollectionCard : MonoBehaviour
         UpdateCardUI();
 
         imageRarity.color = UtilsGeneral.GetColorByRarity(cardSO.CardRarity);
-        textRarity.text = $"{cardSO.CardRarity}";
+        textRarity.text = cardSO.CardRarityName;
     }
 
     public void Refresh()

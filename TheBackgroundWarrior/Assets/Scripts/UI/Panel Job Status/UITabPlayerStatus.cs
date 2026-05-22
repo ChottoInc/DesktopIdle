@@ -73,12 +73,12 @@ public class UITabPlayerStatus : UITabWindow
 
     protected virtual void UpdateCurrentLevelUI()
     {
-        textCurrentLevel.text = $"Lv. : 0";
+        textCurrentLevel.text = string.Format(UtilsText.AllTextDictionary[UtilsText.text_job_current_level], "0");
     }
 
     private void UpdateAvailablePointsUI()
     {
-        textAvailablePoints.text = $"Available points: {tempAvailablePoints}";
+        textAvailablePoints.text = string.Format(UtilsText.AllTextDictionary[UtilsText.text_job_available_points], tempAvailablePoints);
     }
 
 

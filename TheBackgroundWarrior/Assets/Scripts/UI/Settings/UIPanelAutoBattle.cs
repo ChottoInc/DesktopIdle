@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,12 +16,18 @@ public class UIPanelAutoBattle : MonoBehaviour
     private bool isShowingTooltip;
 
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textAutoBattle;
+
+
     public event Action<bool> OnSet;
 
 
     public void Start()
     {
         toggleAutoBattle.SetIsOnWithoutNotify(SettingsManager.Instance.IsAutoBattleOn);
+
+        RefreshTexts();
     }
 
     private void Update()
@@ -36,7 +43,7 @@ public class UIPanelAutoBattle : MonoBehaviour
             isShowingTooltip = true;
 
             // show
-            string text = "If this option is enabled, automatically advance to the next stage when all enemies are slayed, or retry the current stage in case of death";
+            string text = UtilsText.AllTextDictionary[UtilsText.text_tooltip_panel_autobattle];
 
             TooltipManagerData tooltipData = new TooltipManagerData();
             tooltipData.idTooltip = UITooltipManager.ID_SHOW_TEXT;
@@ -47,6 +54,11 @@ public class UIPanelAutoBattle : MonoBehaviour
         {
             timerTooltip -= Time.deltaTime;
         }
+    }
+
+    private void RefreshTexts()
+    {
+        textAutoBattle.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_autobattle];
     }
 
 

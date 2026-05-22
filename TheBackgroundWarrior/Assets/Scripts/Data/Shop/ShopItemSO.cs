@@ -12,7 +12,11 @@ public class ShopItemSO : ScriptableObject
     [SerializeField] protected UtilsShop.ShopItemType shopItemType;
 
     [Space(10)]
+    [SerializeField] protected string itemNameTextId;
     [SerializeField] protected string itemName;
+
+    [Space(10)]
+    [SerializeField] protected string itemDescTextId;
 
     [TextArea]
     [SerializeField] protected string itemDesc;
@@ -31,8 +35,23 @@ public class ShopItemSO : ScriptableObject
 
     public UtilsShop.ShopItemType ShopItemType => shopItemType;
 
-    public string ItemName => itemName; 
-    public string ItemDesc => itemDesc;
+    public string ItemName 
+    {  
+        get 
+        {
+            string res = UtilsText.ItemNamesTextDictionary[itemNameTextId];
+            if (res != null) return res; else return itemName;
+        } 
+    }
+
+    public string ItemDesc
+    {
+        get
+        {
+            string res = UtilsText.ItemDescsTextDictionary[itemDescTextId];
+            if (res != null) return res; else return itemDesc;
+        }
+    }
 
     public int Price => price;
 

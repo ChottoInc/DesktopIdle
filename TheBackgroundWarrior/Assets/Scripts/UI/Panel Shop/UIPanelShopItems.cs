@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIPanelShopItems : MonoBehaviour
@@ -93,5 +94,11 @@ public class UIPanelShopItems : MonoBehaviour
     {
         panelInfo.Show(true);
         panelInfo.Setup(itemSO, currentFilter);
+    }
+
+    public void Hide()
+    {
+        ShowPanelInfo(false);
+        gameObject.SetActive(false);
     }
 }

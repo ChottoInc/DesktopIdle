@@ -119,7 +119,8 @@ public class PlayerFarmerData : IBasePlayerData
         // reset available points to 0 if previous bugs occured, and set exp to 0
         if (currentLevel >= UtilsFarmer.MAX_LEVEL_FARMER)
         {
-            availableStatPoints = 0;
+            availableStatPoints = UtilsFarmer.MAX_LEVEL_FARMER - 1 -
+               levelStatGreenthumb - levelstatAgronomy - levelstatKindness - levelStatLuck;
             currentExp = 0;
         }
 

@@ -9,13 +9,36 @@ public class ItemSO : ScriptableObject
 
     [Space(10)]
     [SerializeField] Sprite sprite;
+    [SerializeField] string itemNameTextId;
     [SerializeField] string itemName;
+
+    [Space(10)]
+    [SerializeField] string itemDescTextId;
+
+    [TextArea]
+    [SerializeField] string itemDesc;
 
     public int Id => id;
     public ItemType ItemType => itemType;
 
     public Sprite Sprite => sprite;
-    public string ItemName => itemName;
+    public string ItemName
+    {
+        get
+        {
+            string res = UtilsText.ItemNamesTextDictionary[itemNameTextId];
+            if (res != null) return res; else return itemName;
+        }
+    }
+
+    public string ItemDesc
+    {
+        get
+        {
+            string res = UtilsText.ItemDescsTextDictionary[itemDescTextId];
+            if (res != null) return res; else return itemDesc;
+        }
+    }
 
 
 

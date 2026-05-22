@@ -139,7 +139,11 @@ public class InitializerManager : MonoBehaviour
 
     private void HandleOtherSetups()
     {
+        // initialize all texts
         UtilsText.Initialize();
+
+        // initialize text general
+        UtilsGeneral.Initialize();
 
         // utils setups
         UtilsPlayer.Initialize();

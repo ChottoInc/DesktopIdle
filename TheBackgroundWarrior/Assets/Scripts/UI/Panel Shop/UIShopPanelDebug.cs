@@ -5,6 +5,21 @@ public class UIShopPanelDebug : MonoBehaviour
 {
     [SerializeField] TMP_InputField inputCode;
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textDebug;
+    [SerializeField] TMP_Text textButtonDebug;
+
+    private void Awake()
+    {
+        RefreshTexts();
+    }
+
+    private void RefreshTexts()
+    {
+        textDebug.text = UtilsText.AllTextDictionary[UtilsText.text_shop_insertdebug];
+        textButtonDebug.text = UtilsText.AllTextDictionary[UtilsText.text_button_debug];
+    }
+
     public void OnButtonRedeem()
     {
         AudioManager.Instance.PlayClickUI();

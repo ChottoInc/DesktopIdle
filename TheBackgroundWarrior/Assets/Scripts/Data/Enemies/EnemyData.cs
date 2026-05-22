@@ -249,7 +249,7 @@ public class EnemyData
         OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
 
         // companions can't kill enemies, at most they reach 1 hp
-        currentHp = MathF.Max(currentHp, 1f);
+        currentHp = Mathf.Max(currentHp, 1f);
     }
 
     public void SetDead()

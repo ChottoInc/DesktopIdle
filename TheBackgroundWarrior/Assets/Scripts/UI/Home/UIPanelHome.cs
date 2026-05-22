@@ -18,6 +18,10 @@ public class UIPanelHome : MonoBehaviour
     [Space(10)]
     [SerializeField] UIPanelAdd panelAdd;
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textNew;
+    [SerializeField] TMP_Text textQuit;
+
     private bool isInit;
 
     private bool isChangingScene;
@@ -37,8 +41,18 @@ public class UIPanelHome : MonoBehaviour
         if (InitializerManager.Instance.HasCheckFiles)
         {
             Setup();
+
+            RefreshTexts();
+
             isInit = true;
         }
+    }
+
+    private void RefreshTexts()
+    {
+        textNew.text = UtilsText.AllTextDictionary[UtilsText.text_button_new];
+        textContinue.text = UtilsText.AllTextDictionary[UtilsText.text_button_continue];
+        textQuit.text = UtilsText.AllTextDictionary[UtilsText.text_button_quit];
     }
 
     private void Setup()
@@ -83,7 +97,7 @@ public class UIPanelHome : MonoBehaviour
         }
         else
         {
-            string question = $"You already have an adventure in progress, starting a new game will erase your current save files.\nAre you sure you want to continue?";
+            string question = UtilsText.AllTextDictionary[UtilsText.text_yesno_newgame];
 
             TooltipManagerData tooltipData = new TooltipManagerData();
             tooltipData.idTooltip = UITooltipManager.ID_SHOW_YESNO;

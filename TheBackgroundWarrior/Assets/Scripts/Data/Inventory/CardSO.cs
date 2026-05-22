@@ -12,15 +12,25 @@ public class CardSO : ItemSO
     [Space(10)]
     [SerializeField] int cardNumber;
 
-    [TextArea]
-    [SerializeField] string cardDescription;
-
 
     public UtilsItem.CardRarity CardRarity => cardRarity;
+    public string CardRarityName
+    {
+        get
+        {
+            string res = string.Empty;
+            switch (cardRarity)
+            {
+                case UtilsItem.CardRarity.Common: return UtilsText.AllTextDictionary[UtilsText.text_name_card_rarity_common];
+                case UtilsItem.CardRarity.Uncommon: return UtilsText.AllTextDictionary[UtilsText.text_name_card_rarity_uncommon];
+                case UtilsItem.CardRarity.Rare: return UtilsText.AllTextDictionary[UtilsText.text_name_card_rarity_rare];
+            }
+
+            if (res != string.Empty) return res; else return cardRarity.ToString();
+        }
+    }
 
     public Sprite BackgoundSprite => backgroundSprite;
 
     public int CardNumber => cardNumber;
-
-    public string CardDescription => cardDescription;
 }

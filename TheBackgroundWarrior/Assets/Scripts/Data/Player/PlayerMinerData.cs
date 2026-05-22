@@ -106,7 +106,8 @@ public class PlayerMinerData : IBasePlayerData
         // reset available points to 0 if previous bugs occured, and set exp to 0
         if (currentLevel >= UtilsMiner.MAX_LEVEL_MINER)
         {
-            availableStatPoints = 0;
+            availableStatPoints = UtilsMiner.MAX_LEVEL_MINER - 1 -
+               levelStatPower - levelSmashSpeed - levelShockwave - levelStatLuck;
             currentExp = 0;
         }
 
