@@ -49,9 +49,10 @@ public class SettingsSaveData
     public int currentMonitorIndex;
 
 
-    // ------------ AUDIO
+    // ------------ GENERAL
 
     public float masterVolume;
+    public int currentLanguage;
 
 
 
@@ -99,5 +100,6 @@ public class SettingsSaveData
 
 
         masterVolume = manager.MasterVolume;
+        currentLanguage = (int)manager.CurrentLanguage;
     }
 }

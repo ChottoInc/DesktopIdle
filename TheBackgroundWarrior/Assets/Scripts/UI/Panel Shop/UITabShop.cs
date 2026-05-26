@@ -94,7 +94,7 @@ public class UITabShop : UITabWindow
         {
             panelDebug.SetActive(true);
 
-            panelShopItems.gameObject.SetActive(false);
+            panelShopItems.Hide();
             panelRedeem.SetActive(false);
         }
         else if(filter == UtilsShop.ID_SHOP_FILTER_REDEEM)
@@ -106,11 +106,11 @@ public class UITabShop : UITabWindow
         }
         else
         {
-            panelShopItems.Hide();
+            panelShopItems.gameObject.SetActive(true);
+            panelShopItems.Setup(filter);
+
             panelRedeem.SetActive(false);
             panelDebug.SetActive(false);
-
-            panelShopItems.Setup(filter);
         }
     }
 

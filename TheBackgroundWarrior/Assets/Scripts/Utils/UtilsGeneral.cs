@@ -8,6 +8,10 @@ public static class UtilsGeneral
     public const float TIMER_5MIN_IN_SECONDS = 300f;
     public const float TIMER_20SECONDS = 20f;
 
+
+    public enum Language { Eng, Ita }
+
+
     public enum DayMoment { Morning, Afternoon, Evening, Night }
 
 
@@ -90,7 +94,64 @@ public static class UtilsGeneral
         return strings;
     }
 
+    public static Dictionary<string, string> GetDictionaryFromList(List<string> list)
+    {
+        Dictionary<string,string> result = new Dictionary<string, string>();
 
+        foreach (var row in list)
+        {
+            string part1 = "";
+            string part2 = "";
+            int dividerIndex = 0;
+
+            // get string id
+            for (int i = 0; i < row.Length; i++)
+            {
+                if (row[i] != ',')
+                {
+                    part1 += row[i];
+                }
+                else
+                {
+                    dividerIndex = i;
+                    break;
+                }
+            }
+
+            // skip divider index and get string value
+            dividerIndex++;
+
+            bool hasApix = false;
+            if (row[dividerIndex] == '"')
+            {
+                dividerIndex++;
+                hasApix = true;
+            }
+
+            for (; dividerIndex < row.Length; dividerIndex++)
+            {
+                if(!hasApix)
+                    part2 += row[dividerIndex];
+                else
+                {
+                    if(dividerIndex != row.Length - 1)
+                    {
+                        part2 += row[dividerIndex];
+                    }
+                }
+
+                if (dividerIndex < row.Length - 1)
+                {
+                    if (row[dividerIndex] == '"' && row[dividerIndex + 1] == '"')
+                        dividerIndex++;
+                }
+            }
+
+            result.Add(part1, part2);
+        }
+
+        return result;
+    }
 
 
 

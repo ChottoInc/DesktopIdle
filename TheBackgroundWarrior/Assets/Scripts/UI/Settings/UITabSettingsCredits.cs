@@ -5,6 +5,7 @@ public class UITabSettingsCredits : UITabWindow
 {
     [Header("Texts")]
     [SerializeField] TMP_Text textPanelMe;
+    [SerializeField] TMP_Text textPanelLocalization;
     [SerializeField] TMP_Text textPanelArt;
     [SerializeField] TMP_Text textPanelSound;
     [SerializeField] TMP_Text textPanelFont;
@@ -21,6 +22,7 @@ public class UITabSettingsCredits : UITabWindow
     private void RefreshTexts()
     {
         textPanelMe.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_me];
+        textPanelLocalization.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_localization];
         textPanelArt.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_art];
         textPanelSound.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_sound];
         textPanelFont.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_font];

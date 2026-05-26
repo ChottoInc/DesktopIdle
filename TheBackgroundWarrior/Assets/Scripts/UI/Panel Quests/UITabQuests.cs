@@ -22,7 +22,7 @@ public class UITabQuests : UITabWindow
 
     private void RefreshTexts()
     {
-        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_shop];
+        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_quests];
         textFilterStory.text = UtilsText.AllTextDictionary[UtilsText.text_button_quests_filter_story];
         textFilterDaily.text = UtilsText.AllTextDictionary[UtilsText.text_button_quests_filter_daily];
         textFilterBounty.text = UtilsText.AllTextDictionary[UtilsText.text_button_quests_filter_bounty];

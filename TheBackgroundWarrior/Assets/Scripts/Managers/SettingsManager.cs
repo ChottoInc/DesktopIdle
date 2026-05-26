@@ -83,11 +83,14 @@ public class SettingsManager : MonoBehaviour
 
 
 
-    // --------- AUDIO
+    // --------- GENERAL
 
     public float MasterVolume { get; private set; }
 
+    public UtilsGeneral.Language CurrentLanguage { get; private set; }
 
+
+    public event Action<UtilsGeneral.Language> OnLanguageChange;
 
 
 
@@ -181,8 +184,9 @@ public class SettingsManager : MonoBehaviour
         SetIs60FPS(saveData.is60FPS, false);
         SetCurrentMonitorIndex(saveData.currentMonitorIndex, false, false);
 
-        // --- audio
+        // --- general
         SetMasterVolume(saveData.masterVolume, false);
+        SetLanguage((UtilsGeneral.Language)saveData.currentLanguage, false);
     }
 
     private void SetupFromDefault()
@@ -223,8 +227,9 @@ public class SettingsManager : MonoBehaviour
         SetIs60FPS(true, false);
         SetCurrentMonitorIndex(0, true, false);
 
-        // --- audio
+        // --- general
         SetMasterVolume(1f, false);
+        SetLanguage(UtilsGeneral.Language.Eng, false);
     }
 
     /// <summary>
@@ -280,7 +285,7 @@ public class SettingsManager : MonoBehaviour
     {
         try
         {
-            CombatMapSaveData saveData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), FileEncryption);
+            CombatMapSaveData saveData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(mapSO.MapEngName + mapSO.IdMap.ToString()), FileEncryption);
             return saveData;
         }
         catch
@@ -293,12 +298,12 @@ public class SettingsManager : MonoBehaviour
     public void SaveCombatMapData(CombatMapSO mapSO, int currentStage, int reachedStage, int reachedPrestige)
     {
         CombatMapSaveData mapData = new CombatMapSaveData(mapSO.IdMap, currentStage, reachedStage, reachedPrestige);
-        saveService.SaveData(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), mapData, FileEncryption);
+        saveService.SaveData(UtilsSave.GetCombatMapFile(mapSO.MapEngName + mapSO.IdMap.ToString()), mapData, FileEncryption);
     }
 
     public void SaveCombatMapData(CombatMapSO mapSO, CombatMapSaveData combatMapSaveData)
     {
-        saveService.SaveData(UtilsSave.GetCombatMapFile(mapSO.MapName + mapSO.IdMap.ToString()), combatMapSaveData, FileEncryption);
+        saveService.SaveData(UtilsSave.GetCombatMapFile(mapSO.MapEngName + mapSO.IdMap.ToString()), combatMapSaveData, FileEncryption);
     }
 
     #endregion
@@ -380,6 +385,7 @@ public class SettingsManager : MonoBehaviour
 
     #endregion
 
+
     #region VIDEO
 
     public void SetIsAlwaysOnTop(bool isOn, bool save = true)
@@ -452,13 +458,25 @@ public class SettingsManager : MonoBehaviour
 
     #endregion
 
-    #region AUDIO
+
+    #region GENERAL
 
     public void SetMasterVolume(float value, bool save = true)
     {
         MasterVolume = value;
 
         AudioManager.Instance.SetMasterVolume(MasterVolume);
+
+        if (save)
+            Save();
+    }
+
+    public void SetLanguage(UtilsGeneral.Language lang, bool save = true)
+    {
+        CurrentLanguage = lang;
+        OnLanguageChange?.Invoke(lang);
+
+        UtilsText.FillValuesWithLang(lang);
 
         if (save)
             Save();

@@ -46,6 +46,7 @@ public class UITabJobWarrior : UITabWindow
         {
             maps = UtilsCombatMap.GetAllMaps();
             FillMaps();
+            scrollMaps.verticalNormalizedPosition = 0f;
         }
 
         if(cards == null)

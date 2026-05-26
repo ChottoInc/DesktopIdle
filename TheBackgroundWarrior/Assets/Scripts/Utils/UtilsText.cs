@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
 public static class UtilsText
 {
@@ -158,9 +160,13 @@ public static class UtilsText
     // -------------------- SETTINGS --------------------- //
 
     public const string text_settings_general_titlevolume = "text_settings_general_titlevolume";
+    public const string text_settings_general_titlelanguage = "text_settings_general_titlelanguage";
     public const string text_settings_general_titleexit = "text_settings_general_titleexit";
     public const string text_settings_general_button_titlescreen = "text_settings_general_button_titlescreen";
     public const string text_settings_general_button_quit = "text_settings_general_button_quit";
+
+    public const string text_settings_general_lang_english = "text_settings_general_lang_english";
+    public const string text_settings_general_lang_italian = "text_settings_general_lang_italian";
 
     public const string text_settings_gameplay_titlebattle = "text_settings_gameplay_titlebattle";
     public const string text_settings_gameplay_autobattle = "text_settings_gameplay_autobattle";
@@ -616,6 +622,7 @@ public static class UtilsText
     #region CREDITS
 
     public const string text_credits_me = "text_credits_me";
+    public const string text_credits_localization = "text_credits_localization";
     public const string text_credits_art = "text_credits_art";
     public const string text_credits_sound = "text_credits_sound";
     public const string text_credits_font = "text_credits_font";
@@ -641,10 +648,46 @@ public static class UtilsText
 
     public static void Initialize()
     {
-        PopulateDefaultValues();
+        FillDefaultValues();
     }
 
-    private static void PopulateDefaultValues()
+    public static void FillValuesWithLang(UtilsGeneral.Language lang)
+    {
+        string folderpath = string.Empty;
+        string finalPart = string.Empty;
+        switch (lang)
+        {
+            default:
+            case UtilsGeneral.Language.Eng: folderpath = "files/localize/eng"; finalPart = "_eng"; break;
+            case UtilsGeneral.Language.Ita: folderpath = "files/localize/ita"; finalPart = "_ita"; break;
+        }
+
+        FillDictionaries(folderpath, finalPart);
+    }
+
+    private static void FillDictionaries(string folderpath, string finalPart)
+    {
+        AllTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "AllText" + finalPart));
+        ItemNamesTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "ItemNames" + finalPart));
+        ItemDescsTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "ItemDescs" + finalPart));
+        CreditsTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "Credits" + finalPart));
+        HelpTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "Help" + finalPart));
+    }
+
+    private static Dictionary<string, string> GetLocalizedDictionary(string filepath)
+    {
+        var list = UtilsGeneral.GetFileStrings(filepath);
+        var dict = UtilsGeneral.GetDictionaryFromList(list);
+        /*
+        if(dict.TryGetValue("text_tutorial_intro_2", out string val))
+        {
+            Debug.Log("dict val: " + val);
+        }*/
+
+        return dict;
+    }
+
+    private static void FillDefaultValues()
     {
         AllTextDictionary = new Dictionary<string, string>()
         {
@@ -799,9 +842,15 @@ public static class UtilsText
              // -------------------- SETTINGS --------------------- //
 
             { text_settings_general_titlevolume, "Volume" },
+            { text_settings_general_titlelanguage, "Language" },
             { text_settings_general_titleexit, "Exit" },
             { text_settings_general_button_titlescreen, "Title Screen" },
             { text_settings_general_button_quit, "Quit" },
+
+            { text_settings_general_lang_english, "English" },
+            { text_settings_general_lang_italian, "Italiano" },
+
+
 
             { text_settings_gameplay_titlebattle, "Battle" },
             { text_settings_gameplay_autobattle, "Auto-Battle" },
@@ -1277,9 +1326,12 @@ public static class UtilsText
             { text_shopitem_job_farmer_desc, "Unlock the Farmer Class" },
         };
 
+
         CreditsTextDictionary = new Dictionary<string, string>()
         {
             { text_credits_me, "<align=\"center\">A game by Matteo Troilo aka Chotto Inc<br></align>" },
+
+            { text_credits_localization, "<align=\"center\">Localization<br>----------------------------</align><br><align=\"center\">Italian<br>-<br>Translation & Review<br>Veronica Faroldi<br></align>" },
 
             { text_credits_art, 
                 "<align=\"center\">Art<br>----------------------------</align><br>Character assets by Zerie (https://zerie.itch.io/tiny-rpg-character-asset-pack). " +
@@ -1295,6 +1347,7 @@ public static class UtilsText
                 "<align=\"center\">Fonts<br>----------------------------</align><br>Font \"m6x11plus.ttf\" by Daniel Linssen (https://managore.itch.io/m6x11) licensed under an Attribution License"
             },
         };
+
 
         HelpTextDictionary = new Dictionary<string, string>()
         {

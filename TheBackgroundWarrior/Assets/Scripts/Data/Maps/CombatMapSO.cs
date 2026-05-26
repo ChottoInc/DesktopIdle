@@ -6,6 +6,7 @@ public class CombatMapSO : ScriptableObject
     [SerializeField] int idMap;
     [SerializeField] string mapNameId;
     [SerializeField] string mapName;
+    [SerializeField] string mapEngName;
     [SerializeField] string mapSceneName;
 
     [Space(10)]
@@ -27,6 +28,7 @@ public class CombatMapSO : ScriptableObject
         }
     }
 
+    public string MapEngName => mapEngName;
     public string MapSceneName => mapSceneName;
 
     public UtilsCombatMap.MapDifficulty MapDifficuty => mapDifficulty;
