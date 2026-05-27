@@ -14,17 +14,28 @@ public class EditorCustomUtilsManager : Editor
 
         m_Script = (CustomUtilsManager)target;
 
+        if (GUILayout.Button("Create english text files"))
+        {
+            UpdateFiles(false);
+        }
+
         if (GUILayout.Button("Update english text files"))
         {
-            UpdateFile();
+            UpdateFiles(true);
         }
     }
 
-    private void UpdateFile()
+    private void UpdateFiles(bool fromFile)
     {
 #if UNITY_EDITOR
-
-        UtilsText.Initialize();
+        if (!fromFile)
+        {
+            UtilsText.Initialize();
+        }
+        else
+        {
+            UtilsText.FillValuesWithLang(UtilsGeneral.Language.Eng);
+        }
         
         string logDir = Path.Combine(Application.persistentDataPath, "Data");
         logDir = Path.Combine(logDir, "Localise");

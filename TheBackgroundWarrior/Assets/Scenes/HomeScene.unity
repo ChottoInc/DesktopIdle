@@ -2224,6 +2224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c333f4b071b8e9241868c7ced5f7034d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlatformSteam: 1
   enableCheats: 1
   fileEncryption: 0
 --- !u!4 &903364526
@@ -3682,6 +3683,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1437485504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1437485506}
+  - component: {fileID: 1437485507}
+  m_Layer: 0
+  m_Name: Steam Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1437485506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437485504}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1437485507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437485504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aba2eeb8d75e0743b9aa204cb445a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1445854930
 GameObject:
   m_ObjectHideFlags: 0
@@ -5728,6 +5773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6820bc9ae93f1c4ea0cf6a743de6833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  contentAppear: {fileID: 8337093054249435949}
   buttonContinue: {fileID: 1645956558881021804}
   buttonNew: {fileID: 2143782918}
   buttonQuit: {fileID: 349671831}
@@ -5788,6 +5834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38393d5b680497945b31aad5c33ac613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  autoStart: 1
   timeFade: 2
 --- !u!225 &8337093054249435950
 CanvasGroup:
@@ -5839,6 +5886,7 @@ SceneRoots:
   - {fileID: 2067813638}
   - {fileID: 2146624748}
   - {fileID: 1519098019}
+  - {fileID: 1437485506}
   - {fileID: 949727701}
   - {fileID: 903364526}
   - {fileID: 1299317318}

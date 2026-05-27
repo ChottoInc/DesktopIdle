@@ -188,7 +188,7 @@ public class UITabJobMiner : UITabWindow
 
     private bool IsWeaponMaxLevel()
     {
-        return lastWeaponLevel >= UtilsMiner.MINER_WEAPON_MAX_LEVEL ? true : false;
+        return lastWeaponLevel >= UtilsMiner.MINER_WEAPON_MAX_LEVEL;
     }
 
     /// <summary>

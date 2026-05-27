@@ -4,6 +4,7 @@ using DG.Tweening;
 [RequireComponent(typeof(CanvasGroup))]
 public class UISelfAppear : MonoBehaviour
 {
+    [SerializeField] bool autoStart = true;
     [SerializeField] float timeFade = 1f;
 
     private CanvasGroup group;
@@ -14,6 +15,14 @@ public class UISelfAppear : MonoBehaviour
     }
 
     private void Start()
+    {
+        if (autoStart)
+        {
+            Appear();
+        }
+    }
+
+    public void Appear()
     {
         group.alpha = 0;
         group.interactable = false;

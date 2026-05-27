@@ -4,6 +4,9 @@ using TMPro;
 
 public class UIPanelHome : MonoBehaviour
 {
+    [SerializeField] UISelfAppear contentAppear;
+
+    [Header("Buttons")]
     [SerializeField] Button buttonContinue;
     [SerializeField] Button buttonNew;
     [SerializeField] Button buttonQuit;
@@ -70,6 +73,8 @@ public class UIPanelHome : MonoBehaviour
 
         buttonNew.interactable = true;
         buttonQuit.interactable = true;
+
+        contentAppear.Appear();
 
         //Debug.Log(SettingsManager.Instance.LastSceneSettings.lastSceneName);
     }

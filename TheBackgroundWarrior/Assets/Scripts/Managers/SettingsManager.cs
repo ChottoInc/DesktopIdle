@@ -1,8 +1,14 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
+    [Header("Platforms")]
+    [SerializeField] bool isPlatformSteam;
+
+    public bool IsSteamPlatform => isPlatformSteam;
+
     [Header("Cheats")]
     [SerializeField] bool enableCheats = true;
     [SerializeField] bool fileEncryption;
@@ -480,6 +486,30 @@ public class SettingsManager : MonoBehaviour
 
         if (save)
             Save();
+    }
+
+    /// <summary>
+    /// Set the client language if available in game, else default
+    /// </summary>
+    /// <param name="steamLang"></param>
+    public void CheckSteamLanguage(string steamLang)
+    {
+        string[] availableLangs = { "english", "italian" };
+        if (availableLangs.Contains(steamLang))
+        {
+            var lang = GetLangIndexByName(steamLang);
+            SetLanguage(lang);
+        }
+    }
+
+    private UtilsGeneral.Language GetLangIndexByName(string lang)
+    {
+        switch (lang)
+        {
+            default:
+            case "english": return UtilsGeneral.Language.Eng;
+            case "italian": return UtilsGeneral.Language.Ita;
+        }
     }
 
     #endregion

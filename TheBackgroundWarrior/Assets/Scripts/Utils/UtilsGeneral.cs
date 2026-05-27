@@ -88,7 +88,11 @@ public static class UtilsGeneral
         // start from 1, excluding headers
         for (int i = 1; i < dataLines.Length; i++)
         {
-            strings.Add(dataLines[i]);
+            string res = dataLines[i]
+                .Replace("…", "...")
+                .Replace("’", "'");
+
+            strings.Add(res);
         }
 
         return strings;
