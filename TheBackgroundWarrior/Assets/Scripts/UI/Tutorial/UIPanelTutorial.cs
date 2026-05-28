@@ -53,6 +53,10 @@ public class UIPanelTutorial : MonoBehaviour
     [SerializeField] GameObject panelText;
     [SerializeField] TMP_Text textTutorial;
 
+    [Header("Texts")]
+    [SerializeField] TMP_Text textContinue;
+    [SerializeField] TMP_Text textSkip;
+
     private IList<UtilsGeneral.TutorialDialogueNeedPos> currentDialogues;
     private int currentDialogueIndex;
     private bool isCurrentDialogueEnded;
@@ -74,9 +78,17 @@ public class UIPanelTutorial : MonoBehaviour
         }
         else
         {
+            RefreshTexts();
+
             content.SetActive(true);
             HandleTutorial();
         }
+    }
+
+    protected virtual void RefreshTexts()
+    {
+        textContinue.text = UtilsText.AllTextDictionary[UtilsText.text_tutorial_continue];
+        textSkip.text = UtilsText.AllTextDictionary[UtilsText.text_tutorial_skip];
     }
 
     private void HandleTutorial()

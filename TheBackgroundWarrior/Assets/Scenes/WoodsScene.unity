@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 158282519}
   - component: {fileID: 158282518}
   m_Layer: 5
-  m_Name: Text Tutorial
+  m_Name: Text Skip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6482,6 +6482,8 @@ MonoBehaviour:
   timeBtwChars: 0.025
   panelText: {fileID: 425545988}
   textTutorial: {fileID: 839775642}
+  textContinue: {fileID: 100687132}
+  textSkip: {fileID: 158282518}
 --- !u!1001 &1827974395
 PrefabInstance:
   m_ObjectHideFlags: 0

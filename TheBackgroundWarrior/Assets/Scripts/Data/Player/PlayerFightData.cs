@@ -382,6 +382,8 @@ public class PlayerFightData : IBasePlayerData
 
     public void AddAvailableMap(int id)
     {
+        if (availableMaps.Contains(id)) return;
+
         availableMaps.Add(id);
         OnAddMap?.Invoke(id);
     }

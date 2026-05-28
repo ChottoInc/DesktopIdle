@@ -185,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textCurrentLevel: {fileID: 7487616837400128945}
   textAvailablePoints: {fileID: 356649080123105872}
+  textButtonSave: {fileID: 9188786157249133001}
   player: {fileID: 0}
 --- !u!1 &5882430698266135776
 GameObject:
@@ -1377,6 +1378,17 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &9188786157249133001 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6833705644455758052, guid: 7599263bee32ba245ab0f181d6ff3b9f, type: 3}
+  m_PrefabInstance: {fileID: 2401284195650531629}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5764224612012333877
 PrefabInstance:
   m_ObjectHideFlags: 0

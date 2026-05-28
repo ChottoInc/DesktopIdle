@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 public static class UtilsText
 {
@@ -16,6 +15,9 @@ public static class UtilsText
     #region ALL
 
     // -------------------- TUTORIAL --------------------- //
+
+    public const string text_tutorial_continue = "text_tutorial_continue";
+    public const string text_tutorial_skip = "text_tutorial_skip";
 
     public const string text_tutorial_intro_1 = "text_tutorial_intro_1";
     public const string text_tutorial_intro_2 = "text_tutorial_intro_2";
@@ -213,6 +215,7 @@ public static class UtilsText
     public const string text_job_fisher_caughtsession = "text_job_fisher_caughtsession";
     public const string text_job_fisher_raritytooltip = "text_job_fisher_raritytooltip";
     public const string text_job_fisher_spawntime = "text_job_fisher_spawntime";
+    public const string text_job_fisher_waittime = "text_job_fisher_waittime";
 
 
     public const string text_job_farmer_crop_basegrowthtime = "text_job_farmer_crop_basegrowthtime";
@@ -226,6 +229,8 @@ public static class UtilsText
     public const string text_button_new = "text_button_new";
     public const string text_button_continue = "text_button_continue";
     public const string text_button_quit = "text_button_quit";
+
+    public const string text_button_savechanges = "text_button_savechanges";
 
     public const string text_button_buy = "text_button_buy";
     public const string text_button_redeem = "text_button_redeem";
@@ -694,6 +699,9 @@ public static class UtilsText
 
             // -------------------- TUTORIAL --------------------- //
 
+            { text_tutorial_continue, "Click to continue" },
+            { text_tutorial_skip, "Click here to skip tutorial" },
+
             { text_tutorial_intro_1, "This is the background Warrior." },
             { text_tutorial_intro_2, "He will keep fighting even when you are not looking." },
             { text_tutorial_intro_3, "Defeat monsters to advance the stages." },
@@ -905,6 +913,7 @@ public static class UtilsText
 
             { text_job_fisher_raritytooltip, "<color=#{1}>{2}</color><br>" },
             { text_job_fisher_spawntime, "Spawn time: {3}" },
+            { text_job_fisher_waittime, "Average time: ~{0}m{1}s" },
 
             
             // -------------------- BUTTONS --------------------- //
@@ -912,6 +921,8 @@ public static class UtilsText
             { text_button_new, "New" },
             { text_button_continue, "Continue" },
             { text_button_quit, "Quit" },
+
+            { text_button_savechanges, "Save changes" },
 
             { text_button_buy, "Buy" },
             { text_button_redeem, "Redeem" },

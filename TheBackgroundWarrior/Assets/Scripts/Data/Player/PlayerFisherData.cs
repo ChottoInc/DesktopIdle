@@ -186,6 +186,8 @@ public class PlayerFisherData : IBasePlayerData
 
     private bool IsGroupCaught(FishGroupSO group)
     {
+        if (group == null) return false;
+
         bool result = true;
 
         foreach (var fish in group.Fishes)

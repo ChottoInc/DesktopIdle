@@ -67,6 +67,8 @@ public class StageManager : MonoBehaviour
             Instance = this;
 
             PlayerManager.Instance.PlayerFarmerData.OnCompanionEquipped += SpawnCompanions;
+
+            SettingsManager.Instance.OnLanguageChange += UpdateStageUI;
         }
         else
         {
@@ -77,6 +79,8 @@ public class StageManager : MonoBehaviour
     private void OnDestroy()
     {
         PlayerManager.Instance.PlayerFarmerData.OnCompanionEquipped -= SpawnCompanions;
+
+        SettingsManager.Instance.OnLanguageChange -= UpdateStageUI;
     }
 
     private void Start()

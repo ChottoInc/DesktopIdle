@@ -13,6 +13,16 @@ public class UITabSettings : UITabWindow
     [SerializeField] TMP_Text textFilterCredits;
     [SerializeField] TMP_Text textFilterHelp;
 
+    private void Awake()
+    {
+        SettingsManager.Instance.OnLanguageChange += RefreshTexts;
+    }
+
+    private void OnDestroy()
+    {
+        SettingsManager.Instance.OnLanguageChange -= RefreshTexts;
+    }
+
     public override void Open()
     {
         base.Open();

@@ -15,6 +15,9 @@ public class UITabPlayerStatus : UITabWindow
     protected int tempAvailablePoints;
     protected int totalDistributedPoints;
 
+    [Header("Texts")]
+    [SerializeField] protected TMP_Text textButtonSave;
+
 
 
     public event Action OnStatusSave;
@@ -45,6 +48,13 @@ public class UITabPlayerStatus : UITabWindow
         UpdateCurrentLevelUI();
 
         UpdateAvailablePointsUI();
+
+        RefreshTexts();
+    }
+
+    protected virtual void RefreshTexts()
+    {
+        textButtonSave.text = UtilsText.AllTextDictionary[UtilsText.text_button_savechanges];
     }
 
     protected virtual void AssignAvailablePoints()

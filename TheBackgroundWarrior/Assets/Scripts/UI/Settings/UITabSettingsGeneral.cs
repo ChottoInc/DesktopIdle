@@ -60,6 +60,7 @@ public class UITabSettingsGeneral : UITabWindow
     public void OnLanguageChange(int index)
     {
         SettingsManager.Instance.SetLanguage((UtilsGeneral.Language)index);
+        RefreshTexts();
     }
 
 

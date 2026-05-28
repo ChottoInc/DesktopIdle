@@ -185,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textCurrentLevel: {fileID: 8274111572071707426}
   textAvailablePoints: {fileID: 4911527057451785629}
+  textButtonSave: {fileID: 4566383904332400132}
   player: {fileID: 0}
 --- !u!1 &7175475760942119854
 GameObject:
@@ -1422,6 +1423,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7599263bee32ba245ab0f181d6ff3b9f, type: 3}
+--- !u!114 &4566383904332400132 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6833705644455758052, guid: 7599263bee32ba245ab0f181d6ff3b9f, type: 3}
+  m_PrefabInstance: {fileID: 7028217843008491232}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4765637811094684801 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2570373080894229089, guid: 7599263bee32ba245ab0f181d6ff3b9f, type: 3}

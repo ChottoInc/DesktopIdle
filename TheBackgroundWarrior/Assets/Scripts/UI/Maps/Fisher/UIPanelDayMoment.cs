@@ -8,6 +8,16 @@ public class UIPanelDayMoment : MonoBehaviour
 
     private float timerCheckMoment;
 
+    private void Awake()
+    {
+        SettingsManager.Instance.OnLanguageChange += UpdateTextUI;
+    }
+
+    private void OnDestroy()
+    {
+        SettingsManager.Instance.OnLanguageChange -= UpdateTextUI;
+    }
+
     private void OnEnable()
     {
         UpdateTextUI();

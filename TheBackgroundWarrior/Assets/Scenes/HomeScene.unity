@@ -5773,6 +5773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6820bc9ae93f1c4ea0cf6a743de6833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  steamManager: {fileID: 1437485507}
   contentAppear: {fileID: 8337093054249435949}
   buttonContinue: {fileID: 1645956558881021804}
   buttonNew: {fileID: 2143782918}
@@ -5834,7 +5835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38393d5b680497945b31aad5c33ac613, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  autoStart: 1
+  autoStart: 0
   timeFade: 2
 --- !u!225 &8337093054249435950
 CanvasGroup:

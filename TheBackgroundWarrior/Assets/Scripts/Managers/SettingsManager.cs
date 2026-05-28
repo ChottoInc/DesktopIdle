@@ -96,7 +96,7 @@ public class SettingsManager : MonoBehaviour
     public UtilsGeneral.Language CurrentLanguage { get; private set; }
 
 
-    public event Action<UtilsGeneral.Language> OnLanguageChange;
+    public event Action OnLanguageChange;
 
 
 
@@ -480,9 +480,10 @@ public class SettingsManager : MonoBehaviour
     public void SetLanguage(UtilsGeneral.Language lang, bool save = true)
     {
         CurrentLanguage = lang;
-        OnLanguageChange?.Invoke(lang);
 
         UtilsText.FillValuesWithLang(lang);
+
+        OnLanguageChange?.Invoke();
 
         if (save)
             Save();
@@ -494,10 +495,12 @@ public class SettingsManager : MonoBehaviour
     /// <param name="steamLang"></param>
     public void CheckSteamLanguage(string steamLang)
     {
+        Debug.Log("gettin languages from steam");
         string[] availableLangs = { "english", "italian" };
         if (availableLangs.Contains(steamLang))
         {
             var lang = GetLangIndexByName(steamLang);
+            Debug.Log("set lang: " + lang);
             SetLanguage(lang);
         }
     }

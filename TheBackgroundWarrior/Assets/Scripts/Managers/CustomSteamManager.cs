@@ -1,15 +1,11 @@
 using Steamworks;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 
 public class CustomSteamManager : SteamManager
 {
-    //private event Action OnInitialize;
+    public event Action OnCheckedSettings;
 
-    private bool checkedSettings;
+    public bool CheckedSettings { get; private set; }
 
     protected override void Awake()
     {
@@ -23,7 +19,6 @@ public class CustomSteamManager : SteamManager
 
         if (Initialized)
         {
-            //OnInitialize?.Invoke();
             OnInitialize();
         }
     }
@@ -47,17 +42,17 @@ public class CustomSteamManager : SteamManager
         if (!SettingsManager.Instance.IsSteamPlatform) return;
 
         // once the initializer manager is init check if game has client language
-        if (!checkedSettings && InitializerManager.Instance.HasCheckFiles)
+        if (!CheckedSettings && InitializerManager.Instance.HasCheckFiles)
         {
-            // only check once
-            checkedSettings = true;
-
             // if game language is the default one means the first open or the player set it to english, so check if game has client language
             if(SettingsManager.Instance.CurrentLanguage == UtilsGeneral.Language.Eng)
             {
                 SettingsManager.Instance.CheckSteamLanguage(SteamApps.GetCurrentGameLanguage());
             }
 
+            // only check once
+            CheckedSettings = true;
+            OnCheckedSettings?.Invoke();
         }
 
         base.Update();

@@ -12,11 +12,13 @@ public class UIPanelAverageHookTime : MonoBehaviour
     private void OnDestroy()
     {
         player.OnStatChange -= CheckStatChange;
+        SettingsManager.Instance.OnLanguageChange -= UpdateUI;
     }
 
     private void Awake()
     {
         player.OnStatChange += CheckStatChange;
+        SettingsManager.Instance.OnLanguageChange += UpdateUI;
     }
 
     private void Update()
@@ -35,7 +37,8 @@ public class UIPanelAverageHookTime : MonoBehaviour
     private void UpdateUI()
     {
         float average = FishSpawnManager.Instance.AverageHookTime;
-        textAverage.text = string.Format("Average time: ~{0}m{1}s", 
+        textAverage.text = string.Format(
+            UtilsText.AllTextDictionary[UtilsText.text_job_fisher_waittime], 
             Mathf.FloorToInt(average / 60f),
             Mathf.FloorToInt(average % 60f));
     }

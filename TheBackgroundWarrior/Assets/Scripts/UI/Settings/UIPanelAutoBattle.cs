@@ -22,6 +22,15 @@ public class UIPanelAutoBattle : MonoBehaviour
 
     public event Action<bool> OnSet;
 
+    private void Awake()
+    {
+        SettingsManager.Instance.OnLanguageChange += RefreshTexts;
+    }
+
+    private void OnDestroy()
+    {
+        SettingsManager.Instance.OnLanguageChange -= RefreshTexts;
+    }
 
     public void Start()
     {

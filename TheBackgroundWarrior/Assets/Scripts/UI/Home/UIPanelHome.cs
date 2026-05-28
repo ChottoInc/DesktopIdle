@@ -4,6 +4,7 @@ using TMPro;
 
 public class UIPanelHome : MonoBehaviour
 {
+    [SerializeField] CustomSteamManager steamManager;
     [SerializeField] UISelfAppear contentAppear;
 
     [Header("Buttons")]
@@ -29,6 +30,15 @@ public class UIPanelHome : MonoBehaviour
 
     private bool isChangingScene;
 
+    private void Awake()
+    {
+        steamManager.OnCheckedSettings += Init;
+    }
+
+    private void OnDestroy()
+    {
+        steamManager.OnCheckedSettings -= Init;
+    }
 
     public void Start()
     {
@@ -43,12 +53,20 @@ public class UIPanelHome : MonoBehaviour
 
         if (InitializerManager.Instance.HasCheckFiles)
         {
-            Setup();
-
-            RefreshTexts();
-
-            isInit = true;
+            if (!SettingsManager.Instance.IsSteamPlatform)
+            {
+                Init();
+            }
         }
+    }
+
+    private void Init()
+    {
+        RefreshTexts();
+
+        Setup();
+
+        isInit = true;
     }
 
     private void RefreshTexts()
@@ -58,7 +76,7 @@ public class UIPanelHome : MonoBehaviour
         textQuit.text = UtilsText.AllTextDictionary[UtilsText.text_button_quit];
     }
 
-    private void Setup()
+    public void Setup()
     {
         buttonContinue.interactable = InitializerManager.Instance.HasSaveFile;
 
