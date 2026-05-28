@@ -4,8 +4,11 @@ using UnityEngine;
 public class FishGroupSO : ScriptableObject
 {
     [SerializeField] UtilsGather.FishGroupType groupType;
+    [SerializeField] string groupNameTextId;
     [SerializeField] string groupName;
 
+    [Space(10)]
+    [SerializeField] string groupDescTextId;
     [TextArea]
     [SerializeField] string groupDesc;
 
@@ -14,8 +17,22 @@ public class FishGroupSO : ScriptableObject
 
 
     public UtilsGather.FishGroupType GroupType => groupType;
-    public string GroupName => groupName;
-    public string GroupDesc => groupDesc;
+    public string GroupName
+    {
+        get
+        {
+            string res = UtilsText.ItemNamesTextDictionary[groupNameTextId];
+            if (res != null) return res; else return groupName;
+        }
+    }
+    public string GroupDesc
+    {
+        get
+        {
+            string res = UtilsText.ItemDescsTextDictionary[groupDescTextId];
+            if (res != null) return res; else return groupDesc;
+        }
+    }
 
 
     public FishSO[] Fishes => fishes;

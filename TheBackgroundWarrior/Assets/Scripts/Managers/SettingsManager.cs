@@ -249,13 +249,13 @@ public class SettingsManager : MonoBehaviour
             try
             {
                 // if save exists do nothing
-                CombatMapSaveData mapData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), FileEncryption);
+                CombatMapSaveData mapData = saveService.LoadData<CombatMapSaveData>(UtilsSave.GetCombatMapFile(maps[i].MapEngName + maps[i].IdMap.ToString()), FileEncryption);
             }
             catch
             {
                 // if it doesn't exists, create new save file for the map
                 CombatMapSaveData mapData = new CombatMapSaveData(maps[i].IdMap, 1, 1, 0);
-                saveService.SaveData(UtilsSave.GetCombatMapFile(maps[i].MapName + i.ToString()), mapData, FileEncryption);
+                saveService.SaveData(UtilsSave.GetCombatMapFile(maps[i].MapEngName + maps[i].IdMap.ToString()), mapData, FileEncryption);
             }
         }
     }
@@ -495,12 +495,12 @@ public class SettingsManager : MonoBehaviour
     /// <param name="steamLang"></param>
     public void CheckSteamLanguage(string steamLang)
     {
-        Debug.Log("gettin languages from steam");
+        //Debug.Log("gettin languages from steam");
         string[] availableLangs = { "english", "italian" };
         if (availableLangs.Contains(steamLang))
         {
             var lang = GetLangIndexByName(steamLang);
-            Debug.Log("set lang: " + lang);
+            //Debug.Log("set lang: " + lang);
             SetLanguage(lang);
         }
     }

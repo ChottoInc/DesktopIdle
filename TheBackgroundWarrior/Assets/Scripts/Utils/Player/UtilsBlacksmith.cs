@@ -174,10 +174,10 @@ public static class UtilsBlacksmith
     };
     */
 
-    public static int BLACKSMITH_HELMET_MAX_LEVEL = 3;
-    public static int BLACKSMITH_ARMOR_MAX_LEVEL = 3;
-    public static int BLACKSMITH_GLOVES_MAX_LEVEL = 3;
-    public static int BLACKSMITH_BOOTS_MAX_LEVEL = 3;
+    public static int BLACKSMITH_HELMET_MAX_LEVEL = 5;
+    public static int BLACKSMITH_ARMOR_MAX_LEVEL = 5;
+    public static int BLACKSMITH_GLOVES_MAX_LEVEL = 5;
+    public static int BLACKSMITH_BOOTS_MAX_LEVEL = 5;
 
 
     private static PlayerJobBlacksmithSO jobDataSO;

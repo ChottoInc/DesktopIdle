@@ -448,6 +448,16 @@ public static class UtilsText
     public const string text_item_fish_79_name = "text_item_fish_79_name";
     public const string text_item_fish_80_name = "text_item_fish_80_name";
 
+    public const string text_item_fish_group_life_name = "text_item_fish_group_life_name";
+    public const string text_item_fish_group_predator_name = "text_item_fish_group_predator_name";
+    public const string text_item_fish_group_guardian_name = "text_item_fish_group_guardian_name";
+    public const string text_item_fish_group_dart_name = "text_item_fish_group_dart_name";
+    public const string text_item_fish_group_sharp_name = "text_item_fish_group_sharp_name";
+    public const string text_item_fish_group_piercing_name = "text_item_fish_group_piercing_name";
+    public const string text_item_fish_group_golden_name = "text_item_fish_group_golden_name";
+    public const string text_item_fish_group_elder_name = "text_item_fish_group_elder_name";
+    public const string text_item_fish_group_quick_name = "text_item_fish_group_quick_name";
+
 
 
     public const string text_shopitem_cardpack01_name = "text_shopitem_cardpack01_name";
@@ -610,6 +620,16 @@ public static class UtilsText
     public const string text_item_fish_78_desc = "text_item_fish_78_desc";
     public const string text_item_fish_79_desc = "text_item_fish_79_desc";
     public const string text_item_fish_80_desc = "text_item_fish_80_desc";
+
+    public const string text_item_fish_group_life_desc = "text_item_fish_group_life_desc";
+    public const string text_item_fish_group_predator_desc = "text_item_fish_group_predator_desc";
+    public const string text_item_fish_group_guardian_desc = "text_item_fish_group_guardian_desc";
+    public const string text_item_fish_group_dart_desc = "text_item_fish_group_dart_desc";
+    public const string text_item_fish_group_sharp_desc = "text_item_fish_group_sharp_desc";
+    public const string text_item_fish_group_piercing_desc = "text_item_fish_group_piercing_desc";
+    public const string text_item_fish_group_golden_desc = "text_item_fish_group_golden_desc";
+    public const string text_item_fish_group_elder_desc = "text_item_fish_group_elder_desc";
+    public const string text_item_fish_group_quick_desc = "text_item_fish_group_quick_desc";
 
 
 
@@ -1139,6 +1159,16 @@ public static class UtilsText
             { text_item_fish_79_name, "Lyretail Anthias" },
             { text_item_fish_80_name, "Fire Goby" },
 
+            { text_item_fish_group_life_name, "Life Series" },
+            { text_item_fish_group_predator_name, "Predator Series" },
+            { text_item_fish_group_guardian_name, "Guardian Series" },
+            { text_item_fish_group_dart_name, "Dart Series" },
+            { text_item_fish_group_sharp_name, "Sharp Series" },
+            { text_item_fish_group_piercing_name, "Piercing Series" },
+            { text_item_fish_group_golden_name, "Golden Series" },
+            { text_item_fish_group_elder_name, "Elder Series" },
+            { text_item_fish_group_quick_name, "Quick Series" },
+
 
 
             { text_shopitem_cardpack01_name, "Copper Pack" },
@@ -1324,6 +1354,16 @@ public static class UtilsText
             { text_item_fish_78_desc, "Atlantic Trumpetfish" },
             { text_item_fish_79_desc, "Lyretail Anthias" },
             { text_item_fish_80_desc, "Fire Goby" },
+
+            { text_item_fish_group_life_desc, "Increase Max Hp for Warrior Job by 100%." },
+            { text_item_fish_group_predator_desc, "Increase Atk for Warrior Job by 50%." },
+            { text_item_fish_group_guardian_desc, "Increase Def for Warrior Job by 30%." },
+            { text_item_fish_group_dart_desc, "Increase Atk Speed for Warrior Job by 20%." },
+            { text_item_fish_group_sharp_desc, "Increase Crit rate for Warrior Job by 20%" },
+            { text_item_fish_group_piercing_desc, "Increase Crit damage for Warrior Job by 20%" },
+            { text_item_fish_group_golden_desc, "Increase Luck for Warrior Job by 10%" },
+            { text_item_fish_group_elder_desc, "Increase Exp gain for Warrior Job by 20%" },
+            { text_item_fish_group_quick_desc, "Increase Movement speed for Warrior Job by 20%" },
 
 
 

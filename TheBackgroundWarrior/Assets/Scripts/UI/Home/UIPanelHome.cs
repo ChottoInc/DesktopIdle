@@ -134,11 +134,19 @@ public class UIPanelHome : MonoBehaviour
                 InitializerManager.Instance.EraseAllSaves();
                 InitializerManager.Instance.HandleSaves();
 
-                // switch to first scene
+                // set var that has files
                 InitializerManager.Instance.SetHasSaveFile();
+
+                // call steammanager to get the default lang
+                if (SettingsManager.Instance.IsSteamPlatform)
+                {
+                    steamManager.CheckDefaultLang();
+                }
+
+                // load first scene
                 SceneLoaderManager.Instance.LoadScene(SettingsManager.Instance.LastSceneSettings);
 
-                isChangingScene= true;
+                isChangingScene = true;
             }
         }
     }

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: FishGroupData_0_Life
   m_EditorClassIdentifier: 
   groupType: 0
+  groupNameTextId: text_item_fish_group_life_name
   groupName: Life Series
+  groupDescTextId: text_item_fish_group_life_desc
   groupDesc: Increase Max Hp for Warrior Job by 100%.
   fishes:
   - {fileID: 11400000, guid: 9fd32aabae787704eaee008cabeaf9d7, type: 2}

@@ -45,17 +45,24 @@ public class CustomSteamManager : SteamManager
         if (!CheckedSettings && InitializerManager.Instance.HasCheckFiles)
         {
             // if game language is the default one means the first open or the player set it to english, so check if game has client language
-            if(SettingsManager.Instance.CurrentLanguage == UtilsGeneral.Language.Eng)
-            {
-                SettingsManager.Instance.CheckSteamLanguage(SteamApps.GetCurrentGameLanguage());
-            }
-
-            // only check once
-            CheckedSettings = true;
-            OnCheckedSettings?.Invoke();
+            CheckDefaultLang();
         }
 
         base.Update();
+    }
+
+    public void CheckDefaultLang()
+    {
+        if (SettingsManager.Instance.CurrentLanguage == UtilsGeneral.Language.Eng)
+        {
+            SettingsManager.Instance.CheckSteamLanguage(SteamApps.GetCurrentGameLanguage());
+        }
+
+        UtilsGeneral.RefreshAll();
+
+        // only check once
+        CheckedSettings = true;
+        OnCheckedSettings?.Invoke();
     }
 
     private void OnInitialize()

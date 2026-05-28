@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: FishGroupData_1_Predator
   m_EditorClassIdentifier: 
   groupType: 1
+  groupNameTextId: text_item_fish_group_predator_name
   groupName: Predator Series
+  groupDescTextId: text_item_fish_group_predator_desc
   groupDesc: Increase Atk for Warrior Job by 50%.
   fishes:
   - {fileID: 11400000, guid: 71c2f171779e2d24e9697075110a61bf, type: 2}

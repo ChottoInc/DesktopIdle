@@ -19,6 +19,17 @@ public static class UtilsGeneral
 
     public static void Initialize()
     {
+        RefreshAll();
+    }
+
+    public static void RefreshAll()
+    {
+        RefreshTexts();
+        RefreshTutorialDictionaries();
+    }
+
+    public static void RefreshTexts()
+    {
         TUTORIAL_INTRO_1 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_1];
         TUTORIAL_INTRO_2 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_2];
         TUTORIAL_INTRO_3 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_3];
@@ -30,6 +41,35 @@ public static class UtilsGeneral
         TUTORIAL_INTRO_9 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_9];
         TUTORIAL_INTRO_10 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_10];
         TUTORIAL_INTRO_11 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_11];
+    }
+
+    public static void RefreshTutorialDictionaries()
+    {
+        TutorialIntroDialogues = new ReadOnlyCollection<TutorialDialogueNeedPos>(
+        new[]
+        {
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_1, false),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_2, false),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_3, false),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_4, false),
+
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_5, true),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_6, false),
+
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_7, false),
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_8, true),
+
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_9, true),
+
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_10, true),
+
+            new TutorialDialogueNeedPos(TUTORIAL_INTRO_11, true),
+        });
+
+        DictTutorials = new Dictionary<int, IList<TutorialDialogueNeedPos>>()
+        {
+            { ID_INTRO_TUTORIAL, TutorialIntroDialogues }
+        };
     }
 
 
@@ -281,7 +321,7 @@ public static class UtilsGeneral
     }
 
     // Tutorial intro
-    public static readonly IList<TutorialDialogueNeedPos> TutorialIntroDialogues = new ReadOnlyCollection<TutorialDialogueNeedPos>(
+    public static IList<TutorialDialogueNeedPos> TutorialIntroDialogues = new ReadOnlyCollection<TutorialDialogueNeedPos>(
         new[]
         {
             new TutorialDialogueNeedPos(TUTORIAL_INTRO_1, false),
@@ -304,7 +344,7 @@ public static class UtilsGeneral
     
 
     // Use to get all the dialogue for a specific tutorial
-    public static readonly Dictionary<int, IList<TutorialDialogueNeedPos>> DictTutorials = new Dictionary<int, IList<TutorialDialogueNeedPos>>()
+    public static Dictionary<int, IList<TutorialDialogueNeedPos>> DictTutorials = new Dictionary<int, IList<TutorialDialogueNeedPos>>()
     {
         { ID_INTRO_TUTORIAL, TutorialIntroDialogues }
     };
