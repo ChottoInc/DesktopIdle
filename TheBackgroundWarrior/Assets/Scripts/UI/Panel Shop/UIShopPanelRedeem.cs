@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -30,8 +31,13 @@ public class UIShopPanelRedeem : MonoBehaviour
     private const string SILVER_POINTS_CODE = "33";
     private const string GOLD_POINTS_CODE = "34";
 
-    // ------- FIVE SIX SEVEN EIGHT ------ //
-    //private const string QUANTITY_CODE = "00";
+    private const string FISH_GROUP_POINTS_CODE = "FH";
+
+    // ------- FIVE SIX ------ //
+    private const string FISH_GROUP_LIFE_CODE = "AA";
+    private const string FISH_GROUP_PREDATOR_CODE = "AB";
+    private const string FISH_GROUP_GUARDIAN_CODE = "AC";
+    private const string FISH_GROUP_DART_CODE = "AD";
 
 
 
@@ -57,24 +63,6 @@ public class UIShopPanelRedeem : MonoBehaviour
         AudioManager.Instance.PlayClickUI();
 
         bool redeemSuccess = AnalyzeRedeem(inputCode.text);
-
-        /*
-        switch (inputCode.text)
-        {
-            default: Debug.Log("Redeem denied"); break;
-
-            case UtilsShop.REDEEM_ERIS_CODE:
-
-                if (!ShopManager.Instance.HasRedeemedErisCode)
-                {
-                    redeemSuccess = true;
-                    ShopManager.Instance.SetRedeemCode(UtilsShop.ID_REDEEM_ERIS_CODE);
-                    ShopManager.Instance.SaveShopData();
-                    Debug.Log("Redeem success: " + UtilsShop.REDEEM_ERIS_CODE);
-                }
-                break;
-        }
-        */
 
         if (!redeemSuccess)
         {
@@ -186,8 +174,28 @@ public class UIShopPanelRedeem : MonoBehaviour
             case BRONZE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(152, quantity); break;
             case SILVER_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(153, quantity); break;
             case GOLD_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(154, quantity); break;
+
+            case FISH_GROUP_POINTS_CODE: return HandleFishGroupRedeem(code);
         }
 
+        return true;
+    }
+
+    private bool HandleFishGroupRedeem(string code)
+    {
+        string fivesix = "" + code[4] + code[5];
+        List<int> fishes = new List<int>();
+        switch (fivesix)
+        {
+            default: return false;
+            case FISH_GROUP_LIFE_CODE: fishes.AddRange(new int[] { 200, 201, 217, 219, 226, 227, 232, 203 }); break;
+            case FISH_GROUP_PREDATOR_CODE: fishes.AddRange(new int[] { 204, 206, 225, 228, 230, 241, 243, 207 }); break;
+            case FISH_GROUP_GUARDIAN_CODE: fishes.AddRange(new int[] { 212, 213, 214, 215, 216, 229, 276 }); break;
+            case FISH_GROUP_DART_CODE: fishes.AddRange(new int[] { 208, 221, 236, 251, 253, 266, 277 }); break;
+        }
+
+        PlayerManager.Instance.Inventory.AddItems(fishes);
+        PlayerManager.Instance.PlayerFisherData.FillFishGroupsSeriesCompletion();
         return true;
     }
 }

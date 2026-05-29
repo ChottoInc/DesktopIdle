@@ -23,16 +23,8 @@ public class Inventory
 
     public Inventory()
     {
-        //currentBits = 100;
         currentBits = 0;
         itemGroups = new List<ItemGroup>();
-        /*
-        itemGroups.Add(new ItemGroup(0, 2000));
-        itemGroups.Add(new ItemGroup(1, 2000));
-        itemGroups.Add(new ItemGroup(2, 2000));
-        itemGroups.Add(new ItemGroup(3, 2000));
-        itemGroups.Add(new ItemGroup(4, 2000));
-        itemGroups.Add(new ItemGroup(50, 100));*/
     }
 
     public Inventory(InventorySaveData saveData)
@@ -69,6 +61,22 @@ public class Inventory
     #endregion
 
     #region ITEMS
+
+    public void AddItems(List<int> ids)
+    {
+        foreach (var id in ids)
+        {
+            AddItem(id, 1);
+        }
+    }
+
+    public void AddItems(List<ItemGroup> groups)
+    {
+        foreach (var group in groups)
+        {
+            AddItem(group.IdItem, group.Quantity);
+        }
+    }
 
     public void AddItem(int id, int quantity)
     {
