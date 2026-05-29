@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Data/Map/Fisher/Fish Group Data", fileName = "FishGroupData_")]
-public class FishGroupSO : ScriptableObject
+public class FishGroupSO : ListableGameDataSO
 {
     [SerializeField] UtilsGather.FishGroupType groupType;
     [SerializeField] string groupNameTextId;
@@ -14,6 +14,8 @@ public class FishGroupSO : ScriptableObject
 
     [Space(10)]
     [SerializeField] FishSO[] fishes;
+
+    public override int Id => (int)groupType;
 
 
     public UtilsGather.FishGroupType GroupType => groupType;

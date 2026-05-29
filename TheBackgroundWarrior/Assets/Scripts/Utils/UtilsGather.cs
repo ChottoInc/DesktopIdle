@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -102,7 +103,8 @@ public static class UtilsGather
         LoadDictRocks();
 
         // Fisher
-        fishGroups = LoadFishGroups();
+        LoadDictFishGroups();
+        //fishGroups = LoadFishGroups();
 
         // Farmer
         crops = LoadCrops();
@@ -257,6 +259,12 @@ public static class UtilsGather
 
     #region FISH GROUPS
 
+    private static void LoadDictFishGroups()
+    {
+        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Fisher/ContainerGameData_FishGroups");
+        dictFishGroups = container.Entries.ToDictionary(e => e.Id);
+    }
+
     private static FishGroupSO[] LoadFishGroups()
     {
         return Resources.LoadAll<FishGroupSO>("Data/Gatherer/Fisher");
@@ -265,9 +273,9 @@ public static class UtilsGather
 
     public static FishGroupSO[] GetAllFishGroups()
     {
-        return fishGroups;
+        return dictFishGroups.Values.OfType<FishGroupSO>().ToArray();
     }
-    
+    /*
     public static FishGroupSO GetFishGroupByType(FishGroupType type)
     {
         foreach (var group in fishGroups)
@@ -277,16 +285,25 @@ public static class UtilsGather
         }
         return null;
     }
+    */
+    public static FishGroupSO GetFishGroupByType(FishGroupType type)
+    {
+        return GetGameDataSO<FishGroupSO>((int)type, dictFishGroups);
+    }
 
     public static FishGroupSO GetFishGroupByFish(FishSO fish)
-    {
+    {/*
         foreach (var group in fishGroups)
         {
             if (group.Fishes.Contains(fish))
                 return group;
         }
         return null;
+        */
+        return GetByPredicate<FishGroupSO>(group => group.Fishes.Contains(fish), dictFishGroups);
     }
+
+    
 
     #endregion
 
@@ -335,4 +352,16 @@ public static class UtilsGather
     }
 
     #endregion
+
+    public static T GetGameDataSO<T>(int id, Dictionary<int, ListableGameDataSO> dict) where T : ListableGameDataSO
+    {
+        return dict.TryGetValue(id, out var entry) ? entry as T : null;
+    }
+
+    public static T GetByPredicate<T>(Func<T, bool> predicate, Dictionary<int, ListableGameDataSO> dict) where T : ListableGameDataSO
+    {
+        return dict.Values
+            .OfType<T>()
+            .FirstOrDefault(predicate);
+    }
 }

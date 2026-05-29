@@ -4,5 +4,5 @@ public abstract class ListableGameDataSO : ScriptableObject
 {
     [SerializeField] int id;
 
-    public int Id => id;
+    public virtual int Id => id;
 }
