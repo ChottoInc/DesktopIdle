@@ -149,33 +149,41 @@ public class UIShopPanelRedeem : MonoBehaviour
     {
         string threefour = "" + code[2] + code[3];
 
-        // get quantity
-        string remains = string.Empty;
-        for (int i = 4; i < code.Length; i++)
+        if (!threefour.Equals(FISH_GROUP_POINTS_CODE))  // TODO: ADD HERE OTHER CHECKS
         {
-            remains += code[i];
+            // get quantity
+            string remains = string.Empty;
+            for (int i = 4; i < code.Length; i++)
+            {
+                remains += code[i];
+            }
+
+            int quantity = int.Parse(remains);
+            //Debug.Log("Quantity added: " + quantity);
+
+            switch (threefour)
+            {
+                default: return false;
+                case COPPERORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(0, quantity); break;
+                case IRONORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(1, quantity); break;
+                case BRONZEORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(2, quantity); break;
+                case SILVERORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(3, quantity); break;
+                case GOLDORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(4, quantity); break;
+
+                case COPPER_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(150, quantity); break;
+                case IRON_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(151, quantity); break;
+                case BRONZE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(152, quantity); break;
+                case SILVER_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(153, quantity); break;
+                case GOLD_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(154, quantity); break;
+            }
         }
-
-        int quantity = int.Parse(remains);
-        //Debug.Log("Quantity added: " + quantity);
-
-
-        switch (threefour)
+        else
         {
-            default: return false;
-            case COPPERORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(0, quantity); break;
-            case IRONORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(1, quantity); break;
-            case BRONZEORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(2, quantity); break;
-            case SILVERORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(3, quantity); break;
-            case GOLDORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(4, quantity); break;
-
-            case COPPER_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(150, quantity); break;
-            case IRON_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(151, quantity); break;
-            case BRONZE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(152, quantity); break;
-            case SILVER_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(153, quantity); break;
-            case GOLD_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(154, quantity); break;
-
-            case FISH_GROUP_POINTS_CODE: return HandleFishGroupRedeem(code);
+            switch (threefour)
+            {
+                default: return false;
+                case FISH_GROUP_POINTS_CODE: return HandleFishGroupRedeem(code);
+            }
         }
 
         return true;
@@ -194,6 +202,7 @@ public class UIShopPanelRedeem : MonoBehaviour
             case FISH_GROUP_DART_CODE: fishes.AddRange(new int[] { 208, 221, 236, 251, 253, 266, 277 }); break;
         }
 
+        Debug.Log("getting: " + fishes.ToString());
         PlayerManager.Instance.Inventory.AddItems(fishes);
         PlayerManager.Instance.PlayerFisherData.FillFishGroupsSeriesCompletion();
         return true;

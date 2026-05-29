@@ -20,7 +20,7 @@ public class PlayerJobSO : ScriptableObject
     {
         get
         {
-            string res = UtilsText.ItemNamesTextDictionary[unlockConditionsTextId];
+            string res = UtilsText.AllTextDictionary[unlockConditionsTextId];
             if (res != null) return res; else return unlockConditions;
         }
     }
