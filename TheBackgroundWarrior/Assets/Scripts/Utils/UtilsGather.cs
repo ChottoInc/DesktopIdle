@@ -5,18 +5,20 @@ using UnityEngine;
 public static class UtilsGather
 {
     // Miner
-    private static RockSO[] rocks;
+    //private static RockSO[] rocks;
+    private static Dictionary<int, ListableGameDataSO> dictRocks;
 
     public enum RockType { Copper, Iron, Bronze, Silver, Gold }
 
     // Fisher
     private static FishGroupSO[] fishGroups;
+    private static Dictionary<int, ListableGameDataSO> dictFishGroups;
 
     // Max hp, Atk, Def, Atk Spd, Crit rate, Crit dmg, Luck, Exp gain, Move spd warrior
     public enum FishGroupType { Life, Predator, Guardian, Dart, Sharp, Piercing, Golden, Elder, Quick }
 
 
-    // Fisher
+    // Farmer
     private static CropSO[] crops;
     private static CompanionSO[] companions;
 
@@ -96,7 +98,8 @@ public static class UtilsGather
     public static void Initialize()
     {
         // Miner
-        rocks = LoadRocks();
+        //rocks = LoadRocks();
+        LoadDictRocks();
 
         // Fisher
         fishGroups = LoadFishGroups();
@@ -110,6 +113,12 @@ public static class UtilsGather
 
     #region ROCKS
 
+    private static void LoadDictRocks()
+    {
+        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Miner/ContainerGameData_Rocks");
+        dictRocks = container.Entries.ToDictionary(e => e.Id);
+    }
+    /*
     private static RockSO[] LoadRocks()
     {
         return Resources.LoadAll<RockSO>("Data/Gatherer/Miner");
@@ -136,6 +145,7 @@ public static class UtilsGather
         }
         return null;
     }
+    */
 
 
 
