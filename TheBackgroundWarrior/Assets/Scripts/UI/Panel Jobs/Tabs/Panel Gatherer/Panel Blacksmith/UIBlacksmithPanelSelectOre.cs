@@ -50,7 +50,7 @@ public class UIBlacksmithPanelSelectOre : MonoBehaviour
     {
         oresObjs = ClearList(oresObjs);
 
-        var ores = UtilsItem.GetAllOres();
+        var ores = UtilsItem.GetAllTypeItem<OreSO>();
 
         for (int i = 0; i < ores.Length; i++)
         {

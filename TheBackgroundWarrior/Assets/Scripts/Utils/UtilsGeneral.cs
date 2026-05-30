@@ -72,7 +72,10 @@ public static class UtilsGeneral
         };
     }
 
-
+    public static T GetGameDataSO<T>(int id, Dictionary<int, ListableGameDataSO> dict) where T : ListableGameDataSO
+    {
+        return dict.TryGetValue(id, out var entry) ? entry as T : null;
+    }
 
 
     public static DayMoment GetDayMoment()

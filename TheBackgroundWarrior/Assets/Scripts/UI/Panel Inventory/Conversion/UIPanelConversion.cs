@@ -111,7 +111,7 @@ public class UIPanelConversion : MonoBehaviour
             PlayerManager.Instance.Inventory.RemoveItem(card.Id, 1);
         }
 
-        CardSO convertedCard = convertedCard = UtilsItem.GetConvertedCard(cards);
+        CardSO convertedCard = convertedCard = UtilsCard.GetConvertedCard(cards);
 
         if(convertedCard == null)
         {

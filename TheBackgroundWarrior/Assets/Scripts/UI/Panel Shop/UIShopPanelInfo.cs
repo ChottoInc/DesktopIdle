@@ -104,7 +104,7 @@ public class UIShopPanelInfo : MonoBehaviour
         for (int i = 0; i < totalCards; i++)
         {
             UtilsItem.CardRarity rarity = UtilsGeneral.GetRandomValueFromGeneralChanches(cardPack.RarityChances);
-            CardSO card = UtilsItem.GetRandomCardByRarity(rarity);
+            CardSO card = UtilsCard.GetRandomCardByRarity(rarity);
             result.Add(card);
         }
 
@@ -112,13 +112,13 @@ public class UIShopPanelInfo : MonoBehaviour
         if (cardPack.IsGuaranteed)
         {
             // check if not contains guaranteed
-            if(!UtilsItem.DoesCardListContainRarity(result, cardPack.GuaranteedRarity))
+            if(!UtilsCard.DoesCardListContainRarity(result, cardPack.GuaranteedRarity))
             {
                 // get random of guarateed rarity
-                CardSO cardToAdd = UtilsItem.GetRandomCardByRarity(cardPack.GuaranteedRarity);
+                CardSO cardToAdd = UtilsCard.GetRandomCardByRarity(cardPack.GuaranteedRarity);
 
                 // switch with guaranteed
-                int indexToSub = UtilsItem.GetRandomIndexLowestRarityCard(result);
+                int indexToSub = UtilsCard.GetRandomIndexLowestRarityCard(result);
                 result[indexToSub] = cardToAdd;
             }
         }

@@ -2,9 +2,8 @@ using UnityEngine;
 using static UtilsItem;
 
 [CreateAssetMenu(menuName = "Data/Inventory/Item Data", fileName = "ItemData_")]
-public class ItemSO : ScriptableObject
+public class ItemSO : ListableGameDataSO
 {
-    [SerializeField] int id;
     [SerializeField] ItemType itemType;
 
     [Space(10)]
@@ -18,7 +17,6 @@ public class ItemSO : ScriptableObject
     [TextArea]
     [SerializeField] string itemDesc;
 
-    public int Id => id;
     public ItemType ItemType => itemType;
 
     public Sprite Sprite => sprite;
@@ -45,7 +43,7 @@ public class ItemSO : ScriptableObject
     public override bool Equals(object other)
     {
         ItemSO otherItem = other as ItemSO;
-        return id == otherItem.id;
+        return Id == otherItem.Id;
     }
 
     public override int GetHashCode()

@@ -271,7 +271,7 @@ public static class UtilsGather
     
     public static FishGroupSO GetFishGroupByType(FishGroupType type)
     {
-        return GetGameDataSO<FishGroupSO>((int)type, dictFishGroups);
+        return UtilsGeneral.GetGameDataSO<FishGroupSO>((int)type, dictFishGroups);
     }
 
     public static FishGroupSO GetFishGroupByFish(FishSO fish)
@@ -298,7 +298,7 @@ public static class UtilsGather
 
     public static CropSO GetCropById(int id)
     {
-        return GetGameDataSO<CropSO>(id, dictCrops);
+        return UtilsGeneral.GetGameDataSO<CropSO>(id, dictCrops);
     }
 
     private static void LoadDictCompanions()
@@ -314,15 +314,12 @@ public static class UtilsGather
 
     public static CompanionSO GetCompanionById(int id)
     {
-        return GetGameDataSO<CompanionSO>(id, dictCompanions);
+        return UtilsGeneral.GetGameDataSO<CompanionSO>(id, dictCompanions);
     }
 
     #endregion
 
-    public static T GetGameDataSO<T>(int id, Dictionary<int, ListableGameDataSO> dict) where T : ListableGameDataSO
-    {
-        return dict.TryGetValue(id, out var entry) ? entry as T : null;
-    }
+    
 
     public static T GetByPredicate<T>(Func<T, bool> predicate, Dictionary<int, ListableGameDataSO> dict) where T : ListableGameDataSO
     {

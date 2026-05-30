@@ -143,7 +143,7 @@ public class UIPanelDismantle : MonoBehaviour
 
         for (int i = 0; i < selectedAmount; i++)
         {
-            totalBits += UtilsItem.GetDismantleValueFromCard(selectedCard);
+            totalBits += UtilsCard.GetDismantleValueFromCard(selectedCard);
         }
 
         // Remove cards and add bits

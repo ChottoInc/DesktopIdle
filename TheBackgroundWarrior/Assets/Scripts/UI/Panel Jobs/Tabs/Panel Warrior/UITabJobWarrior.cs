@@ -51,7 +51,7 @@ public class UITabJobWarrior : UITabWindow
 
         if(cards == null)
         {
-            cards = UtilsItem.GetAllCards();
+            cards = UtilsItem.GetAllTypeItem<CardSO>();
             FillCards();
             RefreshCards();
         }
