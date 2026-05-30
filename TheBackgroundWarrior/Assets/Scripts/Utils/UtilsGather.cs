@@ -6,13 +6,11 @@ using UnityEngine;
 public static class UtilsGather
 {
     // Miner
-    //private static RockSO[] rocks;
     private static Dictionary<int, ListableGameDataSO> dictRocks;
 
     public enum RockType { Copper, Iron, Bronze, Silver, Gold }
 
     // Fisher
-    private static FishGroupSO[] fishGroups;
     private static Dictionary<int, ListableGameDataSO> dictFishGroups;
 
     // Max hp, Atk, Def, Atk Spd, Crit rate, Crit dmg, Luck, Exp gain, Move spd warrior
@@ -20,8 +18,8 @@ public static class UtilsGather
 
 
     // Farmer
-    private static CropSO[] crops;
-    private static CompanionSO[] companions;
+    private static Dictionary<int, ListableGameDataSO> dictCrops;
+    private static Dictionary<int, ListableGameDataSO> dictCompanions;
 
 
 
@@ -99,16 +97,16 @@ public static class UtilsGather
     public static void Initialize()
     {
         // Miner
-        //rocks = LoadRocks();
         LoadDictRocks();
 
         // Fisher
         LoadDictFishGroups();
-        //fishGroups = LoadFishGroups();
 
         // Farmer
-        crops = LoadCrops();
-        companions = LoadCompanions();
+        LoadDictCrops();
+        LoadDictCompanions();
+
+        
 
         minerWeaponSprites = LoadMinerWeaponSprites();
     }
@@ -265,90 +263,58 @@ public static class UtilsGather
         dictFishGroups = container.Entries.ToDictionary(e => e.Id);
     }
 
-    private static FishGroupSO[] LoadFishGroups()
-    {
-        return Resources.LoadAll<FishGroupSO>("Data/Gatherer/Fisher");
-    }
-
 
     public static FishGroupSO[] GetAllFishGroups()
     {
         return dictFishGroups.Values.OfType<FishGroupSO>().ToArray();
     }
-    /*
-    public static FishGroupSO GetFishGroupByType(FishGroupType type)
-    {
-        foreach (var group in fishGroups)
-        {
-            if (group.GroupType == type)
-                return group;
-        }
-        return null;
-    }
-    */
+    
     public static FishGroupSO GetFishGroupByType(FishGroupType type)
     {
         return GetGameDataSO<FishGroupSO>((int)type, dictFishGroups);
     }
 
     public static FishGroupSO GetFishGroupByFish(FishSO fish)
-    {/*
-        foreach (var group in fishGroups)
-        {
-            if (group.Fishes.Contains(fish))
-                return group;
-        }
-        return null;
-        */
+    {
         return GetByPredicate<FishGroupSO>(group => group.Fishes.Contains(fish), dictFishGroups);
     }
 
-    
+
 
     #endregion
 
     #region FARMER 
 
-    private static CropSO[] LoadCrops()
+    private static void LoadDictCrops()
     {
-        return Resources.LoadAll<CropSO>("Data/Player/Farmer");
+        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Farmer/Crops/ContainerGameData_Crops");
+        dictCrops = container.Entries.ToDictionary(e => e.Id);
     }
-
 
     public static CropSO[] GetAllCrops()
     {
-        return crops;
+        return dictCrops.Values.OfType<CropSO>().ToArray();
     }
 
     public static CropSO GetCropById(int id)
     {
-        foreach (var crop in crops)
-        {
-            if (crop.Id == id)
-                return crop;
-        }
-        return null;
+        return GetGameDataSO<CropSO>(id, dictCrops);
     }
 
-    private static CompanionSO[] LoadCompanions()
+    private static void LoadDictCompanions()
     {
-        return Resources.LoadAll<CompanionSO>("Data/Player/Farmer");
+        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Farmer/Companions/ContainerGameData_Companions");
+        dictCompanions = container.Entries.ToDictionary(e => e.Id);
     }
-
 
     public static CompanionSO[] GetAllCompanions()
     {
-        return companions;
+        return dictCompanions.Values.OfType<CompanionSO>().ToArray();
     }
 
     public static CompanionSO GetCompanionById(int id)
     {
-        foreach (var companion in companions)
-        {
-            if (companion.Id == id)
-                return companion;
-        }
-        return null;
+        return GetGameDataSO<CompanionSO>(id, dictCompanions);
     }
 
     #endregion

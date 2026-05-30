@@ -1,10 +1,8 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Data/Map/Farmer/Crop Data", fileName = "CropData_")]
-public class CropSO : ScriptableObject
+public class CropSO : ListableGameDataSO
 {
-    [SerializeField] int id;
-
     [Space(10)]
     [SerializeField] float baseGrowthTime;
 
@@ -21,8 +19,6 @@ public class CropSO : ScriptableObject
 
     [Space(10)]
     [SerializeField] long rewardedExp;
-
-    public int Id => id;
 
     public float BaseGrowthTime => baseGrowthTime;
 

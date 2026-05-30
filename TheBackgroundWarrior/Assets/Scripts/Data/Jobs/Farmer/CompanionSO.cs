@@ -1,9 +1,8 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Data/Map/Farmer/Companion Data", fileName = "CompanionData_")]
-public class CompanionSO : ScriptableObject
+public class CompanionSO : ListableGameDataSO
 {
-    [SerializeField] int id;
     [SerializeField] string itemNameTextId;
     [SerializeField] string companionName;
 
@@ -18,7 +17,6 @@ public class CompanionSO : ScriptableObject
     [SerializeField] float baseAtkPerc;
     [SerializeField] float baseAtkSpd;
 
-    public int Id => id;
     public string CompanionName
     {
         get
