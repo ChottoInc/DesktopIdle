@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class UtilsShop
@@ -15,6 +16,8 @@ public static class UtilsShop
 
     public enum ShopItemType { CardPack, Job }
 
+    private static Dictionary<string, ShopItemSO> dictShopItems;
+
     private static List<ShopItemSO> cardPacks;
     private static List<ShopItemSO> jobs;
 
@@ -23,6 +26,13 @@ public static class UtilsShop
     public static void Initialize()
     {
         LoadAllItems();
+        //LoadItems();
+    }
+
+    private static void LoadItems()
+    {
+        var container = Resources.Load<ContainerGameDataSO>("Data/Shop/ContainerGameData_ShopItems");
+        dictShopItems = container.Entries.OfType<ShopItemSO>().ToDictionary(e => e.UniqueId);
     }
 
     private static void LoadAllItems()
@@ -86,7 +96,7 @@ public static class UtilsShop
     #endregion
 
 
-    #region CARD PACKS
+    #region JOBS
 
     public static ShopItemSO GetShopJobById(string id)
     {

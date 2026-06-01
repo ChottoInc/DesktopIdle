@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ShopItemSO : ScriptableObject
+public class ShopItemSO : ListableGameDataSO
 {
     [SerializeField] protected string uniqueId;
 

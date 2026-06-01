@@ -40,7 +40,7 @@ public class UITooltipCard : MonoBehaviour
         imageBackground.sprite = cardSO.BackgoundSprite;
         imageCard.sprite = cardSO.Sprite;
 
-        imageRarity.color = UtilsGeneral.GetColorByRarity(cardSO.CardRarity);
+        imageRarity.color = UtilsColor.GetColorByRarity(cardSO.CardRarity);
         textRarity.text = cardSO.CardRarityName;
 
         textNumber.text = $"{cardSO.CardNumber}";

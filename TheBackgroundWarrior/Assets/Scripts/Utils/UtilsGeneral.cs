@@ -77,6 +77,18 @@ public static class UtilsGeneral
         return dict.TryGetValue(id, out var entry) ? entry as T : null;
     }
 
+    public static bool GetRandomSuccessFromValue(float value)
+    {
+        if (Random.value <= value) return true;
+        return false;
+    }
+
+    public static float GetRandomValueBtwValues(float val1, float val2)
+    {
+        return Random.Range(val1, val2);
+    }
+
+    #region DAY MOMENT
 
     public static DayMoment GetDayMoment()
     {
@@ -108,17 +120,11 @@ public static class UtilsGeneral
         }
     }
 
-    public static bool GetRandomSuccessFromValue(float value)
-    {
-        if (Random.value <= value) return true;
-        return false;
-    }
+    #endregion
 
-    public static float GetRandomValueBtwValues(float val1, float val2)
-    {
-        return Random.Range(val1, val2);
-    }
+    
 
+    #region FILE READING
 
     public static List<string> GetFileStrings(string filename)
     {
@@ -200,47 +206,9 @@ public static class UtilsGeneral
         return result;
     }
 
+    #endregion
 
 
-
-    public struct MyColors
-    {
-        public static Color CommonRarity
-        {
-            get
-            {
-                return new Color(255f / 255f, 195f / 255f, 95f / 255f, 1f);
-            }
-        }
-
-        public static Color UncommonRarity
-        {
-            get
-            {
-                return new Color(96f / 255f, 180f / 255f, 255f / 255f, 1f);
-            }
-        }
-
-        public static Color RareRarity
-        {
-            get
-            {
-                return new Color(255f / 255f, 125f / 255f, 95f / 255f, 1f);
-            }
-        }
-    }
-
-
-    public static Color GetColorByRarity(UtilsItem.CardRarity rarity)
-    {
-        switch(rarity)
-        {
-            default:
-            case UtilsItem.CardRarity.Common: return MyColors.CommonRarity;
-            case UtilsItem.CardRarity.Uncommon: return MyColors.UncommonRarity;
-            case UtilsItem.CardRarity.Rare: return MyColors.RareRarity;
-        }
-    }
 
     /// <summary>
     /// Are there any common values between a and b?

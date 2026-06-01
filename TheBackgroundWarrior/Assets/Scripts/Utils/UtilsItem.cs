@@ -23,10 +23,10 @@ public static class UtilsItem
 
     public static void Initialize()
     {
-        LoadDictItems();
+        LoadItems();
     }
 
-    private static void LoadDictItems()
+    private static void LoadItems()
     {
         var container = Resources.Load<ContainerGameDataSO>("Data/Items/ContainerGameData_Items");
         dictItems = container.Entries.ToDictionary(e => e.Id);
