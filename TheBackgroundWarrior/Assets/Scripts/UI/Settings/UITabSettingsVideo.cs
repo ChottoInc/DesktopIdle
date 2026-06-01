@@ -13,14 +13,6 @@ public class UITabSettingsVideo : UITabWindow
     [SerializeField] Toggle toggle30FPS;
     [SerializeField] Toggle toggle60FPS;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textAlwaysOnTop;
-    [SerializeField] TMP_Text textClickThrough;
-    [SerializeField] TMP_Text textTargetFPS;
-    [SerializeField] TMP_Text textToggle30;
-    [SerializeField] TMP_Text textToggle60;
-    [SerializeField] TMP_Text textChangeMonitor;
-
 
     private int currentMonitorIndex;
     private int possibleIndexes;
@@ -49,18 +41,6 @@ public class UITabSettingsVideo : UITabWindow
         {
             currentMonitorIndex = 0;
         }
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textAlwaysOnTop.text = UtilsText.AllTextDictionary[UtilsText.text_settings_video_option_alwaysontop];
-        textClickThrough.text = UtilsText.AllTextDictionary[UtilsText.text_settings_video_option_clickthrough];
-        textTargetFPS.text = UtilsText.AllTextDictionary[UtilsText.text_settings_video_titletargetfps];
-        textToggle30.text = UtilsText.AllTextDictionary[UtilsText.text_settings_video_option_toggle30];
-        textToggle60.text = UtilsText.AllTextDictionary[UtilsText.text_settings_video_option_toggle60];
-        textChangeMonitor.text = UtilsText.AllTextDictionary[UtilsText.text_settings_video_button_changemonitor];
     }
 
     public void OnToggleAlwaysOnTop(bool isOn)

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,25 +6,52 @@ public class UILocalizeText : MonoBehaviour
 {
     [SerializeField] string textId;
 
-    private TMP_Text text;
+    private TMP_Text _text;
+
+    private bool _isInit;
+    private bool _isListening;
 
     private void Awake()
     {
-        text = GetComponent<TMP_Text>();
+        _text = GetComponent<TMP_Text>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        RefreshText();
+        // if not first scene, load text at start
+        InitText();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        
+        SettingsManager.Instance.OnLanguageChange -= RefreshText;
+    }
+
+    private void Update()
+    {
+        InitText();
+        InitListening();
+    }
+
+    private void InitText()
+    {
+        if (InitializerManager.Instance.HasCheckFiles && !_isInit)
+        {
+            _isInit = true;
+            RefreshText();
+        }
+    }
+
+    private void InitListening()
+    {
+        if (_isListening) return;
+
+        _isListening = true;
+        SettingsManager.Instance.OnLanguageChange += RefreshText;
     }
 
     private void RefreshText()
     {
-        //text.text = 
+        _text.text = UtilsText.AllDictionaries[textId];
     }
 }

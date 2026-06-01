@@ -1876,6 +1876,7 @@ GameObject:
   - component: {fileID: 786978386}
   - component: {fileID: 786978388}
   - component: {fileID: 786978387}
+  - component: {fileID: 786978389}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1999,6 +2000,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 786978385}
   m_CullTransparentMesh: 1
+--- !u!114 &786978389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786978385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7af02d3c1bf074eb381818c2563fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textId: text_button_continue
 --- !u!1 &802659014
 GameObject:
   m_ObjectHideFlags: 0
@@ -3395,6 +3409,7 @@ GameObject:
   - component: {fileID: 1346255604}
   - component: {fileID: 1346255606}
   - component: {fileID: 1346255605}
+  - component: {fileID: 1346255607}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3518,6 +3533,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1346255603}
   m_CullTransparentMesh: 1
+--- !u!114 &1346255607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346255603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7af02d3c1bf074eb381818c2563fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textId: text_button_new
 --- !u!1 &1398180391
 GameObject:
   m_ObjectHideFlags: 0
@@ -4993,6 +5021,7 @@ GameObject:
   - component: {fileID: 2139900675}
   - component: {fileID: 2139900677}
   - component: {fileID: 2139900676}
+  - component: {fileID: 2139900678}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -5116,6 +5145,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139900674}
   m_CullTransparentMesh: 1
+--- !u!114 &2139900678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139900674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7af02d3c1bf074eb381818c2563fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textId: text_button_quit
 --- !u!1 &2143782916
 GameObject:
   m_ObjectHideFlags: 0
@@ -5782,8 +5824,6 @@ MonoBehaviour:
   disableColor: {r: 0.7058824, g: 0.7058824, b: 0.7058824, a: 1}
   messageNewGamePosition: {fileID: 753341369}
   panelAdd: {fileID: 169615969}
-  textNew: {fileID: 1346255605}
-  textQuit: {fileID: 2139900676}
 --- !u!1 &7979569765715523627
 GameObject:
   m_ObjectHideFlags: 0

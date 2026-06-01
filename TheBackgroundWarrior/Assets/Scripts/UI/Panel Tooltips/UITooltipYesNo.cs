@@ -17,10 +17,6 @@ public class UITooltipYesNo : MonoBehaviour
     [SerializeField] Button yesButton;
     [SerializeField] Button noButton;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textConfirm;
-    [SerializeField] TMP_Text textCancel;
-
 
     public bool IsShowing { get; private set; }
 
@@ -34,19 +30,11 @@ public class UITooltipYesNo : MonoBehaviour
     {
         yesButton.onClick.AddListener(() => Close(true));
         noButton.onClick.AddListener(() => Close(false));
-
-        RefreshTexts();
     }
 
     private void OnDestroy()
     {
         tweenFade?.Kill();
-    }
-
-    private void RefreshTexts()
-    {
-        textConfirm.text = UtilsText.AllTextDictionary[UtilsText.text_yesno_yes];
-        textCancel.text = UtilsText.AllTextDictionary[UtilsText.text_yesno_no];
     }
 
     public Task<bool> Show(string question, Vector2 position, bool fade = false)

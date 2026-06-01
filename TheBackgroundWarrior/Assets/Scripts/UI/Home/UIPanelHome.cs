@@ -22,10 +22,6 @@ public class UIPanelHome : MonoBehaviour
     [Space(10)]
     [SerializeField] UIPanelAdd panelAdd;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textNew;
-    [SerializeField] TMP_Text textQuit;
-
     private bool isInit;
 
     private bool isChangingScene;
@@ -62,18 +58,9 @@ public class UIPanelHome : MonoBehaviour
 
     private void Init()
     {
-        RefreshTexts();
-
         Setup();
 
         isInit = true;
-    }
-
-    private void RefreshTexts()
-    {
-        textNew.text = UtilsText.AllTextDictionary[UtilsText.text_button_new];
-        textContinue.text = UtilsText.AllTextDictionary[UtilsText.text_button_continue];
-        textQuit.text = UtilsText.AllTextDictionary[UtilsText.text_button_quit];
     }
 
     public void Setup()

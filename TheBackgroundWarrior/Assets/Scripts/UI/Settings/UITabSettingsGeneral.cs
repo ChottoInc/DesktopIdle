@@ -8,13 +8,6 @@ public class UITabSettingsGeneral : UITabWindow
     [SerializeField] Slider sliderMaster;
     [SerializeField] TMP_Dropdown dropdownLanguage;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textVolume;
-    [SerializeField] TMP_Text textLanguage;
-    [SerializeField] TMP_Text textExit;
-    [SerializeField] TMP_Text textButtonTitleScreen;
-    [SerializeField] TMP_Text textButtonQuit;
-
     public override void Open()
     {
         base.Open();
@@ -36,18 +29,6 @@ public class UITabSettingsGeneral : UITabWindow
         dropdownLanguage.AddOptions(listLanguage);
 
         dropdownLanguage.SetValueWithoutNotify((int)SettingsManager.Instance.CurrentLanguage);
-
-        RefreshTexts();
-    }
-
-
-    private void RefreshTexts()
-    {
-        textVolume.text = UtilsText.AllTextDictionary[UtilsText.text_settings_general_titlevolume];
-        textLanguage.text = UtilsText.AllTextDictionary[UtilsText.text_settings_general_titlelanguage];
-        textExit.text = UtilsText.AllTextDictionary[UtilsText.text_settings_general_titleexit];
-        textButtonTitleScreen.text = UtilsText.AllTextDictionary[UtilsText.text_settings_general_button_titlescreen];
-        textButtonQuit.text = UtilsText.AllTextDictionary[UtilsText.text_button_quit];
     }
 
 
@@ -60,7 +41,6 @@ public class UITabSettingsGeneral : UITabWindow
     public void OnLanguageChange(int index)
     {
         SettingsManager.Instance.SetLanguage((UtilsGeneral.Language)index);
-        RefreshTexts();
     }
 
 
