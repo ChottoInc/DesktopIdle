@@ -21,14 +21,6 @@ public class UITabJobFisher : UITabWindow
     [SerializeField] TMP_Text textLog;
 
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textTitle;
-    [SerializeField] TMP_Text textPanelLeft;
-    [SerializeField] TMP_Text textPanelCenter;
-    [SerializeField] TMP_Text textPanelRight;
-    [SerializeField] TMP_Text textButtonFish;
-
-
     private PlayerFisher player;
 
 
@@ -48,31 +40,12 @@ public class UITabJobFisher : UITabWindow
 
         panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_FISHER_TAB);
 
-        // resets
-        //panelFishGroup.SetActive(true);
-        //panelLog.SetActive(false);
-
-        //textButtonLog.text = "Log";
-
-        //isLogShow = false;
-
         // refreshes
         RefreshGroups();
 
         FillLog();
 
         FillAvailables();
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_jobs_back];
-        textPanelLeft.text = UtilsText.AllTextDictionary[UtilsText.text_job_fisher_availablefishes];
-        textPanelCenter.text = UtilsText.HelpTextDictionary[UtilsText.text_description_fisher];
-        textPanelRight.text = UtilsText.AllTextDictionary[UtilsText.text_job_fisher_caughtsession];
-        textButtonFish.text = UtilsText.AllTextDictionary[UtilsText.text_button_fish];
     }
 
     private void InitializeIfNeeded()

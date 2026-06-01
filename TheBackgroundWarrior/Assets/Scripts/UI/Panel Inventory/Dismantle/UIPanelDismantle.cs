@@ -19,10 +19,6 @@ public class UIPanelDismantle : MonoBehaviour
     [Space(10)]
     [SerializeField] TMP_InputField inputAmount;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textButtonCancel;
-    [SerializeField] TMP_Text textButtonDismantle;
-
     private int selectedAmount;
 
 
@@ -47,14 +43,6 @@ public class UIPanelDismantle : MonoBehaviour
 
         inputAmount.text = "1";
         selectedAmount = 1;
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textButtonCancel.text = UtilsText.AllTextDictionary[UtilsText.text_button_dismantle_cancel];
-        textButtonDismantle.text = UtilsText.AllTextDictionary[UtilsText.text_button_dismantle];
     }
 
     public void Show(bool show)

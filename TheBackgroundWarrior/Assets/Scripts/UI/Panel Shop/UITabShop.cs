@@ -25,27 +25,9 @@ public class UITabShop : UITabWindow
     [SerializeField] GameObject buttonDebug;
     [SerializeField] GameObject panelDebug;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textTitle;
-    [SerializeField] TMP_Text textFilterCardPacks;
-    [SerializeField] TMP_Text textFilterJobs;
-    [SerializeField] TMP_Text textFilterRedeem;
-    [SerializeField] TMP_Text textFilterDebug;
-
-    private void RefreshTexts()
-    {
-        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_shop];
-        textFilterCardPacks.text = UtilsText.AllTextDictionary[UtilsText.text_button_shop_filter_cardpacks];
-        textFilterJobs.text = UtilsText.AllTextDictionary[UtilsText.text_button_shop_filter_jobs];
-        textFilterRedeem.text = UtilsText.AllTextDictionary[UtilsText.text_button_shop_filter_redeem];
-        textFilterDebug.text = UtilsText.AllTextDictionary[UtilsText.text_button_shop_filter_debug];
-    }
-
     public override void Open()
     {
         base.Open();
-
-        RefreshTexts();
 
         UpdateBitsUI();
 

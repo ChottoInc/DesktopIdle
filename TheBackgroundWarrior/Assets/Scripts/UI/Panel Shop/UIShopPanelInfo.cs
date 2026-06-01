@@ -19,9 +19,6 @@ public class UIShopPanelInfo : MonoBehaviour
     private ShopItemSO itemSO;
     private int currentFilter;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textBuy;
-
     public void Setup(ShopItemSO itemSO, int currentFilter)
     {
         this.itemSO = itemSO;
@@ -30,18 +27,11 @@ public class UIShopPanelInfo : MonoBehaviour
         imageItem.sprite = itemSO.Sprite;
         textName.text = itemSO.ItemName;
         textDesc.text = itemSO.ItemDesc;
-
-        RefreshTexts();
     }
 
     public void Show(bool show)
     {
         gameObject.SetActive(show);
-    }
-
-    private void RefreshTexts()
-    {
-        textBuy.text = UtilsText.AllTextDictionary[UtilsText.text_button_buy];
     }
 
     public async void OnButtonBuy()

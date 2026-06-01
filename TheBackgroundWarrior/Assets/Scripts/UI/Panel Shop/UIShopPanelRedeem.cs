@@ -43,21 +43,6 @@ public class UIShopPanelRedeem : MonoBehaviour
 
     [SerializeField] TMP_InputField inputCode;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textRedeem;
-    [SerializeField] TMP_Text textButtonRedeem;
-
-    private void Awake()
-    {
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textRedeem.text = UtilsText.AllTextDictionary[UtilsText.text_shop_insertredeeem];
-        textButtonRedeem.text = UtilsText.AllTextDictionary[UtilsText.text_button_redeem];
-    }
-
     public void OnButtonRedeem()
     {
         AudioManager.Instance.PlayClickUI();

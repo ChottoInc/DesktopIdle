@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class UIPanelBountiesList : MonoBehaviour
@@ -14,9 +13,6 @@ public class UIPanelBountiesList : MonoBehaviour
 
     [Space(10)]
     [SerializeField] int maxBounties = 7;
-
-    [Header("Texts")]
-    [SerializeField] TMP_Text textTitle;
 
 
     private List<string> currentPossibleBountiesList;
@@ -41,13 +37,6 @@ public class UIPanelBountiesList : MonoBehaviour
         gameObject.SetActive(true);
 
         FillBounties();
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_quests_bountieslist];
     }
 
     private void FillBounties()

@@ -15,10 +15,6 @@ public class UIInventoryPanelInfo : MonoBehaviour
     [SerializeField] GameObject panelButtons;
     [SerializeField] UIPanelDismantle panelDismantle;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textButtonConvert;
-    [SerializeField] TMP_Text textButtonDismantle;
-
 
     private ItemGroup group;
 
@@ -36,14 +32,6 @@ public class UIInventoryPanelInfo : MonoBehaviour
 
         // Set panel buttons to active if the selected item is a card
         panelButtons.SetActive(itemSO.ItemType == UtilsItem.ItemType.Card);
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textButtonConvert.text = UtilsText.AllTextDictionary[UtilsText.text_button_convert];
-        textButtonDismantle.text = UtilsText.AllTextDictionary[UtilsText.text_button_dismantle];
     }
 
     public void Show(bool show)

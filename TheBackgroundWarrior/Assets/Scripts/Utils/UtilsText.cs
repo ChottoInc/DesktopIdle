@@ -225,6 +225,7 @@ public static class UtilsText
     public const string text_job_farmer_crop_attracts = "text_job_farmer_crop_attracts";
     public const string text_job_farmer_crop_companiondesc = "text_job_farmer_crop_companiondesc";
     public const string text_job_farmer_companion_cropdesc = "text_job_farmer_companion_cropdesc";
+    public const string text_job_farmer_companion_equipped = "text_job_farmer_companion_equipped";
 
 
     // -------------------- BUTTONS --------------------- //
@@ -257,6 +258,8 @@ public static class UtilsText
     public const string text_button_farm = "text_button_farm";
     public const string text_button_companions = "text_button_companions";
     public const string text_button_crops = "text_button_crops";
+    public const string text_button_equip = "text_button_equip";
+    public const string text_button_unequip = "text_button_unequip";
 
     public const string text_button_fish = "text_button_fish";
 
@@ -954,6 +957,7 @@ public static class UtilsText
             { text_job_farmer_crop_attracts, "Attracts:<br>" },
             { text_job_farmer_crop_companiondesc, "Equip companions that will help you defeating monsters" },
             { text_job_farmer_companion_cropdesc, "Growing Crops" },
+            { text_job_farmer_companion_equipped, "Equipped" },
 
 
             { text_job_fisher_raritytooltip, "<color=#{1}>{2}</color><br>" },
@@ -991,6 +995,8 @@ public static class UtilsText
             { text_button_farm, "Farm" },
             { text_button_companions, "Companions" },
             { text_button_crops, "Crops" },
+            { text_button_equip, "Equip" },
+            { text_button_unequip, "Unequip" },
 
             { text_button_fish, "Fish" },
 

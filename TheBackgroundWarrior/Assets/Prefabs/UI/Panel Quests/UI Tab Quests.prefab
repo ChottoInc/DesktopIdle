@@ -438,6 +438,7 @@ GameObject:
   - component: {fileID: 5319036154206128960}
   - component: {fileID: 4948918378818826077}
   - component: {fileID: 5110648833766760223}
+  - component: {fileID: 478064726018428406}
   m_Layer: 5
   m_Name: Text Title
   m_TagString: Untagged
@@ -561,6 +562,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &478064726018428406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996973787638243515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7af02d3c1bf074eb381818c2563fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textId: text_title_quests
 --- !u!1 &1052595791220001617
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,7 +707,6 @@ MonoBehaviour:
   container: {fileID: 8048962393238880398}
   textReward: {fileID: 1802819437376103981}
   buttonClaim: {fileID: 3828280659162142625}
-  textClaim: {fileID: 297496980780505862}
 --- !u!1 &1300595226564261778
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,10 +936,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabManager: {fileID: 1960935104803938447}
-  textTitle: {fileID: 5110648833766760223}
-  textFilterStory: {fileID: 4014612574075254223}
-  textFilterDaily: {fileID: 4683891256384137912}
-  textFilterBounty: {fileID: 5293453243227124990}
 --- !u!1 &1900527057050609971
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,7 +1239,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8927222580246936950}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 0.00000011920929}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -2245,8 +2254,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5727181825494248441}
   m_HandleRect: {fileID: 8532581596545752887}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4010,6 +4019,7 @@ GameObject:
   - component: {fileID: 7707799053005594754}
   - component: {fileID: 297496980780505862}
   - component: {fileID: 3797192651265047414}
+  - component: {fileID: 8541865863829860350}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -4153,6 +4163,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &8541865863829860350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6264532156805043543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7af02d3c1bf074eb381818c2563fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textId: text_button_claim
 --- !u!1 &6337760569882084110
 GameObject:
   m_ObjectHideFlags: 0
@@ -4302,7 +4325,6 @@ MonoBehaviour:
   bountyPrefab: {fileID: 1436521952372760619, guid: ef2360f71b4f2c646bb0b1d0a31085f8, type: 3}
   container: {fileID: 8393731358354383022}
   maxBounties: 7
-  textTitle: {fileID: 5828162599211918956}
 --- !u!1 &6804994133103657473
 GameObject:
   m_ObjectHideFlags: 0
@@ -5738,6 +5760,7 @@ GameObject:
   - component: {fileID: 1754598551009948434}
   - component: {fileID: 6901421025609387185}
   - component: {fileID: 5828162599211918956}
+  - component: {fileID: 5278628136999001694}
   m_Layer: 5
   m_Name: Text Title
   m_TagString: Untagged
@@ -5861,6 +5884,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5278628136999001694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9168062557051521937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7af02d3c1bf074eb381818c2563fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textId: text_title_quests_bountieslist
 --- !u!1 &9193545024793459457
 GameObject:
   m_ObjectHideFlags: 0
@@ -6115,6 +6151,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Story
       objectReference: {fileID: 0}
+    - target: {fileID: 7941149393355017628, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: textId
+      value: text_button_quests_filter_story
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6136,17 +6176,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2851677755421363805, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
   m_PrefabInstance: {fileID: 578092914832502851}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4014612574075254223 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4590021983660443020, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
-  m_PrefabInstance: {fileID: 578092914832502851}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5097740723312463427 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5673159340183780864, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
@@ -7287,6 +7316,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bounties
       objectReference: {fileID: 0}
+    - target: {fileID: 7941149393355017628, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: textId
+      value: text_button_quests_filter_bounty
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7301,17 +7334,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f463e93156d03e4e942243dc4f086c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5293453243227124990 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4590021983660443020, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
-  m_PrefabInstance: {fileID: 8558271960266682738}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5794777404898313458 stripped
@@ -7466,6 +7488,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Daily
       objectReference: {fileID: 0}
+    - target: {fileID: 7941149393355017628, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
+      propertyPath: textId
+      value: text_button_quests_filter_daily
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7480,17 +7506,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f463e93156d03e4e942243dc4f086c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4683891256384137912 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4590021983660443020, guid: a23a6ec43e43bb24bbed9bf8c4eeeba3, type: 3}
-  m_PrefabInstance: {fileID: 9129797983003815732}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6349431971479296692 stripped

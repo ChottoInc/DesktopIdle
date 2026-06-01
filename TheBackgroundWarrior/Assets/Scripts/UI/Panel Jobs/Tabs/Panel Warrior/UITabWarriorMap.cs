@@ -25,10 +25,6 @@ public class UITabWarriorMap : MonoBehaviour
 
     private bool isShowingTooltip;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textFight;
-
-
 
     private UITabJobWarrior uiTabWarrior;
     private CombatMapSO mapSO;
@@ -63,13 +59,6 @@ public class UITabWarriorMap : MonoBehaviour
 
             buttonMap.interactable = false;
         }
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textFight.text = UtilsText.AllTextDictionary[UtilsText.text_button_fight];
     }
 
     public void OnButtonClick()

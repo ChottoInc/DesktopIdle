@@ -486,6 +486,7 @@ GameObject:
   - component: {fileID: 4680370292124559212}
   - component: {fileID: 4739234996614486939}
   - component: {fileID: 5174354643549190542}
+  - component: {fileID: 3153676377167773797}
   m_Layer: 5
   m_Name: Text Job Name
   m_TagString: Untagged
@@ -609,6 +610,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3153676377167773797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7688609640177510643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7af02d3c1bf074eb381818c2563fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textId: text_button_help_filter_warrior
 --- !u!1 &7980163431856334846
 GameObject:
   m_ObjectHideFlags: 0

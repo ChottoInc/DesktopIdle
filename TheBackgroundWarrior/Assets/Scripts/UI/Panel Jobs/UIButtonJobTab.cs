@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +11,6 @@ public class UIButtonJobTab : MonoBehaviour
     [Space(10)]
     [SerializeField] GameObject barrier;
     [SerializeField] Button button;
-    [SerializeField] TMP_Text textJob;
 
     [Space(10)]
     [SerializeField] Transform showTooltipPosition;
@@ -53,16 +51,6 @@ public class UIButtonJobTab : MonoBehaviour
 
         button.interactable = isActive;
         barrier.SetActive(!isActive);
-
-        switch (job)
-        {
-            default: textJob.text = string.Empty; break;
-            case UtilsPlayer.PlayerJob.Warrior: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_warrior]; break;
-            case UtilsPlayer.PlayerJob.Miner: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_miner]; break;
-            case UtilsPlayer.PlayerJob.Fisher: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_fisher]; break;
-            case UtilsPlayer.PlayerJob.Blacksmith: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_blacksmith]; break;
-            case UtilsPlayer.PlayerJob.Farmer: textJob.text = UtilsText.AllTextDictionary[UtilsText.text_button_help_filter_farmer]; break;
-        }
     }
 
     public void OnPointerEnter()

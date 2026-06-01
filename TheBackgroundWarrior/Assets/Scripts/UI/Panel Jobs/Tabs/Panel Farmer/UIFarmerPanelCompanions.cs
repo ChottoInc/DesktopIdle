@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class UIFarmerPanelCompanions : MonoBehaviour
@@ -18,12 +17,6 @@ public class UIFarmerPanelCompanions : MonoBehaviour
 
     private List<GameObject> cropsObjs;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textJobDescription;
-    [SerializeField] TMP_Text textCropDesc;
-    [SerializeField] TMP_Text textButtonFarm;
-    [SerializeField] TMP_Text textButtonCrops;
-
     public void Setup()
     {
         gameObject.SetActive(true);
@@ -36,16 +29,6 @@ public class UIFarmerPanelCompanions : MonoBehaviour
 
         cropsObjs = ClearList(cropsObjs);
         FillCrops();
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textJobDescription.text = UtilsText.HelpTextDictionary[UtilsText.text_description_farmer_companions];
-        textCropDesc.text = UtilsText.AllTextDictionary[UtilsText.text_job_farmer_companion_cropdesc];
-        textButtonFarm.text = UtilsText.AllTextDictionary[UtilsText.text_button_farm];
-        textButtonCrops.text = UtilsText.AllTextDictionary[UtilsText.text_button_crops];
     }
 
     private List<GameObject> ClearList(List<GameObject> list)

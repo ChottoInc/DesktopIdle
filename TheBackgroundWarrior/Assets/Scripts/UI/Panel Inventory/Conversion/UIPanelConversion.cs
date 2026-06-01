@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class UIPanelConversion : MonoBehaviour
@@ -17,9 +15,6 @@ public class UIPanelConversion : MonoBehaviour
     [SerializeField] GameObject panelEmpty;
     [SerializeField] GameObject panelCard;
     [SerializeField] UICardConverted cardConvertedPrefab;
-
-    [Header("Texts")]
-    [SerializeField] TMP_Text textButtonConvert;
 
     private void Awake()
     {
@@ -38,13 +33,6 @@ public class UIPanelConversion : MonoBehaviour
         ResetSlots();
 
         gameObject.SetActive(true);
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textButtonConvert.text = UtilsText.AllTextDictionary[UtilsText.text_button_convert];
     }
 
     private void ResetConvertedCardUI()

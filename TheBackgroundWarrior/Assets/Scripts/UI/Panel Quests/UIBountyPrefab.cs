@@ -4,7 +4,6 @@ using UnityEngine;
 public class UIBountyPrefab : MonoBehaviour
 {
     [SerializeField] TMP_Text textBounty;
-    [SerializeField] TMP_Text textAccept;
 
     private UIPanelBountiesList panelBounties;
 
@@ -25,8 +24,6 @@ public class UIBountyPrefab : MonoBehaviour
         
 
         textBounty.text = questDesc;
-
-        textAccept.text = UtilsText.AllTextDictionary[UtilsText.text_button_accept];
     }
 
     public void OnButtonAccept()

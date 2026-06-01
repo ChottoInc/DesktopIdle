@@ -14,9 +14,6 @@ public class UITabQuestsDaily : UITabWindow
     [SerializeField] TMP_Text textReward;
     [SerializeField] Button buttonClaim;
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textClaim;
-
     public override void Open()
     {
         base.Open();
@@ -24,13 +21,6 @@ public class UITabQuestsDaily : UITabWindow
         textReward.text = UtilsQuest.DAILY_BITS_REWARD.ToString();
 
         FillQuests();
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textClaim.text = UtilsText.AllTextDictionary[UtilsText.text_button_claim];
     }
 
     public void FillQuests()
