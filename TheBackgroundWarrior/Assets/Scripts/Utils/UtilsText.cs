@@ -150,6 +150,12 @@ public static class UtilsText
 
     public const string text_quest_desc_kill_specific = "text_quest_desc_kill_specific";
     public const string text_quest_desc_kill_nonspecific = "text_quest_desc_kill_nonspecific";
+
+    public const string text_quest_desc_obtain_item_category_ores = "text_quest_desc_obtain_item_category_ores";
+    public const string text_quest_desc_obtain_item_category_cards = "text_quest_desc_obtain_item_category_cards";
+    public const string text_quest_desc_obtain_item_category_metals = "text_quest_desc_obtain_item_category_metals";
+    public const string text_quest_desc_obtain_item_category_fishes = "text_quest_desc_obtain_item_category_fishes";
+
     public const string text_quest_desc_obtain_specific = "text_quest_desc_obtain_specific";
     public const string text_quest_desc_obtain_nonspecific = "text_quest_desc_obtain_nonspecific";
     public const string text_quest_desc_levelup_specific_once = "text_quest_desc_levelup_specific_once";
@@ -878,6 +884,17 @@ public static class UtilsText
 
             { text_shop_insertredeeem, "Insert the redeem code" },
             { text_shop_insertdebug, "Insert the debug code" },
+            
+            // -------------------- QUESTS --------------------- //
+
+            { text_quest_desc_kill_specific, "Kill {0} {1}" },
+            { text_quest_desc_kill_nonspecific, "Kill {0} monsters" },
+
+            { text_quest_desc_obtain_item_category_ores, "ores" },
+            { text_quest_desc_obtain_item_category_cards, "cards" },
+            { text_quest_desc_obtain_item_category_metals, "metals" },
+            { text_quest_desc_obtain_item_category_fishes, "fishes" },
+
             { text_quest_desc_obtain_specific, "Obtain {0} {1}" },
             { text_quest_desc_obtain_nonspecific, "Obtain {0} {1}" },
             { text_quest_desc_levelup_specific_once, "Level up {0} {1} time" },
@@ -889,11 +906,6 @@ public static class UtilsText
             { text_quest_desc_befriend_nonspecific, "Obtain {0} companions" },
 
             { text_quest_reward_bounty, "Reward: {0} bits" },
-
-            // -------------------- QUESTS --------------------- //
-
-            { text_quest_desc_kill_specific, "Kill {0} {1}" },
-            { text_quest_desc_kill_nonspecific, "Kill {0} monsters" },
 
              // -------------------- SETTINGS --------------------- //
 

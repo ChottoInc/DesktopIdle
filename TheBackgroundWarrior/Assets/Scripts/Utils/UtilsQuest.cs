@@ -172,10 +172,10 @@ public static class UtilsQuest
 
                     switch (data.itemType)
                     {
-                        case UtilsItem.ItemType.Ore: itemType = "ores"; break;
-                        case UtilsItem.ItemType.Card: itemType = "cards"; break;
-                        case UtilsItem.ItemType.Metal: itemType = "metals"; break;
-                        case UtilsItem.ItemType.Fish: itemType = "fishes"; break;
+                        case UtilsItem.ItemType.Ore: itemType = UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_item_category_ores]; break;
+                        case UtilsItem.ItemType.Card: itemType = UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_item_category_cards]; break;
+                        case UtilsItem.ItemType.Metal: itemType = UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_item_category_metals]; break;
+                        case UtilsItem.ItemType.Fish: itemType = UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_item_category_fishes]; break;
                     }
 
                     result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_nonspecific], data.amountObtain, itemType);
