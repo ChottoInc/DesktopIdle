@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UIPanelShopItems : MonoBehaviour
@@ -46,8 +47,8 @@ public class UIPanelShopItems : MonoBehaviour
         switch (currentFilter)
         {
             default:
-            case UtilsShop.ID_SHOP_FILTER_CARDPACKS: shopItems = UtilsShop.GetAllCardPacks(); break;
-            case UtilsShop.ID_SHOP_FILTER_JOBS: shopItems = UtilsShop.GetAllShopJobs(); break;
+            case UtilsShop.ID_SHOP_FILTER_CARDPACKS: shopItems = UtilsShop.GetAllTypeItem<ShopCardPackSO>().Cast<ShopItemSO>().ToList(); break;
+            case UtilsShop.ID_SHOP_FILTER_JOBS: shopItems = UtilsShop.GetAllTypeItem<ShopJobSO>().Cast<ShopItemSO>().ToList(); break;
         }
 
         for (int i = 0; i < shopItems.Count; i++)

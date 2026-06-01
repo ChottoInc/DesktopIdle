@@ -18,15 +18,9 @@ public static class UtilsShop
 
     private static Dictionary<string, ShopItemSO> dictShopItems;
 
-    private static List<ShopItemSO> cardPacks;
-    private static List<ShopItemSO> jobs;
-
-    private static List<ShopItemSO> otherShopItems;
-
     public static void Initialize()
     {
-        LoadAllItems();
-        //LoadItems();
+        LoadItems();
     }
 
     private static void LoadItems()
@@ -35,87 +29,20 @@ public static class UtilsShop
         dictShopItems = container.Entries.OfType<ShopItemSO>().ToDictionary(e => e.UniqueId);
     }
 
-    private static void LoadAllItems()
-    {
-        ShopItemSO[] items = Resources.LoadAll<ShopItemSO>("Data/Shop");
-
-        cardPacks = new List<ShopItemSO>();
-        jobs = new List<ShopItemSO>();
-        otherShopItems = new List<ShopItemSO>();
-
-        foreach (ShopItemSO item in items)
-        {
-            switch (item.ShopItemType)
-            {
-                default: otherShopItems.Add(item); break;
-                case ShopItemType.CardPack: cardPacks.Add(item); break;
-                case ShopItemType.Job: jobs.Add(item); break;
-            }
-        }
-    }
-
     public static List<ShopItemSO> GetAllItems()
     {
-        List<ShopItemSO> result = new List<ShopItemSO>();
-        result.AddRange(cardPacks);
-        result.AddRange(jobs);
-        result.AddRange(otherShopItems);
-        return result;
+        return dictShopItems.Values.ToList();
     }
 
     public static ShopItemSO GetItemById(string id)
     {
-        List<ShopItemSO> items = GetAllItems();
-
-        foreach (ShopItemSO item in items)
-        {
-            if (item.UniqueId == id)
-                return item;
-        }
-        return null;
+        return UtilsGeneral.GetGameDataSO<ShopItemSO>(id, dictShopItems);
     }
 
-
-    #region CARD PACKS
-
-    public static ShopItemSO GetCardPackById(string id)
+    public static T[] GetAllTypeItem<T>() where T : ShopItemSO
     {
-        foreach (ShopItemSO pack in cardPacks)
-        {
-            if (pack.UniqueId == id)
-                return pack;
-        }
-        return null;
+        return dictShopItems.Values.OfType<T>().ToArray();
     }
-
-    public static List<ShopItemSO> GetAllCardPacks()
-    {
-        return cardPacks;
-    }
-
-    #endregion
-
-
-    #region JOBS
-
-    public static ShopItemSO GetShopJobById(string id)
-    {
-        foreach (ShopItemSO job in jobs)
-        {
-            if (job.UniqueId == id)
-                return job;
-        }
-        return null;
-    }
-
-    public static List<ShopItemSO> GetAllShopJobs()
-    {
-        return jobs;
-    }
-
-    #endregion
-
-
 
 
 

@@ -77,6 +77,11 @@ public static class UtilsGeneral
         return dict.TryGetValue(id, out var entry) ? entry as T : null;
     }
 
+    public static T GetGameDataSO<T>(string id, Dictionary<string, T> dict) where T : ListableGameDataSO
+    {
+        return dict.TryGetValue(id, out var entry) ? entry as T : null;
+    }
+
     public static bool GetRandomSuccessFromValue(float value)
     {
         if (Random.value <= value) return true;
