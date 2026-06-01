@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 
 public static class UtilsText
 {
@@ -11,6 +12,8 @@ public static class UtilsText
     public static Dictionary<string, string> CreditsTextDictionary;
 
     public static Dictionary<string, string> HelpTextDictionary;
+
+    public static Dictionary<string, string> AllDictionaries;
 
     #region ALL
 
@@ -674,6 +677,26 @@ public static class UtilsText
     public static void Initialize()
     {
         FillDefaultValues();
+
+        MergeDictionaries();
+    }
+
+    private static void MergeDictionaries()
+    {
+        if(AllDictionaries == null)
+        {
+            AllDictionaries = new Dictionary<string, string>();
+        }
+        else 
+        { 
+            AllDictionaries.Clear(); 
+        }
+
+        AllDictionaries.AddRange(AllTextDictionary);
+        AllDictionaries.AddRange(ItemNamesTextDictionary);
+        AllDictionaries.AddRange(ItemDescsTextDictionary);
+        AllDictionaries.AddRange(CreditsTextDictionary);
+        AllDictionaries.AddRange(HelpTextDictionary);
     }
 
     public static void FillValuesWithLang(UtilsGeneral.Language lang)
@@ -688,6 +711,8 @@ public static class UtilsText
         }
 
         FillDictionaries(folderpath, finalPart);
+
+        MergeDictionaries();
     }
 
     private static void FillDictionaries(string folderpath, string finalPart)

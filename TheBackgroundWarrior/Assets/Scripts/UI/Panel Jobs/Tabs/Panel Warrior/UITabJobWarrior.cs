@@ -46,7 +46,13 @@ public class UITabJobWarrior : UITabWindow
         {
             maps = UtilsCombatMap.GetAllMaps();
             FillMaps();
-            scrollMaps.verticalNormalizedPosition = 0f;
+
+            // set map scroll to point near your last unlocked map
+            int mapsCount = PlayerManager.Instance.PlayerFightData.AvailableMaps.Count;
+            if (mapsCount > 3)
+            {
+                scrollMaps.verticalNormalizedPosition = 1f / (float)mapsCount;
+            }
         }
 
         if(cards == null)

@@ -21,11 +21,11 @@ public class UITabSettingsCredits : UITabWindow
 
     private void RefreshTexts()
     {
-        textPanelMe.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_me];
-        textPanelLocalization.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_localization];
-        textPanelArt.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_art];
-        textPanelSound.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_sound];
-        textPanelFont.text = UtilsText.CreditsTextDictionary[UtilsText.text_credits_font];
+        textPanelMe.text = UtilsText.AllDictionaries[UtilsText.text_credits_me];
+        textPanelLocalization.text = UtilsText.AllDictionaries[UtilsText.text_credits_localization];
+        textPanelArt.text = UtilsText.AllDictionaries[UtilsText.text_credits_art];
+        textPanelSound.text = UtilsText.AllDictionaries[UtilsText.text_credits_sound];
+        textPanelFont.text = UtilsText.AllDictionaries[UtilsText.text_credits_font];
     }
 
     private void Setup()
