@@ -40,7 +40,7 @@ public class UIShopPanelInfo : MonoBehaviour
 
         if (PlayerManager.Instance.Inventory.CurrentBits < itemSO.Price) return;
 
-        string question = string.Format(UtilsText.AllTextDictionary[UtilsText.text_yesno_question_buy], itemSO.ItemName, itemSO.Price);
+        string question = string.Format(UtilsText.AllText[UtilsText.text_yesno_question_buy], itemSO.ItemName, itemSO.Price);
 
         TooltipManagerData tooltipData = new TooltipManagerData();
         tooltipData.idTooltip = UITooltipManager.ID_SHOW_YESNO;

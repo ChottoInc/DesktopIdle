@@ -66,11 +66,11 @@ public class UIStatusIncreaseStat : MonoBehaviour
         if(tempLevel != currentLevel)
         {
             // show old and new level if there have been changes
-            textStatLevel.text = string.Format(UtilsText.AllTextDictionary[UtilsText.text_job_change_stat_level], currentLevel, tempLevel);
+            textStatLevel.text = string.Format(UtilsText.AllText[UtilsText.text_job_change_stat_level], currentLevel, tempLevel);
         }
         else
         {
-            textStatLevel.text = string.Format(UtilsText.AllTextDictionary[UtilsText.text_job_current_stat_level], currentLevel);
+            textStatLevel.text = string.Format(UtilsText.AllText[UtilsText.text_job_current_stat_level], currentLevel);
         }
     }
 

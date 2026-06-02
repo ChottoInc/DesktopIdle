@@ -43,7 +43,7 @@ public class UITabWarriorStatus : UITabPlayerStatus
 
     protected override void UpdateCurrentLevelUI()
     {
-        textCurrentLevel.text = string.Format(UtilsText.AllTextDictionary[UtilsText.text_job_current_level], player.PlayerData.CurrentLevel);
+        textCurrentLevel.text = string.Format(UtilsText.AllText[UtilsText.text_job_current_level], player.PlayerData.CurrentLevel);
     }
 
     public void OnButtonSaveChanges()

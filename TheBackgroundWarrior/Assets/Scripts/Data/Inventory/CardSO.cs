@@ -21,9 +21,9 @@ public class CardSO : ItemSO
             string res = string.Empty;
             switch (cardRarity)
             {
-                case UtilsItem.CardRarity.Common: return UtilsText.AllTextDictionary[UtilsText.text_name_card_rarity_common];
-                case UtilsItem.CardRarity.Uncommon: return UtilsText.AllTextDictionary[UtilsText.text_name_card_rarity_uncommon];
-                case UtilsItem.CardRarity.Rare: return UtilsText.AllTextDictionary[UtilsText.text_name_card_rarity_rare];
+                case UtilsItem.CardRarity.Common: return UtilsText.AllText[UtilsText.text_name_card_rarity_common];
+                case UtilsItem.CardRarity.Uncommon: return UtilsText.AllText[UtilsText.text_name_card_rarity_uncommon];
+                case UtilsItem.CardRarity.Rare: return UtilsText.AllText[UtilsText.text_name_card_rarity_rare];
             }
 
             if (res != string.Empty) return res; else return cardRarity.ToString();

@@ -152,11 +152,11 @@ public static class UtilsQuest
                 if (data.questKillSpecific)
                 {
                     EnemySO enemySO = UtilsEnemy.GetEnemySOById(data.monsterId);
-                    result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_kill_specific], data.amountKill, enemySO.EnemyName);
+                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_kill_specific], data.amountKill, enemySO.EnemyName);
                 }
                 else
                 {
-                    result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_kill_nonspecific], data.amountKill);
+                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_kill_nonspecific], data.amountKill);
                 }
                 break;
 
@@ -164,7 +164,7 @@ public static class UtilsQuest
                 if (data.questObtainSpecific)
                 {
                     ItemSO itemSO = UtilsItem.GetItemById(data.itemId);
-                    result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_specific], data.amountObtain, itemSO.ItemName);
+                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_obtain_specific], data.amountObtain, itemSO.ItemName);
                 }
                 else
                 {
@@ -172,13 +172,13 @@ public static class UtilsQuest
 
                     switch (data.itemType)
                     {
-                        case UtilsItem.ItemType.Ore: itemType = UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_item_category_ores]; break;
-                        case UtilsItem.ItemType.Card: itemType = UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_item_category_cards]; break;
-                        case UtilsItem.ItemType.Metal: itemType = UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_item_category_metals]; break;
-                        case UtilsItem.ItemType.Fish: itemType = UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_item_category_fishes]; break;
+                        case UtilsItem.ItemType.Ore: itemType = UtilsText.AllText[UtilsText.text_quest_desc_obtain_item_category_ores]; break;
+                        case UtilsItem.ItemType.Card: itemType = UtilsText.AllText[UtilsText.text_quest_desc_obtain_item_category_cards]; break;
+                        case UtilsItem.ItemType.Metal: itemType = UtilsText.AllText[UtilsText.text_quest_desc_obtain_item_category_metals]; break;
+                        case UtilsItem.ItemType.Fish: itemType = UtilsText.AllText[UtilsText.text_quest_desc_obtain_item_category_fishes]; break;
                     }
 
-                    result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_obtain_nonspecific], data.amountObtain, itemType);
+                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_obtain_nonspecific], data.amountObtain, itemType);
                 }
                 break;
 
@@ -189,16 +189,16 @@ public static class UtilsQuest
                     string statName = UtilsPlayer.GetQuestStatNameById(data.statId);
 
                     if (data.amountStat < 2)
-                        result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_levelup_specific_once], statName, data.amountStat);
+                        result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_levelup_specific_once], statName, data.amountStat);
                     else
-                        result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_levelup_specific_multiple], statName, data.amountStat);
+                        result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_levelup_specific_multiple], statName, data.amountStat);
                 }
                 else
                 {
                     if (data.amountStat < 2)
-                        result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_levelup_nonspecific_once], data.amountStat);
+                        result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_levelup_nonspecific_once], data.amountStat);
                     else
-                        result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_levelup_nonspecific_multiple], data.amountStat);
+                        result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_levelup_nonspecific_multiple], data.amountStat);
                 }
                 break;
 
@@ -207,18 +207,18 @@ public static class UtilsQuest
                 CombatMapSO mapSO = UtilsCombatMap.GetMapById(data.mapId);
                 string mapName = mapSO.MapName;
 
-                result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_unlockmap], mapName);
+                result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_unlockmap], mapName);
 
                 break;
 
             case QuestObjectiveType.Befriend:
                 if (data.questBefriendSpecific)
                 {
-                    result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_befriend_specific], data.amountBefriend, data.companionSO.CompanionName);
+                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_befriend_specific], data.amountBefriend, data.companionSO.CompanionName);
                 }
                 else
                 {
-                    result = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_desc_befriend_nonspecific], data.amountBefriend);
+                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_befriend_nonspecific], data.amountBefriend);
                 }
                 break;
         }

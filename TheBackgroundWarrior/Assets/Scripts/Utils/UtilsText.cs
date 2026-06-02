@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 
 public static class UtilsText
 {
-    public static Dictionary<string, string> AllTextDictionary;
+    public static Dictionary<string, string> GeneralDictionary;
 
     public static Dictionary<string, string> ItemNamesTextDictionary;
     public static Dictionary<string, string> ItemDescsTextDictionary;
@@ -13,7 +13,7 @@ public static class UtilsText
 
     public static Dictionary<string, string> HelpTextDictionary;
 
-    public static Dictionary<string, string> AllDictionaries;
+    public static Dictionary<string, string> AllText;
 
     #region ALL
 
@@ -692,20 +692,20 @@ public static class UtilsText
 
     private static void MergeDictionaries()
     {
-        if(AllDictionaries == null)
+        if(AllText == null)
         {
-            AllDictionaries = new Dictionary<string, string>();
+            AllText = new Dictionary<string, string>();
         }
         else 
         { 
-            AllDictionaries.Clear(); 
+            AllText.Clear(); 
         }
 
-        AllDictionaries.AddRange(AllTextDictionary);
-        AllDictionaries.AddRange(ItemNamesTextDictionary);
-        AllDictionaries.AddRange(ItemDescsTextDictionary);
-        AllDictionaries.AddRange(CreditsTextDictionary);
-        AllDictionaries.AddRange(HelpTextDictionary);
+        AllText.AddRange(GeneralDictionary);
+        AllText.AddRange(ItemNamesTextDictionary);
+        AllText.AddRange(ItemDescsTextDictionary);
+        AllText.AddRange(CreditsTextDictionary);
+        AllText.AddRange(HelpTextDictionary);
     }
 
     public static void FillValuesWithLang(UtilsGeneral.Language lang)
@@ -726,7 +726,7 @@ public static class UtilsText
 
     private static void FillDictionaries(string folderpath, string finalPart)
     {
-        AllTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "AllText" + finalPart));
+        GeneralDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "General" + finalPart));
         ItemNamesTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "ItemNames" + finalPart));
         ItemDescsTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "ItemDescs" + finalPart));
         CreditsTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "Credits" + finalPart));
@@ -748,7 +748,7 @@ public static class UtilsText
 
     private static void FillDefaultValues()
     {
-        AllTextDictionary = new Dictionary<string, string>()
+        GeneralDictionary = new Dictionary<string, string>()
         {
 
             // -------------------- TUTORIAL --------------------- //

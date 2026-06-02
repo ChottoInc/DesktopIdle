@@ -24,7 +24,7 @@ public class ItemSO : ListableGameDataSO
     {
         get
         {
-            string res = UtilsText.ItemNamesTextDictionary[itemNameTextId];
+            string res = UtilsText.AllText[itemNameTextId];
             if (res != null) return res; else return itemName;
         }
     }
@@ -33,7 +33,7 @@ public class ItemSO : ListableGameDataSO
     {
         get
         {
-            string res = UtilsText.ItemDescsTextDictionary[itemDescTextId];
+            string res = UtilsText.AllText[itemDescTextId];
             if (res != null) return res; else return itemDesc;
         }
     }

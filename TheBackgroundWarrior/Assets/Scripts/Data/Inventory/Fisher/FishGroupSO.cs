@@ -23,7 +23,7 @@ public class FishGroupSO : ListableGameDataSO
     {
         get
         {
-            string res = UtilsText.ItemNamesTextDictionary[groupNameTextId];
+            string res = UtilsText.AllText[groupNameTextId];
             if (res != null) return res; else return groupName;
         }
     }
@@ -31,7 +31,7 @@ public class FishGroupSO : ListableGameDataSO
     {
         get
         {
-            string res = UtilsText.ItemDescsTextDictionary[groupDescTextId];
+            string res = UtilsText.AllText[groupDescTextId];
             if (res != null) return res; else return groupDesc;
         }
     }

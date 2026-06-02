@@ -40,7 +40,7 @@ public class UITabJobFarmer : UITabWindow
 
     private void RefreshTexts()
     {
-        textTitle.text = UtilsText.AllTextDictionary[UtilsText.text_title_jobs_back];
+        textTitle.text = UtilsText.AllText[UtilsText.text_title_jobs_back];
     }
 
     public void OnButtonBack()

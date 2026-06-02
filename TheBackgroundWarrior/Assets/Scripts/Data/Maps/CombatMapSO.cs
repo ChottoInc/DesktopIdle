@@ -23,7 +23,7 @@ public class CombatMapSO : ScriptableObject
     {
         get
         {
-            string res = UtilsText.AllTextDictionary[mapNameId];
+            string res = UtilsText.AllText[mapNameId];
             if (res != null) return res; else return mapName;
         }
     }

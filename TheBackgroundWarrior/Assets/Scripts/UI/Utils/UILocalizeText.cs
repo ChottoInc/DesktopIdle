@@ -52,6 +52,6 @@ public class UILocalizeText : MonoBehaviour
 
     private void RefreshText()
     {
-        _text.text = UtilsText.AllDictionaries[textId];
+        _text.text = UtilsText.AllText[textId];
     }
 }

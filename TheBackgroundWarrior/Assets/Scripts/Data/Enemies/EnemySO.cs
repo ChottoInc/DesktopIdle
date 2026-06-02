@@ -20,7 +20,7 @@ public class EnemySO : ScriptableObject
     {
         get
         {
-            string res = UtilsText.ItemNamesTextDictionary[enemyNameTextId];
+            string res = UtilsText.AllText[enemyNameTextId];
             if (res != null) return res; else return enemyName;
         }
     }

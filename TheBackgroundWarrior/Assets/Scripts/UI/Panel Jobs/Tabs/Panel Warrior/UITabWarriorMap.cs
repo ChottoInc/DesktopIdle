@@ -44,7 +44,7 @@ public class UITabWarriorMap : MonoBehaviour
         textMapName.text = mapSO.MapName;
 
         CombatMapSaveData mapData = SettingsManager.Instance.GetCombatMapSaveData(mapSO);
-        textMapStage.text = string.Format(UtilsText.AllTextDictionary[UtilsText.text_job_warrior_mapstage], mapData.currentStage, mapSO.Stages);
+        textMapStage.text = string.Format(UtilsText.AllText[UtilsText.text_job_warrior_mapstage], mapData.currentStage, mapSO.Stages);
 
         if (PlayerManager.Instance.PlayerFightData.AvailableMaps.Contains(mapSO.IdMap))
         {
@@ -108,7 +108,7 @@ public class UITabWarriorMap : MonoBehaviour
         }
 
         string text = string.Format(
-            UtilsText.AllTextDictionary[UtilsText.text_job_warrior_possiblemonsters] +
+            UtilsText.AllText[UtilsText.text_job_warrior_possiblemonsters] +
             "{0}",
             possibleMonsters);
 

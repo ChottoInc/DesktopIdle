@@ -52,7 +52,7 @@ public class UIPanelAutoBattle : MonoBehaviour
             isShowingTooltip = true;
 
             // show
-            string text = UtilsText.AllTextDictionary[UtilsText.text_tooltip_panel_autobattle];
+            string text = UtilsText.AllText[UtilsText.text_tooltip_panel_autobattle];
 
             TooltipManagerData tooltipData = new TooltipManagerData();
             tooltipData.idTooltip = UITooltipManager.ID_SHOW_TEXT;
@@ -67,7 +67,7 @@ public class UIPanelAutoBattle : MonoBehaviour
 
     private void RefreshTexts()
     {
-        textAutoBattle.text = UtilsText.AllTextDictionary[UtilsText.text_settings_gameplay_autobattle];
+        textAutoBattle.text = UtilsText.AllText[UtilsText.text_settings_gameplay_autobattle];
     }
 
 

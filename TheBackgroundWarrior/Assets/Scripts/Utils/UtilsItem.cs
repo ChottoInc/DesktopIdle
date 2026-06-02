@@ -170,11 +170,11 @@ public static class UtilsItem
         switch (rarity)
         {
             default:
-            case FishRarity.Riverfolk: return UtilsText.AllTextDictionary[UtilsText.text_name_fish_rarity_riverfolk];
-            case FishRarity.Deepwater: return UtilsText.AllTextDictionary[UtilsText.text_name_fish_rarity_deepwater];
-            case FishRarity.Tideborn: return UtilsText.AllTextDictionary[UtilsText.text_name_fish_rarity_tideborn];
-            case FishRarity.Ancient: return UtilsText.AllTextDictionary[UtilsText.text_name_fish_rarity_ancient];
-            case FishRarity.Mythic: return UtilsText.AllTextDictionary[UtilsText.text_name_fish_rarity_mythic];
+            case FishRarity.Riverfolk: return UtilsText.AllText[UtilsText.text_name_fish_rarity_riverfolk];
+            case FishRarity.Deepwater: return UtilsText.AllText[UtilsText.text_name_fish_rarity_deepwater];
+            case FishRarity.Tideborn: return UtilsText.AllText[UtilsText.text_name_fish_rarity_tideborn];
+            case FishRarity.Ancient: return UtilsText.AllText[UtilsText.text_name_fish_rarity_ancient];
+            case FishRarity.Mythic: return UtilsText.AllText[UtilsText.text_name_fish_rarity_mythic];
         }
     }
 

@@ -22,8 +22,8 @@ public class UITabSettingsGeneral : UITabWindow
         dropdownLanguage.ClearOptions();
         List<TMP_Dropdown.OptionData> listLanguage = new List<TMP_Dropdown.OptionData>()
         {
-            new TMP_Dropdown.OptionData(UtilsText.AllTextDictionary[UtilsText.text_settings_general_lang_english]),
-            new TMP_Dropdown.OptionData(UtilsText.AllTextDictionary[UtilsText.text_settings_general_lang_italian])
+            new TMP_Dropdown.OptionData(UtilsText.AllText[UtilsText.text_settings_general_lang_english]),
+            new TMP_Dropdown.OptionData(UtilsText.AllText[UtilsText.text_settings_general_lang_italian])
         };
 
         dropdownLanguage.AddOptions(listLanguage);
@@ -48,7 +48,7 @@ public class UITabSettingsGeneral : UITabWindow
 
     public async void OnButtonTitleScreen()
     {
-        string question = UtilsText.AllTextDictionary[UtilsText.text_yesno_question_titlescreen];
+        string question = UtilsText.AllText[UtilsText.text_yesno_question_titlescreen];
 
         TooltipManagerData tooltipData = new TooltipManagerData();
         tooltipData.idTooltip = UITooltipManager.ID_SHOW_YESNO;
@@ -65,7 +65,7 @@ public class UITabSettingsGeneral : UITabWindow
 
     public async void OnButtonQuit()
     {
-        string question = UtilsText.AllTextDictionary[UtilsText.text_yesno_question_quitgame];
+        string question = UtilsText.AllText[UtilsText.text_yesno_question_quitgame];
 
         TooltipManagerData tooltipData = new TooltipManagerData();
         tooltipData.idTooltip = UITooltipManager.ID_SHOW_YESNO;

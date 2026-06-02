@@ -16,7 +16,7 @@ public class UIBountyPrefab : MonoBehaviour
 
         // set reward
         int rewardAmount = data.rewardAmount;
-        string rewardString = string.Format(UtilsText.AllTextDictionary[UtilsText.text_quest_reward_bounty], rewardAmount);
+        string rewardString = string.Format(UtilsText.AllText[UtilsText.text_quest_reward_bounty], rewardAmount);
 
         // set description
         string questDesc = string.Format("{0}\n{1}", UtilsQuest.GetQuestDescription(data), rewardString);

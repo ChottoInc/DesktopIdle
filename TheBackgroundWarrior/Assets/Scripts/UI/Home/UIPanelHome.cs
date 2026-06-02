@@ -107,7 +107,7 @@ public class UIPanelHome : MonoBehaviour
         }
         else
         {
-            string question = UtilsText.AllTextDictionary[UtilsText.text_yesno_newgame];
+            string question = UtilsText.AllText[UtilsText.text_yesno_newgame];
 
             TooltipManagerData tooltipData = new TooltipManagerData();
             tooltipData.idTooltip = UITooltipManager.ID_SHOW_YESNO;

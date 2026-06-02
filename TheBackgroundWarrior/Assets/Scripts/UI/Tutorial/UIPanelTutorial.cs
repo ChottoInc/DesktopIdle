@@ -87,8 +87,8 @@ public class UIPanelTutorial : MonoBehaviour
 
     protected virtual void RefreshTexts()
     {
-        textContinue.text = UtilsText.AllTextDictionary[UtilsText.text_tutorial_continue];
-        textSkip.text = UtilsText.AllTextDictionary[UtilsText.text_tutorial_skip];
+        textContinue.text = UtilsText.AllText[UtilsText.text_tutorial_continue];
+        textSkip.text = UtilsText.AllText[UtilsText.text_tutorial_skip];
     }
 
     private void HandleTutorial()

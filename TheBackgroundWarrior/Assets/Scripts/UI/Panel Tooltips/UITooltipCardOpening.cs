@@ -36,7 +36,7 @@ public class UITooltipCardOpening : UITooltipBase
 
     private void RefreshTexts()
     {
-        textButtonrevealAll.text = UtilsText.AllTextDictionary[UtilsText.text_button_revealall];
+        textButtonrevealAll.text = UtilsText.AllText[UtilsText.text_button_revealall];
     }
 
     public void Hide(bool fade = false)

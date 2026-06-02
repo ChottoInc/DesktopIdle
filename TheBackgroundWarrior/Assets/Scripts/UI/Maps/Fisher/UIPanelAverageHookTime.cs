@@ -38,7 +38,7 @@ public class UIPanelAverageHookTime : MonoBehaviour
     {
         float average = FishSpawnManager.Instance.AverageHookTime;
         textAverage.text = string.Format(
-            UtilsText.AllTextDictionary[UtilsText.text_job_fisher_waittime], 
+            UtilsText.AllText[UtilsText.text_job_fisher_waittime], 
             Mathf.FloorToInt(average / 60f),
             Mathf.FloorToInt(average % 60f));
     }

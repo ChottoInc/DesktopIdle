@@ -30,17 +30,17 @@ public static class UtilsGeneral
 
     public static void RefreshTexts()
     {
-        TUTORIAL_INTRO_1 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_1];
-        TUTORIAL_INTRO_2 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_2];
-        TUTORIAL_INTRO_3 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_3];
-        TUTORIAL_INTRO_4 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_4];
-        TUTORIAL_INTRO_5 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_5];
-        TUTORIAL_INTRO_6 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_6];
-        TUTORIAL_INTRO_7 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_7];
-        TUTORIAL_INTRO_8 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_8];
-        TUTORIAL_INTRO_9 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_9];
-        TUTORIAL_INTRO_10 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_10];
-        TUTORIAL_INTRO_11 = UtilsText.AllTextDictionary[UtilsText.text_tutorial_intro_11];
+        TUTORIAL_INTRO_1 = UtilsText.AllText[UtilsText.text_tutorial_intro_1];
+        TUTORIAL_INTRO_2 = UtilsText.AllText[UtilsText.text_tutorial_intro_2];
+        TUTORIAL_INTRO_3 = UtilsText.AllText[UtilsText.text_tutorial_intro_3];
+        TUTORIAL_INTRO_4 = UtilsText.AllText[UtilsText.text_tutorial_intro_4];
+        TUTORIAL_INTRO_5 = UtilsText.AllText[UtilsText.text_tutorial_intro_5];
+        TUTORIAL_INTRO_6 = UtilsText.AllText[UtilsText.text_tutorial_intro_6];
+        TUTORIAL_INTRO_7 = UtilsText.AllText[UtilsText.text_tutorial_intro_7];
+        TUTORIAL_INTRO_8 = UtilsText.AllText[UtilsText.text_tutorial_intro_8];
+        TUTORIAL_INTRO_9 = UtilsText.AllText[UtilsText.text_tutorial_intro_9];
+        TUTORIAL_INTRO_10 = UtilsText.AllText[UtilsText.text_tutorial_intro_10];
+        TUTORIAL_INTRO_11 = UtilsText.AllText[UtilsText.text_tutorial_intro_11];
     }
 
     public static void RefreshTutorialDictionaries()
@@ -118,10 +118,10 @@ public static class UtilsGeneral
         switch(dayMoment)
         {
             default:
-            case DayMoment.Morning: return UtilsText.AllTextDictionary[UtilsText.text_name_daymoment_morning];
-            case DayMoment.Afternoon: return UtilsText.AllTextDictionary[UtilsText.text_name_daymoment_afternoon];
-            case DayMoment.Evening: return UtilsText.AllTextDictionary[UtilsText.text_name_daymoment_evening];
-            case DayMoment.Night: return UtilsText.AllTextDictionary[UtilsText.text_name_daymoment_night];
+            case DayMoment.Morning: return UtilsText.AllText[UtilsText.text_name_daymoment_morning];
+            case DayMoment.Afternoon: return UtilsText.AllText[UtilsText.text_name_daymoment_afternoon];
+            case DayMoment.Evening: return UtilsText.AllText[UtilsText.text_name_daymoment_evening];
+            case DayMoment.Night: return UtilsText.AllText[UtilsText.text_name_daymoment_night];
         }
     }
 

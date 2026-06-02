@@ -21,7 +21,7 @@ public class CompanionSO : ListableGameDataSO
     {
         get
         {
-            string res = UtilsText.ItemNamesTextDictionary[itemNameTextId];
+            string res = UtilsText.AllText[itemNameTextId];
             if (res != null) return res; else return companionName;
         }
     }
