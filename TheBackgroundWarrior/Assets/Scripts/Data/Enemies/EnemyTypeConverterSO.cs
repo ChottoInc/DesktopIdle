@@ -14,6 +14,7 @@ public class EnemyTypeConverterSO : ListableGameDataSO
     public UtilsEnemy.EnemyType EnemyType => enemyType;
 
     public string EnemyPoolName => enemyPoolName.ToLower();
+
     public string EnemyName
     {
         get

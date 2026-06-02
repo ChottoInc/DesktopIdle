@@ -39,7 +39,7 @@ public static class UtilsEnemy
         dictEnemyTypeConverters = container.Entries.ToDictionary(e => e.Id);
     }
 
-    public static EnemyTypeConverterSO GetTypeConverterById(int id)
+    public static EnemyTypeConverterSO GetTypeConverterByType(int id)
     {
         return UtilsGeneral.GetGameDataSO<EnemyTypeConverterSO>(id, dictEnemyTypeConverters);
     }

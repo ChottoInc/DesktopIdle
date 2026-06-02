@@ -320,16 +320,27 @@ public static class UtilsText
     #region ITEM NAMES
 
     public const string text_enemy_slime_name = "text_enemy_slime_name";
+    public const string text_enemy_slime_name_plural = "text_enemy_slime_name_plural";
     public const string text_enemy_orc_name = "text_enemy_orc_name";
+    public const string text_enemy_orc_name_plural = "text_enemy_orc_name_plural";
     public const string text_enemy_skeleton_name = "text_enemy_skeleton_name";
+    public const string text_enemy_skeleton_name_plural = "text_enemy_skeleton_name_plural";
     public const string text_enemy_werewolf_name = "text_enemy_werewolf_name";
+    public const string text_enemy_werewolf_name_plural = "text_enemy_werewolf_name_plural";
     public const string text_enemy_werebear_name = "text_enemy_werebear_name";
+    public const string text_enemy_werebear_name_plural = "text_enemy_werebear_name_plural";
     public const string text_enemy_armoredskeleton_name = "text_enemy_armoredskeleton_name";
+    public const string text_enemy_armoredskeleton_name_plural = "text_enemy_armoredskeleton_name_plural";
     public const string text_enemy_greatswordskeleton_name = "text_enemy_greatswordskeleton_name";
+    public const string text_enemy_greatswordskeleton_name_plural = "text_enemy_greatswordskeleton_name_plural";
     public const string text_enemy_skeletonarcher_name = "text_enemy_skeletonarcher_name";
+    public const string text_enemy_skeletonarcher_name_plural = "text_enemy_skeletonarcher_name_plural";
     public const string text_enemy_armoredorc_name = "text_enemy_armoredorc_name";
+    public const string text_enemy_armoredorc_name_plural = "text_enemy_armoredorc_name_plural";
     public const string text_enemy_eliteorc_name = "text_enemy_eliteorc_name";
+    public const string text_enemy_eliteorc_name_plural = "text_enemy_eliteorc_name_plural";
     public const string text_enemy_orcrider_name = "text_enemy_orcrider_name";
+    public const string text_enemy_orcrider_name_plural = "text_enemy_orcrider_name_plural";
 
     public const string text_item_copperore_name = "text_item_copperore_name";
     public const string text_item_ironore_name = "text_item_ironore_name";
@@ -1067,16 +1078,27 @@ public static class UtilsText
         ItemNamesTextDictionary = new Dictionary<string, string>()
         {
             { text_enemy_slime_name, "Slime" },
+            { text_enemy_slime_name_plural, "Slimes" },
             { text_enemy_orc_name, "Orc" },
+            { text_enemy_orc_name_plural, "Orcs" },
             { text_enemy_skeleton_name, "Skeleton" },
+            { text_enemy_skeleton_name_plural, "Skeletons" },
             { text_enemy_werewolf_name, "Werewolf" },
+            { text_enemy_werewolf_name_plural, "Werewolves" },
             { text_enemy_werebear_name, "Werebear" },
+            { text_enemy_werebear_name_plural, "Werebears" },
             { text_enemy_armoredskeleton_name, "Armored Skeleton" },
+            { text_enemy_armoredskeleton_name_plural, "Armored Skeletons" },
             { text_enemy_greatswordskeleton_name, "Greatsword Skeleton" },
+            { text_enemy_greatswordskeleton_name_plural, "Greatsword Skeletons" },
             { text_enemy_skeletonarcher_name, "Skeleton Archer" },
+            { text_enemy_skeletonarcher_name_plural, "Skeleton Archers" },
             { text_enemy_armoredorc_name, "Armored Orc" },
-            { text_enemy_eliteorc_name, "Eilte Orc" },
+            { text_enemy_armoredorc_name_plural, "Armored Orcs" },
+            { text_enemy_eliteorc_name, "Elite Orc" },
+            { text_enemy_eliteorc_name_plural, "Elite Orcs" },
             { text_enemy_orcrider_name, "Orc Rider" },
+            { text_enemy_orcrider_name_plural, "Orc Riders" },
 
             { text_item_copperore_name, "Copper Ore" },
             { text_item_ironore_name, "Iron Ore" },

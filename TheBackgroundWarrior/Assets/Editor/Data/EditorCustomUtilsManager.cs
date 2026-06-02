@@ -50,7 +50,7 @@ public class EditorCustomUtilsManager : Editor
         {
             Debug.Log("key: " + pair.Key + ", val: " + pair.Value);
         }*/
-        UtilsText.GeneralDictionary = MergeWithNonPresent(UtilsText.AllText, missingPairsAllText);
+        UtilsText.GeneralDictionary = MergeWithNonPresent(UtilsText.GeneralDictionary, missingPairsAllText);
 
         var missingPairsItemNames = defItemNames.Where(pair => !UtilsText.ItemNamesTextDictionary.ContainsKey(pair.Key));
         UtilsText.ItemNamesTextDictionary = MergeWithNonPresent(UtilsText.ItemNamesTextDictionary, missingPairsItemNames);

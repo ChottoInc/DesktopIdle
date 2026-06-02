@@ -4,10 +4,6 @@ using UnityEngine;
 public class EnemySO : ListableGameDataSO
 {
     [SerializeField] UtilsEnemy.EnemyType enemyType;
-    [SerializeField] string enemyPoolName;
-    [SerializeField] string enemyNameTextId;
-    [SerializeField] string enemyNamePluralTextId;
-    [SerializeField] string enemyName;
 
     [Space(10)]
     [SerializeField] float baseMaxHp = 30f;
@@ -18,24 +14,12 @@ public class EnemySO : ListableGameDataSO
 
     public UtilsEnemy.EnemyType EnemyType => enemyType;
 
-    public string EnemyPoolName => enemyPoolName.ToLower();
-    public string EnemyName
-    {
-        get
-        {
-            string res = UtilsText.AllText[enemyNameTextId];
-            if (res != null) return res; else return enemyName;
-        }
-    }
+    public string EnemyPoolName => UtilsEnemy.GetTypeConverterByType((int)enemyType).EnemyPoolName;
 
-    public string EnemyNamePlural
-    {
-        get
-        {
-            string res = UtilsText.AllText[enemyNamePluralTextId];
-            if (res != null) return res; else return enemyName;
-        }
-    }
+    public string EnemyName => UtilsEnemy.GetTypeConverterByType((int)enemyType).EnemyName;
+
+    public string EnemyNamePlural => UtilsEnemy.GetTypeConverterByType((int)enemyType).EnemyNamePlural;
+
 
     public float BaseMaxHp => baseMaxHp;
     public float BaseAtk => baseAtk;
@@ -46,12 +30,12 @@ public class EnemySO : ListableGameDataSO
 
     public void SetPoolName(string poolName)
     {
-        enemyPoolName = poolName;
+        //enemyPoolName = poolName;
     }
 
     public void SetEnemyName(string enemyName)
     {
-        this.enemyName = enemyName;
+        //this.enemyName = enemyName;
     }
 
     public void SetId(int id)
