@@ -9,6 +9,7 @@ public class ItemSO : ListableGameDataSO
     [Space(10)]
     [SerializeField] Sprite sprite;
     [SerializeField] string itemNameTextId;
+    [SerializeField] string itemNamePluralTextId;
     [SerializeField] string itemName;
 
     [Space(10)]
@@ -25,6 +26,15 @@ public class ItemSO : ListableGameDataSO
         get
         {
             string res = UtilsText.AllText[itemNameTextId];
+            if (res != null) return res; else return itemName;
+        }
+    }
+
+    public string ItemNamePlural
+    {
+        get
+        {
+            string res = UtilsText.AllText[itemNamePluralTextId];
             if (res != null) return res; else return itemName;
         }
     }

@@ -114,7 +114,7 @@ public static class UtilsQuest
 
     public static string GetQuestProgress(QuestData data, QuestDataProgress progress)
     {
-        string result = GetQuestDescription(data);
+        string result = UtilsQuestDescriptions.GetQuestDescription(data);
 
         switch (data.questObjectiveType)
         {
@@ -142,90 +142,7 @@ public static class UtilsQuest
         return result;
     }
 
-    public static string GetQuestDescription(QuestData data)
-    {
-        string result = "";
-
-        switch (data.questObjectiveType)
-        {
-            case QuestObjectiveType.Kill:
-                if (data.questKillSpecific)
-                {
-                    EnemySO enemySO = UtilsEnemy.GetEnemySOById(data.monsterId);
-                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_kill_specific], data.amountKill, enemySO.EnemyName);
-                }
-                else
-                {
-                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_kill_nonspecific], data.amountKill);
-                }
-                break;
-
-            case QuestObjectiveType.Obtain:
-                if (data.questObtainSpecific)
-                {
-                    ItemSO itemSO = UtilsItem.GetItemById(data.itemId);
-                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_obtain_specific], data.amountObtain, itemSO.ItemName);
-                }
-                else
-                {
-                    string itemType = string.Empty;
-
-                    switch (data.itemType)
-                    {
-                        case UtilsItem.ItemType.Ore: itemType = UtilsText.AllText[UtilsText.text_quest_desc_obtain_item_category_ores]; break;
-                        case UtilsItem.ItemType.Card: itemType = UtilsText.AllText[UtilsText.text_quest_desc_obtain_item_category_cards]; break;
-                        case UtilsItem.ItemType.Metal: itemType = UtilsText.AllText[UtilsText.text_quest_desc_obtain_item_category_metals]; break;
-                        case UtilsItem.ItemType.Fish: itemType = UtilsText.AllText[UtilsText.text_quest_desc_obtain_item_category_fishes]; break;
-                    }
-
-                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_obtain_nonspecific], data.amountObtain, itemType);
-                }
-                break;
-
-            case QuestObjectiveType.LevelUp:
-
-                if (data.questLevelUpSpecific)
-                {
-                    string statName = UtilsPlayer.GetQuestStatNameById(data.statId);
-
-                    if (data.amountStat < 2)
-                        result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_levelup_specific_once], statName, data.amountStat);
-                    else
-                        result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_levelup_specific_multiple], statName, data.amountStat);
-                }
-                else
-                {
-                    if (data.amountStat < 2)
-                        result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_levelup_nonspecific_once], data.amountStat);
-                    else
-                        result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_levelup_nonspecific_multiple], data.amountStat);
-                }
-                break;
-
-            case QuestObjectiveType.UnlockMap:
-
-                CombatMapSO mapSO = UtilsCombatMap.GetMapById(data.mapId);
-                string mapName = mapSO.MapName;
-
-                result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_unlockmap], mapName);
-
-                break;
-
-            case QuestObjectiveType.Befriend:
-                if (data.questBefriendSpecific)
-                {
-                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_befriend_specific], data.amountBefriend, data.companionSO.CompanionName);
-                }
-                else
-                {
-                    result = string.Format(UtilsText.AllText[UtilsText.text_quest_desc_befriend_nonspecific], data.amountBefriend);
-                }
-                break;
-        }
-
-
-        return result;
-    }
+    
 
 
     public static bool CanClaim(QuestData data, QuestDataProgress progress)

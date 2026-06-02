@@ -150,11 +150,16 @@ public static class UtilsText
 
     public const string text_quest_desc_kill_specific = "text_quest_desc_kill_specific";
     public const string text_quest_desc_kill_nonspecific = "text_quest_desc_kill_nonspecific";
+    public const string text_quest_desc_kill_nonspecific_plural = "text_quest_desc_kill_nonspecific_plural";
 
     public const string text_quest_desc_obtain_item_category_ores = "text_quest_desc_obtain_item_category_ores";
+    public const string text_quest_desc_obtain_item_category_ores_plural = "text_quest_desc_obtain_item_category_ores_plural";
     public const string text_quest_desc_obtain_item_category_cards = "text_quest_desc_obtain_item_category_cards";
+    public const string text_quest_desc_obtain_item_category_cards_plural = "text_quest_desc_obtain_item_category_cards_plural";
     public const string text_quest_desc_obtain_item_category_metals = "text_quest_desc_obtain_item_category_metals";
+    public const string text_quest_desc_obtain_item_category_metals_plural = "text_quest_desc_obtain_item_category_metals_plural";
     public const string text_quest_desc_obtain_item_category_fishes = "text_quest_desc_obtain_item_category_fishes";
+    public const string text_quest_desc_obtain_item_category_fishes_plural = "text_quest_desc_obtain_item_category_fishes_plural";
 
     public const string text_quest_desc_obtain_specific = "text_quest_desc_obtain_specific";
     public const string text_quest_desc_obtain_nonspecific = "text_quest_desc_obtain_nonspecific";
@@ -888,12 +893,17 @@ public static class UtilsText
             // -------------------- QUESTS --------------------- //
 
             { text_quest_desc_kill_specific, "Kill {0} {1}" },
-            { text_quest_desc_kill_nonspecific, "Kill {0} monsters" },
+            { text_quest_desc_kill_nonspecific, "Kill {0} monster" },
+            { text_quest_desc_kill_nonspecific_plural, "Kill {0} monsters" },
 
-            { text_quest_desc_obtain_item_category_ores, "ores" },
-            { text_quest_desc_obtain_item_category_cards, "cards" },
-            { text_quest_desc_obtain_item_category_metals, "metals" },
-            { text_quest_desc_obtain_item_category_fishes, "fishes" },
+            { text_quest_desc_obtain_item_category_ores, "ore" },
+            { text_quest_desc_obtain_item_category_ores_plural, "ores" },
+            { text_quest_desc_obtain_item_category_cards, "card" },
+            { text_quest_desc_obtain_item_category_cards_plural, "cards" },
+            { text_quest_desc_obtain_item_category_metals, "metal" },
+            { text_quest_desc_obtain_item_category_metals_plural, "metals" },
+            { text_quest_desc_obtain_item_category_fishes, "fish" },
+            { text_quest_desc_obtain_item_category_fishes_plural, "fishes" },
 
             { text_quest_desc_obtain_specific, "Obtain {0} {1}" },
             { text_quest_desc_obtain_nonspecific, "Obtain {0} {1}" },

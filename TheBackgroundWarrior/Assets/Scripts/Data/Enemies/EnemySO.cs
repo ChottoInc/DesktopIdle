@@ -5,6 +5,7 @@ public class EnemySO : ScriptableObject
 {
     [SerializeField] string enemyPoolName;
     [SerializeField] string enemyNameTextId;
+    [SerializeField] string enemyNamePluralTextId;
     [SerializeField] string enemyName;
     [SerializeField] int id;
 
@@ -21,6 +22,15 @@ public class EnemySO : ScriptableObject
         get
         {
             string res = UtilsText.AllText[enemyNameTextId];
+            if (res != null) return res; else return enemyName;
+        }
+    }
+
+    public string EnemyNamePlural
+    {
+        get
+        {
+            string res = UtilsText.AllText[enemyNamePluralTextId];
             if (res != null) return res; else return enemyName;
         }
     }
