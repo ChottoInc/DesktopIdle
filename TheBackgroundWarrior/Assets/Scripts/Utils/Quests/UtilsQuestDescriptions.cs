@@ -22,7 +22,7 @@ public static class UtilsQuestDescriptions
         bool plural = data.amountKill > 1;
         if (data.questKillSpecific)
         {
-            EnemySO enemySO = UtilsEnemy.GetEnemySOById(data.monsterId);
+            EnemySO enemySO = UtilsEnemy.GetEnemyById(data.monsterId);
             string name = plural ? enemySO.EnemyNamePlural : enemySO.EnemyName;
             return string.Format(AllText[text_quest_desc_kill_specific], data.amountKill, name);
         }

@@ -1,13 +1,13 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Data/Enemy/Enemy Data", fileName = "EnemyData_")]
-public class EnemySO : ScriptableObject
+public class EnemySO : ListableGameDataSO
 {
+    [SerializeField] UtilsEnemy.EnemyType enemyType;
     [SerializeField] string enemyPoolName;
     [SerializeField] string enemyNameTextId;
     [SerializeField] string enemyNamePluralTextId;
     [SerializeField] string enemyName;
-    [SerializeField] int id;
 
     [Space(10)]
     [SerializeField] float baseMaxHp = 30f;
@@ -15,6 +15,8 @@ public class EnemySO : ScriptableObject
     [SerializeField] float baseDef = 1f;
     [SerializeField] float baseCritDmg = 1.5f;
 
+
+    public UtilsEnemy.EnemyType EnemyType => enemyType;
 
     public string EnemyPoolName => enemyPoolName.ToLower();
     public string EnemyName
@@ -34,8 +36,6 @@ public class EnemySO : ScriptableObject
             if (res != null) return res; else return enemyName;
         }
     }
-
-    public int Id => id;
 
     public float BaseMaxHp => baseMaxHp;
     public float BaseAtk => baseAtk;

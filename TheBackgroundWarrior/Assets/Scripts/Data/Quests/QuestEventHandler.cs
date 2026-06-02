@@ -45,7 +45,7 @@ public class QuestEventHandler
             {
                 // Check actual pooling name, since the prefabs are identical
                 // If the check is on the id, different monsters data would be compared instead of monster type
-                string enemyName = UtilsEnemy.GetEnemySOById(data.monsterId).EnemyPoolName;
+                string enemyName = UtilsEnemy.GetEnemyById(data.monsterId).EnemyPoolName;
                 if (enemyName == enemySO.EnemyPoolName)
                 {
                     return true;

@@ -1,36 +1,46 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class UtilsEnemy
 {
-    //public enum EnemyType { Slime, Orc, Undead, Werewolf, Werebear,  }
+    public enum EnemyType { ArmoredOrc, ArmoredSkeleton, EliteOrc, GreatswordSkeleton, Orc, OrcRider, Skeleton, SkeletonArcher, Slime, Werebear, Werewolf }
 
-
-    private static EnemySO[] enemySOs;
+    private static Dictionary<int, ListableGameDataSO> dictEnemies;
+    private static Dictionary<int, ListableGameDataSO> dictEnemyTypeConverters;
 
 
     public static void Initialize()
     {
-        enemySOs = LoadEnemies();
+        LoadEnemies();
+        LoadEnemyConverters();
     }
 
-    private static EnemySO[] LoadEnemies()
+    private static void LoadEnemies()
     {
-        return Resources.LoadAll<EnemySO>("Data/Enemies");
+        var container = Resources.Load<ContainerGameDataSO>("Data/Enemies/ContainerGameData_Enemies");
+        dictEnemies = container.Entries.ToDictionary(e => e.Id);
     }
-
 
     public static EnemySO[] GetAllEnemies()
     {
-        return enemySOs;
+        return dictEnemies.OfType<EnemySO>().ToArray();
     }
 
-    public static EnemySO GetEnemySOById(int id)
+    public static EnemySO GetEnemyById(int id)
     {
-        foreach (var enemy in enemySOs)
-        {
-            if (enemy.Id == id)
-                return enemy;
-        }
-        return null;
+        return UtilsGeneral.GetGameDataSO<EnemySO>(id, dictEnemies);
+    }
+
+
+    private static void LoadEnemyConverters()
+    {
+        var container = Resources.Load<ContainerGameDataSO>("Data/Enemies/ContainerGameData_EnemyTypeConverters");
+        dictEnemyTypeConverters = container.Entries.ToDictionary(e => e.Id);
+    }
+
+    public static EnemyTypeConverterSO GetTypeConverterById(int id)
+    {
+        return UtilsGeneral.GetGameDataSO<EnemyTypeConverterSO>(id, dictEnemyTypeConverters);
     }
 }
