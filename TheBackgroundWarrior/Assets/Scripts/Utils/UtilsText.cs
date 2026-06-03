@@ -343,16 +343,26 @@ public static class UtilsText
     public const string text_enemy_orcrider_name_plural = "text_enemy_orcrider_name_plural";
 
     public const string text_item_copperore_name = "text_item_copperore_name";
+    public const string text_item_copperore_name_plural = "text_item_copperore_name_plural";
     public const string text_item_ironore_name = "text_item_ironore_name";
+    public const string text_item_ironore_name_plural = "text_item_ironore_name_plural";
     public const string text_item_bronzeore_name = "text_item_bronzeore_name";
+    public const string text_item_bronzeore_name_plural = "text_item_bronzeore_name_plural";
     public const string text_item_silverore_name = "text_item_silverore_name";
+    public const string text_item_silverore_name_plural = "text_item_silverore_name_plural";
     public const string text_item_goldore_name = "text_item_goldore_name";
+    public const string text_item_goldore_name_plural = "text_item_goldore_name_plural";
 
     public const string text_item_copper_name = "text_item_copper_name";
+    //public const string text_item_copper_name_plural = "text_item_copper_name_plural";
     public const string text_item_iron_name = "text_item_iron_name";
+    //public const string text_item_iron_name_plural = "text_item_iron_name_plural";
     public const string text_item_bronze_name = "text_item_bronze_name";
+    //public const string text_item_bronze_name_plural = "text_item_bronze_name_plural";
     public const string text_item_silver_name = "text_item_silver_name";
+    //public const string text_item_silver_name_plural = "text_item_silver_name_plural";
     public const string text_item_gold_name = "text_item_gold_name";
+    //public const string text_item_gold_name_plural = "text_item_gold_name_plural";
 
     public const string text_item_card_01_name = "text_item_card_01_name";
     public const string text_item_card_02_name = "text_item_card_02_name";
@@ -1100,11 +1110,16 @@ public static class UtilsText
             { text_enemy_orcrider_name, "Orc Rider" },
             { text_enemy_orcrider_name_plural, "Orc Riders" },
 
-            { text_item_copperore_name, "Copper Ore" },
-            { text_item_ironore_name, "Iron Ore" },
-            { text_item_bronzeore_name, "Bronze Ore" },
-            { text_item_silverore_name, "Silver Ore" },
-            { text_item_goldore_name, "Gold Ore" },
+            { text_item_copperore_name, "Copper ore" },
+            { text_item_copperore_name_plural, "Copper ores" },
+            { text_item_ironore_name, "Iron ore" },
+            { text_item_ironore_name_plural, "Iron ores" },
+            { text_item_bronzeore_name, "Bronze ore" },
+            { text_item_bronzeore_name_plural, "Bronze ores" },
+            { text_item_silverore_name, "Silver ore" },
+            { text_item_silverore_name_plural, "Silver ores" },
+            { text_item_goldore_name, "Gold ore" },
+            { text_item_goldore_name_plural, "Gold ores" },
 
             { text_item_copper_name, "Copper" },
             { text_item_iron_name, "Iron" },

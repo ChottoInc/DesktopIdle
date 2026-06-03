@@ -34,8 +34,12 @@ public class ItemSO : ListableGameDataSO
     {
         get
         {
-            string res = UtilsText.AllText[itemNamePluralTextId];
-            if (res != null) return res; else return itemName;
+            if (itemNamePluralTextId == string.Empty) return ItemName;
+            else
+            {
+                string res = UtilsText.AllText[itemNamePluralTextId];
+                if (res != null) return res; else return ItemName;
+            }
         }
     }
 

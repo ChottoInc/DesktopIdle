@@ -28,8 +28,9 @@ public class EnemyTypeConverterSO : ListableGameDataSO
     {
         get
         {
+            if (enemyNamePluralTextId == string.Empty) return EnemyName;
             string res = UtilsText.AllText[enemyNamePluralTextId];
-            if (res != null) return res; else return enemyName;
+            if (res != null) return res; else return EnemyName;
         }
     }
 }
