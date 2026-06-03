@@ -188,8 +188,11 @@ public static class UtilsGeneral
 
             for (; dividerIndex < row.Length; dividerIndex++)
             {
-                if(!hasApix)
+                if (!hasApix)
+                {
                     part2 += row[dividerIndex];
+
+                }
                 else
                 {
                     if(dividerIndex != row.Length - 1)

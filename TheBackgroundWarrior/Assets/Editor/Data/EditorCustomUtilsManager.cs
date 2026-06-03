@@ -25,6 +25,7 @@ public class EditorCustomUtilsManager : Editor
     {
 #if UNITY_EDITOR
 
+        UtilsTextLimits.Initialize();
         UtilsText.Initialize();
         Dictionary<string, string> defAllText = new Dictionary<string, string>(UtilsText.GeneralDictionary);
         Dictionary<string, string> defItemNames = new Dictionary<string, string>(UtilsText.ItemNamesTextDictionary);
@@ -91,20 +92,21 @@ public class EditorCustomUtilsManager : Editor
     {
         string COL1 = "ID";
         string COL2 = "ENG";
+        string COL3 = "LIMITS";
 
         string logFilePath = Path.Combine(path, filename);
         StreamWriter logWriter = new StreamWriter(logFilePath, false);
         logWriter.AutoFlush = true;
 
-        logWriter.WriteLine($"{COL1},{COL2},");
+        logWriter.WriteLine($"{COL1},{COL2},{COL3}");
 
         int counterLines = 0;
         foreach (var pair in dict)
         {
             if(counterLines != dict.Count - 1)
-                logWriter.WriteLine(string.Format("{0}, \"{1}\",", pair.Key,pair.Value));
+                logWriter.WriteLine(string.Format("{0}, \"{1}\",{2},", pair.Key,pair.Value, UtilsTextLimits.GetCharLimit(pair.Key)));
             else
-                logWriter.Write(string.Format("{0}, \"{1}\"", pair.Key, pair.Value));
+                logWriter.Write(string.Format("{0}, \"{1}\",{2}", pair.Key, pair.Value, UtilsTextLimits.GetCharLimit(pair.Key)));
 
             counterLines++;
         }
