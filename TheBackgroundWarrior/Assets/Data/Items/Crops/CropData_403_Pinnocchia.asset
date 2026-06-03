@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 092ea51638e200b4aade7d4282df60d2, type: 3}
-  m_Name: CropData_3_Pinnocchia
+  m_Name: CropData_403_Pinnocchia
   m_EditorClassIdentifier: 
-  id: 3
-  baseGrowthTime: 1150
+  id: 403
+  itemType: 4
+  sprite: {fileID: 21300000, guid: 11781d63e6407034fab187d6c0531b97, type: 3}
   itemNameTextId: text_crop_3_name
-  cropName: Pinnocchia
+  itemNamePluralTextId: 
+  itemName: Pinnocchia
+  itemDescTextId: text_crop_3_name
+  itemDesc: 
+  baseGrowthTime: 1150
+  unlocksWithAgronomyLevel: 3
   spriteSeed: {fileID: 21300000, guid: e5606a51fc58c7e468b5aa4b36d930aa, type: 3}
   spriteCrop:
   - {fileID: 1673504085, guid: a21f154a6c710d244b4c6f42e3b5870f, type: 3}

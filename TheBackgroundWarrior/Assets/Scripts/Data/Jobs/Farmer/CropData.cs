@@ -38,7 +38,7 @@ public class CropData
 
     public CropData(CropSaveData saveData)
     {
-        cropSO = UtilsGather.GetCropById(saveData.cropId);
+        cropSO = UtilsItem.GetItemById(saveData.cropId) as CropSO;
 
         baseGrowthTime = cropSO.BaseGrowthTime;
         currentGrowth = saveData.currentGrowth;

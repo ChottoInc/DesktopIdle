@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class UIFarmerPanelSelectionCrop : MonoBehaviour
 {
@@ -36,16 +37,26 @@ public class UIFarmerPanelSelectionCrop : MonoBehaviour
 
     private void FillCrops()
     {
-        int lastIndex = Mathf.FloorToInt(PlayerManager.Instance.PlayerFarmerData.CurrentAgronomy) + 1; // +1 because the first is always available
+        //int lastIndex = Mathf.FloorToInt(PlayerManager.Instance.PlayerFarmerData.CurrentAgronomy) + 1; // +1 because the first is always available
 
+        var crops = UtilsItem.GetCropsByAgronomyLevel(Mathf.FloorToInt(PlayerManager.Instance.PlayerFarmerData.CurrentAgronomy));
+
+        foreach (var crop in crops)
+        {
+            if (crop != null)
+            {
+                CreateSingleCropPrefab(crop);
+            }
+        }
+        /*
         for (int i = 0; i < lastIndex; i++)
         {
-            CropSO cropSO = UtilsGather.GetCropById(i);
+            CropSO cropSO = UtilsItem.GetItemById(i);
             if(cropSO != null)
             {
                 CreateSingleCropPrefab(cropSO);
             }
-        }
+        }*/
     }
 
     private void CreateSingleCropPrefab(CropSO cropSO)

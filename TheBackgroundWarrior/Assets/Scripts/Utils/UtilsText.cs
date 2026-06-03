@@ -301,6 +301,7 @@ public static class UtilsText
     public const string text_button_inventory_filter_ores = "text_button_inventory_filter_ores";
     public const string text_button_inventory_filter_metals = "text_button_inventory_filter_metals";
     public const string text_button_inventory_filter_fishes = "text_button_inventory_filter_fishes";
+    public const string text_button_inventory_filter_crops = "text_button_inventory_filter_crops";
     public const string text_button_inventory_filter_cards = "text_button_inventory_filter_cards";
 
 
@@ -1070,6 +1071,7 @@ public static class UtilsText
             { text_button_inventory_filter_ores, "Ores" },
             { text_button_inventory_filter_metals, "Metals" },
             { text_button_inventory_filter_fishes, "Fishes" },
+            { text_button_inventory_filter_crops, "Crops" },
             { text_button_inventory_filter_cards, "Cards" },
 
              // -------------------- YESNO --------------------- //

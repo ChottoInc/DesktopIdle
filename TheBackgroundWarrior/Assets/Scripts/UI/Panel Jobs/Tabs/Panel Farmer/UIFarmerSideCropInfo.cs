@@ -13,7 +13,7 @@ public class UIFarmerSideCropInfo : MonoBehaviour
         // show last sprite of the crop, full growth
         imageCrop.sprite = cropData.CropSO.SpriteCrop[cropData.CropSO.SpriteCrop.Length - 1];
 
-        textName.text = cropData.CropSO.CropName;
+        textName.text = cropData.CropSO.ItemName;
 
         barGrowth.Setup(cropData.GrowthTime, cropData.CurrentGrowth);
     }

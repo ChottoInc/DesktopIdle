@@ -41,10 +41,10 @@ public class UIFarmerCropSelectionPrefab : MonoBehaviour
 
         string text = string.Format(
             "{0}\n" +
-            UtilsText.AllText[UtilsText.text_job_farmer_crop_basegrowthtime],
-            UtilsText.AllText[UtilsText.text_job_farmer_crop_attracts],
+            UtilsText.AllText[UtilsText.text_job_farmer_crop_basegrowthtime] +
+            UtilsText.AllText[UtilsText.text_job_farmer_crop_attracts] +
             "{3}",
-            cropSO.CropName,
+            cropSO.ItemName,
             Mathf.FloorToInt(cropSO.BaseGrowthTime / 60f),
             Mathf.FloorToInt(cropSO.BaseGrowthTime % 60f),
             possibleCompanions);

@@ -7,6 +7,7 @@ public class UITabInventory : UITabWindow
     public const int ID_INVENTORY_FILTER_ORES = 1;
     public const int ID_INVENTORY_FILTER_METALS = 2;
     public const int ID_INVENTORY_FILTER_FISHES = 3;
+    public const int ID_INVENTORY_FILTER_CROPS = 4;
     public const int ID_INVENTORY_FILTER_CARDS = 20;
 
     [Header("Currencies")]

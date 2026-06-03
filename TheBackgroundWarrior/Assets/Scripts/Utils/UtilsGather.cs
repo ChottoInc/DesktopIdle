@@ -18,7 +18,6 @@ public static class UtilsGather
 
 
     // Farmer
-    private static Dictionary<int, ListableGameDataSO> dictCrops;
     private static Dictionary<int, ListableGameDataSO> dictCompanions;
 
 
@@ -103,7 +102,6 @@ public static class UtilsGather
         LoadDictFishGroups();
 
         // Farmer
-        LoadDictCrops();
         LoadDictCompanions();
 
         
@@ -283,23 +281,7 @@ public static class UtilsGather
 
     #endregion
 
-    #region FARMER 
-
-    private static void LoadDictCrops()
-    {
-        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Farmer/Crops/ContainerGameData_Crops");
-        dictCrops = container.Entries.ToDictionary(e => e.Id);
-    }
-
-    public static CropSO[] GetAllCrops()
-    {
-        return dictCrops.Values.OfType<CropSO>().ToArray();
-    }
-
-    public static CropSO GetCropById(int id)
-    {
-        return UtilsGeneral.GetGameDataSO<CropSO>(id, dictCrops);
-    }
+    #region FARMER
 
     private static void LoadDictCompanions()
     {

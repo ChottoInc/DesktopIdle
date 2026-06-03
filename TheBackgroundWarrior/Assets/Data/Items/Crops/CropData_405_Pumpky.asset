@@ -10,12 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 092ea51638e200b4aade7d4282df60d2, type: 3}
-  m_Name: CropData_5_Pumpky
+  m_Name: CropData_405_Pumpky
   m_EditorClassIdentifier: 
-  id: 5
-  baseGrowthTime: 2000
+  id: 405
+  itemType: 4
+  sprite: {fileID: 21300000, guid: 11781d63e6407034fab187d6c0531b97, type: 3}
   itemNameTextId: text_crop_5_name
-  cropName: Pumpky
+  itemNamePluralTextId: 
+  itemName: Pumpky
+  itemDescTextId: text_crop_5_name
+  itemDesc: 
+  baseGrowthTime: 2000
+  unlocksWithAgronomyLevel: 5
   spriteSeed: {fileID: 21300000, guid: eccd6ac9df95fcb48a0ea52da8c76da2, type: 3}
   spriteCrop:
   - {fileID: 254040384, guid: 369084ec5c2bee740bf4e0cb3fa53c24, type: 3}

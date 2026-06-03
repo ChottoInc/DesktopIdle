@@ -39,7 +39,7 @@ public class UIFarmerPlantedCropInfo : MonoBehaviour
             // show last sprite of the crop, full growth
             imageCrop.sprite = cropData.CropSO.SpriteCrop[cropData.CropSO.SpriteCrop.Length - 1];
 
-            textName.text = cropData.CropSO.CropName;
+            textName.text = cropData.CropSO.ItemName;
 
             textGrowth.gameObject.SetActive(true);
             textGrowth.text = string.Format("Growth: {0:0}%", (cropData.CurrentGrowth/cropData.GrowthTime) * 100f);

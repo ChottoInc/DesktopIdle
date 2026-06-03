@@ -9,11 +9,12 @@ public static class UtilsItem
      * Cards ids start from 50
      * Metals ids start from 150
      * Fishes ids start from 200
+     * Crops ids start from 400
      * */
 
     private static Dictionary<int, ListableGameDataSO> dictItems;
 
-    public enum ItemType { Ore, Card, Metal, Fish }
+    public enum ItemType { Ore, Card, Metal, Fish, Crop }
 
     public enum CardRarity { Common, Uncommon, Rare }
 
@@ -188,6 +189,16 @@ public static class UtilsItem
             case FishRarity.Ancient: return "7928BA";
             case FishRarity.Mythic: return "E0D315";
         }
+    }
+
+    #endregion
+
+    #region CROPS
+
+    public static CropSO[] GetCropsByAgronomyLevel(int agronmyLevel)
+    {
+        var crops = GetAllTypeItem<CropSO>();
+        return crops.Where(c => c.UnlocksWithAgronomyLevel <= agronmyLevel).ToArray();
     }
 
     #endregion
