@@ -18,12 +18,12 @@ public class UIFarmerPlantedCropInfo : MonoBehaviour
     [Space(10)]
     [SerializeField] GenericBar barGrowth;
 
-    private CropData cropData;
+    private CropData _cropData;
 
 
     public void Setup(CropData cropData)
     {
-        this.cropData = cropData;
+        _cropData = cropData;
 
         if(cropData == null)
         {

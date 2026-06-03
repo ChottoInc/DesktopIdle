@@ -487,6 +487,14 @@ public static class UtilsText
     public const string text_item_fish_79_name = "text_item_fish_79_name";
     public const string text_item_fish_80_name = "text_item_fish_80_name";
 
+    public const string text_item_crop_1_name = "text_item_crop_1_name";
+    public const string text_item_crop_2_name = "text_item_crop_2_name";
+    public const string text_item_crop_3_name = "text_item_crop_3_name";
+    public const string text_item_crop_4_name = "text_item_crop_4_name";
+    public const string text_item_crop_5_name = "text_item_crop_5_name";
+    public const string text_item_crop_6_name = "text_item_crop_6_name";
+
+
     public const string text_item_fish_group_life_name = "text_item_fish_group_life_name";
     public const string text_item_fish_group_predator_name = "text_item_fish_group_predator_name";
     public const string text_item_fish_group_guardian_name = "text_item_fish_group_guardian_name";
@@ -509,12 +517,6 @@ public static class UtilsText
     public const string text_shopitem_job_farmer_name = "text_shopitem_job_farmer_name";
 
 
-    public const string text_crop_0_name = "text_crop_0_name";
-    public const string text_crop_1_name = "text_crop_1_name";
-    public const string text_crop_2_name = "text_crop_2_name";
-    public const string text_crop_3_name = "text_crop_3_name";
-    public const string text_crop_4_name = "text_crop_4_name";
-    public const string text_crop_5_name = "text_crop_5_name";
 
     public const string text_companion_0_name = "text_companion_0_name";
     public const string text_companion_1_name = "text_companion_1_name";
@@ -659,6 +661,13 @@ public static class UtilsText
     public const string text_item_fish_78_desc = "text_item_fish_78_desc";
     public const string text_item_fish_79_desc = "text_item_fish_79_desc";
     public const string text_item_fish_80_desc = "text_item_fish_80_desc";
+
+    public const string text_item_crop_1_desc = "text_item_crop_1_desc";
+    public const string text_item_crop_2_desc = "text_item_crop_2_desc";
+    public const string text_item_crop_3_desc = "text_item_crop_3_desc";
+    public const string text_item_crop_4_desc = "text_item_crop_4_desc";
+    public const string text_item_crop_5_desc = "text_item_crop_5_desc";
+    public const string text_item_crop_6_desc = "text_item_crop_6_desc";
 
     public const string text_item_fish_group_life_desc = "text_item_fish_group_life_desc";
     public const string text_item_fish_group_predator_desc = "text_item_fish_group_predator_desc";
@@ -1251,6 +1260,13 @@ public static class UtilsText
             { text_item_fish_79_name, "Lyretail Anthias" },
             { text_item_fish_80_name, "Fire Goby" },
 
+             { text_item_crop_1_name, "Bamboo" },
+            { text_item_crop_2_name, "Lumberry" },
+            { text_item_crop_3_name, "Oramelon" },
+            { text_item_crop_4_name, "Pinnocchia" },
+            { text_item_crop_5_name, "Pommodoro" },
+            { text_item_crop_6_name, "Pumpky" },
+
             { text_item_fish_group_life_name, "Life Series" },
             { text_item_fish_group_predator_name, "Predator Series" },
             { text_item_fish_group_guardian_name, "Guardian Series" },
@@ -1272,13 +1288,6 @@ public static class UtilsText
                                       
             { text_shopitem_job_farmer_name, "Class: Farmer" },
 
-
-            { text_crop_0_name, "Bamboo" },
-            { text_crop_1_name, "Lumberry" },
-            { text_crop_2_name, "Oramelon" },
-            { text_crop_3_name, "Pinnocchia" },
-            { text_crop_4_name, "Pommodoro" },
-            { text_crop_5_name, "Pumpky" },
 
             { text_companion_0_name, "Ragghost" },
             { text_companion_1_name, "Shemoon" },
@@ -1446,6 +1455,13 @@ public static class UtilsText
             { text_item_fish_78_desc, "Atlantic Trumpetfish" },
             { text_item_fish_79_desc, "Lyretail Anthias" },
             { text_item_fish_80_desc, "Fire Goby" },
+
+            { text_item_crop_1_desc, "Bamboo" },
+            { text_item_crop_2_desc, "Lumberry" },
+            { text_item_crop_3_desc, "Oramelon" },
+            { text_item_crop_4_desc, "Pinnocchia" },
+            { text_item_crop_5_desc, "Pommodoro" },
+            { text_item_crop_6_desc, "Pumpky" },
 
             { text_item_fish_group_life_desc, "Increase Max Hp for Warrior Job by 100%." },
             { text_item_fish_group_predator_desc, "Increase Atk for Warrior Job by 50%." },

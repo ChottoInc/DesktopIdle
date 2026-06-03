@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,33 +6,33 @@ public class UIFarmerCropSelectionPrefab : MonoBehaviour
     [SerializeField] Image imageCrop;
     [SerializeField] Transform tooltipPosition;
 
-    private bool isShowingTooltip;
+    private bool _isShowingTooltip;
 
-    private UIFarmerPanelSelectionCrop panelSelection;
-    private CropSO cropSO;
+    private UIFarmerPanelSelectionCrop _panelSelection;
+    private CropSO _cropSO;
 
     public void Setup(UIFarmerPanelSelectionCrop panelSelection, CropSO cropSO)
     {
-        this.panelSelection = panelSelection;
-        this.cropSO = cropSO;
+        _panelSelection = panelSelection;
+        _cropSO = cropSO;
 
         imageCrop.sprite = cropSO.SpriteSeed;
     }
 
     public void OnPointerEnter()
     {
-        if (isShowingTooltip) return;
+        if (_isShowingTooltip) return;
 
-        isShowingTooltip = true;
+        _isShowingTooltip = true;
 
         string possibleCompanions = string.Empty;
 
-        for (int i = 0; i < cropSO.AttractedCompanions.Length; i++)
+        for (int i = 0; i < _cropSO.AttractedCompanions.Length; i++)
         {
-            possibleCompanions += cropSO.AttractedCompanions[i].CompanionName;
+            possibleCompanions += _cropSO.AttractedCompanions[i].CompanionName;
 
             // add new line only when not last possible
-            if(i < cropSO.AttractedCompanions.Length - 1)
+            if(i < _cropSO.AttractedCompanions.Length - 1)
             {
                 possibleCompanions += "\n";
             }
@@ -44,9 +43,9 @@ public class UIFarmerCropSelectionPrefab : MonoBehaviour
             UtilsText.AllText[UtilsText.text_job_farmer_crop_basegrowthtime] +
             UtilsText.AllText[UtilsText.text_job_farmer_crop_attracts] +
             "{3}",
-            cropSO.ItemName,
-            Mathf.FloorToInt(cropSO.BaseGrowthTime / 60f),
-            Mathf.FloorToInt(cropSO.BaseGrowthTime % 60f),
+            _cropSO.ItemName,
+            Mathf.FloorToInt(_cropSO.BaseGrowthTime / 60f),
+            Mathf.FloorToInt(_cropSO.BaseGrowthTime % 60f),
             possibleCompanions);
 
 
@@ -58,21 +57,21 @@ public class UIFarmerCropSelectionPrefab : MonoBehaviour
 
     public void OnPointerExit()
     {
-        if (!isShowingTooltip) return;
+        if (!_isShowingTooltip) return;
 
-        isShowingTooltip = false;
+        _isShowingTooltip = false;
 
         UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_TEXT, true);
     }
 
     public void OnCropSelected()
     {
-        if (isShowingTooltip)
+        if (_isShowingTooltip)
         {
             UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_TEXT, true);
         }
 
         AudioManager.Instance.PlayClickUI();
-        panelSelection.OnCropSelected(cropSO);
+        _panelSelection.OnCropSelected(_cropSO);
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class UIFarmerPanelSelectionCrop : MonoBehaviour
 {
@@ -11,13 +10,13 @@ public class UIFarmerPanelSelectionCrop : MonoBehaviour
     [SerializeField] GameObject cropSelectionPrefab;
     [SerializeField] Transform container;
 
-    private List<GameObject> cropObjs;
+    private List<GameObject> _cropObjs;
 
     public void Setup()
     {
         gameObject.SetActive(true);
 
-        cropObjs = ClearList(cropObjs);
+        _cropObjs = ClearList(_cropObjs);
         FillCrops();
     }
 
@@ -37,8 +36,6 @@ public class UIFarmerPanelSelectionCrop : MonoBehaviour
 
     private void FillCrops()
     {
-        //int lastIndex = Mathf.FloorToInt(PlayerManager.Instance.PlayerFarmerData.CurrentAgronomy) + 1; // +1 because the first is always available
-
         var crops = UtilsItem.GetCropsByAgronomyLevel(Mathf.FloorToInt(PlayerManager.Instance.PlayerFarmerData.CurrentAgronomy));
 
         foreach (var crop in crops)
@@ -48,15 +45,6 @@ public class UIFarmerPanelSelectionCrop : MonoBehaviour
                 CreateSingleCropPrefab(crop);
             }
         }
-        /*
-        for (int i = 0; i < lastIndex; i++)
-        {
-            CropSO cropSO = UtilsItem.GetItemById(i);
-            if(cropSO != null)
-            {
-                CreateSingleCropPrefab(cropSO);
-            }
-        }*/
     }
 
     private void CreateSingleCropPrefab(CropSO cropSO)
@@ -71,7 +59,7 @@ public class UIFarmerPanelSelectionCrop : MonoBehaviour
         {
             obj.Setup(this, cropSO);
         }
-        cropObjs.Add(prefab);
+        _cropObjs.Add(prefab);
     }
 
     public void OnCropSelected(CropSO cropSO)
