@@ -385,7 +385,7 @@ public class UITabJobBlacksmith : UITabWindow
             sprite = UtilsBlacksmith.GetBlacksmithGearSpriteByIndex(currentGear, UtilsBlacksmith.GetAllBlacksmithGearSprites(currentGear).Length - 1);
         }
 
-        textLevel.text = $"Lv. {gearLevel}";
+        textLevel.text = string.Format(UtilsText.AllText[UtilsText.text_job_miner_weapon_currentlevel], gearLevel);
 
         // Multiply by 100 to get percentage, and minus 100 to remove base multiplier
 
@@ -395,36 +395,36 @@ public class UITabJobBlacksmith : UITabWindow
             case UtilsBlacksmith.ID_BLACKSMITH_HELMET:
                 float maxHp = UtilsBlacksmith.GetBlacksmithHelmetMaxHpMultiplier(data.HelmetLevel);
 
-                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Max Hp", maxHp));
+                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo(UtilsText.AllText[UtilsText.text_name_warrior_stat_maxhp], maxHp));
                 break;
 
             case UtilsBlacksmith.ID_BLACKSMITH_ARMOR:
                 float aDef = UtilsBlacksmith.GetBlacksmithArmorDefMultiplier(data.ArmorLevel);
 
-                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Def", aDef));
+                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo(UtilsText.AllText[UtilsText.text_name_warrior_stat_def], aDef));
                 break;
 
             case UtilsBlacksmith.ID_BLACKSMITH_GLOVES:
                 float atkSpd = UtilsBlacksmith.GetBlacksmithGlovesAtkSpdMultiplier(data.GlovesLevel);
                 float critDmg = UtilsBlacksmith.GetBlacksmithGlovesCritDmgMultiplier(data.GlovesLevel);
 
-                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Atk Speed", atkSpd));
-                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Crit Dmg", critDmg));
+                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo(UtilsText.AllText[UtilsText.text_name_warrior_stat_atkspd], atkSpd));
+                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo(UtilsText.AllText[UtilsText.text_name_warrior_stat_critdmg], critDmg));
                 break;
 
             case UtilsBlacksmith.ID_BLACKSMITH_BOOTS:
                 float bDef = UtilsBlacksmith.GetBlacksmithBootsDefMultiplier(data.BootsLevel);
                 float critRate = UtilsBlacksmith.GetBlacksmithBootsCritRateMultiplier(data.BootsLevel);
 
-                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Def", bDef));
-                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo("Crit Rate", critRate));
+                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo(UtilsText.AllText[UtilsText.text_name_warrior_stat_def], bDef));
+                uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo(UtilsText.AllText[UtilsText.text_name_warrior_stat_critrate], critRate));
                 break;
         }
 
         string result = string.Empty;
         foreach (var info in uiStatsInfos)
         {
-            result += $"{info.statName}: +{(info.multValue * 100f) - 100f:.#}%\n";
+            result += string.Format(UtilsText.AllText[UtilsText.text_job_blacksmith_gear_currentstats], info.statName, UtilsGeneral.FormatDecimal((info.multValue * 100f) - 100f));
             //Debug.Log("stat: " + info.statName + ", mult val: " + info.multValue);
         }
 

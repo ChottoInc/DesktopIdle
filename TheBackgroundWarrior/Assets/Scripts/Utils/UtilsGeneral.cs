@@ -226,6 +226,14 @@ public static class UtilsGeneral
         return a.Intersect(b).Any();
     }
 
+    /// <summary>
+    /// If number has no decimal will return the whole value, or with at max one decimal if it has
+    /// </summary>
+    public static string FormatDecimal(float value)
+    {
+        return value % 1 == 0 ? value.ToString("0") : value.ToString("0.0");
+    }
+
     #region GENERAL CHANCES
 
     [System.Serializable]

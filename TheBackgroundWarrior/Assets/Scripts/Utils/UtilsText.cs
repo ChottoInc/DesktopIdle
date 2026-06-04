@@ -222,7 +222,10 @@ public static class UtilsText
     public const string text_job_warrior_possiblemonsters = "text_job_warrior_possiblemonsters";
 
 
+    public const string text_job_miner_weapon_currentlevel = "text_job_miner_weapon_currentlevel";
+    public const string text_job_miner_weapon_currentstats = "text_job_miner_weapon_currentstats";
     public const string text_job_miner_requirements_levelup = "text_job_miner_requirements_levelup";
+    public const string text_job_blacksmith_gear_currentstats = "text_job_blacksmith_gear_currentstats";
     public const string text_job_blacksmith_requirements_levelup = "text_job_blacksmith_requirements_levelup";
 
     public const string text_job_fisher_availablefishes = "text_job_fisher_availablefishes";
@@ -999,7 +1002,10 @@ public static class UtilsText
             { text_job_warrior_possiblemonsters, "Possible monsters:<br>" },
 
 
+            { text_job_miner_weapon_currentlevel, "Lv. {0}" },
+            { text_job_miner_weapon_currentstats, "Dmg: +{0:.0}%" },
             { text_job_miner_requirements_levelup, "Requirements for level up" },
+            { text_job_blacksmith_gear_currentstats, "{0}: +{1:.0}%<br>" },
             { text_job_blacksmith_requirements_levelup, "Requirements for level up" },
 
             { text_job_fisher_availablefishes, "Current available fishes" },

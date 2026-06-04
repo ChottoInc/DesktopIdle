@@ -212,11 +212,11 @@ public class UITabJobMiner : UITabWindow
             Debug.Log("data is null");
         }
 
-        textLevel.text = $"Lv. {weaponLevel}";
+        textLevel.text = string.Format(UtilsText.AllText[UtilsText.text_job_miner_weapon_currentlevel], weaponLevel);
 
         // Multiply by 100 to get percentage, and minus 100 to remove base multiplier
         float multiplier = UtilsMiner.GetMinerWeaponMultiplier(data.WeaponLevel);
-        textStats.text = $"Dmg: +{(multiplier * 100f) - 100f:.#}%";
+        textStats.text = string.Format(UtilsText.AllText[UtilsText.text_job_miner_weapon_currentstats], UtilsGeneral.FormatDecimal((multiplier * 100f) - 100f));
         //Debug.Log("dmg: " + multiplier);
 
         // Check if need change
