@@ -314,6 +314,11 @@ public class PlayerFightData : IBasePlayerData
         OnStatChange?.Invoke(id, amount);
     }
 
+    public void SetHp(float value)
+    {
+        currentHp = value;
+    }
+
     #endregion
 
     #region FIGHT

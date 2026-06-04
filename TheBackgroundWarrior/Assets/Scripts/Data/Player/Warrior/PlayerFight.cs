@@ -361,6 +361,14 @@ public class PlayerFight : Player, IDamageable
 
     private void OnStatChangeFight(int id, int value)
     {
+        // if max hp are updated during battle, the ui needs update
+        if(id == UtilsPlayer.ID_WARRIOR_MAXHP)
+        {
+            float diff = hpBar.MaxValue - playerData.CurrentHp;
+            playerData.SetHp(playerData.MaxHp - diff);
+            hpBar.Setup(playerData.MaxHp, playerData.CurrentHp);
+        }
+
         OnStatChange?.Invoke(id, value);
     }
 
