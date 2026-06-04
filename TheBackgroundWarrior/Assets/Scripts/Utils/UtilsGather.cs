@@ -7,6 +7,7 @@ public static class UtilsGather
 {
     // Miner
     private static Dictionary<int, ListableGameDataSO> dictRocks;
+    private static Dictionary<int, ListableGameDataSO> dictWeaponLevelToSprite;
 
     public enum RockType { Copper, Iron, Bronze, Silver, Gold }
 
@@ -21,10 +22,6 @@ public static class UtilsGather
     private static Dictionary<int, ListableGameDataSO> dictCompanions;
 
 
-
-    private static Sprite[] minerWeaponSprites;
-
-    
 
     public const int ID_MINER_WEAPON = 0;
     
@@ -97,16 +94,13 @@ public static class UtilsGather
     {
         // Miner
         LoadDictRocks();
+        LoadDictWeaponLevelToSprites();
 
         // Fisher
         LoadDictFishGroups();
 
         // Farmer
         LoadDictCompanions();
-
-        
-
-        minerWeaponSprites = LoadMinerWeaponSprites();
     }
 
     #region ROCKS
@@ -116,37 +110,6 @@ public static class UtilsGather
         var container = Resources.Load<ContainerGameDataSO>("Data/Player/Miner/ContainerGameData_Rocks");
         dictRocks = container.Entries.ToDictionary(e => e.Id);
     }
-    /*
-    private static RockSO[] LoadRocks()
-    {
-        return Resources.LoadAll<RockSO>("Data/Gatherer/Miner");
-    }
-
-
-    public static RockSO[] GetAllRocks()
-    {
-        return rocks;
-    }
-
-    public static RockSO GetRandomRock()
-    {
-        int rand = Random.Range(0, rocks.Length);
-        return rocks[rand];
-    }
-
-    public static RockSO GetRockById(int id)
-    {
-        foreach (var rock in rocks)
-        {
-            if (rock.Id == id)
-                return rock;
-        }
-        return null;
-    }
-    */
-
-
-
 
     public static float GetRockDurabilityByType(RockType rockType)
     {
@@ -174,24 +137,15 @@ public static class UtilsGather
 
     #region MINER WEAPON
 
-    public const int CHANGE_MINER_WEAPON_EVERY = 5;
-
-    private static Sprite[] LoadMinerWeaponSprites()
+    private static void LoadDictWeaponLevelToSprites()
     {
-        return Resources.LoadAll<Sprite>("Sprites/Miner/Weapon");
+        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Miner/ContainerGameData_WeaponToSprites");
+        dictWeaponLevelToSprite = container.Entries.ToDictionary(e => e.Id);
     }
-
-
-    public static Sprite[] GetAllMinerWeaponSprites()
+    
+    public static Sprite GetWeaponSpriteByLevel(int id)
     {
-        return minerWeaponSprites;
-    }
-
-    public static Sprite GetMinerWeaponSpriteByIndex(int index)
-    {
-        if (index < minerWeaponSprites.Length)
-            return minerWeaponSprites[index];
-        return null;
+        return UtilsGeneral.GetGameDataSO<WeaponToSpriteSO>(id, dictWeaponLevelToSprite).Sprite;
     }
 
     public static List<ItemGroup> GetRequirementsForMinerWeaponLevel(int level)

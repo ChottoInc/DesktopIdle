@@ -143,6 +143,7 @@ public static class UtilsText
 
     // -------------------- SHOP --------------------- //
 
+    public const string text_shop_item_purchased = "text_shop_item_purchased";
     public const string text_shop_insertredeeem = "text_shop_insertredeeem";
     public const string text_shop_insertdebug = "text_shop_insertdebug";
 
@@ -921,6 +922,7 @@ public static class UtilsText
 
             // -------------------- SHOP --------------------- //
 
+            { text_shop_item_purchased, "Purchased" },
             { text_shop_insertredeeem, "Insert the redeem code" },
             { text_shop_insertdebug, "Insert the debug code" },
             

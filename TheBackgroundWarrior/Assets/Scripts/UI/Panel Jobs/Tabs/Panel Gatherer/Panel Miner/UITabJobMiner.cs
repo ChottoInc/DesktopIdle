@@ -189,15 +189,15 @@ public class UITabJobMiner : UITabWindow
         }
 
         int weaponLevel = data.WeaponLevel;
-        int indexMinerWeaponSprite = weaponLevel / UtilsGather.CHANGE_MINER_WEAPON_EVERY;
 
         // check for different sprite
         bool isDifferentLevel = lastWeaponLevel != weaponLevel;
+        Debug.Log("is different level: " + isDifferentLevel);
 
-        Sprite sprite = UtilsGather.GetMinerWeaponSpriteByIndex(indexMinerWeaponSprite);
+        Sprite sprite = UtilsGather.GetWeaponSpriteByLevel(weaponLevel);
         if(sprite == null)
         {
-            sprite = UtilsGather.GetMinerWeaponSpriteByIndex(UtilsGather.GetAllMinerWeaponSprites().Length - 1);
+            sprite = UtilsGather.GetWeaponSpriteByLevel(1);
         }
 
         
@@ -245,6 +245,8 @@ public class UITabJobMiner : UITabWindow
     {
         isAnimatingLevelUp = true;
 
+        Debug.Log("Animating up");
+
         float elapsedTime = 0;
 
         float lerpedTransparency = 0;
@@ -253,6 +255,7 @@ public class UITabJobMiner : UITabWindow
         while (elapsedTime < timerChangeTransparency)
         {
             elapsedTime += Time.unscaledDeltaTime;
+            Debug.Log("elapsed: " + elapsedTime);
 
             lerpedTransparency = Mathf.Clamp01(elapsedTime / timerChangeTransparency);
 
@@ -267,7 +270,7 @@ public class UITabJobMiner : UITabWindow
         // idle
         yield return new WaitForSecondsRealtime(timerChangeTransparencyIdle);
 
-
+        Debug.Log("Animating down");
         elapsedTime = 0;
 
         lerpedTransparency = 1;
@@ -276,6 +279,7 @@ public class UITabJobMiner : UITabWindow
         while (elapsedTime < timerChangeTransparency)
         {
             elapsedTime += Time.unscaledDeltaTime;
+            Debug.Log("elapsed: " + elapsedTime);
 
             lerpedTransparency = Mathf.Lerp(1f, 0f, elapsedTime / timerChangeTransparency);
 
@@ -285,6 +289,7 @@ public class UITabJobMiner : UITabWindow
         }
 
         isAnimatingLevelUp = false;
+        Debug.Log("animaetd");
     }
 
 
@@ -322,14 +327,14 @@ public class UITabJobMiner : UITabWindow
         {
             // update directly from save if not in miner scene
             PlayerManager.Instance.PlayerMinerData.AddMinerWeaponLevel(1);
-            lastWeaponLevel = PlayerManager.Instance.PlayerMinerData.WeaponLevel;
+            //lastWeaponLevel = PlayerManager.Instance.PlayerMinerData.WeaponLevel;
         }
         else
         {
             // or update from temp data if in miner scene, and update from there
             player.AddMinerWeaponLevel(1);
             PlayerManager.Instance.UpdateMinerData(player.PlayerData);
-            lastWeaponLevel = player.PlayerData.WeaponLevel;
+            //lastWeaponLevel = player.PlayerData.WeaponLevel;
         }
 
         // save miner data

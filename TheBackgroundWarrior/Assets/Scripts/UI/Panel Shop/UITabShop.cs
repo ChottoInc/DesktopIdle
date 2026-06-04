@@ -50,6 +50,12 @@ public class UITabShop : UITabWindow
         panelDebug.SetActive(false);
         panelRedeem.SetActive(false);
 
+        // disable last filter
+        if(currentFilterButton != null)
+        {
+            currentFilterButton.SelectButton(false);
+        }
+
         // select first filter by default
         currentFilterButton = firstFilterButton;
         currentFilterButton.SelectButton(true);
