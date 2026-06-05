@@ -32,7 +32,7 @@ public class ObjectPool
     {
         if (objects.Count == 0)
         {
-            Debug.Log("Exceeded objects");
+            //Debug.Log("Exceeded objects");
             CreateNewObject();
         }
 

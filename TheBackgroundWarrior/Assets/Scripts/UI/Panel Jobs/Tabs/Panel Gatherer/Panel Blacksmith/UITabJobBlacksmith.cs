@@ -462,7 +462,7 @@ public class UITabJobBlacksmith : UITabWindow
         while (elapsedTime < timerChangeTransparency)
         {
             elapsedTime += Time.unscaledDeltaTime;
-
+            
             lerpedTransparency = Mathf.Clamp01(elapsedTime / timerChangeTransparency);
 
             matImageWeapon.SetFloat(transparencyAmount, lerpedTransparency);
