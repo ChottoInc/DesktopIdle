@@ -16,6 +16,7 @@ public class PlayerFarmer : Player
 
     [Space(10)]
     [SerializeField] AnimationClip sowClip;
+    [SerializeField] AnimationClip mowClip;
 
 
     private float timer5Mins;
@@ -29,8 +30,13 @@ public class PlayerFarmer : Player
 
     private bool isWalking;
 
+    private enum FarmerAction { Sowing, Mowing }
+
     private bool isSowing;
     private bool canSow;
+
+    private bool isMowing;
+    private bool canMow;
 
 
     private Vector3 startScale;
@@ -43,12 +49,15 @@ public class PlayerFarmer : Player
 
     private Rigidbody2D rb;
 
+    // ------ FARMER VARS
+
+    private Queue<Transform> farmPlotsToMow;
+    private Queue<CropSlotData> farmPlotsToMowData;
+    private int currentFarmPlotToMow;
+
     private Queue<Transform> farmPlotsToSow;
     private Queue<CropSlotData> farmPlotsToSowData;
-    private int currentFarmPlot;
-
-
-    // ------ FARMER VARS
+    private int currentFarmPlotToSow;
 
     public event Action<int, int> OnStatChange;
 
@@ -114,14 +123,16 @@ public class PlayerFarmer : Player
 
     private void FixedUpdate()
     {
-        if (!isSowing)
+        if (!isSowing && !isMowing)
         {
             HandleMovement();
         }
         else
         {
             if(canSow)
-                GoToFarmPlot();
+                GoToFarmPlot(FarmerAction.Sowing);
+            else if(canMow)
+                GoToFarmPlot(FarmerAction.Mowing);
         }
     }
 
@@ -141,6 +152,9 @@ public class PlayerFarmer : Player
         animator.SetBool("isWalking", isWalking);
     }
 
+    /// <summary>
+    /// Handles walking, if distant from target walk, else idle
+    /// </summary>
     private void HandleMovement()
     {
         if (!canInitialMove) return;
@@ -189,7 +203,10 @@ public class PlayerFarmer : Player
         }
     }
 
-    private void GoToFarmPlot()
+    /// <summary>
+    /// Handles movement to first farm plot when sowing, starts a coroutine for next ones
+    /// </summary>
+    private void GoToFarmPlot(FarmerAction fAction)
     {
         float distance = Mathf.Abs(transform.position.x - currentTarget);
 
@@ -205,14 +222,28 @@ public class PlayerFarmer : Player
         }
         else
         {
-            // reset to stop the movement
-            canSow = false;
+            if(fAction == FarmerAction.Sowing)
+            {
+                // reset to stop the movement
+                canSow = false;
 
-            isWalking = false;
-            animator.SetBool("isWalking", isWalking);
+                isWalking = false;
+                animator.SetBool("isWalking", isWalking);
 
-            // wait for sow animation and call next farm plot
-            StartCoroutine(CoWaitSowAnimation());
+                // wait for sow animation and call next farm plot
+                StartCoroutine(CoWaitSowAnimation());
+            }
+            else if(fAction == FarmerAction.Mowing)
+            {
+                // reset to stop the movement
+                canMow = false;
+
+                isWalking = false;
+                animator.SetBool("isWalking", isWalking);
+
+                // wait for sow animation and call next farm plot
+                StartCoroutine(CoWaitMowAnimation());
+            }
         }
     }
 
@@ -266,11 +297,37 @@ public class PlayerFarmer : Player
             isSowing = true;
 
             // start sow plots
-            NextPlot(farmPlotsToSow.Dequeue());
+            NextPlot(FarmerAction.Sowing,farmPlotsToSow.Dequeue());
         }
     }
 
-    private void NextPlot(Transform farmPlot)
+    public void AddMow(CropSlotData cropSlotData, Transform[] farmPlots, bool needResetCrop)
+    {
+        // reset index
+        //currentFarmPlot = 0;
+
+        farmPlotsToMow ??= new Queue<Transform>();
+        farmPlotsToMowData ??= new Queue<CropSlotData>();
+
+        foreach (var farmPlot in farmPlots)
+        {
+            farmPlotsToMow.Enqueue(farmPlot);
+        }
+
+        farmPlotsToMowData.Enqueue(cropSlotData);
+
+        // handles if it's not already mowing, or else just add to queues
+        if (!isMowing)
+        {
+            // set sowing so a new target isn't generated
+            isMowing = true;
+
+            // start sow plots
+            NextPlot(FarmerAction.Mowing, farmPlotsToMow.Dequeue());
+        }
+    }
+
+    private void NextPlot(FarmerAction fAction, Transform farmPlot)
     {
         // set next farm plot X
         currentTarget = farmPlot.position.x;
@@ -288,11 +345,22 @@ public class PlayerFarmer : Player
             animator.SetBool("isWalking", isWalking);
         }
 
-        // set already next farm plot index
-        currentFarmPlot++;
+        if(fAction == FarmerAction.Sowing)
+        {
+            // set already next farm plot index
+            currentFarmPlotToSow++;
 
-        // start move
-        canSow = true;
+            // start move
+            canSow = true;
+        }
+        else if(fAction == FarmerAction.Mowing)
+        {
+            // set already next farm plot index
+            currentFarmPlotToMow++;
+
+            // start move
+            canMow = true;
+        }
     }
 
     private IEnumerator CoWaitSowAnimation()
@@ -303,17 +371,18 @@ public class PlayerFarmer : Player
         yield return new WaitForSeconds(sowClip.length);
 
         // every 4 plots reset and dequeue datas to set sprite
-        if (currentFarmPlot == 4)
+        if (currentFarmPlotToSow == 4)
         {
-            currentFarmPlot = 0;
+            currentFarmPlotToSow = 0;
             CropSlotData slotData = farmPlotsToSowData.Dequeue();
 
+            // set sprites
             CropsPlantManager.Instance.SetCropSprite(slotData.slot, slotData.cropData);
         }
 
         if (farmPlotsToSow.Count > 0)
         {
-            NextPlot(farmPlotsToSow.Dequeue());
+            NextPlot(FarmerAction.Sowing, farmPlotsToSow.Dequeue());
         }
         else
         {
@@ -321,6 +390,66 @@ public class PlayerFarmer : Player
 
             // set new target
             GenerateNewTarget();
+        }
+    }
+
+    private IEnumerator CoWaitMowAnimation()
+    {
+        // tell animator to do the sowing animation
+        animator.SetTrigger("Mow");
+
+        yield return new WaitForSeconds(mowClip.length);
+
+        // every 4 plots reset and dequeue datas to set sprite
+        if (currentFarmPlotToMow == 4)
+        {
+            currentFarmPlotToMow = 0;
+            CropSlotData slotData = farmPlotsToMowData.Dequeue();
+
+            // harvest
+            Harvest(slotData);
+
+            // reset crop
+            ResetCrop(slotData);
+        }
+
+        if (farmPlotsToMow.Count > 0)
+        {
+            NextPlot(FarmerAction.Mowing, farmPlotsToMow.Dequeue());
+        }
+        else
+        {
+            isMowing = false;
+
+            // set new target
+            GenerateNewTarget();
+        }
+    }
+
+    private void Harvest(CropSlotData slotData)
+    {
+        // TODO: might change with new stat? influenced by luck and greeenthumb??
+        PlayerManager.Instance.Inventory.AddItem(slotData.cropData.CropSO.Id, 4);
+        Debug.Log("Adding: " + slotData.cropData.CropSO.Id);
+        PlayerManager.Instance.SaveInventoryData();
+    }
+
+    private void ResetCrop(CropSlotData slotData)
+    {
+        CropData currentCrop = null;
+
+        switch (slotData.slot)
+        {
+            case 0: currentCrop = PlayerManager.Instance.PlayerFarmerData.Slot1CropData; break;
+            case 1: currentCrop = PlayerManager.Instance.PlayerFarmerData.Slot2CropData; break;
+            case 2: currentCrop = PlayerManager.Instance.PlayerFarmerData.Slot3CropData; break;
+            case 3: currentCrop = PlayerManager.Instance.PlayerFarmerData.Slot4CropData; break;
+        }
+
+        if (currentCrop != null)
+        {
+            currentCrop.ResetGrowth();
+            CropsPlantManager.Instance.SetCrop(slotData.slot, currentCrop, false);
         }
     }
 
@@ -341,7 +470,7 @@ public class PlayerFarmer : Player
 
     #endregion
 
-    #region HANDLE EVENTS FROM FISHER DATA
+    #region HANDLE EVENTS FROM FARMER DATA
 
     protected override void LevelUp()
     {

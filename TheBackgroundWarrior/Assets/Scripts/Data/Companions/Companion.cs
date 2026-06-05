@@ -174,16 +174,19 @@ public class Companion : MonoBehaviour
         {
             if (timerIdle <= 0)
             {
-                // remove crop from plot
-                ResetCrop();
-                
-
                 isGoingToCrop = false;
 
                 // take action befriended or not
                 bool success = UtilsGeneral.GetRandomSuccessFromValue(PlayerManager.Instance.PlayerFarmerData.CurrentLuck);
                 if (success)
                 {
+                    // call farmer mow, doesn't need reset after mow
+                    CropsPlantManager.Instance.AddMowToPlayer(slotCropIndex, false);
+
+                    // remove crop from plot is they eat it, then call mow
+                    ResetCrop();
+
+
                     // Animation
                     imageBefriended.SetActive(true);
 
@@ -213,6 +216,9 @@ public class Companion : MonoBehaviour
                 }
                 else
                 {
+                    // call farmer mow, need reset after mow
+                    CropsPlantManager.Instance.AddMowToPlayer(slotCropIndex, true);
+
                     // add exp, might tweak
                     PlayerManager.Instance.PlayerFarmerData.AddExp(50);
                     PlayerManager.Instance.SaveFarmerData();

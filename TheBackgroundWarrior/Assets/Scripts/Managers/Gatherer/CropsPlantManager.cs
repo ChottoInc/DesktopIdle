@@ -80,16 +80,16 @@ public class CropsPlantManager : MonoBehaviour
         HandleUpdateSave();
 
         if (cropSlot1 != null)
-            timerLureSlot1 = HandleLureSlot(1, isLuringSlot1, cropSlot1, slot1, timerLureSlot1);
+            timerLureSlot1 = HandleLureSlot(0, isLuringSlot1, cropSlot1, slot1, timerLureSlot1);
 
         if (cropSlot2 != null)
-            timerLureSlot2 = HandleLureSlot(2, isLuringSlot2, cropSlot2, slot2, timerLureSlot2);
+            timerLureSlot2 = HandleLureSlot(1, isLuringSlot2, cropSlot2, slot2, timerLureSlot2);
 
         if (cropSlot3 != null)
-            timerLureSlot3 = HandleLureSlot(3, isLuringSlot3, cropSlot3, slot3, timerLureSlot3);
+            timerLureSlot3 = HandleLureSlot(2, isLuringSlot3, cropSlot3, slot3, timerLureSlot3);
 
         if (cropSlot4 != null)
-            timerLureSlot4 = HandleLureSlot(4, isLuringSlot4, cropSlot4, slot4, timerLureSlot4);
+            timerLureSlot4 = HandleLureSlot(3, isLuringSlot4, cropSlot4, slot4, timerLureSlot4);
     }
 
     public float HandleLureSlot(int slotIndex, bool isLuringSlot, CropData cropSlot, WorldCropSlot worldSlot, float currentTimer)
@@ -102,10 +102,10 @@ public class CropsPlantManager : MonoBehaviour
                 switch (slotIndex)
                 {
                     default: break;
-                    case 1: isLuringSlot1 = true; break;
-                    case 2: isLuringSlot2 = true; break;
-                    case 3: isLuringSlot3 = true; break;
-                    case 4: isLuringSlot4 = true; break;
+                    case 0: isLuringSlot1 = true; break;
+                    case 1: isLuringSlot2 = true; break;
+                    case 2: isLuringSlot3 = true; break;
+                    case 3: isLuringSlot4 = true; break;
                 }
 
                 // get random timer to lure a companion
@@ -128,16 +128,16 @@ public class CropsPlantManager : MonoBehaviour
             {
                 // get random companion from possible of crops and spawn
                 int randCompanionIndex = Random.Range(0, cropSlot.CropSO.AttractedCompanions.Length);
-                SpawnCompanion(0, cropSlot.CropSO.AttractedCompanions[randCompanionIndex], worldSlot);
+                SpawnCompanion(slotIndex, cropSlot.CropSO.AttractedCompanions[randCompanionIndex], worldSlot);
 
                 // reset lure so the timer resets
                 switch (slotIndex)
                 {
                     default: break;
-                    case 1: isLuringSlot1 = false; break;
-                    case 2: isLuringSlot2 = false; break;
-                    case 3: isLuringSlot3 = false; break;
-                    case 4: isLuringSlot4 = false; break;
+                    case 0: isLuringSlot1 = false; break;
+                    case 1: isLuringSlot2 = false; break;
+                    case 2: isLuringSlot3 = false; break;
+                    case 3: isLuringSlot4 = false; break;
                 }
             }
             else
@@ -340,5 +340,23 @@ public class CropsPlantManager : MonoBehaviour
         Sprite currentSprite = data.GetCurrentSprite();
         if (slot != null && currentSprite != null)
             slot.SetSprite(currentSprite);
+    }
+
+
+    public void AddMowToPlayer(int slot, bool needResetCrop)
+    {
+        WorldCropSlot selectedSlot = null;
+        CropData selectedData = null;
+        switch (slot)
+        {
+            case 0: selectedSlot = slot1; selectedData = cropSlot1; break;
+            case 1: selectedSlot = slot2; selectedData = cropSlot2; break;
+            case 2: selectedSlot = slot3; selectedData = cropSlot3; break;
+            case 3: selectedSlot = slot4; selectedData = cropSlot4; break;
+        }
+
+        CropSlotData cropSlotData = new CropSlotData(selectedData, slot);
+
+        player.AddMow(cropSlotData, selectedSlot.CropTransforms, needResetCrop);
     }
 }

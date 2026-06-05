@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Inventory
@@ -155,6 +156,11 @@ public class Inventory
                 return i;
         }
         return -1;
+    }
+
+    public List<ItemGroup> GetGroupsOfType(UtilsItem.ItemType itemType)
+    {
+        return itemGroups.Where(group => UtilsItem.GetItemById(group.IdItem).ItemType == itemType).ToList();
     }
 
     public List<ItemGroup> GetAllCards()

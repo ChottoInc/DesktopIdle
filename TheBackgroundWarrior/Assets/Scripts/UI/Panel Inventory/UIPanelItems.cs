@@ -48,44 +48,29 @@ public class UIPanelItems : MonoBehaviour
         if (itemGroups != null) itemGroups.Clear();
 
         // get updated list
-        itemGroups = new List<ItemGroup>(PlayerManager.Instance.Inventory.ItemGroups);
-
+        if(currentInvFilter != 0)
+        {
+            UtilsItem.ItemType itemType = UtilsItem.ItemType.Ore;
+            switch (currentInvFilter)
+            {
+                default:
+                case UITabInventory.ID_INVENTORY_FILTER_ORES: itemType = UtilsItem.ItemType.Ore; break;
+                case UITabInventory.ID_INVENTORY_FILTER_METALS: itemType = UtilsItem.ItemType.Metal; break;
+                case UITabInventory.ID_INVENTORY_FILTER_FISHES: itemType = UtilsItem.ItemType.Fish; break;
+                case UITabInventory.ID_INVENTORY_FILTER_CROPS: itemType = UtilsItem.ItemType.Crop; break;
+                case UITabInventory.ID_INVENTORY_FILTER_CARDS: itemType = UtilsItem.ItemType.Card; break;
+            }
+            itemGroups = PlayerManager.Instance.Inventory.GetGroupsOfType(itemType);
+        }
+        else
+        {
+            itemGroups = new List<ItemGroup>(PlayerManager.Instance.Inventory.ItemGroups);
+        }
+       
         for (int i = 0; i < itemGroups.Count; i++)
         {
             ItemSO itemSO = UtilsItem.GetItemById(itemGroups[i].IdItem);
-
-            switch (currentInvFilter)
-            {
-                case UITabInventory.ID_INVENTORY_FILTER_ALL: CreateSinglePrefab(itemGroups[i], itemSO); break;
-
-                case UITabInventory.ID_INVENTORY_FILTER_ORES: 
-                    if(itemSO.ItemType == UtilsItem.ItemType.Ore)
-                    {
-                        CreateSinglePrefab(itemGroups[i], itemSO); 
-                    }
-                    break;
-
-                case UITabInventory.ID_INVENTORY_FILTER_METALS:
-                    if (itemSO.ItemType == UtilsItem.ItemType.Metal)
-                    {
-                        CreateSinglePrefab(itemGroups[i], itemSO);
-                    }
-                    break;
-
-                case UITabInventory.ID_INVENTORY_FILTER_FISHES:
-                    if (itemSO.ItemType == UtilsItem.ItemType.Fish)
-                    {
-                        CreateSinglePrefab(itemGroups[i], itemSO);
-                    }
-                    break;
-
-                case UITabInventory.ID_INVENTORY_FILTER_CARDS:
-                    if (itemSO.ItemType == UtilsItem.ItemType.Card)
-                    {
-                        CreateSinglePrefab(itemGroups[i], itemSO);
-                    }
-                    break;
-            }
+            CreateSinglePrefab(itemGroups[i], itemSO);
         }
     }
 
