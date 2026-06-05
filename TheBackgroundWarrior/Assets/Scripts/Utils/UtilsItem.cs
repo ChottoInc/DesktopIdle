@@ -59,11 +59,11 @@ public static class UtilsItem
         switch (metalSO.RockType)
         {
             default:
-            case UtilsGather.RockType.Copper: result = 200; break;
-            case UtilsGather.RockType.Iron: result = 600; break;
-            case UtilsGather.RockType.Bronze: result = 1400; break;
-            case UtilsGather.RockType.Silver: result = 2400; break;
-            case UtilsGather.RockType.Gold: result = 4000; break;
+            case UtilsMiner.RockType.Copper: result = 200; break;
+            case UtilsMiner.RockType.Iron: result = 600; break;
+            case UtilsMiner.RockType.Bronze: result = 1400; break;
+            case UtilsMiner.RockType.Silver: result = 2400; break;
+            case UtilsMiner.RockType.Gold: result = 4000; break;
         }
         return result * metalSO.RequiredOres * multiplier;
     }
@@ -125,7 +125,7 @@ public static class UtilsItem
 
 
             // check if the fish can actually get caught, there are some SOs extra, so the fish wouldn't be in any of the groups
-            if (UtilsGather.GetFishGroupByFish(result) == null)
+            if (UtilsFisher.GetFishGroupByFish(result) == null)
                 found = false;
 
             tries++;

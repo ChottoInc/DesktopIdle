@@ -61,15 +61,15 @@ public class PlayerManager : MonoBehaviour
     public float BootsCritRateBlacksmithMultiplier => UtilsBlacksmith.GetBlacksmithBootsCritRateMultiplier(PlayerBlacksmithData.BootsLevel);
 
     //Fisher
-    public float FisherLifeSeriesMultiplier => PlayerFisherData.IsLifeSeriesCompleted ? UtilsGather.FISHER_LIFE_SERIES_COMPLETE_MULTIPLIER : 1f;
-    public float FisherPredatorSeriesMultiplier => PlayerFisherData.IsPredatorSeriesCompleted ? UtilsGather.FISHER_PREDATOR_SERIES_COMPLETE_MULTIPLIER : 1f;
-    public float FisherGuardianSeriesMultiplier => PlayerFisherData.IsGuardianSeriesCompleted ? UtilsGather.FISHER_GUARDIAN_SERIES_COMPLETE_MULTIPLIER : 1f;
-    public float FisherDartSeriesMultiplier => PlayerFisherData.IsDartSeriesCompleted ? UtilsGather.FISHER_DART_SERIES_COMPLETE_MULTIPLIER : 1f;
-    public float FisherSharpSeriesMultiplier => PlayerFisherData.IsSharpSeriesCompleted ? UtilsGather.FISHER_SHARP_SERIES_COMPLETE_MULTIPLIER : 1f;
-    public float FisherPiercingSeriesMultiplier => PlayerFisherData.IsPiercingSeriesCompleted ? UtilsGather.FISHER_PIERCING_SERIES_COMPLETE_MULTIPLIER : 1f;
-    public float FisherGoldenSeriesMultiplier => PlayerFisherData.IsGoldenSeriesCompleted ? UtilsGather.FISHER_GOLDEN_SERIES_COMPLETE_MULTIPLIER : 1f;
-    public float FisherElderSeriesMultiplier => PlayerFisherData.IsElderSeriesCompleted ? UtilsGather.FISHER_ELDER_SERIES_COMPLETE_MULTIPLIER : 1f;
-    public float FisherQuickSeriesMultiplier => PlayerFisherData.IsQuickSeriesCompleted ? UtilsGather.FISHER_QUICK_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherLifeSeriesMultiplier => PlayerFisherData.IsLifeSeriesCompleted ? UtilsFisher.FISHER_LIFE_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherPredatorSeriesMultiplier => PlayerFisherData.IsPredatorSeriesCompleted ? UtilsFisher.FISHER_PREDATOR_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherGuardianSeriesMultiplier => PlayerFisherData.IsGuardianSeriesCompleted ? UtilsFisher.FISHER_GUARDIAN_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherDartSeriesMultiplier => PlayerFisherData.IsDartSeriesCompleted ? UtilsFisher.FISHER_DART_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherSharpSeriesMultiplier => PlayerFisherData.IsSharpSeriesCompleted ? UtilsFisher.FISHER_SHARP_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherPiercingSeriesMultiplier => PlayerFisherData.IsPiercingSeriesCompleted ? UtilsFisher.FISHER_PIERCING_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherGoldenSeriesMultiplier => PlayerFisherData.IsGoldenSeriesCompleted ? UtilsFisher.FISHER_GOLDEN_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherElderSeriesMultiplier => PlayerFisherData.IsElderSeriesCompleted ? UtilsFisher.FISHER_ELDER_SERIES_COMPLETE_MULTIPLIER : 1f;
+    public float FisherQuickSeriesMultiplier => PlayerFisherData.IsQuickSeriesCompleted ? UtilsFisher.FISHER_QUICK_SERIES_COMPLETE_MULTIPLIER : 1f;
 
 
 

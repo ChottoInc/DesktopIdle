@@ -105,7 +105,7 @@ public class SmashManager : MonoBehaviour
         //Debug.Log("Rock smash");
 
         // get exp before starting death for safety
-        long rewardedExp = UtilsGather.GetRockExp(currentRock.RockData.RockSO.RockType);
+        long rewardedExp = UtilsMiner.GetRockExp(currentRock.RockData.RockSO.RockType);
 
         // kill rock
         currentRock.PlayDeath(false);
@@ -150,7 +150,7 @@ public class SmashManager : MonoBehaviour
                     if (rock.IsSmashed)
                     {
                         // exp for each rock
-                        long rewardedExp = UtilsGather.GetRockExp(rock.RockData.RockSO.RockType);
+                        long rewardedExp = UtilsMiner.GetRockExp(rock.RockData.RockSO.RockType);
 
                         // destroy them
                         rock.PlayDeath(false);

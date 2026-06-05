@@ -250,14 +250,14 @@ public class PlayerBlacksmith : Player
     }
 
 
-    public void AddBlacksmithGearLevel(int idGear, int level)
+    public void AddBlacksmithGearLevel(UtilsBlacksmith.BlacksmithGear gear, int level)
     {
-        switch (idGear)
+        switch (gear)
         {
-            case UtilsBlacksmith.ID_BLACKSMITH_HELMET: playerData.AddBlacksmithHelmetLevel(1); break;
-            case UtilsBlacksmith.ID_BLACKSMITH_ARMOR: playerData.AddBlacksmithArmorLevel(1); break;
-            case UtilsBlacksmith.ID_BLACKSMITH_GLOVES: playerData.AddBlacksmithGlovesLevel(1); break;
-            case UtilsBlacksmith.ID_BLACKSMITH_BOOTS: playerData.AddBlacksmithBootsLevel(1); break;
+            case UtilsBlacksmith.BlacksmithGear.Helmet: playerData.AddBlacksmithHelmetLevel(1); break;
+            case UtilsBlacksmith.BlacksmithGear.Armor: playerData.AddBlacksmithArmorLevel(1); break;
+            case UtilsBlacksmith.BlacksmithGear.Gloves: playerData.AddBlacksmithGlovesLevel(1); break;
+            case UtilsBlacksmith.BlacksmithGear.Boots: playerData.AddBlacksmithBootsLevel(1); break;
         }
     }
 

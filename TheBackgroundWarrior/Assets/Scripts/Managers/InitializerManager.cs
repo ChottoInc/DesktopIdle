@@ -151,7 +151,6 @@ public class InitializerManager : MonoBehaviour
         UtilsEnemy.Initialize();
         UtilsCombatMap.Initialize();
         UtilsQuest.Initialize();
-        UtilsGather.Initialize();
         UtilsShop.Initialize();
 
         // load files

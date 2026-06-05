@@ -5,8 +5,8 @@ public class MetalSO : ItemSO
 {
     [Space(10)]
     [SerializeField] int requiredOres;
-    [SerializeField] UtilsGather.RockType rockType;
+    [SerializeField] UtilsMiner.RockType rockType;
 
     public int RequiredOres => requiredOres;
-    public UtilsGather.RockType RockType => rockType;
+    public UtilsMiner.RockType RockType => rockType;
 }

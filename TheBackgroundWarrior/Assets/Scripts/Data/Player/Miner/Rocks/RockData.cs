@@ -24,7 +24,7 @@ public class RockData
     {
         this.rockSO = rockSO;
 
-        currentDurability = UtilsGather.GetRockDurabilityByType(rockSO.RockType);
+        currentDurability = UtilsMiner.GetRockDurabilityByType(rockSO.RockType);
         maxDurability = currentDurability;
     }
 

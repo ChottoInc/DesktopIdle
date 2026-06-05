@@ -17,7 +17,7 @@ public class UITabJobBlacksmith : UITabWindow
 
     private List<GameObject> requirementObjs;
 
-    private int currentGear;
+    private UtilsBlacksmith.BlacksmithGear currentGear;
 
     [Header("Gear")]
     [SerializeField] Image imageGear;
@@ -107,22 +107,22 @@ public class UITabJobBlacksmith : UITabWindow
 
         switch (currentGear)
         {
-            case UtilsBlacksmith.ID_BLACKSMITH_HELMET: 
+            case UtilsBlacksmith.BlacksmithGear.Helmet: 
                 lastWeaponLevel = data.HelmetLevel;
                 lastSelectedGearButton = buttonHelmet;
                 break;
 
-            case UtilsBlacksmith.ID_BLACKSMITH_ARMOR: 
+            case UtilsBlacksmith.BlacksmithGear.Armor: 
                 lastWeaponLevel = data.ArmorLevel;
                 lastSelectedGearButton = buttonArmor;
                 break;
 
-            case UtilsBlacksmith.ID_BLACKSMITH_GLOVES:
+            case UtilsBlacksmith.BlacksmithGear.Gloves:
                 lastWeaponLevel = data.GlovesLevel;
                 lastSelectedGearButton = buttonGloves;
                 break;
 
-            case UtilsBlacksmith.ID_BLACKSMITH_BOOTS: 
+            case UtilsBlacksmith.BlacksmithGear.Boots: 
                 lastWeaponLevel = data.BootsLevel;
                 lastSelectedGearButton = buttonBoots;
                 break;
@@ -194,19 +194,19 @@ public class UITabJobBlacksmith : UITabWindow
         return list;
     }
 
-    private void FillRequirements(int idGear)
+    private void FillRequirements(UtilsBlacksmith.BlacksmithGear gear)
     {
         int gearLevel = 0;
 
-        switch (idGear)
+        switch (gear)
         {
-            case UtilsBlacksmith.ID_BLACKSMITH_HELMET: gearLevel = PlayerManager.Instance.PlayerBlacksmithData.HelmetLevel + 1; break;
-            case UtilsBlacksmith.ID_BLACKSMITH_ARMOR: gearLevel = PlayerManager.Instance.PlayerBlacksmithData.ArmorLevel + 1; break;
-            case UtilsBlacksmith.ID_BLACKSMITH_GLOVES: gearLevel = PlayerManager.Instance.PlayerBlacksmithData.GlovesLevel + 1; break;
-            case UtilsBlacksmith.ID_BLACKSMITH_BOOTS: gearLevel = PlayerManager.Instance.PlayerBlacksmithData.BootsLevel + 1; break;
+            case UtilsBlacksmith.BlacksmithGear.Helmet: gearLevel = PlayerManager.Instance.PlayerBlacksmithData.HelmetLevel + 1; break;
+            case UtilsBlacksmith.BlacksmithGear.Armor: gearLevel = PlayerManager.Instance.PlayerBlacksmithData.ArmorLevel + 1; break;
+            case UtilsBlacksmith.BlacksmithGear.Gloves: gearLevel = PlayerManager.Instance.PlayerBlacksmithData.GlovesLevel + 1; break;
+            case UtilsBlacksmith.BlacksmithGear.Boots: gearLevel = PlayerManager.Instance.PlayerBlacksmithData.BootsLevel + 1; break;
         }
 
-        requirements = UtilsBlacksmith.GetRequirementsForBlacksmithGearLevel(idGear, gearLevel);
+        requirements = UtilsBlacksmith.GetRequirementsForBlacksmithGearLevel(gear, gearLevel);
     }
 
     private void FillRequirementsUI()
@@ -248,7 +248,7 @@ public class UITabJobBlacksmith : UITabWindow
     {
         switch (currentGear)
         {
-            case UtilsBlacksmith.ID_BLACKSMITH_HELMET:
+            case UtilsBlacksmith.BlacksmithGear.Helmet:
                 if (lastWeaponLevel >= UtilsBlacksmith.BLACKSMITH_HELMET_MAX_LEVEL)
                 {
                     //Debug.Log("gear level: " + lastWeaponLevel);
@@ -256,17 +256,17 @@ public class UITabJobBlacksmith : UITabWindow
                 }
                 break;
 
-            case UtilsBlacksmith.ID_BLACKSMITH_ARMOR:
+            case UtilsBlacksmith.BlacksmithGear.Armor:
                 if (lastWeaponLevel >= UtilsBlacksmith.BLACKSMITH_ARMOR_MAX_LEVEL)
                     return true;
                 break;
 
-            case UtilsBlacksmith.ID_BLACKSMITH_GLOVES:
+            case UtilsBlacksmith.BlacksmithGear.Gloves:
                 if (lastWeaponLevel >= UtilsBlacksmith.BLACKSMITH_GLOVES_MAX_LEVEL)
                     return true;
                 break;
 
-            case UtilsBlacksmith.ID_BLACKSMITH_BOOTS:
+            case UtilsBlacksmith.BlacksmithGear.Boots:
                 if (lastWeaponLevel >= UtilsBlacksmith.BLACKSMITH_BOOTS_MAX_LEVEL)
                     return true;
                 break;
@@ -368,21 +368,20 @@ public class UITabJobBlacksmith : UITabWindow
 
         switch (currentGear)
         {
-            case UtilsBlacksmith.ID_BLACKSMITH_HELMET: gearLevel = data.HelmetLevel; break;
-            case UtilsBlacksmith.ID_BLACKSMITH_ARMOR: gearLevel = data.ArmorLevel; break;
-            case UtilsBlacksmith.ID_BLACKSMITH_GLOVES: gearLevel = data.GlovesLevel; break;
-            case UtilsBlacksmith.ID_BLACKSMITH_BOOTS: gearLevel = data.BootsLevel; break;
+            case UtilsBlacksmith.BlacksmithGear.Helmet: gearLevel = data.HelmetLevel; break;
+            case UtilsBlacksmith.BlacksmithGear.Armor: gearLevel = data.ArmorLevel; break;
+            case UtilsBlacksmith.BlacksmithGear.Gloves: gearLevel = data.GlovesLevel; break;
+            case UtilsBlacksmith.BlacksmithGear.Boots: gearLevel = data.BootsLevel; break;
         }
-
-        int indexBlacksmithGearSprite = gearLevel / UtilsBlacksmith.CHANGE_BLACKSMITH_GEARS_EVERY;
 
         // check for different sprite
         bool isDifferentLevel = lastWeaponLevel != gearLevel;
 
-        Sprite sprite = UtilsBlacksmith.GetBlacksmithGearSpriteByIndex(currentGear, indexBlacksmithGearSprite);
+        Sprite sprite = UtilsBlacksmith.GetGearSpriteByLevel(gearLevel, (UtilsBlacksmith.BlacksmithGear)currentGear);
         if (sprite == null)
         {
-            sprite = UtilsBlacksmith.GetBlacksmithGearSpriteByIndex(currentGear, UtilsBlacksmith.GetAllBlacksmithGearSprites(currentGear).Length - 1);
+            // get default sprite for selected gear
+            sprite = UtilsBlacksmith.GetGearSpriteByLevel(1, (UtilsBlacksmith.BlacksmithGear)currentGear);
         }
 
         textLevel.text = string.Format(UtilsText.AllText[UtilsText.text_job_miner_weapon_currentlevel], gearLevel);
@@ -392,19 +391,19 @@ public class UITabJobBlacksmith : UITabWindow
         List<UtilsGeneral.UIStatMultInfo> uiStatsInfos = new List<UtilsGeneral.UIStatMultInfo>();
         switch (currentGear)
         {
-            case UtilsBlacksmith.ID_BLACKSMITH_HELMET:
+            case UtilsBlacksmith.BlacksmithGear.Helmet:
                 float maxHp = UtilsBlacksmith.GetBlacksmithHelmetMaxHpMultiplier(data.HelmetLevel);
 
                 uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo(UtilsText.AllText[UtilsText.text_name_warrior_stat_maxhp], maxHp));
                 break;
 
-            case UtilsBlacksmith.ID_BLACKSMITH_ARMOR:
+            case UtilsBlacksmith.BlacksmithGear.Armor:
                 float aDef = UtilsBlacksmith.GetBlacksmithArmorDefMultiplier(data.ArmorLevel);
 
                 uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo(UtilsText.AllText[UtilsText.text_name_warrior_stat_def], aDef));
                 break;
 
-            case UtilsBlacksmith.ID_BLACKSMITH_GLOVES:
+            case UtilsBlacksmith.BlacksmithGear.Gloves:
                 float atkSpd = UtilsBlacksmith.GetBlacksmithGlovesAtkSpdMultiplier(data.GlovesLevel);
                 float critDmg = UtilsBlacksmith.GetBlacksmithGlovesCritDmgMultiplier(data.GlovesLevel);
 
@@ -412,7 +411,7 @@ public class UITabJobBlacksmith : UITabWindow
                 uiStatsInfos.Add(new UtilsGeneral.UIStatMultInfo(UtilsText.AllText[UtilsText.text_name_warrior_stat_critdmg], critDmg));
                 break;
 
-            case UtilsBlacksmith.ID_BLACKSMITH_BOOTS:
+            case UtilsBlacksmith.BlacksmithGear.Boots:
                 float bDef = UtilsBlacksmith.GetBlacksmithBootsDefMultiplier(data.BootsLevel);
                 float critRate = UtilsBlacksmith.GetBlacksmithBootsCritRateMultiplier(data.BootsLevel);
 
@@ -528,7 +527,7 @@ public class UITabJobBlacksmith : UITabWindow
     {
         AudioManager.Instance.PlayClickUI();
 
-        currentGear = UtilsBlacksmith.ID_BLACKSMITH_HELMET;
+        currentGear = UtilsBlacksmith.BlacksmithGear.Helmet;
         Open();
     }
 
@@ -536,7 +535,7 @@ public class UITabJobBlacksmith : UITabWindow
     {
         AudioManager.Instance.PlayClickUI();
 
-        currentGear = UtilsBlacksmith.ID_BLACKSMITH_ARMOR;
+        currentGear = UtilsBlacksmith.BlacksmithGear.Armor;
         Open();
     }
 
@@ -544,7 +543,7 @@ public class UITabJobBlacksmith : UITabWindow
     {
         AudioManager.Instance.PlayClickUI();
 
-        currentGear = UtilsBlacksmith.ID_BLACKSMITH_GLOVES;
+        currentGear = UtilsBlacksmith.BlacksmithGear.Gloves;
         Open();
     }
 
@@ -552,7 +551,7 @@ public class UITabJobBlacksmith : UITabWindow
     {
         AudioManager.Instance.PlayClickUI();
 
-        currentGear = UtilsBlacksmith.ID_BLACKSMITH_BOOTS;
+        currentGear = UtilsBlacksmith.BlacksmithGear.Boots;
         Open();
     }
 
@@ -611,10 +610,10 @@ public class UITabJobBlacksmith : UITabWindow
             // update directly from save if not in blacksmith scene
             switch (currentGear)
             {
-                case UtilsBlacksmith.ID_BLACKSMITH_HELMET: PlayerManager.Instance.PlayerBlacksmithData.AddBlacksmithHelmetLevel(1); break;
-                case UtilsBlacksmith.ID_BLACKSMITH_ARMOR: PlayerManager.Instance.PlayerBlacksmithData.AddBlacksmithArmorLevel(1); break;
-                case UtilsBlacksmith.ID_BLACKSMITH_GLOVES: PlayerManager.Instance.PlayerBlacksmithData.AddBlacksmithGlovesLevel(1); break;
-                case UtilsBlacksmith.ID_BLACKSMITH_BOOTS: PlayerManager.Instance.PlayerBlacksmithData.AddBlacksmithBootsLevel(1); break;
+                case UtilsBlacksmith.BlacksmithGear.Helmet: PlayerManager.Instance.PlayerBlacksmithData.AddBlacksmithHelmetLevel(1); break;
+                case UtilsBlacksmith.BlacksmithGear.Armor: PlayerManager.Instance.PlayerBlacksmithData.AddBlacksmithArmorLevel(1); break;
+                case UtilsBlacksmith.BlacksmithGear.Gloves: PlayerManager.Instance.PlayerBlacksmithData.AddBlacksmithGlovesLevel(1); break;
+                case UtilsBlacksmith.BlacksmithGear.Boots: PlayerManager.Instance.PlayerBlacksmithData.AddBlacksmithBootsLevel(1); break;
             }
         }
         else

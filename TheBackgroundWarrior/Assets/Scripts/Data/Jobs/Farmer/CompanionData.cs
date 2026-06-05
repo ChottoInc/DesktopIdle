@@ -32,7 +32,7 @@ public class CompanionData
 
     public CompanionData(CompanionSaveData saveData)
     {
-        companionSO = UtilsGather.GetCompanionById(saveData.companionId);
+        companionSO = UtilsFarmer.GetCompanionById(saveData.companionId);
 
         currentLevel = saveData.currentLevel;
 

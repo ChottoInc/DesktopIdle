@@ -129,7 +129,7 @@ public class UITabJobMiner : UITabWindow
     {
         requirementObjs = new List<GameObject>();
 
-        requirements = UtilsGather.GetRequirementsForMinerWeaponLevel(PlayerManager.Instance.PlayerMinerData.WeaponLevel + 1);
+        requirements = UtilsMiner.GetRequirementsForMinerWeaponLevel(PlayerManager.Instance.PlayerMinerData.WeaponLevel + 1);
     }
 
     private void FillRequirementsUI()
@@ -193,10 +193,10 @@ public class UITabJobMiner : UITabWindow
         // check for different sprite
         bool isDifferentLevel = lastWeaponLevel != weaponLevel;
 
-        Sprite sprite = UtilsGather.GetWeaponSpriteByLevel(weaponLevel);
+        Sprite sprite = UtilsMiner.GetWeaponSpriteByLevel(weaponLevel);
         if(sprite == null)
         {
-            sprite = UtilsGather.GetWeaponSpriteByLevel(1);
+            sprite = UtilsMiner.GetWeaponSpriteByLevel(1);
         }
 
         

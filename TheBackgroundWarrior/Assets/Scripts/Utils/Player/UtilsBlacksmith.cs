@@ -1,14 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class UtilsBlacksmith
 {
     // ---------------- GEAR IDS --------------- //
 
-    public const int ID_BLACKSMITH_HELMET = 0;
-    public const int ID_BLACKSMITH_ARMOR = 1;
-    public const int ID_BLACKSMITH_GLOVES = 2;
-    public const int ID_BLACKSMITH_BOOTS = 3;
+    public enum BlacksmithGear { Helmet, Armor, Gloves, Boots }
 
 
     // ---------------- STATS SCALING --------------- //
@@ -62,19 +60,17 @@ public static class UtilsBlacksmith
     // ---------------- GEAR MATERIALS SCALING --------------- //
 
 
-    public const int CHANGE_BLACKSMITH_GEARS_EVERY = 5;
-
-    private const int MAX_MANUAL_WEAPON_REQUIREMENT = 5;
+    private const int MAX_MANUAL_GEAR_REQUIREMENT = 5;
 
     private const int MAX_ITEM_REQUIREMENTS_FOR_BLACKSMITH_GEARS = 5;
 
 
 
     // sprites
-    private static Sprite[] blacksmithHelmetSprites;
-    private static Sprite[] blacksmithArmorSprites;
-    private static Sprite[] blacksmithGlovesSprites;
-    private static Sprite[] blacksmithBootsSprites;
+    private static Dictionary<int, ListableGameDataSO> dictHelmetLevelToSprite;
+    private static Dictionary<int, ListableGameDataSO> dictArmorLevelToSprite;
+    private static Dictionary<int, ListableGameDataSO> dictGlovesLevelToSprite;
+    private static Dictionary<int, ListableGameDataSO> dictBootsLevelToSprite;
 
 
     
@@ -174,10 +170,10 @@ public static class UtilsBlacksmith
 
         // load sprites
 
-        blacksmithHelmetSprites = LoadBlacksmithGearSprites("Sprites/Blacksmith/Helmets");
-        blacksmithArmorSprites = LoadBlacksmithGearSprites("Sprites/Blacksmith/Armors");
-        blacksmithGlovesSprites = LoadBlacksmithGearSprites("Sprites/Blacksmith/Gloves");
-        blacksmithBootsSprites = LoadBlacksmithGearSprites("Sprites/Blacksmith/Boots");
+        dictHelmetLevelToSprite = LoadDictGearLevelToSprites("Data/Player/Blacksmith/ContainerGameData_HelmetToSprites");
+        dictArmorLevelToSprite = LoadDictGearLevelToSprites("Data/Player/Blacksmith/ContainerGameData_ArmorToSprites");
+        dictGlovesLevelToSprite = LoadDictGearLevelToSprites("Data/Player/Blacksmith/ContainerGameData_GlovesToSprites");
+        dictBootsLevelToSprite = LoadDictGearLevelToSprites("Data/Player/Blacksmith/ContainerGameData_BootsToSprites");
     }
 
 
@@ -264,52 +260,30 @@ public static class UtilsBlacksmith
 
     // ---------------- GEAR MATERIALS --------------- //
 
-    private static Sprite[] LoadBlacksmithGearSprites(string path)
+    private static Dictionary<int, ListableGameDataSO> LoadDictGearLevelToSprites(string path)
     {
-        return Resources.LoadAll<Sprite>(path);
+        var container = Resources.Load<ContainerGameDataSO>(path);
+        return container.Entries.ToDictionary(e => e.Id);
     }
 
-
-    public static Sprite[] GetAllBlacksmithGearSprites(int idGear)
+    public static Sprite GetGearSpriteByLevel(int id, BlacksmithGear gear)
     {
-        switch (idGear)
+        switch (gear)
         {
-            case ID_BLACKSMITH_HELMET: return blacksmithHelmetSprites;
-            case ID_BLACKSMITH_ARMOR: return blacksmithArmorSprites;
-            case ID_BLACKSMITH_GLOVES: return blacksmithGlovesSprites;
-            case ID_BLACKSMITH_BOOTS: return blacksmithBootsSprites;
+            default: return null;
+            case BlacksmithGear.Helmet: return UtilsGeneral.GetGameDataSO<GearToSpriteSO>(id, dictHelmetLevelToSprite).Sprite;
+            case BlacksmithGear.Armor: return UtilsGeneral.GetGameDataSO<GearToSpriteSO>(id, dictArmorLevelToSprite).Sprite;
+            case BlacksmithGear.Gloves: return UtilsGeneral.GetGameDataSO<GearToSpriteSO>(id, dictGlovesLevelToSprite).Sprite;
+            case BlacksmithGear.Boots: return UtilsGeneral.GetGameDataSO<GearToSpriteSO>(id, dictBootsLevelToSprite).Sprite;
         }
-        return null;
-
     }
 
-    public static Sprite GetBlacksmithGearSpriteByIndex(int idGear, int index)
-    {
-        Sprite[] sprites = null;
-
-        switch (idGear)
-        {
-            case ID_BLACKSMITH_HELMET: sprites = blacksmithHelmetSprites; break;
-            case ID_BLACKSMITH_ARMOR: sprites = blacksmithArmorSprites; break;
-            case ID_BLACKSMITH_GLOVES: sprites = blacksmithGlovesSprites; break;
-            case ID_BLACKSMITH_BOOTS: sprites = blacksmithBootsSprites; break;
-        }
-
-        if (sprites != null)
-        {
-            if (index < sprites.Length)
-                return sprites[index];
-        }
-
-        return null;
-    }
-
-    public static List<ItemGroup> GetRequirementsForBlacksmithGearLevel(int idGear, int level)
+    public static List<ItemGroup> GetRequirementsForBlacksmithGearLevel(BlacksmithGear gear, int level)
     {
         List<ItemGroup> result = new List<ItemGroup>();
 
         // For simplicity, the first 5 levels are shared between gears
-        if (level <= MAX_MANUAL_WEAPON_REQUIREMENT)
+        if (level <= MAX_MANUAL_GEAR_REQUIREMENT)
         {
             switch (level)
             {
@@ -348,7 +322,7 @@ public static class UtilsBlacksmith
             // automatically get items amount after all of them are used manually
             for (int i = 0; i < MAX_ITEM_REQUIREMENTS_FOR_BLACKSMITH_GEARS; i++)
             {
-                int amount = RequiredBlacksmithItemAmount(idGear, level, i);
+                int amount = RequiredBlacksmithItemAmount(gear, level, i);
 
                 if (amount != -1)
                     result.Add(new ItemGroup(ids[i], amount));
@@ -358,7 +332,7 @@ public static class UtilsBlacksmith
         return result;
     }
 
-    private static int RequiredBlacksmithItemAmount(int idGear, int level, int itemIndex)
+    private static int RequiredBlacksmithItemAmount(BlacksmithGear gear, int level, int itemIndex)
     {
         /*
         switch (idGear)
@@ -393,6 +367,6 @@ public static class UtilsBlacksmith
 
         return
                     Mathf.FloorToInt(BASE_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex] *
-                    Mathf.Pow(GROWTH_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex], level - MAX_MANUAL_WEAPON_REQUIREMENT));
+                    Mathf.Pow(GROWTH_AMOUNT_BLACKSMITH_GEAR_PER_LEVEL_METAL[itemIndex], level - MAX_MANUAL_GEAR_REQUIREMENT));
     }
 }

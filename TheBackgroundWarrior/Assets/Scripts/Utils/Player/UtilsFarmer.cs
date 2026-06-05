@@ -1,7 +1,12 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class UtilsFarmer
 {
+    private static Dictionary<int, ListableGameDataSO> dictCompanions;
+
+
     public static float PER_LEVEL_FARMER_GAIN_GREENTHUMB = 0.01f;    // max 25%, base 1, multiplier
 
     // for now max 5 companions, so need to unlock just few plants, if companion different from crop, 
@@ -57,6 +62,9 @@ public static class UtilsFarmer
         BASE_FARMER_EXP_GROWTH = jobDataSO.BaseExpGrowth;
         EXPO_FARMER_EXP_GROWTH = jobDataSO.ExpoExpGrowth;
         FLAT_FARMER_EXP_GROWTH = jobDataSO.FlatExpGrowth;
+
+
+        LoadDictCompanions();
     }
 
 
@@ -69,5 +77,22 @@ public static class UtilsFarmer
 
         // Formula: baseExp * (growthRate^(level-1) - 1)
         return (long)(BASE_FARMER_EXP_GROWTH * Mathf.Pow(level, EXPO_FARMER_EXP_GROWTH) + FLAT_FARMER_EXP_GROWTH * level);
+    }
+
+
+    private static void LoadDictCompanions()
+    {
+        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Farmer/Companions/ContainerGameData_Companions");
+        dictCompanions = container.Entries.ToDictionary(e => e.Id);
+    }
+
+    public static CompanionSO[] GetAllCompanions()
+    {
+        return dictCompanions.Values.OfType<CompanionSO>().ToArray();
+    }
+
+    public static CompanionSO GetCompanionById(int id)
+    {
+        return UtilsGeneral.GetGameDataSO<CompanionSO>(id, dictCompanions);
     }
 }

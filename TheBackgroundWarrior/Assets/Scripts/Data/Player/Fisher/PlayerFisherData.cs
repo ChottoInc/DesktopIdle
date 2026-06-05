@@ -156,31 +156,31 @@ public class PlayerFisherData : IBasePlayerData
     {
         FishGroupSO currentGroup = null;
 
-        currentGroup = UtilsGather.GetFishGroupByType(UtilsGather.FishGroupType.Life);
+        currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Life);
         isLifeSeriesCompleted = IsGroupCaught(currentGroup);
 
-        currentGroup = UtilsGather.GetFishGroupByType(UtilsGather.FishGroupType.Predator);
+        currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Predator);
         isPredatorSeriesCompleted = IsGroupCaught(currentGroup);
 
-        currentGroup = UtilsGather.GetFishGroupByType(UtilsGather.FishGroupType.Guardian);
+        currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Guardian);
         isGuardianSeriesCompleted = IsGroupCaught(currentGroup);
 
-        currentGroup = UtilsGather.GetFishGroupByType(UtilsGather.FishGroupType.Dart);
+        currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Dart);
         isDartSeriesCompleted = IsGroupCaught(currentGroup);
 
-        currentGroup = UtilsGather.GetFishGroupByType(UtilsGather.FishGroupType.Sharp);
+        currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Sharp);
         isSharpSeriesCompleted = IsGroupCaught(currentGroup);
 
-        currentGroup = UtilsGather.GetFishGroupByType(UtilsGather.FishGroupType.Piercing);
+        currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Piercing);
         isPiercingSeriesCompleted = IsGroupCaught(currentGroup);
 
-        currentGroup = UtilsGather.GetFishGroupByType(UtilsGather.FishGroupType.Golden);
+        currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Golden);
         isGoldenSeriesCompleted = IsGroupCaught(currentGroup);
 
-        currentGroup = UtilsGather.GetFishGroupByType(UtilsGather.FishGroupType.Elder);
+        currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Elder);
         isElderSeriesCompleted = IsGroupCaught(currentGroup);
 
-        currentGroup = UtilsGather.GetFishGroupByType(UtilsGather.FishGroupType.Quick);
+        currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Quick);
         isQuickSeriesCompleted = IsGroupCaught(currentGroup);
     }
 

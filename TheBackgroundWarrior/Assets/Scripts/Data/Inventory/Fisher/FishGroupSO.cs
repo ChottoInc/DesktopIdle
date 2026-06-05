@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/Map/Fisher/Fish Group Data", fileName = "FishGroupData_")]
 public class FishGroupSO : ListableGameDataSO
 {
-    [SerializeField] UtilsGather.FishGroupType groupType;
+    [SerializeField] UtilsFisher.FishGroupType groupType;
     [SerializeField] string groupNameTextId;
     [SerializeField] string groupName;
 
@@ -18,7 +18,7 @@ public class FishGroupSO : ListableGameDataSO
     public override int Id => (int)groupType;
 
 
-    public UtilsGather.FishGroupType GroupType => groupType;
+    public UtilsFisher.FishGroupType GroupType => groupType;
     public string GroupName
     {
         get

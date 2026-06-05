@@ -128,7 +128,7 @@ public class UITabJobFisher : UITabWindow
     {
         groupsObjs = new List<GameObject>();
 
-        FishGroupSO[] groups = UtilsGather.GetAllFishGroups();
+        FishGroupSO[] groups = UtilsFisher.GetAllFishGroups();
 
         for (int i = 0; i < groups.Length; i++)
         {
