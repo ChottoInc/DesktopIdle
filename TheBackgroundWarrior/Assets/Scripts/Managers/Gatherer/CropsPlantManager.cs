@@ -80,176 +80,73 @@ public class CropsPlantManager : MonoBehaviour
         HandleUpdateSave();
 
         if (cropSlot1 != null)
-            HandleLureSlot1();
+            timerLureSlot1 = HandleLureSlot(1, isLuringSlot1, cropSlot1, slot1, timerLureSlot1);
 
         if (cropSlot2 != null)
-            HandleLureSlot2();
+            timerLureSlot2 = HandleLureSlot(2, isLuringSlot2, cropSlot2, slot2, timerLureSlot2);
 
         if (cropSlot3 != null)
-            HandleLureSlot3();
+            timerLureSlot3 = HandleLureSlot(3, isLuringSlot3, cropSlot3, slot3, timerLureSlot3);
 
         if (cropSlot4 != null)
-            HandleLureSlot4();
+            timerLureSlot4 = HandleLureSlot(4, isLuringSlot4, cropSlot4, slot4, timerLureSlot4);
     }
 
-    private void HandleLureSlot1()
+    public float HandleLureSlot(int slotIndex, bool isLuringSlot, CropData cropSlot, WorldCropSlot worldSlot, float currentTimer)
     {
-        if (!isLuringSlot1)
+        float resultTimer = currentTimer;
+        if (!isLuringSlot)
         {
-            if (cropSlot1.IsFullyGrown)
+            if (cropSlot.IsFullyGrown)
             {
-                isLuringSlot1 = true;
+                switch (slotIndex)
+                {
+                    default: break;
+                    case 1: isLuringSlot1 = true; break;
+                    case 2: isLuringSlot2 = true; break;
+                    case 3: isLuringSlot3 = true; break;
+                    case 4: isLuringSlot4 = true; break;
+                }
 
                 // get random timer to lure a companion
                 float finalMaxLureCooldown = maxLureCooldown - (maxLureCooldown * PlayerManager.Instance.PlayerFarmerData.CurrentKindness);
 
                 if (reducedLureCooldownCheat && SettingsManager.Instance.AreCheatsEnabled)
                 {
-                    timerLureSlot1 = 30f;
+                    resultTimer = 30f;
                     //Debug.Log("started lure slot 1");
                 }
                 else
                 {
-                    timerLureSlot1 = UtilsGeneral.GetRandomValueBtwValues(minLureCooldown, finalMaxLureCooldown);
+                    resultTimer = UtilsGeneral.GetRandomValueBtwValues(minLureCooldown, finalMaxLureCooldown);
                 }
             }
         }
         else
         {
-            if (timerLureSlot1 <= 0)
+            if (currentTimer <= 0)
             {
                 // get random companion from possible of crops and spawn
-                int randCompanionIndex = Random.Range(0, cropSlot1.CropSO.AttractedCompanions.Length);
-                SpawnCompanion(0, cropSlot1.CropSO.AttractedCompanions[randCompanionIndex], slot1);
+                int randCompanionIndex = Random.Range(0, cropSlot.CropSO.AttractedCompanions.Length);
+                SpawnCompanion(0, cropSlot.CropSO.AttractedCompanions[randCompanionIndex], worldSlot);
 
                 // reset lure so the timer resets
-                isLuringSlot1 = false;
+                switch (slotIndex)
+                {
+                    default: break;
+                    case 1: isLuringSlot1 = false; break;
+                    case 2: isLuringSlot2 = false; break;
+                    case 3: isLuringSlot3 = false; break;
+                    case 4: isLuringSlot4 = false; break;
+                }
             }
             else
             {
-                timerLureSlot1 -= Time.deltaTime;
+                resultTimer -= Time.deltaTime;
             }
         }
-    }
 
-    private void HandleLureSlot2()
-    {
-        if (!isLuringSlot2)
-        {
-            if (cropSlot2.IsFullyGrown)
-            {
-                isLuringSlot2 = true;
-
-                // get random timer to lure a companion
-                float finalMaxLureCooldown = maxLureCooldown - (maxLureCooldown * PlayerManager.Instance.PlayerFarmerData.CurrentKindness);
-
-                if (reducedLureCooldownCheat && SettingsManager.Instance.AreCheatsEnabled)
-                {
-                    timerLureSlot2 = 30f;
-                    //Debug.Log("started lure slot 2");
-                }
-                else
-                {
-                    timerLureSlot2 = UtilsGeneral.GetRandomValueBtwValues(minLureCooldown, finalMaxLureCooldown);
-                }
-            }
-        }
-        else
-        {
-            if (timerLureSlot2 <= 0)
-            {
-                // get random companion from possible of crops and spawn
-                int randCompanionIndex = Random.Range(0, cropSlot2.CropSO.AttractedCompanions.Length);
-                SpawnCompanion(1, cropSlot2.CropSO.AttractedCompanions[randCompanionIndex], slot2);
-
-                // reset lure so the timer resets
-                isLuringSlot2 = false;
-            }
-            else
-            {
-                timerLureSlot2 -= Time.deltaTime;
-            }
-        }
-    }
-
-    private void HandleLureSlot3()
-    {
-        if (!isLuringSlot3)
-        {
-            if (cropSlot3.IsFullyGrown)
-            {
-                isLuringSlot3 = true;
-
-                // get random timer to lure a companion
-                float finalMaxLureCooldown = maxLureCooldown - (maxLureCooldown * PlayerManager.Instance.PlayerFarmerData.CurrentKindness);
-
-                if (reducedLureCooldownCheat && SettingsManager.Instance.AreCheatsEnabled)
-                {
-                    timerLureSlot3 = 30f;
-                    //Debug.Log("started lure slot 3");
-                }
-                else
-                {
-                    timerLureSlot3 = UtilsGeneral.GetRandomValueBtwValues(minLureCooldown, finalMaxLureCooldown);
-                }
-            }
-        }
-        else
-        {
-            if (timerLureSlot3 <= 0)
-            {
-                // get random companion from possible of crops and spawn
-                int randCompanionIndex = Random.Range(0, cropSlot3.CropSO.AttractedCompanions.Length);
-                SpawnCompanion(2, cropSlot3.CropSO.AttractedCompanions[randCompanionIndex], slot3);
-
-                // reset lure so the timer resets
-                isLuringSlot3 = false;
-            }
-            else
-            {
-                timerLureSlot3 -= Time.deltaTime;
-            }
-        }
-    }
-
-    private void HandleLureSlot4()
-    {
-        if (!isLuringSlot4)
-        {
-            if (cropSlot4.IsFullyGrown)
-            {
-                isLuringSlot4 = true;
-
-                // get random timer to lure a companion
-                float finalMaxLureCooldown = maxLureCooldown - (maxLureCooldown * PlayerManager.Instance.PlayerFarmerData.CurrentKindness);
-
-                if (reducedLureCooldownCheat && SettingsManager.Instance.AreCheatsEnabled)
-                {
-                    timerLureSlot4 = 30f;
-                    //Debug.Log("started lure slot 4");
-                }
-                else
-                {
-                    timerLureSlot4 = UtilsGeneral.GetRandomValueBtwValues(minLureCooldown, finalMaxLureCooldown);
-                }
-            }
-        }
-        else
-        {
-            if (timerLureSlot4 <= 0)
-            {
-                // get random companion from possible of crops and spawn
-                int randCompanionIndex = Random.Range(0, cropSlot4.CropSO.AttractedCompanions.Length);
-                SpawnCompanion(3, cropSlot4.CropSO.AttractedCompanions[randCompanionIndex], slot4);
-
-                // reset lure so the timer resets
-                isLuringSlot4 = false;
-            }
-            else
-            {
-                timerLureSlot4 -= Time.deltaTime;
-            }
-        }
+        return resultTimer;
     }
 
     private void SpawnCompanion(int slotIndex, CompanionSO so, WorldCropSlot worldSlot)
