@@ -18,6 +18,11 @@ public class PlayerFarmer : Player
     [SerializeField] AnimationClip sowClip;
     [SerializeField] AnimationClip mowClip;
 
+    [Header("Watering")]
+    [SerializeField] float minCooldownWatering;
+    [SerializeField] float maxCooldownWatering;
+    [SerializeField] Transform[] cropsPositions;
+
 
     private float timer5Mins;
 
@@ -29,14 +34,15 @@ public class PlayerFarmer : Player
     private bool canInitialMove;
 
     private bool isWalking;
+    private float timerWatering;
 
-    private enum FarmerAction { Sowing, Mowing }
+    private bool _needResetCrop;
 
-    private bool isSowing;
-    private bool canSow;
+    private enum FarmerAction { None, Sowing, Mowing, Watering }
 
-    private bool isMowing;
-    private bool canMow;
+    private Queue<FarmerAction> nextActions;
+    private FarmerAction currentAction;
+    private bool _isPerformingAction;
 
 
     private Vector3 startScale;
@@ -80,10 +86,43 @@ public class PlayerFarmer : Player
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        nextActions = new Queue<FarmerAction>();
+
+        timerWatering = GetRandomWateringTime();
     }
 
     private void Update()
     {
+        // get next action in queue
+        if((currentAction == FarmerAction.Watering || currentAction == FarmerAction.None) && nextActions.Count > 0)
+        {
+            if(currentAction == FarmerAction.Watering)
+            {
+                // stop watering animation
+                StopCoroutine(nameof(CoWaitWateringAnimation));
+                animator.SetTrigger("Idle");
+                _isPerformingAction = false;
+            }
+
+            currentAction = nextActions.Dequeue();
+            CheckAction();
+        }
+
+        if(timerWatering <= 0)
+        {
+            if(currentAction == FarmerAction.None)
+            {
+                currentAction = FarmerAction.Watering;
+            }
+
+            timerWatering = GetRandomWateringTime();
+        }
+        else
+        {
+            timerWatering -= Time.deltaTime;
+        }
+
         // every 5 mins give some exp to the player
         if (timer5Mins <= 0)
         {
@@ -123,16 +162,13 @@ public class PlayerFarmer : Player
 
     private void FixedUpdate()
     {
-        if (!isSowing && !isMowing)
+        if(currentAction == FarmerAction.None && nextActions.Count == 0)
         {
             HandleMovement();
         }
         else
         {
-            if(canSow)
-                GoToFarmPlot(FarmerAction.Sowing);
-            else if(canMow)
-                GoToFarmPlot(FarmerAction.Mowing);
+            GoToFarmPlot();
         }
     }
 
@@ -206,7 +242,7 @@ public class PlayerFarmer : Player
     /// <summary>
     /// Handles movement to first farm plot when sowing, starts a coroutine for next ones
     /// </summary>
-    private void GoToFarmPlot(FarmerAction fAction)
+    private void GoToFarmPlot()
     {
         float distance = Mathf.Abs(transform.position.x - currentTarget);
 
@@ -222,27 +258,31 @@ public class PlayerFarmer : Player
         }
         else
         {
-            if(fAction == FarmerAction.Sowing)
-            {
-                // reset to stop the movement
-                canSow = false;
+            if (_isPerformingAction) return;
 
+            if(currentAction == FarmerAction.Sowing)
+            {
                 isWalking = false;
                 animator.SetBool("isWalking", isWalking);
 
                 // wait for sow animation and call next farm plot
                 StartCoroutine(CoWaitSowAnimation());
             }
-            else if(fAction == FarmerAction.Mowing)
+            else if(currentAction == FarmerAction.Mowing)
             {
-                // reset to stop the movement
-                canMow = false;
-
                 isWalking = false;
                 animator.SetBool("isWalking", isWalking);
 
                 // wait for sow animation and call next farm plot
                 StartCoroutine(CoWaitMowAnimation());
+            }
+            else if (currentAction == FarmerAction.Watering)
+            {
+                isWalking = false;
+                animator.SetBool("isWalking", isWalking);
+
+                // wait for mow animation and call next farm plot
+                StartCoroutine(CoWaitWateringAnimation());
             }
         }
     }
@@ -277,9 +317,6 @@ public class PlayerFarmer : Player
 
     public void AddSow(CropSlotData cropSlotData, Transform[] farmPlots)
     {
-        // reset index
-        //currentFarmPlot = 0;
-
         farmPlotsToSow ??= new Queue<Transform>();
         farmPlotsToSowData ??= new Queue<CropSlotData>();
 
@@ -290,21 +327,13 @@ public class PlayerFarmer : Player
 
         farmPlotsToSowData.Enqueue(cropSlotData);
 
-        // handles if it's not already sowing, or else just add to queues
-        if (!isSowing)
-        {
-            // set sowing so a new target isn't generated
-            isSowing = true;
-
-            // start sow plots
-            NextPlot(FarmerAction.Sowing,farmPlotsToSow.Dequeue());
-        }
+        // enqueue the next action
+        nextActions.Enqueue(FarmerAction.Sowing);
     }
 
     public void AddMow(CropSlotData cropSlotData, Transform[] farmPlots, bool needResetCrop)
     {
-        // reset index
-        //currentFarmPlot = 0;
+        _needResetCrop = needResetCrop;
 
         farmPlotsToMow ??= new Queue<Transform>();
         farmPlotsToMowData ??= new Queue<CropSlotData>();
@@ -316,22 +345,64 @@ public class PlayerFarmer : Player
 
         farmPlotsToMowData.Enqueue(cropSlotData);
 
-        // handles if it's not already mowing, or else just add to queues
-        if (!isMowing)
-        {
-            // set sowing so a new target isn't generated
-            isMowing = true;
+        // enqueue the next action
+        nextActions.Enqueue(FarmerAction.Mowing);
+    }
 
-            // start sow plots
-            NextPlot(FarmerAction.Mowing, farmPlotsToMow.Dequeue());
+    private void CheckAction()
+    {
+        if(currentAction == FarmerAction.Sowing)
+        {
+            HandleSowingAction();
+        }
+        else if(currentAction == FarmerAction.Mowing)
+        {
+            HandleMowingAction();
+        }
+        else if (currentAction == FarmerAction.Watering)
+        {
+            HandleWateringAction();
         }
     }
 
-    private void NextPlot(FarmerAction fAction, Transform farmPlot)
+    private void HandleSowingAction()
     {
+        Transform farmPlot = farmPlotsToSow.Dequeue();
+
         // set next farm plot X
         currentTarget = farmPlot.position.x;
 
+        SetToWalking();
+
+        // set already next farm plot index
+        currentFarmPlotToSow++;
+    }
+
+    private void HandleMowingAction()
+    {
+        Transform farmPlot = farmPlotsToMow.Dequeue();
+
+        // set next farm plot X
+        currentTarget = farmPlot.position.x;
+
+        SetToWalking();
+
+        // set already next farm plot index
+        currentFarmPlotToMow++;
+    }
+
+    private void HandleWateringAction()
+    {
+        Transform farmPlot = cropsPositions[UnityEngine.Random.Range(0, cropsPositions.Length)];
+
+        // set next farm plot X
+        currentTarget = farmPlot.position.x;
+
+        SetToWalking();
+    }
+
+    private void SetToWalking()
+    {
         // disable isIdling
         if (isIdling)
         {
@@ -344,27 +415,12 @@ public class PlayerFarmer : Player
             isWalking = true;
             animator.SetBool("isWalking", isWalking);
         }
-
-        if(fAction == FarmerAction.Sowing)
-        {
-            // set already next farm plot index
-            currentFarmPlotToSow++;
-
-            // start move
-            canSow = true;
-        }
-        else if(fAction == FarmerAction.Mowing)
-        {
-            // set already next farm plot index
-            currentFarmPlotToMow++;
-
-            // start move
-            canMow = true;
-        }
     }
 
     private IEnumerator CoWaitSowAnimation()
     {
+        _isPerformingAction = true;
+
         // tell animator to do the sowing animation
         animator.SetTrigger("Sow");
 
@@ -378,24 +434,28 @@ public class PlayerFarmer : Player
 
             // set sprites
             CropsPlantManager.Instance.SetCropSprite(slotData.slot, slotData.cropData);
+
+            // reset action
+            currentAction = FarmerAction.None;
         }
 
-        if (farmPlotsToSow.Count > 0)
+        if (farmPlotsToSow.Count == 0)
         {
-            NextPlot(FarmerAction.Sowing, farmPlotsToSow.Dequeue());
+            GenerateNewTarget();
         }
         else
         {
-            isSowing = false;
-
-            // set new target
-            GenerateNewTarget();
+            HandleSowingAction();
         }
+
+        _isPerformingAction = false;
     }
 
     private IEnumerator CoWaitMowAnimation()
     {
-        // tell animator to do the sowing animation
+        _isPerformingAction = true;
+
+        // tell animator to do the mowing animation
         animator.SetTrigger("Mow");
 
         yield return new WaitForSeconds(mowClip.length);
@@ -410,27 +470,48 @@ public class PlayerFarmer : Player
             Harvest(slotData);
 
             // reset crop
-            ResetCrop(slotData);
+            if(_needResetCrop)
+                ResetCrop(slotData);
+
+            // reset action
+            currentAction = FarmerAction.None;
         }
 
-        if (farmPlotsToMow.Count > 0)
+        if (farmPlotsToMow.Count == 0)
         {
-            NextPlot(FarmerAction.Mowing, farmPlotsToMow.Dequeue());
+            GenerateNewTarget();
         }
         else
         {
-            isMowing = false;
-
-            // set new target
-            GenerateNewTarget();
+            HandleMowingAction();
         }
+
+        _isPerformingAction = false;
+    }
+
+    private IEnumerator CoWaitWateringAnimation()
+    {
+        _isPerformingAction = true;
+
+        // tell animator to do the watering animation
+        animator.SetTrigger("Watering");
+
+        yield return new WaitForSeconds(cooldownIdle);
+
+        // reset animation
+        animator.SetTrigger("Idle");
+        currentAction = FarmerAction.None;
+
+        GenerateNewTarget();
+
+        _isPerformingAction = false;
     }
 
     private void Harvest(CropSlotData slotData)
     {
         // TODO: might change with new stat? influenced by luck and greeenthumb??
         PlayerManager.Instance.Inventory.AddItem(slotData.cropData.CropSO.Id, 4);
-        Debug.Log("Adding: " + slotData.cropData.CropSO.Id);
+        //Debug.Log("Adding: " + slotData.cropData.CropSO.Id);
         PlayerManager.Instance.SaveInventoryData();
     }
 
@@ -451,6 +532,11 @@ public class PlayerFarmer : Player
             currentCrop.ResetGrowth();
             CropsPlantManager.Instance.SetCrop(slotData.slot, currentCrop, false);
         }
+    }
+
+    private float GetRandomWateringTime()
+    {
+        return UtilsGeneral.GetRandomValueBtwValues(minCooldownWatering, maxCooldownWatering);
     }
 
 
