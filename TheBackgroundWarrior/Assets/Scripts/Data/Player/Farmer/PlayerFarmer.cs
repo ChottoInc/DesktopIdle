@@ -509,8 +509,16 @@ public class PlayerFarmer : Player
 
     private void Harvest(CropSlotData slotData)
     {
-        // TODO: might change with new stat? influenced by luck and greeenthumb??
-        PlayerManager.Instance.Inventory.AddItem(slotData.cropData.CropSO.Id, 4);
+        if (_needResetCrop)
+        {
+            // Add only 4 if has been befriended companion
+            PlayerManager.Instance.Inventory.AddItem(slotData.cropData.CropSO.Id, 4);
+        }
+        else
+        {
+            // scale with greenthumb ability
+            PlayerManager.Instance.Inventory.AddItem(slotData.cropData.CropSO.Id, Mathf.FloorToInt(4f * playerData.CurrentGreenthumb));
+        }
         //Debug.Log("Adding: " + slotData.cropData.CropSO.Id);
         PlayerManager.Instance.SaveInventoryData();
     }
