@@ -24,13 +24,17 @@ public static class UtilsFarmer
     public static int MAX_LEVEL_FARMER;
 
 
-
     private static float BASE_FARMER_EXP_GROWTH = 50f;
     private static float EXPO_FARMER_EXP_GROWTH = 1.08f;
     private static float FLAT_FARMER_EXP_GROWTH = 10f;
 
 
     public const long PASSIVE_EXP = 650;
+
+
+
+    public static int MAX_LEVEL_COMPANIONS = 5;
+
 
 
     private static PlayerJobFarmerSO jobDataSO;
@@ -77,6 +81,17 @@ public static class UtilsFarmer
 
         // Formula: baseExp * (growthRate^(level-1) - 1)
         return (long)(BASE_FARMER_EXP_GROWTH * Mathf.Pow(level, EXPO_FARMER_EXP_GROWTH) + FLAT_FARMER_EXP_GROWTH * level);
+    }
+
+
+    public static int RequiredExpForCompanionLevel(int level)
+    {
+        // Level starts at 1
+        if (level <= 1) return 0;
+
+        // Formula: baseExp * (growthRate^(level-1) - 1)
+        //return (long)(BASE_FARMER_EXP_GROWTH * Mathf.Pow(level, EXPO_FARMER_EXP_GROWTH) + FLAT_FARMER_EXP_GROWTH * level);
+        return 5 + Mathf.FloorToInt(50 * 1.5f);
     }
 
 

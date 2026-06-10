@@ -17,6 +17,9 @@ public class CompanionSO : ListableGameDataSO
     [SerializeField] float baseAtkPerc;
     [SerializeField] float baseAtkSpd;
 
+    [Header("Taming")]
+    [SerializeField] CompanionStatModifier statModifier;
+
     public string CompanionName
     {
         get
@@ -32,4 +35,6 @@ public class CompanionSO : ListableGameDataSO
 
     public float BaseAtkPerc => baseAtkPerc;
     public float BaseAtkSpd => baseAtkSpd;
+
+    public CompanionStatModifier StatModifier => statModifier;
 }

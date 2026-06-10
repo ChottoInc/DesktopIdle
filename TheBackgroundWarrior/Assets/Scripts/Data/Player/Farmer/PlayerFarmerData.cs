@@ -289,6 +289,11 @@ public class PlayerFarmerData : IBasePlayerData
         return -1;
     }
 
+    public void AddCompanionExp(CompanionSO comp, int value)
+    {
+        companions[GetCompanionIndexList(comp)].AddExp(value);
+    }
+
     public bool SetCompanionToSlot(CompanionData companion, int slot)
     {
         if (HasCompanion(companion.CompanionSO))

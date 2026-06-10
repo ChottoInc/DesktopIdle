@@ -348,5 +348,6 @@ public class CombatManager : MonoBehaviour
         StageManager.Instance.KillAllEnemies();
 
         player.PlayerData.ResetAfterStage();
+        player.PlayerData.ResetStatModifiers();
     }
 }

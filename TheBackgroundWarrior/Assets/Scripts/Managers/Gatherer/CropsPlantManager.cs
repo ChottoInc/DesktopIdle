@@ -43,6 +43,9 @@ public class CropsPlantManager : MonoBehaviour
     [Header("Cheats")]
     [SerializeField] bool reducedLureCooldownCheat;
     [SerializeField] bool reducedGrowthTimeCheat;
+    [SerializeField] bool alwaysBefriendCheat;
+
+    public bool AlwaysBefriendCheat => alwaysBefriendCheat;
 
 
     public static CropsPlantManager Instance { get; private set; }

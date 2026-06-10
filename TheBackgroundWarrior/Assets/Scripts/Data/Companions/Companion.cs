@@ -178,7 +178,7 @@ public class Companion : MonoBehaviour
 
                 // take action befriended or not
                 bool success = UtilsGeneral.GetRandomSuccessFromValue(PlayerManager.Instance.PlayerFarmerData.CurrentLuck);
-                if (success)
+                if (success || CropsPlantManager.Instance.AlwaysBefriendCheat)
                 {
                     // call farmer mow, doesn't need reset after mow
                     CropsPlantManager.Instance.AddMowToPlayer(slotCropIndex, false);
@@ -197,8 +197,9 @@ public class Companion : MonoBehaviour
 
                     if (PlayerManager.Instance.PlayerFarmerData.HasCompanion(tempSOBefriend))
                     {
-                        // TODO: handle if companion is already befriended, dismantle it, for now give bits?
-                        PlayerManager.Instance.Inventory.AddBits(2);
+                        //PlayerManager.Instance.Inventory.AddBits(2);
+                        // give exp to companion if already befriended
+                        PlayerManager.Instance.PlayerFarmerData.AddCompanionExp(tempSOBefriend, 1);
                         PlayerManager.Instance.SaveInventoryData();
                     }
                     else

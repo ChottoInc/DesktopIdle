@@ -7,6 +7,9 @@ public class StageManager : MonoBehaviour
 {
     private const int MAX_ENEMIES = 10;
 
+    [Header("Player")]
+    [SerializeField] PlayerFight player;
+
     [Header("Enemies")]
     [SerializeField] MapToEnemiesSO mapEnemies;
 
@@ -255,6 +258,11 @@ public class StageManager : MonoBehaviour
 
             if (!companionIds.Contains(companion.CurrentCompanionData.CompanionSO.Id))
             {
+                int idStatToChange = companion.CurrentCompanionData.CompanionSO.StatModifier.StatModifier;
+                float valueStat = companion.CurrentCompanionData.CompanionSO.StatModifier.BaseModifierValue + 
+                    (companion.CurrentCompanionData.CompanionSO.StatModifier.IncreasePerLevelValue * (companion.CurrentCompanionData.CurrentLevel - 1));
+                player.PlayerData.ChangeStatModifier(idStatToChange, valueStat, false);
+
                 Destroy(currentCompanionsObjs[i]);
                 currentCompanionsObjs.RemoveAt(i);
             }
@@ -271,6 +279,10 @@ public class StageManager : MonoBehaviour
             Companion companion = companionObj.GetComponent<Companion>();
 
             companion.SetupFight(data);
+
+            int idStatToChange = data.CompanionSO.StatModifier.StatModifier;
+            float valueStat = data.CompanionSO.StatModifier.BaseModifierValue + (data.CompanionSO.StatModifier.IncreasePerLevelValue * (data.CurrentLevel - 1));
+            player.PlayerData.ChangeStatModifier(idStatToChange, valueStat, true);
 
             currentCompanionsObjs.Add(companionObj);
         }

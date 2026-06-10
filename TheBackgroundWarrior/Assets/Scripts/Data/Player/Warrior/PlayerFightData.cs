@@ -86,6 +86,13 @@ public class PlayerFightData : IBasePlayerData
     private float currentHp;
 
 
+    private float maxHpModifier = 1f;
+    private float atkModifier = 1f;
+    private float defModifier = 1f;
+    private float atkSpdModifier = 1f;
+    private float critDmgModifier = 1f;
+
+
 
 
 
@@ -97,26 +104,30 @@ public class PlayerFightData : IBasePlayerData
     public float MaxHp => 
         (baseMaxHp + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_MAXHP * (levelStatMaxHp - 1)) *
         PlayerManager.Instance.HelmetMaxHpBlacksmithMultiplier *
-        PlayerManager.Instance.FisherLifeSeriesMultiplier;
+        PlayerManager.Instance.FisherLifeSeriesMultiplier *
+        maxHpModifier;
 
     public float CurrentHp => currentHp;
 
     public float CurrentAtk => 
         (baseAtk + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_ATK * (levelStatAtk - 1)) *
         PlayerManager.Instance.WeaponMinerMultiplier *
-        PlayerManager.Instance.FisherPredatorSeriesMultiplier;
+        PlayerManager.Instance.FisherPredatorSeriesMultiplier *
+        atkModifier;
 
     public float CurrentDef => 
         (baseDef + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_DEF * (levelStatDef - 1)) *
         PlayerManager.Instance.ArmorDefBlacksmithMultiplier *
         PlayerManager.Instance.BootsDefBlacksmithMultiplier *
-        PlayerManager.Instance.FisherGuardianSeriesMultiplier;
+        PlayerManager.Instance.FisherGuardianSeriesMultiplier *
+        defModifier;
 
     // todo: if more mehods will be available to increase atk spd and crit rate, then check if you want those stats to be past the max threshold
     public float CurrentAtkSpd => 
         (baseAtkSpd + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_ATK_SPEED * (levelStatAtkSpd - 1)) *
         PlayerManager.Instance.GlovesAtkSpdBlacksmithMultiplier *
-        PlayerManager.Instance.FisherDartSeriesMultiplier;
+        PlayerManager.Instance.FisherDartSeriesMultiplier *
+        atkSpdModifier;
 
     public float CurrentCritRate => 
         (baseCritRate + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_CRIT_RATE * (levelStatCritRate - 1)) *
@@ -126,7 +137,8 @@ public class PlayerFightData : IBasePlayerData
     public float CurrentCritDmg => 
         (baseCritDmg + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_CRIT_DMG * (levelStatCritDmg - 1)) *
         PlayerManager.Instance.GlovesCritDmgBlacksmithMultiplier *
-        PlayerManager.Instance.FisherPiercingSeriesMultiplier;
+        PlayerManager.Instance.FisherPiercingSeriesMultiplier *
+        critDmgModifier;
 
     // affects card drop rates, and gives a one more chance to crit rate check
     public float CurrentLuck => 
@@ -380,6 +392,29 @@ public class PlayerFightData : IBasePlayerData
         //Debug.Log("Max hp after death: " + currentHp);
 
         OnHpChange?.Invoke();
+    }
+
+
+    public void ChangeStatModifier(int id, float value, bool adding)
+    {
+        //Debug.Log("id stat: " + id + ", val: " + value + ", adding: " + adding.ToString());
+        switch (id)
+        {
+            case UtilsPlayer.ID_WARRIOR_MAXHP: if (adding) maxHpModifier += value; else maxHpModifier -= value; break;
+            case UtilsPlayer.ID_WARRIOR_ATK: if (adding) atkModifier += value; else atkModifier -= value; break;
+            case UtilsPlayer.ID_WARRIOR_DEF: if (adding) defModifier += value; else defModifier -= value; break;
+            case UtilsPlayer.ID_WARRIOR_ATKSPD: if (adding) atkSpdModifier += value; else atkSpdModifier -= value; break;
+            case UtilsPlayer.ID_WARRIOR_CRITDMG: if (adding) critDmgModifier += value; else critDmgModifier -= value; break;
+        }
+    }
+
+    public void ResetStatModifiers()
+    {
+        maxHpModifier = 1f;
+        atkModifier = 1f;
+        defModifier = 1f;
+        atkSpdModifier = 1f;
+        critDmgModifier = 1f;
     }
 
     #endregion

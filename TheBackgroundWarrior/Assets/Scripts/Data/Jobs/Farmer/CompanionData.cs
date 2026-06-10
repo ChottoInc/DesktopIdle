@@ -1,46 +1,69 @@
 
 public class CompanionData
 {
-    private CompanionSO companionSO;
+    public CompanionSO CompanionSO { get; private set; }
 
-    private int currentLevel;
+    public int CurrentLevel { get; private set; }
 
-    private int currentSlot;
+    public int CurrentExp { get; private set; }
+    public int ExpToNextLevel => UtilsFarmer.RequiredExpForCompanionLevel(CurrentLevel + 1);
 
-
-    public CompanionSO CompanionSO => companionSO;
-
-    public int CurrentLevel => currentLevel;
-
-    public int CurrentSlot => currentSlot;
+    public int CurrentSlot { get; private set; }
 
 
 
-    public float CurrentAtkPerc => companionSO.BaseAtkPerc;
-    public float CurrentAtkSpd => companionSO.BaseAtkSpd;
+    public float CurrentAtkPerc => CompanionSO.BaseAtkPerc;
+    public float CurrentAtkSpd => CompanionSO.BaseAtkSpd;
 
 
 
     public CompanionData(CompanionSO companionSO)
     {
-        this.companionSO = companionSO;
+        CompanionSO = companionSO;
 
-        currentLevel = 1;
+        CurrentExp = 0;
+        CurrentLevel = 1;
 
-        currentSlot = -1;
+        CurrentSlot = -1;
     }
 
     public CompanionData(CompanionSaveData saveData)
     {
-        companionSO = UtilsFarmer.GetCompanionById(saveData.companionId);
+        CompanionSO = UtilsFarmer.GetCompanionById(saveData.companionId);
 
-        currentLevel = saveData.currentLevel;
+        CurrentExp = saveData.currentExp;
+        CurrentLevel = saveData.currentLevel;
 
-        currentSlot = saveData.currentSlot;
+        CurrentSlot = saveData.currentSlot;
     }
 
     public void SetSlot(int id)
     {
-        currentSlot = id;
+        CurrentSlot = id;
+    }
+
+
+    public void AddExp(int amount)
+    {
+        // check max level
+        if (CurrentLevel >= UtilsFarmer.MAX_LEVEL_COMPANIONS)
+        {
+            // set current exp to 0
+            CurrentExp = 0;
+            return;
+        }
+
+        CurrentExp += amount;
+        //UnityEngine.Debug.Log("current exp: " + CurrentExp);
+
+        // looping for every level gained
+        while (CurrentExp >= ExpToNextLevel)
+        {
+            // recalculate current exp
+            CurrentExp -= ExpToNextLevel;
+
+            // give level
+            CurrentLevel++;
+        }
     }
 }
