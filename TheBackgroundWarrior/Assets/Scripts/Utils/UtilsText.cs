@@ -694,6 +694,13 @@ public static class UtilsText
 
     public const string text_shopitem_job_farmer_desc = "text_shopitem_job_farmer_desc";
 
+
+    public const string text_companion_0_desc = "text_companion_0_desc";
+    public const string text_companion_1_desc = "text_companion_1_desc";
+    public const string text_companion_2_desc = "text_companion_2_desc";
+    public const string text_companion_3_desc = "text_companion_3_desc";
+    public const string text_companion_4_desc = "text_companion_4_desc";
+
     #endregion
 
     #region CREDITS
@@ -1491,6 +1498,13 @@ public static class UtilsText
 
                                        
             { text_shopitem_job_farmer_desc, "Unlock the Farmer Class" },
+
+
+            { text_companion_0_desc, "Increase Warrior Max Hp by {0}%" },
+            { text_companion_1_desc, "Increase Warrior Atk by {0}%" },
+            { text_companion_2_desc, "Increase Warrior Def by {0}%" },
+            { text_companion_3_desc, "Increase Warrior Atk speed by {0}%" },
+            { text_companion_4_desc, "Increase Warrior Crit damage by {0}%" },
         };
 
 

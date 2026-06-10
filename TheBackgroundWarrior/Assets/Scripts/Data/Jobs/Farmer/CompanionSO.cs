@@ -7,6 +7,10 @@ public class CompanionSO : ListableGameDataSO
     [SerializeField] string companionName;
 
     [Space(10)]
+    [SerializeField] string itemDescTextId;
+    [SerializeField] string companionDesc;
+
+    [Space(10)]
     [SerializeField] Sprite iconCompanion;
 
     [Space(10)]
@@ -25,6 +29,15 @@ public class CompanionSO : ListableGameDataSO
         get
         {
             string res = UtilsText.AllText[itemNameTextId];
+            if (res != null) return res; else return companionName;
+        }
+    }
+
+    public string CompanionDesc
+    {
+        get
+        {
+            string res = UtilsText.AllText[itemDescTextId];
             if (res != null) return res; else return companionName;
         }
     }

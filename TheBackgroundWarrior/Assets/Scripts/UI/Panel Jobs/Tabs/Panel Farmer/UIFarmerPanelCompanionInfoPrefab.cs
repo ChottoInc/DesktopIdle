@@ -5,10 +5,16 @@ using UnityEngine.UI;
 public class UIFarmerPanelCompanionInfoPrefab : MonoBehaviour
 {
     [SerializeField] Image imageIconCompanion;
+
+    [Header("Info")]
     [SerializeField] TMP_Text textName;
     [SerializeField] TMP_Text textLevel;
+    [SerializeField] GenericBar barExp;
 
-    [Space(10)]
+    [Header("Ability")]
+    [SerializeField] TMP_Text textAbility;
+
+    [Header("Equip")]
     [SerializeField] GameObject panelEquipped;
     [SerializeField] Button buttonEquip;
     [SerializeField] GameObject buttonUnequip;
@@ -25,6 +31,10 @@ public class UIFarmerPanelCompanionInfoPrefab : MonoBehaviour
 
         textName.text = companionData.CompanionSO.CompanionName;
         textLevel.text = companionData.CurrentLevel.ToString();
+        barExp.Setup(companionData.ExpToNextLevel, companionData.CurrentExp);
+
+        float valueStat = companionData.CompanionSO.StatModifier.BaseModifierValue + (companionData.CompanionSO.StatModifier.IncreasePerLevelValue * (companionData.CurrentLevel - 1));
+        textAbility.text = string.Format(companionData.CompanionSO.CompanionDesc, valueStat * 100f);
 
         if(companionData.CurrentSlot != -1)
         {
