@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour, IPoolObject, IDamageable
 
     private float startingAttackSpeedAnimationDuration;
 
-    private RuntimeAnimatorController animController;
 
     [Header("Check Player")]
     [SerializeField] float hitRadius;
@@ -72,6 +71,12 @@ public class Enemy : MonoBehaviour, IPoolObject, IDamageable
 
     private bool canFight;
 
+
+    private float timerChilling;
+    private float timerPoisoned;
+
+
+
     public event Action OnPerformAttack;
     public event Action<int> OnTakeDamage;
 
@@ -122,6 +127,7 @@ public class Enemy : MonoBehaviour, IPoolObject, IDamageable
 
     private void Update()
     {
+
         if (isAttacking)
         {
             CheckAttack();
@@ -130,6 +136,11 @@ public class Enemy : MonoBehaviour, IPoolObject, IDamageable
         if (isDeathVFXPlaying)
         {
             CheckDeathVFX();
+        }
+
+        if(enemyData != null)
+        {
+            CheckStatuses();
         }
     }
 
@@ -256,6 +267,49 @@ public class Enemy : MonoBehaviour, IPoolObject, IDamageable
         else
         {
             timerDeathVFX -= Time.deltaTime;
+        }
+    }
+
+    private void CheckStatuses()
+    {
+        if(timerChilling > 0)
+        {
+            timerChilling -= Time.deltaTime;
+        }
+        else
+        {
+            enemyData.RemoveStatus(UtilsEnemy.EnemyAffectedStatus.Chilled);
+        }
+
+        if (timerPoisoned > 0)
+        {
+            timerPoisoned -= Time.deltaTime;
+        }
+        else
+        {
+            enemyData.RemoveStatus(UtilsEnemy.EnemyAffectedStatus.Poisoned);
+        }
+    }
+
+    /// <summary>
+    /// Check and adds statuses to enemy
+    /// </summary>
+    public void AddStatus(UtilsEnemy.EnemyAffectedStatus status)
+    {
+        if(!enemyData.HasStatus(status))
+        {
+            enemyData.AddStatus(status);
+
+            switch (status)
+            {
+                case UtilsEnemy.EnemyAffectedStatus.Chilled:
+                    timerChilling = UtilsEnemy.TIMER_CHILLED_STATUS;
+                    break;
+
+                case UtilsEnemy.EnemyAffectedStatus.Poisoned:
+                    timerPoisoned = UtilsEnemy.TIMER_POISONED_STATUS;
+                    break;
+            }
         }
     }
 

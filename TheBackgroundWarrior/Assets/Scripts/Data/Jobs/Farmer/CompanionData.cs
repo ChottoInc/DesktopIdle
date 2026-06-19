@@ -12,7 +12,9 @@ public class CompanionData
 
 
 
-    public float CurrentAtkPerc => CompanionSO.BaseAtkPerc;
+    public float CurrentAtkPerc => CompanionSO.BaseAtkPerc +
+        0.05f * (CurrentLevel - 1);
+
     public float CurrentAtkSpd => CompanionSO.BaseAtkSpd;
 
 

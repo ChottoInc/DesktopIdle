@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 public class UITabJobFarmer : UITabWindow
@@ -10,12 +9,7 @@ public class UITabJobFarmer : UITabWindow
     [SerializeField] UIFarmerPanelCompanions panelCompanions;
 
 
-    [Header("Texts")]
-    [SerializeField] TMP_Text textTitle;
-
-
     private PlayerFarmer player;
-
 
 
     public PlayerFarmer Player => player;
@@ -30,17 +24,10 @@ public class UITabJobFarmer : UITabWindow
             player = FindFirstObjectByType<PlayerFarmer>();
         }
 
-        panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_FARMER_TAB);
+        panelJob.ChangeCurrentTab(this, UtilsPlayer.PlayerJob.Farmer);
 
         panelCrops.Setup();
         panelCompanions.gameObject.SetActive(false);
-
-        RefreshTexts();
-    }
-
-    private void RefreshTexts()
-    {
-        textTitle.text = UtilsText.AllText[UtilsText.text_title_jobs_back];
     }
 
     public void OnButtonBack()
@@ -48,7 +35,7 @@ public class UITabJobFarmer : UITabWindow
         AudioManager.Instance.PlayClickUI();
 
         Close();
-        panelJob.ChangeCurrentTab(null, -1);
+        panelJob.ChangeCurrentTab(null, UtilsPlayer.PlayerJob.None);
     }
 
     public void OnButtonFarm()

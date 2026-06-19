@@ -6,6 +6,8 @@ public class CombatManager : MonoBehaviour
 {
     private const float BASE_CARD_DROPRATE = 0.005f;
 
+    private const int ID_CARD_ANCIENTTOME = 80;
+
 
     [SerializeField] PlayerFight player;
 
@@ -152,7 +154,7 @@ public class CombatManager : MonoBehaviour
 
         if (currentEnemy.IsDead && currentEnemy != null)
         {
-            HandleEnemyDeath();
+            HandleInternalEnemyDeath();
 
             currentEnemy = null;
         }
@@ -181,33 +183,42 @@ public class CombatManager : MonoBehaviour
 
 
 
-    private void HandleEnemyDeath()
+    private void HandleInternalEnemyDeath()
     {
+        // remove observer from attack
         if (currentEnemy != null)
         {
             currentEnemy.OnPerformAttack -= OnEnemyAttack;
         }
 
+        // stop fight after setting death
+        EnableFight(false);
+
+        //Debug.Log("Enemy dead");
+
+        HandleEnemyDeath(currentEnemy);
+    }
+
+    public void HandleEnemyDeath(Enemy enemy)
+    {
+        if (enemy == null) return;
         //Debug.Log("Enemy dead");
 
         // Trigger which enemy died, mainly used for quests
-        OnEnemyKill?.Invoke(currentEnemy.EnemyData.EnemySO);
-        
+        OnEnemyKill?.Invoke(enemy.EnemyData.EnemySO);
+
         // --- get exp before starting death for safety
-        int rewardedExp = UtilsCombatMap.GetEnemyExp(currentEnemy.EnemyData.CurrentLevel, mapSO.MapDifficuty);
+        int rewardedExp = UtilsCombatMap.GetEnemyExp(enemy.EnemyData.CurrentLevel, mapSO.MapDifficuty);
 
         // todo: add addictional exp multipliers here
-        rewardedExp = Mathf.RoundToInt( 
+        rewardedExp = Mathf.RoundToInt(
             (float)rewardedExp *
             PlayerManager.Instance.FisherPredatorSeriesMultiplier
             );
 
         // kill enemy
-        currentEnemy.PlayDeath(false);
+        enemy.PlayDeath(false);
         StageManager.Instance.AddKill(1);
-
-        // stop fight after setting death
-        EnableFight(false);
 
         // give exp to player
         if (playerHighExpCheat && SettingsManager.Instance.AreCheatsEnabled)
@@ -218,7 +229,7 @@ public class CombatManager : MonoBehaviour
         {
             player.PlayerData.AddExp(rewardedExp);
         }
-            
+
         PlayerManager.Instance.UpdateFightData(player.PlayerData);
 
         // handle card drop
@@ -249,6 +260,14 @@ public class CombatManager : MonoBehaviour
                 if (randCardSO != null)
                 {
                     player.AddItem(randCardSO.Id, 1);
+
+                    if(randCardSO.Id == ID_CARD_ANCIENTTOME)
+                    {
+                        if (!PlayerManager.Instance.PlayerJobsData.IsMageUnlocked)
+                        {
+                            PlayerManager.Instance.PlayerJobsData.AddAvailableJob(UtilsPlayer.PlayerJob.Mage);
+                        }
+                    }
                 }
             }
         }

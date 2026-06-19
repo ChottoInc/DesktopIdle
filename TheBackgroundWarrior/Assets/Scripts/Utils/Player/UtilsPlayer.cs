@@ -4,7 +4,7 @@ using static UtilsText;
 
 public static class UtilsPlayer
 {
-    public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher, Farmer }
+    public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher, Farmer, Mage }
 
     private static PlayerJobSO[] jobs;
 
@@ -41,6 +41,11 @@ public static class UtilsPlayer
     public const int ID_FARMER_KINDNESS = 52;           // increase probability to encounter a companion
     public const int ID_FARMER_LUCK = 53;               // increase the probability the companion is befriended
 
+    public const int ID_MAGE_INSIGHT = 60;              // reduce times a spell needs to be casted to increase the level
+    public const int ID_MAGE_CASTSPEED = 61;            // increase cast speed
+    public const int ID_MAGE_SCHOLAR = 62;              // every x levels unlock new spell
+    public const int ID_MAGE_PROFICIENCY = 63;          // every x levels unlock spell slot
+
 
     public static void Initialize()
     {
@@ -57,6 +62,7 @@ public static class UtilsPlayer
         UtilsBlacksmith.Initialize();
         UtilsFisher.Initialize();
         UtilsFarmer.Initialize();
+        UtilsMage.Initialize();
     }
 
     private static PlayerJobSO[] LoadJobs()
@@ -132,6 +138,12 @@ public static class UtilsPlayer
             case ID_FARMER_AGRONOMY: return UtilsFarmer.PER_LEVEL_FARMER_MAX_AGRONOMY;
             case ID_FARMER_KINDNESS: return UtilsFarmer.PER_LEVEL_FARMER_MAX_KINDNESS;
             case ID_FARMER_LUCK: return UtilsFarmer.PER_LEVEL_FARMER_MAX_LUCK;
+
+            // MAGE DATA
+            case ID_MAGE_INSIGHT: return UtilsMage.PER_LEVEL_MAGE_MAX_INSIGHT;
+            case ID_MAGE_CASTSPEED: return UtilsMage.PER_LEVEL_MAGE_MAX_CASTSPEED;
+            case ID_MAGE_SCHOLAR: return UtilsMage.PER_LEVEL_MAGE_MAX_SCHOLAR;
+            case ID_MAGE_PROFICIENCY: return UtilsMage.PER_LEVEL_MAGE_MAX_PROFICIENCY;
         }
     }
 
@@ -173,6 +185,12 @@ public static class UtilsPlayer
             case ID_FARMER_AGRONOMY: return PlayerManager.Instance.PlayerFarmerData.LevelStatAgronomy;
             case ID_FARMER_KINDNESS: return PlayerManager.Instance.PlayerFarmerData.LevelStatKindness;
             case ID_FARMER_LUCK: return PlayerManager.Instance.PlayerFarmerData.LevelStatLuck;
+
+            // MAGE DATA
+            case ID_MAGE_INSIGHT: return PlayerManager.Instance.PlayerMageData.LevelStatInsight;
+            case ID_MAGE_CASTSPEED: return PlayerManager.Instance.PlayerMageData.LevelStatCastSpeed;
+            case ID_MAGE_SCHOLAR: return PlayerManager.Instance.PlayerMageData.LevelStatScholar;
+            case ID_MAGE_PROFICIENCY: return PlayerManager.Instance.PlayerMageData.LevelStatProficiency;
         }
     }
 
@@ -214,6 +232,12 @@ public static class UtilsPlayer
             case ID_FARMER_AGRONOMY: return AllText[text_tooltip_stat_farmer_agronomy];
             case ID_FARMER_KINDNESS: return AllText[text_tooltip_stat_farmer_kindness];
             case ID_FARMER_LUCK: return AllText[text_tooltip_stat_farmer_luck];
+
+            // MAGE DATA
+            case ID_MAGE_INSIGHT: return AllText[text_tooltip_stat_mage_insight];
+            case ID_MAGE_CASTSPEED: return AllText[text_tooltip_stat_mage_castspeed];
+            case ID_MAGE_SCHOLAR: return AllText[text_tooltip_stat_mage_scholar];
+            case ID_MAGE_PROFICIENCY: return AllText[text_tooltip_stat_mage_proficiency];
         }
     }
 
@@ -263,6 +287,11 @@ public static class UtilsPlayer
             case ID_FARMER_AGRONOMY: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_farmer]);
             case ID_FARMER_KINDNESS: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_farmer]);
             case ID_FARMER_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_farmer]);
+
+            case ID_MAGE_INSIGHT: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_mage]);
+            case ID_MAGE_CASTSPEED: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_mage]);
+            case ID_MAGE_SCHOLAR: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_mage]);
+            case ID_MAGE_PROFICIENCY: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_mage]);
         }
     }
     
@@ -298,6 +327,11 @@ public static class UtilsPlayer
             case ID_FARMER_AGRONOMY: return AllText[text_name_farmer_stat_agronomy];
             case ID_FARMER_KINDNESS: return AllText[text_name_farmer_stat_kindness];
             case ID_FARMER_LUCK: return AllText[text_name_farmer_stat_luck];
+
+            case ID_MAGE_INSIGHT: return AllText[text_name_mage_stat_insight];
+            case ID_MAGE_CASTSPEED: return AllText[text_name_mage_stat_castspeed];
+            case ID_MAGE_SCHOLAR: return AllText[text_name_mage_stat_scholar];
+            case ID_MAGE_PROFICIENCY: return AllText[text_name_mage_stat_proficiency];
         }
     }
 }

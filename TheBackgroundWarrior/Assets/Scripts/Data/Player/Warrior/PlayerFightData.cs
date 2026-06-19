@@ -152,6 +152,7 @@ public class PlayerFightData : IBasePlayerData
 
     public event Action OnHpChange;
     public event Action<int> OnTakeDamage;
+    public event Action<int> OnHeal;
 
 
     public event Action<int, int> OnStatChange;
@@ -383,6 +384,23 @@ public class PlayerFightData : IBasePlayerData
         {
             currentHp = 0;
         }
+    }
+
+    /// <summary>
+    /// Heal Warrior
+    /// </summary>
+    public void Heal(float value)
+    {
+        float total = Mathf.Max(0f, value);
+
+        // subtract total to hp
+        currentHp += total;
+
+        OnHpChange?.Invoke();
+
+        OnHeal?.Invoke(Mathf.FloorToInt(total));
+
+        currentHp = Mathf.Max(0, currentHp);
     }
 
     public void ResetAfterStage()

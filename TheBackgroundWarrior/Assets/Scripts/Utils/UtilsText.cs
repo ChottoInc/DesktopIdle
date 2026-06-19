@@ -41,6 +41,7 @@ public static class UtilsText
     public const string text_name_class_fisher = "text_name_class_fisher";
     public const string text_name_class_farmer = "text_name_class_farmer";
     public const string text_name_class_blacksmith = "text_name_class_blacksmith";
+    public const string text_name_class_mage = "text_name_class_mage";
 
     public const string text_name_warrior_stat_maxhp = "text_name_warrior_stat_maxhp";
     public const string text_name_warrior_stat_atk = "text_name_warrior_stat_atk";
@@ -69,6 +70,11 @@ public static class UtilsText
     public const string text_name_farmer_stat_agronomy = "text_name_farmer_stat_agronomy";
     public const string text_name_farmer_stat_kindness = "text_name_farmer_stat_kindness";
     public const string text_name_farmer_stat_luck = "text_name_farmer_stat_luck";
+
+    public const string text_name_mage_stat_insight = "text_name_mage_stat_insight";
+    public const string text_name_mage_stat_castspeed = "text_name_mage_stat_castspeed";
+    public const string text_name_mage_stat_scholar = "text_name_mage_stat_scholar";
+    public const string text_name_mage_stat_proficiency = "text_name_mage_stat_proficiency";
 
 
     public const string text_name_daymoment_morning = "text_name_daymoment_morning";
@@ -128,6 +134,11 @@ public static class UtilsText
     public const string text_tooltip_stat_farmer_agronomy = "text_tooltip_stat_farmer_agronomy";
     public const string text_tooltip_stat_farmer_kindness = "text_tooltip_stat_farmer_kindness";
     public const string text_tooltip_stat_farmer_luck = "text_tooltip_stat_farmer_luck";
+
+    public const string text_tooltip_stat_mage_insight = "text_tooltip_stat_mage_insight";
+    public const string text_tooltip_stat_mage_castspeed = "text_tooltip_stat_mage_castspeed";
+    public const string text_tooltip_stat_mage_scholar = "text_tooltip_stat_mage_scholar";
+    public const string text_tooltip_stat_mage_proficiency = "text_tooltip_stat_mage_proficiency";
 
     // -------------------- TITLE --------------------- //
 
@@ -218,6 +229,7 @@ public static class UtilsText
     public const string text_job_fisher_unlockconditions = "text_job_fisher_unlockconditions";
     public const string text_job_farmer_unlockconditions = "text_job_farmer_unlockconditions";
     public const string text_job_blacksmith_unlockconditions = "text_job_blacksmith_unlockconditions";
+    public const string text_job_mage_unlockconditions = "text_job_mage_unlockconditions";
 
     public const string text_job_warrior_mapstage = "text_job_warrior_mapstage";
     public const string text_job_warrior_possiblemonsters = "text_job_warrior_possiblemonsters";
@@ -241,6 +253,9 @@ public static class UtilsText
     public const string text_job_farmer_crop_companiondesc = "text_job_farmer_crop_companiondesc";
     public const string text_job_farmer_companion_cropdesc = "text_job_farmer_companion_cropdesc";
     public const string text_job_farmer_companion_equipped = "text_job_farmer_companion_equipped";
+
+
+    public const string text_job_mage_spell_locked = "text_job_mage_spell_locked";
 
 
     // -------------------- BUTTONS --------------------- //
@@ -278,6 +293,8 @@ public static class UtilsText
 
     public const string text_button_fish = "text_button_fish";
 
+    public const string text_button_learn = "text_button_learn";
+
     public const string text_button_revealall = "text_button_revealall";
 
     public const string text_button_shop_filter_cardpacks = "text_button_shop_filter_cardpacks";
@@ -300,6 +317,7 @@ public static class UtilsText
     public const string text_button_help_filter_fisher = "text_button_help_filter_fisher";
     public const string text_button_help_filter_blacksmith = "text_button_help_filter_blacksmith";
     public const string text_button_help_filter_farmer = "text_button_help_filter_farmer";
+    public const string text_button_help_filter_mage = "text_button_help_filter_mage";
 
     public const string text_button_inventory_filter_all = "text_button_inventory_filter_all";
     public const string text_button_inventory_filter_ores = "text_button_inventory_filter_ores";
@@ -510,6 +528,13 @@ public static class UtilsText
     public const string text_item_fish_group_quick_name = "text_item_fish_group_quick_name";
 
 
+    public const string text_mage_spell_fireball_name = "text_mage_spell_fireball_name";
+    public const string text_mage_spell_explosion_name = "text_mage_spell_explosion_name";
+    public const string text_mage_spell_chillwind_name = "text_mage_spell_chillwind_name";
+    public const string text_mage_spell_poisongas_name = "text_mage_spell_poisongas_name";
+    public const string text_mage_spell_zap_name = "text_mage_spell_zap_name";
+
+
 
     public const string text_shopitem_cardpack01_name = "text_shopitem_cardpack01_name";
     public const string text_shopitem_cardpack02_name = "text_shopitem_cardpack02_name";
@@ -683,6 +708,12 @@ public static class UtilsText
     public const string text_item_fish_group_elder_desc = "text_item_fish_group_elder_desc";
     public const string text_item_fish_group_quick_desc = "text_item_fish_group_quick_desc";
 
+    public const string text_mage_spell_fireball_desc = "text_mage_spell_fireball_desc";
+    public const string text_mage_spell_explosion_desc = "text_mage_spell_explosion_desc";
+    public const string text_mage_spell_chillwind_desc = "text_mage_spell_chillwind_desc";
+    public const string text_mage_spell_poisongas_desc = "text_mage_spell_poisongas_desc";
+    public const string text_mage_spell_zap_desc = "text_mage_spell_zap_desc";
+
 
 
     public const string text_shopitem_cardpack01_desc = "text_shopitem_cardpack01_desc";
@@ -720,6 +751,7 @@ public static class UtilsText
     public const string text_help_fisher = "text_help_fisher";
     public const string text_help_blacksmith = "text_help_blacksmith";
     public const string text_help_farmer = "text_help_farmer";
+    public const string text_help_mage = "text_help_mage";
 
     public const string text_description_warrior = "text_description_warrior";
     public const string text_description_miner = "text_description_miner";
@@ -727,6 +759,7 @@ public static class UtilsText
     public const string text_description_farmer_crops = "text_description_farmer_crops";
     public const string text_description_farmer_companions = "text_description_farmer_companions";
     public const string text_description_blacksmith = "text_description_blacksmith";
+    public const string text_description_mage = "text_description_mage";
 
     #endregion
 
@@ -822,6 +855,7 @@ public static class UtilsText
             { text_name_class_fisher, "Fisher" },
             { text_name_class_farmer, "Farmer" },
             { text_name_class_blacksmith, "Blacksmith" },
+            { text_name_class_mage, "Mage" },
 
             { text_name_warrior_stat_maxhp, "Max Hp" },
             { text_name_warrior_stat_atk, "Atk" },
@@ -850,6 +884,11 @@ public static class UtilsText
             { text_name_farmer_stat_agronomy, "Agronomy" },
             { text_name_farmer_stat_kindness, "Kindness" },
             { text_name_farmer_stat_luck, "Luck" },
+
+            { text_name_mage_stat_insight, "Insight" },
+            { text_name_mage_stat_castspeed, "Cast Speed" },
+            { text_name_mage_stat_scholar, "Scholar" },
+            { text_name_mage_stat_proficiency, "Proficiency" },
 
 
 
@@ -914,6 +953,11 @@ public static class UtilsText
             { text_tooltip_stat_farmer_agronomy, "Unlock a new seed for the Farmer to plant every 5 levels" },
             { text_tooltip_stat_farmer_kindness, "Increase Farmer chance to encounter a companion" },
             { text_tooltip_stat_farmer_luck, "Increase Farmer chance to befriend a companion" },
+
+            { text_tooltip_stat_mage_insight, "Increase Mage learning ability" },
+            { text_tooltip_stat_mage_castspeed, "Increase Mage and Warrior casting speed" },
+            { text_tooltip_stat_mage_scholar, "Unlock a new spell for the Mage to learn every 5 levels" },
+            { text_tooltip_stat_mage_proficiency, "Every 5 levels unlock a slot to equip a spell to cast when advancing through the stages" },
 
             // -------------------- TITLE --------------------- //
 
@@ -1006,6 +1050,7 @@ public static class UtilsText
             { text_job_fisher_unlockconditions, "None" },
             { text_job_farmer_unlockconditions, "Purchasable from the shop" },
             { text_job_blacksmith_unlockconditions, "Collect at least 1 gold ore." },
+            { text_job_mage_unlockconditions, "Find the Ancient Tome card" },
 
             { text_job_warrior_mapstage, "Stage: {0}/{1}" },
             { text_job_warrior_possiblemonsters, "Possible monsters:<br>" },
@@ -1026,6 +1071,9 @@ public static class UtilsText
             { text_job_farmer_crop_companiondesc, "Equip companions that will help you defeating monsters" },
             { text_job_farmer_companion_cropdesc, "Growing Crops" },
             { text_job_farmer_companion_equipped, "Equipped" },
+
+
+            { text_job_mage_spell_locked, "Spell locked" },
 
 
             { text_job_fisher_raritytooltip, "<color=#{1}>{2}</color><br>" },
@@ -1068,6 +1116,8 @@ public static class UtilsText
 
             { text_button_fish, "Fish" },
 
+            { text_button_learn, "Learn" },
+
             { text_button_revealall, "Reveal All" },
 
             { text_button_shop_filter_cardpacks, "Card Packs" },
@@ -1090,6 +1140,7 @@ public static class UtilsText
             { text_button_help_filter_fisher, "Fisher" },
             { text_button_help_filter_blacksmith, "Blacksmith" },
             { text_button_help_filter_farmer, "Farmer" },
+            { text_button_help_filter_mage, "Mage" },
 
             { text_button_inventory_filter_all, "All" },
             { text_button_inventory_filter_ores, "Ores" },
@@ -1292,6 +1343,12 @@ public static class UtilsText
             { text_item_fish_group_elder_name, "Elder Series" },
             { text_item_fish_group_quick_name, "Quick Series" },
 
+            { text_mage_spell_fireball_name, "Fireball" },
+            { text_mage_spell_explosion_name, "Explosion" },
+            { text_mage_spell_chillwind_name, "Chill Wind" },
+            { text_mage_spell_poisongas_name, "Poison Gas" },
+            { text_mage_spell_zap_name, "Zap" },
+
 
 
             { text_shopitem_cardpack01_name, "Copper Pack" },
@@ -1488,6 +1545,12 @@ public static class UtilsText
             { text_item_fish_group_elder_desc, "Increase Exp gain for Warrior Job by 20%" },
             { text_item_fish_group_quick_desc, "Increase Movement speed for Warrior Job by 20%" },
 
+            { text_mage_spell_fireball_desc, "Deals {0} of max hp to a single enemy" },
+            { text_mage_spell_explosion_desc, "Deals {0} of max hp to all enemies hit in a {1} unit radius" },
+            { text_mage_spell_chillwind_desc, "Deals {0} of max hp to all enemies hit in a {1} unit radius, enemies hit by the spell will take {2} more damage from spell for a short time" },
+            { text_mage_spell_poisongas_desc, "Deals {0} of max hp to all enemies hit in a {1} unit radius, enemies hit by the spell will give the player {2} lifesteal for a short time" },
+            { text_mage_spell_zap_desc, "Deals {0} of max hp to a single enemy, the spell will bounce {1} times if another enemy is close enough" },
+
 
 
             { text_shopitem_cardpack01_desc, "A humble card pack containing 3 cards." },
@@ -1558,6 +1621,12 @@ public static class UtilsText
                 "Extra befriended companions of the same species will be automatically converted into Bits.<br><br>Your companions may appear while farming and chill with you."
             },
 
+            { text_help_mage,
+                "<align=\"center\">Mage<br>----------------------------</align><br>The Mage learns spells to autocast them when advancing through the stages.<br><br>" +
+                "Spells can be equipped through slots.<br>Spell can be ranked up to increase their effectivness.<br>" +
+                "Every 5 levels of Scholar ability a new spell is unlocked, and every 5 levels of Proficiency ability a new slot to equip spells will be unlocked."
+            },
+
 
 
             { text_description_warrior,
@@ -1582,6 +1651,10 @@ public static class UtilsText
 
             { text_description_farmer_companions,
                 "Companions will help you defeating monsters, equip up to 3 companions at the same time."
+            },
+
+            { text_description_mage,
+                "Description: Learn spell to autocast while advancing through the stages"
             },
         };
     }

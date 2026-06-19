@@ -12,6 +12,7 @@ public class UIShopPanelRedeem : MonoBehaviour
     private const string BLACKSMITH_STAT_CODE = "02";
     private const string FISHER_STAT_CODE = "03";
     private const string FARMER_STAT_CODE = "04";
+    private const string MAGE_STAT_CODE = "05";
 
     private const string ITEM_STAT_CODE = "80";
 
@@ -78,6 +79,7 @@ public class UIShopPanelRedeem : MonoBehaviour
             case BLACKSMITH_STAT_CODE:
             case FISHER_STAT_CODE:
             case FARMER_STAT_CODE:
+            case MAGE_STAT_CODE:
                 return HandleStatRedeem(code);
 
             case ITEM_STAT_CODE:
@@ -114,6 +116,7 @@ public class UIShopPanelRedeem : MonoBehaviour
             case BLACKSMITH_STAT_CODE: playerData = PlayerManager.Instance.PlayerBlacksmithData; break;
             case FISHER_STAT_CODE: playerData = PlayerManager.Instance.PlayerFisherData; break;
             case FARMER_STAT_CODE: playerData = PlayerManager.Instance.PlayerFarmerData; break;
+            case MAGE_STAT_CODE: playerData = PlayerManager.Instance.PlayerMageData; break;
         }
 
         if(playerData != null)

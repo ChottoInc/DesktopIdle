@@ -187,6 +187,9 @@ public class StageManager : MonoBehaviour
         Vector2 spawnPos = new Vector2(randX, ySpawn);
 
         EnemyData data = GenerateEnemy();
+
+        //Debug.Log("Spawning enemy with index: " + (currentEnemyIndex - 1));
+
         SpawnEnemy(data, spawnPos);
     }
 
@@ -297,7 +300,7 @@ public class StageManager : MonoBehaviour
     public void AddKill(int amount)
     {
         currentStageKilled += amount;
-        //Debug.Log("current killed count: " + currentStageKilled);
+        //Debug.Log("Killed: " + currentStageKilled);
     }
 
     
@@ -407,6 +410,36 @@ public class StageManager : MonoBehaviour
     {
         currentEnemyIndex = 1;
         currentStageKilled = 0;
+    }
+
+
+    public Enemy GetRandomNonCombatEnemy()
+    {
+        if(currentEnemies.Count <= 0) return null;
+
+        int randIndex;
+        int tries = 0;
+        int maxTries = 100;
+        bool valid;
+
+        Enemy result;
+
+        do
+        {
+            valid = true;
+            randIndex = Random.Range(0, currentEnemies.Count);
+            result = currentEnemies[randIndex];
+
+            if (result == null)
+                valid = false;
+
+            if (result.IsAttacking)
+                valid = false;
+
+            tries++;
+        } while (!valid && tries < maxTries);
+
+        return result;
     }
 
     #region UI

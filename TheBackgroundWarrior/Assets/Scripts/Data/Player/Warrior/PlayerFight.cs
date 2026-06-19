@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerFight : Player, IDamageable
+public class PlayerFight : Player, IDamageable, IHealable
 {
     [Header("Movement")]
     [SerializeField] Animator animator;
@@ -25,7 +25,6 @@ public class PlayerFight : Player, IDamageable
 
     [Space(10)]
     [SerializeField] GenericBar hpBar;
-    [SerializeField] UIPanelPlayerDamage panelDamage;
 
     [Header("Death")]
     [SerializeField] float timerResetAfterDeath = 2f;
@@ -63,6 +62,7 @@ public class PlayerFight : Player, IDamageable
 
     public event Action OnPerformAttack;
     public event Action<int> OnTakeDamage;
+    public event Action<int> OnHeal;
 
 
     public event Action<int, int> OnStatChange;
@@ -85,6 +85,7 @@ public class PlayerFight : Player, IDamageable
         {
             playerData.OnHpChange -= UpdateHpBarUI;
             playerData.OnTakeDamage -= OnActionTakeDamage;
+            playerData.OnHeal -= OnActionHeal;
             playerData.OnLevelUp -= LevelUp;
 
             playerData.OnStatChange -= OnStatChangeFight;
@@ -165,6 +166,11 @@ public class PlayerFight : Player, IDamageable
     private void OnActionTakeDamage(int damage)
     {
         OnTakeDamage?.Invoke(damage);
+    }
+
+    private void OnActionHeal(int heal)
+    {
+        OnHeal?.Invoke(heal);
     }
 
     private void CheckForEnemy()
@@ -258,6 +264,7 @@ public class PlayerFight : Player, IDamageable
         {
             playerData.OnHpChange += UpdateHpBarUI;
             playerData.OnTakeDamage += OnActionTakeDamage;
+            playerData.OnHeal += OnActionHeal;
             playerData.OnLevelUp += LevelUp;
 
             playerData.OnStatChange += OnStatChangeFight;

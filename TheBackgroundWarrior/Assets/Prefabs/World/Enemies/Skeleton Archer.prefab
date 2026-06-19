@@ -60,6 +60,9 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 64
+  excludeLayersRb:
+    serializedVersion: 2
+    m_Bits: 0
   deathVFX: {fileID: 6681827546233653741}
   panelDamage: {fileID: 4412499685901597854}
 --- !u!61 &501778126147037121
@@ -248,6 +251,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2743424106164451571}
     m_Modifications:
+    - target: {fileID: 947542979626652890, guid: fc80308f3a3a459438c7efda32c234e1, type: 3}
+      propertyPath: panelDamage
+      value: 
+      objectReference: {fileID: 4412499685901597854}
     - target: {fileID: 1180699542007843452, guid: fc80308f3a3a459438c7efda32c234e1, type: 3}
       propertyPath: m_Name
       value: Canvas Enemy
@@ -256,6 +263,10 @@ PrefabInstance:
       propertyPath: enemy
       value: 
       objectReference: {fileID: 1879443194582367414}
+    - target: {fileID: 4981248491179370897, guid: fc80308f3a3a459438c7efda32c234e1, type: 3}
+      propertyPath: panelDamage
+      value: 
+      objectReference: {fileID: 4412499685901597854}
     - target: {fileID: 5646721344524385407, guid: fc80308f3a3a459438c7efda32c234e1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -336,6 +347,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7519225694257513657, guid: fc80308f3a3a459438c7efda32c234e1, type: 3}
+      propertyPath: panelDamage
+      value: 
+      objectReference: {fileID: 4412499685901597854}
+    - target: {fileID: 8857123972100627901, guid: fc80308f3a3a459438c7efda32c234e1, type: 3}
+      propertyPath: panelDamage
+      value: 
+      objectReference: {fileID: 4412499685901597854}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

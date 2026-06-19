@@ -7,15 +7,11 @@ public class PlayerJobsData
 
     // ------- CONDITIONS --------- //
 
-    private bool isBlacksmithUnlocked;
-    private bool isFarmerUnlocked;
-
-
     public List<UtilsPlayer.PlayerJob> AvailableJobs => availableJobs;
 
-
-    public bool IsBlacksmithUnlocked => isBlacksmithUnlocked;
-    public bool IsFarmerUnlocked => isFarmerUnlocked;
+    public bool IsBlacksmithUnlocked { get; private set; }
+    public bool IsFarmerUnlocked { get; private set; }
+    public bool IsMageUnlocked { get; private set; }
 
 
     public PlayerJobsData()
@@ -39,12 +35,17 @@ public class PlayerJobsData
 
         if(availableJobs.Contains(UtilsPlayer.PlayerJob.Blacksmith))
         {
-            isBlacksmithUnlocked = true;
+            IsBlacksmithUnlocked = true;
         }
 
         if (availableJobs.Contains(UtilsPlayer.PlayerJob.Farmer))
         {
-            isFarmerUnlocked = true;
+            IsFarmerUnlocked = true;
+        }
+
+        if (availableJobs.Contains(UtilsPlayer.PlayerJob.Mage))
+        {
+            IsMageUnlocked = true;
         }
     }
 
@@ -58,9 +59,12 @@ public class PlayerJobsData
             UtilsPlayer.PlayerJob.Fisher,
             //UtilsPlayer.PlayerJob.Farmer,
             //UtilsPlayer.PlayerJob.Blacksmith
+            //UtilsPlayer.PlayerJob.Mage
         };
 
-        isBlacksmithUnlocked = false;
+        IsBlacksmithUnlocked = false;
+        IsFarmerUnlocked = false;
+        IsMageUnlocked = false;
     }
 
 
@@ -70,8 +74,9 @@ public class PlayerJobsData
 
         switch(job)
         {
-            case UtilsPlayer.PlayerJob.Blacksmith: isBlacksmithUnlocked = true; break;
-            case UtilsPlayer.PlayerJob.Farmer: isFarmerUnlocked = true; break;
+            case UtilsPlayer.PlayerJob.Blacksmith: IsBlacksmithUnlocked = true; break;
+            case UtilsPlayer.PlayerJob.Farmer: IsFarmerUnlocked = true; break;
+            case UtilsPlayer.PlayerJob.Mage: IsMageUnlocked = true; break;
         }
 
         PlayerManager.Instance.SaveJobsData();

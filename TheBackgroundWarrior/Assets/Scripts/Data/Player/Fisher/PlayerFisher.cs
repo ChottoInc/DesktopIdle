@@ -160,11 +160,6 @@ public class PlayerFisher : Player
         playerData.AddExp(rewardedExp);
     }
 
-    public void HandleSwitchScene()
-    {
-
-    }
-
 
     #region SAVE
 

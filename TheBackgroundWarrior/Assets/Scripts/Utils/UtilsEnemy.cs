@@ -6,6 +6,12 @@ public static class UtilsEnemy
 {
     public enum EnemyType { ArmoredOrc, ArmoredSkeleton, EliteOrc, GreatswordSkeleton, Orc, OrcRider, Skeleton, SkeletonArcher, Slime, Werebear, Werewolf }
 
+
+    public enum EnemyAffectedStatus { None, Chilled, Poisoned }
+    public const float TIMER_CHILLED_STATUS = 20f;
+    public const float TIMER_POISONED_STATUS = 20f;
+
+
     private static Dictionary<int, ListableGameDataSO> dictEnemies;
     private static Dictionary<int, ListableGameDataSO> dictEnemyTypeConverters;
 

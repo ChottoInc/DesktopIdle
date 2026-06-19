@@ -5,12 +5,6 @@ using UnityEngine.UI;
 
 public class UITabPlayerJob : UITabWindow
 {
-    public const int ID_WARRIOR_TAB = 0;
-    public const int ID_MINER_TAB = 1;
-    public const int ID_BLACKSMITH_TAB = 2;
-    public const int ID_FISHER_TAB = 3;
-    public const int ID_FARMER_TAB = 4;
-
     [Header("Title")]
     [SerializeField] TMP_Text textJob;
 
@@ -24,11 +18,12 @@ public class UITabPlayerJob : UITabWindow
     [SerializeField] UITab tabBlacksmith;
     [SerializeField] UITab tabFisher;
     [SerializeField] UITab tabFarmer;
+    [SerializeField] UITab tabMage;
 
     private List<UIButtonJobTab> jobTabs;
 
     private UITabWindow currentTabWindow;
-    private int currentTab = -1;
+    private UtilsPlayer.PlayerJob currentTab;
 
     public override void Open()
     {
@@ -42,15 +37,18 @@ public class UITabPlayerJob : UITabWindow
             tab.Refresh();
         }
 
-        if(currentTab == -1)
+        ResetScrollUI();
+
+        if(currentTab == UtilsPlayer.PlayerJob.None)
         {
             switch (SettingsManager.Instance.LastSceneSettings.lastSceneType)
             {
-                case SceneLoaderManager.SceneType.CombatMap: currentTab = ID_WARRIOR_TAB; break;
-                case SceneLoaderManager.SceneType.Miner: currentTab = ID_MINER_TAB; break;
-                case SceneLoaderManager.SceneType.Blacksmith: currentTab = ID_BLACKSMITH_TAB; break;
-                case SceneLoaderManager.SceneType.Fisher: currentTab = ID_FISHER_TAB; break;
-                case SceneLoaderManager.SceneType.Farmer: currentTab = ID_FARMER_TAB; break;
+                case SceneLoaderManager.SceneType.CombatMap: currentTab = UtilsPlayer.PlayerJob.Warrior; break;
+                case SceneLoaderManager.SceneType.Miner: currentTab = UtilsPlayer.PlayerJob.Miner; break;
+                case SceneLoaderManager.SceneType.Blacksmith: currentTab = UtilsPlayer.PlayerJob.Blacksmith; break;
+                case SceneLoaderManager.SceneType.Fisher: currentTab = UtilsPlayer.PlayerJob.Fisher; break;
+                case SceneLoaderManager.SceneType.Farmer: currentTab = UtilsPlayer.PlayerJob.Farmer; break;
+                case SceneLoaderManager.SceneType.Mage: currentTab = UtilsPlayer.PlayerJob.Mage; break;
             }
             ChangeCurrentTab(currentTab);
         }
@@ -70,30 +68,32 @@ public class UITabPlayerJob : UITabWindow
                 tabMiner.GetComponent<UIButtonJobTab>(),
                 tabBlacksmith.GetComponent<UIButtonJobTab>(),
                 tabFisher.GetComponent<UIButtonJobTab>(),
-                tabFarmer.GetComponent<UIButtonJobTab>()
+                tabFarmer.GetComponent<UIButtonJobTab>(),
+                tabMage.GetComponent<UIButtonJobTab>()
             };
         }
     }
 
-    public void ChangeCurrentTab(int tab)
+    public void ChangeCurrentTab(UtilsPlayer.PlayerJob tab)
     {
         switch (tab)
         {
             default: ResetScrollUI(); break; // show job tree
 
-            case ID_WARRIOR_TAB: tabWarrior.Select(); break;
-            case ID_MINER_TAB: tabMiner.Select(); break;
-            case ID_BLACKSMITH_TAB: tabBlacksmith.Select(); break;
-            case ID_FISHER_TAB: tabFisher.Select(); break;
-            case ID_FARMER_TAB: tabFarmer.Select(); break;
+            case UtilsPlayer.PlayerJob.Warrior: tabWarrior.Select(); break;
+            case UtilsPlayer.PlayerJob.Miner: tabMiner.Select(); break;
+            case UtilsPlayer.PlayerJob.Blacksmith: tabBlacksmith.Select(); break;
+            case UtilsPlayer.PlayerJob.Fisher: tabFisher.Select(); break;
+            case UtilsPlayer.PlayerJob.Farmer: tabFarmer.Select(); break;
+            case UtilsPlayer.PlayerJob.Mage: tabMage.Select(); break;
         }
 
         ChangeTitleText(tab);
     }
 
-    public void ChangeCurrentTab(UITabWindow window, int id)
+    public void ChangeCurrentTab(UITabWindow window, UtilsPlayer.PlayerJob tab)
     {
-        if(id != -1)
+        if(tab != UtilsPlayer.PlayerJob.None)
         {
             panelScroll.gameObject.SetActive(false);
             currentTabWindow = window;
@@ -104,20 +104,21 @@ public class UITabPlayerJob : UITabWindow
             ResetScrollUI();
         }
 
-        ChangeTitleText(id);
-        currentTab = id;
+        ChangeTitleText(tab);
+        currentTab = tab;
     }
 
-    private void ChangeTitleText(int idTab)
+    private void ChangeTitleText(UtilsPlayer.PlayerJob tab)
     {
-        switch (idTab)
+        switch (tab)
         {
             default: textJob.text = UtilsText.AllText[UtilsText.text_title_jobs]; break;
-            case ID_WARRIOR_TAB: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_warrior]; break;
-            case ID_MINER_TAB: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_miner]; break;
-            case ID_BLACKSMITH_TAB: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_blacksmith]; break;
-            case ID_FISHER_TAB: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_fisher]; break;
-            case ID_FARMER_TAB: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_farmer]; break;
+            case UtilsPlayer.PlayerJob.Warrior: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_warrior]; break;
+            case UtilsPlayer.PlayerJob.Miner: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_miner]; break;
+            case UtilsPlayer.PlayerJob.Blacksmith: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_blacksmith]; break;
+            case UtilsPlayer.PlayerJob.Fisher: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_fisher]; break;
+            case UtilsPlayer.PlayerJob.Farmer: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_farmer]; break;
+            case UtilsPlayer.PlayerJob.Mage: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_mage]; break;
         }
     }
 
@@ -130,18 +131,22 @@ public class UITabPlayerJob : UITabWindow
 
 
 
-    public void OnButtonClose()
+    public void OnButtonClose(bool makeSound = true)
     {
         if(currentTabWindow == null)
         {
-            AudioManager.Instance.PlayClickUI();
+            if(makeSound)
+                AudioManager.Instance.PlayClickUI();
+
             Close();
         }
         else
         {
             if (currentTabWindow.CanClose())
             {
-                AudioManager.Instance.PlayClickUI();
+                if (makeSound)
+                    AudioManager.Instance.PlayClickUI();
+
                 Close();
             }
         }

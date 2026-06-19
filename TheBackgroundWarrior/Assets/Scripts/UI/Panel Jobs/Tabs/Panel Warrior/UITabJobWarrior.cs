@@ -35,7 +35,7 @@ public class UITabJobWarrior : UITabWindow
             player = FindFirstObjectByType<PlayerFight>();
         }
 
-        panelJob.ChangeCurrentTab(this, UITabPlayerJob.ID_WARRIOR_TAB);
+        panelJob.ChangeCurrentTab(this, UtilsPlayer.PlayerJob.Warrior);
 
         if(maps == null)
         {
@@ -67,7 +67,7 @@ public class UITabJobWarrior : UITabWindow
         AudioManager.Instance.PlayClickUI();
 
         Close();
-        panelJob.ChangeCurrentTab(null, -1);
+        panelJob.ChangeCurrentTab(null, UtilsPlayer.PlayerJob.None);
     }
 
     private void FillMaps()
@@ -123,8 +123,6 @@ public class UITabJobWarrior : UITabWindow
 
 
 
-
-
     public void OnMapSelected(string mapName, int idMap)
     {
         LastSceneSettings settings = new LastSceneSettings();
@@ -133,27 +131,5 @@ public class UITabJobWarrior : UITabWindow
         settings.lastCombatMapId = idMap;
 
         SceneLoaderManager.Instance.LoadScene(settings);
-
-
-        /*
-        if(player != null)
-        {
-            // if already in the scene do not load
-            if(SettingsManager.Instance.LastSceneSettings.lastSceneName == mapName)
-            {
-
-            }
-        }
-        else
-        {
-            // 100% not in a fight scene
-            LastSceneSettings settings = new LastSceneSettings();
-            settings.lastSceneName = mapName;
-            settings.lastSceneType = SceneLoaderManager.SceneType.CombatMap;
-            settings.lastCombatMapId = idMap;
-
-            SceneLoaderManager.Instance.LoadScene(settings);
-        }
-        */
     }
 }

@@ -28,6 +28,8 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerFarmerData PlayerFarmerData { get; private set; }
 
+    public PlayerMageData PlayerMageData { get; private set; }
+
 
     // --- COMPANIONS
 
@@ -113,6 +115,7 @@ public class PlayerManager : MonoBehaviour
         LoadBlacksmithData();
         LoadFisherData();
         LoadFarmerData();
+        LoadMageData();
 
         LoadFightData();
     }
@@ -344,6 +347,37 @@ public class PlayerManager : MonoBehaviour
 
     #endregion
 
+    #region MAGE DATA
+
+    private void LoadMageData()
+    {
+        try
+        {
+            PlayerMageSaveData mageSaveData = saveService.LoadData<PlayerMageSaveData>(UtilsSave.GetPlayerMageFile(), SettingsManager.Instance.FileEncryption);
+            PlayerMageData = new PlayerMageData(mageSaveData);
+        }
+        catch
+        {
+            PlayerMageData = new PlayerMageData();
+            SaveMageData();
+        }
+
+    }
+
+    public void UpdateMageData(PlayerMageData data)
+    {
+        PlayerMageData = data;
+        SaveMageData();
+    }
+
+    public void SaveMageData()
+    {
+        PlayerMageSaveData data = new PlayerMageSaveData(PlayerMageData);
+        saveService.SaveData(UtilsSave.GetPlayerMageFile(), data, SettingsManager.Instance.FileEncryption);
+    }
+
+    #endregion
+
     public void SaveAll()
     {
         SaveInventoryData();
@@ -353,6 +387,7 @@ public class PlayerManager : MonoBehaviour
         SaveBlacksmithData();
         SaveFisherData();
         SaveFarmerData();
+        SaveMageData();
 
         SaveJobsData();
     }

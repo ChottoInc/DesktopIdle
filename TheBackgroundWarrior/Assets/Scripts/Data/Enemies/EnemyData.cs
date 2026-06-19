@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyData
@@ -12,40 +14,28 @@ public class EnemyData
     private const float DEF_GAIN_PER_LEVEL = 0.06f;
 
 
-    private EnemySO enemySO;
-
-
-    private int currentLevel;
-
-    private float maxHp;
-    private float currentHp;
-
-    private float currentAtk;
-    private float currentDef;
-
-    private float currentAtkSpd;
-
-    private float currentCritRate;
-    private float currentCritDmg;
 
 
     private CombatMapSO mapSO;
 
 
-    public EnemySO EnemySO => enemySO;
+    public EnemySO EnemySO { get; private set; }
 
 
-    public int CurrentLevel => currentLevel;
+    public int CurrentLevel { get; private set; }
 
-    public float MaxHp => maxHp;
-    public float CurrentHp => currentHp;
+    public float MaxHp { get; private set; }
+    public float CurrentHp { get; private set; }
 
-    public float CurrentAtk => currentAtk;
-    public float CurrentDef => currentDef;
+    public float CurrentAtk { get; private set; }
+    public float CurrentDef { get; private set; }
 
-    public float CurrentAtkSpd => currentAtkSpd;
-    public float CurrentCritRate => currentCritRate;
-    public float CurrentCritDmg => currentCritDmg;
+    public float CurrentAtkSpd { get; private set; }
+    public float CurrentCritRate { get; private set; }
+    public float CurrentCritDmg { get; private set; }
+
+
+    private List<UtilsEnemy.EnemyAffectedStatus> _affectedStatuses;
 
 
     public event Action<int> OnTakeDamage;
@@ -55,28 +45,32 @@ public class EnemyData
 
     public EnemyData(EnemySO enemySO)
     {
-        this.enemySO = enemySO;
+        EnemySO = enemySO;
+
+        _affectedStatuses = new List<UtilsEnemy.EnemyAffectedStatus>();
     }
 
 
     public EnemyData(EnemySO enemySO, CombatMapSO mapSO)
     {
-        this.enemySO = enemySO;
+        EnemySO = enemySO;
         this.mapSO = mapSO;
 
-        currentLevel = Mathf.FloorToInt(CalculateLevel());
+        CurrentLevel = Mathf.FloorToInt(CalculateLevel());
 
-        maxHp = CalculateMaxHp();
-        currentHp = maxHp;
+        MaxHp = CalculateMaxHp();
+        CurrentHp = MaxHp;
 
-        currentAtk = CalculateAtk();
-        currentDef = CalculateDef();
+        CurrentAtk = CalculateAtk();
+        CurrentDef = CalculateDef();
+        
+        CurrentAtkSpd = CalculateAtkSpd();
+        
+        CurrentCritRate = CalculateCritRate();
+        CurrentCritDmg = CalculateCritDmg();
 
-        currentAtkSpd = CalculateAtkSpd();
-
-        currentCritRate = CalculateCritRate();
-        currentCritDmg = CalculateCritDmg();
-    }
+        _affectedStatuses = new List<UtilsEnemy.EnemyAffectedStatus>();
+    }   
 
     private float CalculateLevel()
     {
@@ -93,21 +87,21 @@ public class EnemyData
     {
         // exp growth
         float p = 1.25f;
-        return enemySO.BaseMaxHp + MAXHP_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
+        return EnemySO.BaseMaxHp + MAXHP_GAIN_PER_LEVEL * Mathf.Pow(CurrentLevel - 1, p);
     }
 
     private float CalculateAtk()
     {
         // exp growth
         float p = 1.35f;
-        return enemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
+        return EnemySO.BaseAtk + ATK_GAIN_PER_LEVEL * Mathf.Pow(CurrentLevel - 1, p);
     }
 
     private float CalculateDef()
     {
         // exp growth
         float p = 1.12f;
-        return enemySO.BaseDef + DEF_GAIN_PER_LEVEL * Mathf.Pow(currentLevel - 1, p);
+        return EnemySO.BaseDef + DEF_GAIN_PER_LEVEL * Mathf.Pow(CurrentLevel - 1, p);
     }
 
     private float CalculateAtkSpd()
@@ -116,7 +110,7 @@ public class EnemyData
         float maxDelay = 1.0f;
         float k = 80f;
 
-        float t = currentLevel / (currentLevel + k);
+        float t = CurrentLevel / (CurrentLevel + k);
         return Mathf.Lerp(maxDelay, minDelay, t);
     }
 
@@ -127,7 +121,7 @@ public class EnemyData
         // controls how fast the crit rate goes, the bigger the slower
         float k = 100f;
 
-        return Mathf.Min(maxCritRate, maxCritRate * (currentLevel / (currentLevel + k)));
+        return Mathf.Min(maxCritRate, maxCritRate * (CurrentLevel / (CurrentLevel + k)));
     }
 
     private float CalculateCritDmg()
@@ -137,7 +131,7 @@ public class EnemyData
         // controls how fast the crit dmg goes, the bigger the slower
         float k = 200f;
 
-        return enemySO.BaseCritDmg + maxCritDmg * (currentLevel / (currentLevel + k));
+        return EnemySO.BaseCritDmg + maxCritDmg * (CurrentLevel / (CurrentLevel + k));
     }
 
     /*
@@ -186,6 +180,8 @@ public class EnemyData
 
     public void TakeDamage(PlayerFightData data)
     {
+        if (CurrentHp <= 0) return;
+
         // can't take less than 0 or it will cure
 
         float baseDamage = data.CurrentAtk;
@@ -205,17 +201,23 @@ public class EnemyData
             }
         }
 
-        total = Mathf.Max(0f, baseDamage - currentDef);
+        total = Mathf.Max(0f, baseDamage - CurrentDef);
 
         // subtract total to hp
-        currentHp -= total;
+        CurrentHp -= total;
 
         OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
 
-        if(currentHp <= 0f)
+        // heal warrior if poisoned
+        if (HasStatus(UtilsEnemy.EnemyAffectedStatus.Poisoned))
         {
-            currentHp = 0;
+            var poisonSpell = PlayerManager.Instance.PlayerMageData.GetSpellByType(UtilsMage.MageSpellType.PoisonGas);
+            float healBy = data.MaxHp * poisonSpell.PercentageLifesteal;
+            //Debug.Log("player heals by" + poisonSpell.PercentageLifesteal.ToString() + " for: " + healBy);
+            data.Heal(healBy);
         }
+
+        CurrentHp = Mathf.Max(CurrentHp, 0f);
     }
 
     /// <summary>
@@ -226,35 +228,76 @@ public class EnemyData
         float total = Mathf.Max(0f, damage);
 
         // subtract total to hp
-        currentHp -= total;
+        CurrentHp -= total;
 
         OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
 
-        if (currentHp <= 0f)
-        {
-            currentHp = 0;
-        }
+        CurrentHp = Mathf.Max(CurrentHp, 0f);
     }
 
     public void TakeDamage(CompanionData data)
     {
+        if (CurrentHp <= 0) return;
+
         // can't take less than 0 or it will cure
-        float total = maxHp * data.CurrentAtkPerc;
+        float total = MaxHp * data.CurrentAtkPerc;
 
         total = Mathf.Max(0f, total);
 
         // subtract total to hp
-        currentHp -= total;
+        CurrentHp -= total;
 
         OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
 
         // companions can't kill enemies, at most they reach 1 hp
-        currentHp = Mathf.Max(currentHp, 1f);
+        CurrentHp = Mathf.Max(CurrentHp, 1f);
+    }
+
+    public void TakeDamageFromSpell(float damage)
+    {
+        if (CurrentHp <= 0) return;
+
+        float total = damage;
+
+        if (HasStatus(UtilsEnemy.EnemyAffectedStatus.Chilled))
+        {
+            var chillWindSpell = PlayerManager.Instance.PlayerMageData.GetSpellByType(UtilsMage.MageSpellType.ChillWind);
+            total += total * chillWindSpell.PercentageMoreDamageFromSpells;
+            //Debug.Log("enemy affcted by chilled");
+            //Debug.Log("increase by: " + chillWindSpell.PercentageMoreDamageFromSpells);
+        }
+
+        total = Mathf.Max(0f, total);
+
+        //Debug.Log("Enemy hit by " + spellData.SpellSO.SpellType.ToString() + " for: " + total);
+
+        // subtract total to hp
+        CurrentHp -= total;
+
+        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
+
+        // se to 0 if lower
+        CurrentHp = Mathf.Max(CurrentHp, 0f);
+    }
+
+    public bool HasStatus(UtilsEnemy.EnemyAffectedStatus status)
+    {
+        return _affectedStatuses.Contains(status);
+    }
+
+    public void AddStatus(UtilsEnemy.EnemyAffectedStatus status)
+    {
+        _affectedStatuses.Add(status);
+    }
+
+    public void RemoveStatus(UtilsEnemy.EnemyAffectedStatus status)
+    {
+        _affectedStatuses.Remove(status);
     }
 
     public void SetDead()
     {
-        currentHp = 0;
+        CurrentHp = 0;
     }
 
     #endregion

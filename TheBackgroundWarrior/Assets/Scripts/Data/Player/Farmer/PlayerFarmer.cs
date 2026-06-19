@@ -548,12 +548,6 @@ public class PlayerFarmer : Player
     }
 
 
-    public void HandleSwitchScene()
-    {
-
-    }
-
-
     #region SAVE
 
     public void SaveFarmerData()

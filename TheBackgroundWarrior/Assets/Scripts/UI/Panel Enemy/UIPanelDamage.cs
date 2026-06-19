@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class UIPanelDamage : UIBasePanelDamage
+public class UIPanelDamage : UIBasePanelFloating
 {
     [SerializeField] Enemy enemy;
 
     protected override void Awake()
     {
-        enemy.OnTakeDamage += ShowDamage;
+        enemy.OnTakeDamage += ShowValue;
     }
 
     protected override void OnDestroy()
     {
-        enemy.OnTakeDamage -= ShowDamage;
+        enemy.OnTakeDamage -= ShowValue;
     }
 }
