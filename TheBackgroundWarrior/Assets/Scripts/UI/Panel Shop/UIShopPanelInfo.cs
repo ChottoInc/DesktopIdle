@@ -26,7 +26,23 @@ public class UIShopPanelInfo : MonoBehaviour
         
         imageItem.sprite = itemSO.Sprite;
         textName.text = itemSO.ItemName;
-        textDesc.text = itemSO.ItemDesc;
+       
+        HandleDesc();
+    }
+
+    private void HandleDesc()
+    {
+        switch (itemSO.ShopItemType)
+        {
+            default: textDesc.text = itemSO.ItemDesc; break;
+            case UtilsShop.ShopItemType.Baits: HandleBaitDesc(); break;
+        }
+    }
+
+    private void HandleBaitDesc()
+    {
+        ShopBaitSO shopBaitSO = itemSO as ShopBaitSO;
+        textDesc.text = string.Format(shopBaitSO.ItemDesc, shopBaitSO.BaitSO.ItemDesc);
     }
 
     public void Show(bool show)
@@ -68,6 +84,7 @@ public class UIShopPanelInfo : MonoBehaviour
             {
                 case UtilsShop.ShopItemType.CardPack: needClose = true; break;
                 case UtilsShop.ShopItemType.Job: needClose = false; break;
+                case UtilsShop.ShopItemType.Baits: needClose = false; break;
             }
 
             if (needClose)
@@ -80,6 +97,7 @@ public class UIShopPanelInfo : MonoBehaviour
             {
                 case UtilsShop.ShopItemType.CardPack: HandleCardPack(itemSO as ShopCardPackSO); break;
                 case UtilsShop.ShopItemType.Job: HandleShopJob(itemSO as ShopJobSO); break;
+                case UtilsShop.ShopItemType.Baits: HandleShopBait(itemSO as ShopBaitSO); break;
             }
         }
     }
@@ -119,7 +137,7 @@ public class UIShopPanelInfo : MonoBehaviour
             PlayerManager.Instance.Inventory.AddItem(card.Id, 1);
         }
 
-        // save only when added new cards and removed bits
+        // save
         PlayerManager.Instance.SaveInventoryData();
 
         TooltipManagerData tooltipData = new TooltipManagerData
@@ -135,7 +153,15 @@ public class UIShopPanelInfo : MonoBehaviour
     {
         PlayerManager.Instance.PlayerJobsData.AddAvailableJob(jobSO.ShoppingJob);
 
-        // save only when added new cards and removed bits
+        // save
+        PlayerManager.Instance.SaveInventoryData();
+    }
+
+    private void HandleShopBait(ShopBaitSO shopBaitSO)
+    {
+        PlayerManager.Instance.Inventory.AddItem(shopBaitSO.BaitSO.Id, shopBaitSO.Quantity);
+
+        // save
         PlayerManager.Instance.SaveInventoryData();
     }
 }

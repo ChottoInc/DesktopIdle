@@ -12,7 +12,8 @@ public class UIInventoryPanelInfo : MonoBehaviour
     [SerializeField] TMP_Text textName;
 
     [Header("Buttons")]
-    [SerializeField] GameObject panelButtons;
+    [SerializeField] GameObject _panelCardButtons;
+    [SerializeField] GameObject _panelConsumableButtons;
     [SerializeField] UIPanelDismantle panelDismantle;
 
 
@@ -31,13 +32,16 @@ public class UIInventoryPanelInfo : MonoBehaviour
         textName.text = itemSO.ItemName;
 
         // Set panel buttons to active if the selected item is a card
-        panelButtons.SetActive(itemSO.ItemType == UtilsItem.ItemType.Card);
+        _panelCardButtons.SetActive(itemSO.ItemType == UtilsItem.ItemType.Card);
+        _panelConsumableButtons.SetActive(itemSO.ItemType == UtilsItem.ItemType.Bait);
     }
 
     public void Show(bool show)
     {
         gameObject.SetActive(show);
     }
+
+
 
     public void OnButtonConvert()
     {
@@ -50,4 +54,15 @@ public class UIInventoryPanelInfo : MonoBehaviour
         panelDismantle.Show(true);
         Show(false);
     }
+
+
+
+    public void OnButtonUse()
+    {
+        if (UtilsItem.UseConsumable(itemSO))
+        {
+
+        }
+    }
+
 }

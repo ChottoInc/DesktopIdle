@@ -10,11 +10,12 @@ public static class UtilsItem
      * Metals ids start from 150
      * Fishes ids start from 200
      * Crops ids start from 400
+     * Baits ids start from 450
      * */
 
     private static Dictionary<int, ListableGameDataSO> dictItems;
 
-    public enum ItemType { Ore, Card, Metal, Fish, Crop }
+    public enum ItemType { Ore, Card, Metal, Fish, Crop, Bait }
 
     public enum CardRarity { Common, Uncommon, Rare }
 
@@ -202,4 +203,23 @@ public static class UtilsItem
     }
 
     #endregion
+
+
+
+    private static readonly Dictionary<ItemType, IConsumableHandler> _consumableHandlers = new()
+    {
+        { ItemType.Bait, new ConsumableBaitHandler() },
+    };
+
+
+    public static bool UseConsumable(ItemSO item)
+    {
+        if (_consumableHandlers.TryGetValue(item.ItemType, out var handler))
+           return handler.Use(item);
+        else
+        {
+            Debug.LogWarning($"No handler for item type {item.ItemType}");
+            return false;
+        }
+    }
 }

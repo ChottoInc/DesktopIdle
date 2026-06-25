@@ -49,6 +49,7 @@ public class UIPanelShopItems : MonoBehaviour
             default:
             case UtilsShop.ID_SHOP_FILTER_CARDPACKS: shopItems = UtilsShop.GetAllTypeItem<ShopCardPackSO>().Cast<ShopItemSO>().ToList(); break;
             case UtilsShop.ID_SHOP_FILTER_JOBS: shopItems = UtilsShop.GetAllTypeItem<ShopJobSO>().Cast<ShopItemSO>().ToList(); break;
+            case UtilsShop.ID_SHOP_FILTER_BAITS: shopItems = UtilsShop.GetAllTypeItem<ShopBaitSO>().Cast<ShopItemSO>().ToList(); break;
         }
 
         for (int i = 0; i < shopItems.Count; i++)

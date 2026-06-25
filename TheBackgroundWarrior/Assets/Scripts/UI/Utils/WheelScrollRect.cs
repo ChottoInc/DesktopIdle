@@ -26,6 +26,11 @@ public class WheelScrollRect : ScrollRect, IPointerEnterHandler, IPointerExitHan
         {
             var delta = Input.GetAxis(mouseScrollWheelAxis);
 
+            // check top or bottom
+            if ((delta > 0 && verticalNormalizedPosition >= 1f) ||
+                (delta < 0 && verticalNormalizedPosition <= 0f))
+                return;
+
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
             pointerData.scrollDelta = new Vector2(0f, delta);
 

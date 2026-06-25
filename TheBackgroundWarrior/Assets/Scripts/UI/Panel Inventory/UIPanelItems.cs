@@ -58,6 +58,7 @@ public class UIPanelItems : MonoBehaviour
                 case UITabInventory.ID_INVENTORY_FILTER_METALS: itemType = UtilsItem.ItemType.Metal; break;
                 case UITabInventory.ID_INVENTORY_FILTER_FISHES: itemType = UtilsItem.ItemType.Fish; break;
                 case UITabInventory.ID_INVENTORY_FILTER_CROPS: itemType = UtilsItem.ItemType.Crop; break;
+                case UITabInventory.ID_INVENTORY_FILTER_BAITS: itemType = UtilsItem.ItemType.Bait; break;
                 case UITabInventory.ID_INVENTORY_FILTER_CARDS: itemType = UtilsItem.ItemType.Card; break;
             }
             itemGroups = PlayerManager.Instance.Inventory.GetGroupsOfType(itemType);

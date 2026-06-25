@@ -37,6 +37,14 @@ public static class UtilsMage
 
 
 
+    private const long FIREBALL_EXP = 50;
+    private const long EXPLOSION_EXP = 75;
+    private const long CHILLWIND_EXP = 100;
+    private const long POISONGAS_EXP = 125;
+    private const long ZAP_EXP = 150;
+
+
+
 
 
     public static void Initialize()
@@ -119,11 +127,11 @@ public static class UtilsMage
         switch (spellType)
         {
             default: return 0;
-            case MageSpellType.Fireball: return 50;
-            case MageSpellType.Explosion: return 75;
-            case MageSpellType.ChillWind: return 100;
-            case MageSpellType.PoisonGas: return 125;
-            case MageSpellType.Zap: return 150;
+            case MageSpellType.Fireball: return FIREBALL_EXP;
+            case MageSpellType.Explosion: return EXPLOSION_EXP;
+            case MageSpellType.ChillWind: return CHILLWIND_EXP;
+            case MageSpellType.PoisonGas: return POISONGAS_EXP;
+            case MageSpellType.Zap: return ZAP_EXP;
         }
     }
 

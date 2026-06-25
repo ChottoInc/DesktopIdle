@@ -13,21 +13,16 @@ public class PlayerFisherData : IBasePlayerData
 
     // ---- LEVEL STAT POINTS
 
-    private int levelStatCalmness = 1;
-    private int levelstatReflex = 1;
-    private int levelstatKnowledge = 1;
-    private int levelStatLuck = 1;
-
     private int startLevelCalmness = 1;
     private int startLevelReflex = 1;
     private int startLevelKnowledge = 1;
     private int startLevelLuck = 1;
 
 
-    public int LevelStatCalmness => levelStatCalmness;
-    public int LevelStatReflex => levelstatReflex;
-    public int LevelStatKnowledge => levelstatKnowledge;
-    public int LevelStatLuck => levelStatLuck;
+    public int LevelStatCalmness { get; private set; }
+    public int LevelStatReflex { get; private set; }
+    public int LevelStatKnowledge { get; private set; }
+    public int LevelStatLuck { get; private set; }
 
 
     // ---- POINTS
@@ -43,42 +38,35 @@ public class PlayerFisherData : IBasePlayerData
     private long currentExp;
 
 
-    // ---- FISH GROUPS CHECKS COMPLETION
-
-    private bool isLifeSeriesCompleted;
-    private bool isPredatorSeriesCompleted;
-    private bool isGuardianSeriesCompleted;
-    private bool isDartSeriesCompleted;
-    private bool isSharpSeriesCompleted;
-    private bool isPiercingSeriesCompleted;
-    private bool isGoldenSeriesCompleted;
-    private bool isElderSeriesCompleted;
-    private bool isQuickSeriesCompleted;
-
-
-
-
 
     public int CurrentLevel => currentLevel;
     public long CurrentExp => currentExp;
     public long ExpToNextLevel => UtilsFisher.RequiredExpForFisherLevel(currentLevel + 1);
 
-    public float CurrentCalmness => baseCalmness + UtilsFisher.PER_LEVEL_FISHER_GAIN_CALMNESS * (levelStatCalmness);
-    public float CurrentReflex => baseReflex + UtilsFisher.PER_LEVEL_FISHER_GAIN_REFLEX * (levelstatReflex - 1);
-    public float CurrentKnowledge => baseKnowledge + UtilsFisher.PER_LEVEL_FISHER_GAIN_KNOWLEDGE * (levelstatKnowledge - 1);
-    public float CurrentLuck => baseLuck + UtilsFisher.PER_LEVEL_FISHER_GAIN_LUCK * (levelStatLuck - 1);
+    public float CurrentCalmness => baseCalmness + UtilsFisher.PER_LEVEL_FISHER_GAIN_CALMNESS * (LevelStatCalmness);
+    public float CurrentReflex => baseReflex + UtilsFisher.PER_LEVEL_FISHER_GAIN_REFLEX * (LevelStatReflex - 1);
+    public float CurrentKnowledge => baseKnowledge + UtilsFisher.PER_LEVEL_FISHER_GAIN_KNOWLEDGE * (LevelStatKnowledge - 1);
+    public float CurrentLuck => baseLuck + UtilsFisher.PER_LEVEL_FISHER_GAIN_LUCK * (LevelStatLuck - 1);
 
 
+    // ---- FISH GROUPS CHECKS COMPLETION
 
-    public bool IsLifeSeriesCompleted => isLifeSeriesCompleted;
-    public bool IsPredatorSeriesCompleted => isPredatorSeriesCompleted;
-    public bool IsGuardianSeriesCompleted => isGuardianSeriesCompleted;
-    public bool IsDartSeriesCompleted => isDartSeriesCompleted;
-    public bool IsSharpSeriesCompleted => isSharpSeriesCompleted;
-    public bool IsPiercingSeriesCompleted => isPiercingSeriesCompleted;
-    public bool IsGoldenSeriesCompleted => isGoldenSeriesCompleted;
-    public bool IsElderSeriesCompleted => isElderSeriesCompleted;
-    public bool IsQuickSeriesCompleted => isQuickSeriesCompleted;
+    public bool IsLifeSeriesCompleted { get; private set; }
+    public bool IsPredatorSeriesCompleted { get; private set; }
+    public bool IsGuardianSeriesCompleted { get; private set; }
+    public bool IsDartSeriesCompleted { get; private set; }
+    public bool IsSharpSeriesCompleted { get; private set; }
+    public bool IsPiercingSeriesCompleted { get; private set; }
+    public bool IsGoldenSeriesCompleted { get; private set; }
+    public bool IsElderSeriesCompleted { get; private set; }
+    public bool IsQuickSeriesCompleted { get; private set; }
+
+
+    // ---- BAITS VARS
+
+    public bool IsBaitActive { get; private set; }
+    public BaitSO ActiveBait { get; private set; }
+    public float RemainingTimeBait { get; private set; }
 
 
 
@@ -97,16 +85,16 @@ public class PlayerFisherData : IBasePlayerData
     {
         GenerateBaseStats();
 
-        levelStatCalmness = saveData.levelStatCalmness;
-        levelstatReflex = saveData.levelReflex;
-        levelstatKnowledge = saveData.levelKnowledge;
-        levelStatLuck = saveData.levelStatLuck;
+        LevelStatCalmness = saveData.levelStatCalmness;
+        LevelStatReflex = saveData.levelReflex;
+        LevelStatKnowledge = saveData.levelKnowledge;
+        LevelStatLuck = saveData.levelStatLuck;
 
 
-        levelStatCalmness = Math.Min(levelStatCalmness, UtilsFisher.PER_LEVEL_FISHER_MAX_CALMNESS);
-        levelstatReflex = Math.Min(levelstatReflex, UtilsFisher.PER_LEVEL_FISHER_MAX_REFLEX);
-        levelstatKnowledge = Math.Min(levelstatKnowledge, UtilsFisher.PER_LEVEL_FISHER_MAX_KNOWLEDGE);
-        levelStatLuck = Math.Min(levelStatLuck, UtilsFisher.PER_LEVEL_FISHER_MAX_LUCK);
+        LevelStatCalmness = Math.Min(LevelStatCalmness, UtilsFisher.PER_LEVEL_FISHER_MAX_CALMNESS);
+        LevelStatReflex = Math.Min(LevelStatReflex, UtilsFisher.PER_LEVEL_FISHER_MAX_REFLEX);
+        LevelStatKnowledge = Math.Min(LevelStatKnowledge, UtilsFisher.PER_LEVEL_FISHER_MAX_KNOWLEDGE);
+        LevelStatLuck = Math.Min(LevelStatLuck, UtilsFisher.PER_LEVEL_FISHER_MAX_LUCK);
 
 
         availableStatPoints = saveData.availableStatPoints;
@@ -115,7 +103,7 @@ public class PlayerFisherData : IBasePlayerData
         currentExp = saveData.currentExp;
 
         int sumLevels =
-            levelStatCalmness + levelstatReflex + levelstatKnowledge + levelStatLuck +
+            LevelStatCalmness + LevelStatReflex + LevelStatKnowledge + LevelStatLuck +
             //startLevelCalmness + startLevelReflex + startLevelKnowledge + startLevelLuck +
             availableStatPoints +
             1;
@@ -126,11 +114,15 @@ public class PlayerFisherData : IBasePlayerData
         if (currentLevel >= UtilsFisher.MAX_LEVEL_FISHER)
         {
             availableStatPoints = UtilsFisher.MAX_LEVEL_FISHER - 1 -
-               levelStatCalmness - levelstatReflex - levelstatKnowledge - levelStatLuck;
+               LevelStatCalmness - LevelStatReflex - LevelStatKnowledge - LevelStatLuck;
             currentExp = 0;
         }
 
         FillFishGroupsSeriesCompletion();
+
+        IsBaitActive = saveData.isBaitActive;
+        ActiveBait = UtilsItem.GetItemById(saveData.activeBaitId) as BaitSO;
+        RemainingTimeBait = saveData.remainingTimeBait;
     }
 
     private void GenerateBaseStats()
@@ -138,10 +130,10 @@ public class PlayerFisherData : IBasePlayerData
         currentLevel = 1;
         currentExp = 0;
 
-        levelStatCalmness = startLevelCalmness;
-        levelstatReflex = startLevelReflex;
-        levelstatKnowledge = startLevelKnowledge;
-        levelStatLuck = startLevelLuck;
+        LevelStatCalmness = startLevelCalmness;
+        LevelStatReflex = startLevelReflex;
+        LevelStatKnowledge = startLevelKnowledge;
+        LevelStatLuck = startLevelLuck;
 
         // multiplier
         baseCalmness = 0f; // reduced max time for spawn fish, up to 0.5f - 50%
@@ -150,6 +142,10 @@ public class PlayerFisherData : IBasePlayerData
         baseKnowledge = 0f; // reduce chances of same species, up to 0.3 - 30%
 
         baseLuck = 0f; // controls rarity of fish, up to 0.4 - 40%
+
+        IsBaitActive = false;
+        ActiveBait = null;
+        RemainingTimeBait = 0f;
     }
 
     public void FillFishGroupsSeriesCompletion()
@@ -157,31 +153,31 @@ public class PlayerFisherData : IBasePlayerData
         FishGroupSO currentGroup = null;
 
         currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Life);
-        isLifeSeriesCompleted = IsGroupCaught(currentGroup);
+        IsLifeSeriesCompleted = IsGroupCaught(currentGroup);
 
         currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Predator);
-        isPredatorSeriesCompleted = IsGroupCaught(currentGroup);
+        IsPredatorSeriesCompleted = IsGroupCaught(currentGroup);
 
         currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Guardian);
-        isGuardianSeriesCompleted = IsGroupCaught(currentGroup);
+        IsGuardianSeriesCompleted = IsGroupCaught(currentGroup);
 
         currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Dart);
-        isDartSeriesCompleted = IsGroupCaught(currentGroup);
+        IsDartSeriesCompleted = IsGroupCaught(currentGroup);
 
         currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Sharp);
-        isSharpSeriesCompleted = IsGroupCaught(currentGroup);
+        IsSharpSeriesCompleted = IsGroupCaught(currentGroup);
 
         currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Piercing);
-        isPiercingSeriesCompleted = IsGroupCaught(currentGroup);
+        IsPiercingSeriesCompleted = IsGroupCaught(currentGroup);
 
         currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Golden);
-        isGoldenSeriesCompleted = IsGroupCaught(currentGroup);
+        IsGoldenSeriesCompleted = IsGroupCaught(currentGroup);
 
         currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Elder);
-        isElderSeriesCompleted = IsGroupCaught(currentGroup);
+        IsElderSeriesCompleted = IsGroupCaught(currentGroup);
 
         currentGroup = UtilsFisher.GetFishGroupByType(UtilsFisher.FishGroupType.Quick);
-        isQuickSeriesCompleted = IsGroupCaught(currentGroup);
+        IsQuickSeriesCompleted = IsGroupCaught(currentGroup);
     }
 
     private bool IsGroupCaught(FishGroupSO group)
@@ -256,10 +252,10 @@ public class PlayerFisherData : IBasePlayerData
         switch (id)
         {
             default: Debug.Log("Increased stat id not correct. " + id); break;
-            case ID_FISHER_CALMNESS: levelStatCalmness += amount; break;
-            case ID_FISHER_REFLEX: levelstatReflex += amount; break;
-            case ID_FISHER_KNOWLEDGE: levelstatKnowledge += amount; break;
-            case ID_FISHER_LUCK: levelStatLuck += amount; break;
+            case ID_FISHER_CALMNESS: LevelStatCalmness += amount; break;
+            case ID_FISHER_REFLEX: LevelStatReflex += amount; break;
+            case ID_FISHER_KNOWLEDGE: LevelStatKnowledge += amount; break;
+            case ID_FISHER_LUCK: LevelStatLuck += amount; break;
         }
 
         OnStatChange?.Invoke(id, amount);

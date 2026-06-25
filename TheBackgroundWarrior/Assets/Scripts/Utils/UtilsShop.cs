@@ -6,6 +6,8 @@ public static class UtilsShop
 {
     public const int ID_SHOP_FILTER_CARDPACKS = 0;
     public const int ID_SHOP_FILTER_JOBS = 1;
+    public const int ID_SHOP_FILTER_BAITS = 2;
+
     public const int ID_SHOP_FILTER_REDEEM = 9;
     public const int ID_SHOP_FILTER_DEBUG = 10;
 
@@ -14,7 +16,7 @@ public static class UtilsShop
     public const int ID_REDEEM_ERIS_CODE = 0;
 
 
-    public enum ShopItemType { CardPack, Job }
+    public enum ShopItemType { CardPack, Job, Baits }
 
     private static Dictionary<string, ShopItemSO> dictShopItems;
 
@@ -41,7 +43,7 @@ public static class UtilsShop
 
     public static T[] GetAllTypeItem<T>() where T : ShopItemSO
     {
-        return dictShopItems.Values.OfType<T>().ToArray();
+        return dictShopItems.Values.OfType<T>().OrderBy(item => item.Id).ToArray();
     }
 
 

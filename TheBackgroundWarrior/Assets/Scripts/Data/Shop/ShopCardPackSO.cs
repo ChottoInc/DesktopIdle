@@ -8,7 +8,7 @@ public class ShopCardPackSO : ShopItemSO
     [SerializeField] int size;
 
     [Space(10)]
-    [SerializeField]UtilsGeneral.GeneralChances<UtilsItem.CardRarity>[] rarityChances;
+    [SerializeField] UtilsGeneral.GeneralChances<UtilsItem.CardRarity>[] rarityChances;
 
     [Space(10)]
     [SerializeField] bool isGuaranteed;

@@ -274,6 +274,7 @@ public static class UtilsText
     public const string text_button_selectbounty = "text_button_selectbounty";
     public const string text_button_accept = "text_button_accept";
 
+    public const string text_button_use = "text_button_use";
     public const string text_button_convert = "text_button_convert";
     public const string text_button_dismantle = "text_button_dismantle";
     public const string text_button_dismantle_cancel = "text_button_dismantle_cancel";
@@ -299,6 +300,7 @@ public static class UtilsText
 
     public const string text_button_shop_filter_cardpacks = "text_button_shop_filter_cardpacks";
     public const string text_button_shop_filter_jobs = "text_button_shop_filter_jobs";
+    public const string text_button_shop_filter_baits = "text_button_shop_filter_baits";
     public const string text_button_shop_filter_redeem = "text_button_shop_filter_redeem";
     public const string text_button_shop_filter_debug = "text_button_shop_filter_debug";
 
@@ -324,6 +326,7 @@ public static class UtilsText
     public const string text_button_inventory_filter_metals = "text_button_inventory_filter_metals";
     public const string text_button_inventory_filter_fishes = "text_button_inventory_filter_fishes";
     public const string text_button_inventory_filter_crops = "text_button_inventory_filter_crops";
+    public const string text_button_inventory_filter_baits = "text_button_inventory_filter_baits";
     public const string text_button_inventory_filter_cards = "text_button_inventory_filter_cards";
 
 
@@ -516,6 +519,16 @@ public static class UtilsText
     public const string text_item_crop_5_name = "text_item_crop_5_name";
     public const string text_item_crop_6_name = "text_item_crop_6_name";
 
+    public const string text_item_bait_1_name = "text_item_bait_1_name";
+    public const string text_item_bait_2_name = "text_item_bait_2_name";
+    public const string text_item_bait_3_name = "text_item_bait_3_name";
+    public const string text_item_bait_4_name = "text_item_bait_4_name";
+    public const string text_item_bait_5_name = "text_item_bait_5_name";
+    public const string text_item_bait_6_name = "text_item_bait_6_name";
+    public const string text_item_bait_7_name = "text_item_bait_7_name";
+    public const string text_item_bait_8_name = "text_item_bait_8_name";
+    public const string text_item_bait_9_name = "text_item_bait_9_name";
+
 
     public const string text_item_fish_group_life_name = "text_item_fish_group_life_name";
     public const string text_item_fish_group_predator_name = "text_item_fish_group_predator_name";
@@ -544,6 +557,17 @@ public static class UtilsText
 
 
     public const string text_shopitem_job_farmer_name = "text_shopitem_job_farmer_name";
+
+
+    public const string text_shopitem_bait_normalmorning_name = "text_shopitem_bait_normalmorning_name";
+    public const string text_shopitem_bait_greatmorning_name = "text_shopitem_bait_greatmorning_name";
+    public const string text_shopitem_bait_maxmorning_name = "text_shopitem_bait_maxmorning_name";
+    public const string text_shopitem_bait_normalafternoon_name = "text_shopitem_bait_normalafternoon_name";
+    public const string text_shopitem_bait_greatafternoon_name = "text_shopitem_bait_greatafternoon_name";
+    public const string text_shopitem_bait_maxafternoon_name = "text_shopitem_bait_maxafternoon_name";
+    public const string text_shopitem_bait_normalnight_name = "text_shopitem_bait_normalnight_name";
+    public const string text_shopitem_bait_greatnight_name = "text_shopitem_bait_greatnight_name";
+    public const string text_shopitem_bait_maxnight_name = "text_shopitem_bait_maxnight_name";
 
 
 
@@ -698,6 +722,16 @@ public static class UtilsText
     public const string text_item_crop_5_desc = "text_item_crop_5_desc";
     public const string text_item_crop_6_desc = "text_item_crop_6_desc";
 
+    public const string text_item_bait_1_desc = "text_item_bait_1_desc";
+    public const string text_item_bait_2_desc = "text_item_bait_2_desc";
+    public const string text_item_bait_3_desc = "text_item_bait_3_desc";
+    public const string text_item_bait_4_desc = "text_item_bait_4_desc";
+    public const string text_item_bait_5_desc = "text_item_bait_5_desc";
+    public const string text_item_bait_6_desc = "text_item_bait_6_desc";
+    public const string text_item_bait_7_desc = "text_item_bait_7_desc";
+    public const string text_item_bait_8_desc = "text_item_bait_8_desc";
+    public const string text_item_bait_9_desc = "text_item_bait_9_desc";
+
     public const string text_item_fish_group_life_desc = "text_item_fish_group_life_desc";
     public const string text_item_fish_group_predator_desc = "text_item_fish_group_predator_desc";
     public const string text_item_fish_group_guardian_desc = "text_item_fish_group_guardian_desc";
@@ -724,6 +758,17 @@ public static class UtilsText
 
 
     public const string text_shopitem_job_farmer_desc = "text_shopitem_job_farmer_desc";
+
+
+    public const string text_shopitem_bait_normalmorning_desc = "text_shopitem_bait_normalmorning_desc";
+    public const string text_shopitem_bait_greatmorning_desc = "text_shopitem_bait_greatmorning_desc";
+    public const string text_shopitem_bait_maxmorning_desc = "text_shopitem_bait_maxmorning_desc";
+    public const string text_shopitem_bait_normalafternoon_desc = "text_shopitem_bait_normalafternoon_desc";
+    public const string text_shopitem_bait_greatafternoon_desc = "text_shopitem_bait_greatafternoon_desc";
+    public const string text_shopitem_bait_maxafternoon_desc = "text_shopitem_bait_maxafternoon_desc";
+    public const string text_shopitem_bait_normalnight_desc = "text_shopitem_bait_normalnight_desc";
+    public const string text_shopitem_bait_greatnight_desc = "text_shopitem_bait_greatnight_desc";
+    public const string text_shopitem_bait_maxnight_desc = "text_shopitem_bait_maxnight_desc";
 
 
     public const string text_companion_0_desc = "text_companion_0_desc";
@@ -1097,6 +1142,7 @@ public static class UtilsText
             { text_button_selectbounty, "--- Click to choose a bounty from the list ---" },
             { text_button_accept, "Accept" },
 
+            { text_button_use, "Use" },
             { text_button_convert, "Convert" },
             { text_button_dismantle, "Dismantle" },
             { text_button_dismantle_cancel, "<- Cancel" },
@@ -1122,6 +1168,7 @@ public static class UtilsText
 
             { text_button_shop_filter_cardpacks, "Card Packs" },
             { text_button_shop_filter_jobs, "Jobs" },
+            { text_button_shop_filter_baits, "Baits" },
             { text_button_shop_filter_redeem, "Redeem" },
             { text_button_shop_filter_debug, "Debug" },
 
@@ -1147,6 +1194,7 @@ public static class UtilsText
             { text_button_inventory_filter_metals, "Metals" },
             { text_button_inventory_filter_fishes, "Fishes" },
             { text_button_inventory_filter_crops, "Crops" },
+            { text_button_inventory_filter_baits, "Baits" },
             { text_button_inventory_filter_cards, "Cards" },
 
              // -------------------- YESNO --------------------- //
@@ -1333,6 +1381,16 @@ public static class UtilsText
             { text_item_crop_5_name, "Pommodoro" },
             { text_item_crop_6_name, "Pumpky" },
 
+            { text_item_bait_1_name, "Earthworm Bait" },
+            { text_item_bait_2_name, "Earthworm Bait Plus" },
+            { text_item_bait_3_name, "Earthworm Bait Max" },
+            { text_item_bait_4_name, "Cricket Bait" },
+            { text_item_bait_5_name, "Cricket Bait Plus" },
+            { text_item_bait_6_name, "Cricket Bait Max" },
+            { text_item_bait_7_name, "Shrimp Bait" },
+            { text_item_bait_8_name, "Shrimp Bait Plus" },
+            { text_item_bait_9_name, "Earthworm Bait Max" },
+
             { text_item_fish_group_life_name, "Life Series" },
             { text_item_fish_group_predator_name, "Predator Series" },
             { text_item_fish_group_guardian_name, "Guardian Series" },
@@ -1359,6 +1417,19 @@ public static class UtilsText
 
                                       
             { text_shopitem_job_farmer_name, "Class: Farmer" },
+
+
+            { text_shopitem_bait_normalmorning_name, "Box of Earthworm Baits" },
+            { text_shopitem_bait_greatmorning_name, "Box of Earthworm Baits Plus" },
+            { text_shopitem_bait_maxmorning_name, "Box of Earthworm Baits Max" },
+            { text_shopitem_bait_normalafternoon_name, "Box of Cricket Baits" },
+            { text_shopitem_bait_greatafternoon_name, "Box of Cricket Baits Plus" },
+            { text_shopitem_bait_maxafternoon_name, "Box of Cricket Baits Max" },
+            { text_shopitem_bait_normalnight_name, "Box of Shrimp Baits" },
+            { text_shopitem_bait_greatnight_name, "Box of Shrimp Baits Plus" },
+            { text_shopitem_bait_maxnight_name, "Box of Shrimp Baits Max" },
+
+
 
 
             { text_companion_0_name, "Ragghost" },
@@ -1535,6 +1606,16 @@ public static class UtilsText
             { text_item_crop_5_desc, "Pommodoro" },
             { text_item_crop_6_desc, "Pumpky" },
 
+            { text_item_bait_1_desc, "For 10 minutes, also attracts fishes normally found in the morning" },
+            { text_item_bait_2_desc, "For 10 minutes, also attracts a lot of fishes normally found in the morning" },
+            { text_item_bait_3_desc, "For 10 minutes, attracts only fishes normally found in the morning" },
+            { text_item_bait_4_desc, "For 10 minutes, also attracts fishes normally found in the afternoon" },
+            { text_item_bait_5_desc, "For 10 minutes, also attracts a lot of fishes normally found in the afternoon" },
+            { text_item_bait_6_desc, "For 10 minutes, attracts only fishes normally found in the afternoon" },
+            { text_item_bait_7_desc, "For 10 minutes, also attracts fishes normally found in the night" },
+            { text_item_bait_8_desc, "For 10 minutes, also attracts a lot of fishes normally found in the night" },
+            { text_item_bait_9_desc, "For 10 minutes, attracts only fishes normally found in the night" },
+
             { text_item_fish_group_life_desc, "Increase Max Hp for Warrior Job by 100%." },
             { text_item_fish_group_predator_desc, "Increase Atk for Warrior Job by 50%." },
             { text_item_fish_group_guardian_desc, "Increase Def for Warrior Job by 30%." },
@@ -1561,6 +1642,18 @@ public static class UtilsText
 
                                        
             { text_shopitem_job_farmer_desc, "Unlock the Farmer Class" },
+
+
+            { text_shopitem_bait_normalmorning_desc, "Contains 10 Earthworm Baits<br>Effect:{0}" },
+            { text_shopitem_bait_greatmorning_desc, "Contains 10 Earthworm Baits Plus<br>Effect:{0}" },
+            { text_shopitem_bait_maxmorning_desc, "Contains 10 Earthworm Baits Max<br>Effect:{0}" },
+            { text_shopitem_bait_normalafternoon_desc, "Contains 10 Cricket Baits<br>Effect:{0}" },
+            { text_shopitem_bait_greatafternoon_desc, "Contains 10 Cricket Baits Plus<br>Effect:{0}" },
+            { text_shopitem_bait_maxafternoon_desc, "Contains 10 Cricket Baits Max<br>Effect:{0}" },
+            { text_shopitem_bait_normalnight_desc, "Contains 10 Shrimp Baits<br>Effect:{0}" },
+            { text_shopitem_bait_greatnight_desc, "Contains 10 Shrimp Baits Plus<br>Effect:{0}" },
+            { text_shopitem_bait_maxnight_desc, "Contains 10 Shrimp Baits Max<br>Effect:{0}" },
+
 
 
             { text_companion_0_desc, "Increase Warrior Max Hp by {0}%" },

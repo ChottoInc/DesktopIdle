@@ -10,6 +10,10 @@ public class PlayerFisherSaveData
     public int currentLevel;
     public long currentExp;
 
+    public bool isBaitActive;
+    public int activeBaitId;
+    public float remainingTimeBait;
+
     public PlayerFisherSaveData() { }
 
     public PlayerFisherSaveData(PlayerFisherData data)
@@ -24,5 +28,8 @@ public class PlayerFisherSaveData
         currentLevel = data.CurrentLevel;
         currentExp = data.CurrentExp;
 
+        isBaitActive = data.IsBaitActive;
+        activeBaitId = data.ActiveBait.Id;
+        remainingTimeBait = data.RemainingTimeBait;
     }
 }
