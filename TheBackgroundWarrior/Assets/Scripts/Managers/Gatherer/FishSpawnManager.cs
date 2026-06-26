@@ -72,6 +72,7 @@ public class FishSpawnManager : MonoBehaviour
     private void OnDestroy()
     {
         player.OnFishCaught -= AddFishToCaughtList;
+        player.OnBaitChange -= OnFisherBaitChange;
 
         SettingsManager.Instance.OnIsHiddenFishingBarChange -= OnFishBarHiddenChange;
     }
@@ -80,6 +81,7 @@ public class FishSpawnManager : MonoBehaviour
     private void Start()
     {
         player.OnFishCaught += AddFishToCaughtList;
+        player.OnBaitChange += OnFisherBaitChange;
 
 
         currentPool = new List<FishSO>();
@@ -128,6 +130,41 @@ public class FishSpawnManager : MonoBehaviour
         }
     }
 
+    private void OnFisherBaitChange()
+    {
+        currentPool.Clear();
+
+        if (player.PlayerData.IsBaitActive)
+        {
+            BaitSO bait = player.PlayerData.ActiveBait;
+
+            int loop1Counter = 0, loop2Counter = 0;
+            switch (bait.Effectivness)
+            {
+                case UtilsFisher.BaitEffectivness.Normal:
+                    loop1Counter = Mathf.FloorToInt((float)MAX_FISHES_IN_POOL * 0.25f);
+                    loop2Counter = MAX_FISHES_IN_POOL - loop1Counter;
+                    break;
+
+                case UtilsFisher.BaitEffectivness.Great:
+                    loop1Counter = Mathf.FloorToInt((float)MAX_FISHES_IN_POOL * 0.5f);
+                    loop2Counter = MAX_FISHES_IN_POOL - loop1Counter;
+                    break;
+
+                case UtilsFisher.BaitEffectivness.Max:
+                    loop1Counter = MAX_FISHES_IN_POOL;
+                    loop2Counter = 0;
+                    break;
+            }
+
+            FillPool(loop1Counter, loop2Counter, bait.AttractsMoment);
+        }
+        else
+        {
+            FillPool();
+        }
+    }
+
     private void OnFishBarHiddenChange(bool isOn)
     {
         fishBar.gameObject.SetActive(!isOn);
@@ -141,30 +178,51 @@ public class FishSpawnManager : MonoBehaviour
             // Get day moment
             UtilsGeneral.DayMoment currentMoment = UtilsGeneral.GetDayMoment();
 
-            // Get rand rarity 
-            UtilsItem.FishRarity randRarity = UtilsGeneral.GetRandomValueFromGeneralChanches(rarityProbabilities);
+            SinglePoolAdd(currentMoment);
+        }
+    }
 
-            // Get luck and cycle until it fails boost rarity
-            float baseLuckPlayer = player.PlayerData.CurrentLuck;
-            while (UtilsGeneral.GetRandomSuccessFromValue(baseLuckPlayer))
+    public void FillPool(int loop1Count, int loop2Count, UtilsGeneral.DayMoment moment)
+    {
+        while (currentPool.Count < loop1Count)
+        {
+            SinglePoolAdd(moment);
+        }
+
+        while (currentPool.Count < loop2Count)
+        {
+            // Get day moment
+            UtilsGeneral.DayMoment currentMoment = UtilsGeneral.GetDayMoment();
+
+            SinglePoolAdd(currentMoment);
+        }
+    }
+
+    private void SinglePoolAdd(UtilsGeneral.DayMoment moment)
+    {
+        // Get rand rarity 
+        UtilsItem.FishRarity randRarity = UtilsGeneral.GetRandomValueFromGeneralChanches(rarityProbabilities);
+
+        // Get luck and cycle until it fails boost rarity
+        float baseLuckPlayer = player.PlayerData.CurrentLuck;
+        while (UtilsGeneral.GetRandomSuccessFromValue(baseLuckPlayer))
+        {
+            randRarity = UpgradeRarity(randRarity);
+
+            // interrupt check luck if max rarity reached
+            if ((int)randRarity == System.Enum.GetValues(typeof(UtilsItem.FishRarity)).Length - 1)
             {
-                randRarity = UpgradeRarity(randRarity);
-
-                // interrupt check luck if max rarity reached
-                if((int)randRarity == System.Enum.GetValues(typeof(UtilsItem.FishRarity)).Length - 1)
-                {
-                    break;
-                }
-
-                baseLuckPlayer *= 0.5f;
+                break;
             }
 
-            // Get random fish
-            FishSO randFish = UtilsItem.GetRandomFishByDayMomentAndRarity(currentMoment, randRarity);
-
-            // Add to pool
-            currentPool.Add(randFish);
+            baseLuckPlayer *= 0.5f;
         }
+
+        // Get random fish
+        FishSO randFish = UtilsItem.GetRandomFishByDayMomentAndRarity(moment, randRarity);
+
+        // Add to pool
+        currentPool.Add(randFish);
     }
 
     public FishSO GetRandomFishFromPool(bool successKnowledge)

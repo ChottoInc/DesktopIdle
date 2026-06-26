@@ -61,7 +61,10 @@ public class UIInventoryPanelInfo : MonoBehaviour
     {
         if (UtilsItem.UseConsumable(itemSO))
         {
+            PlayerManager.Instance.Inventory.RemoveItem(itemSO.Id, 1);
+            PlayerManager.Instance.SaveInventoryData();
 
+            Setup(group);
         }
     }
 

@@ -21,6 +21,8 @@ public class PlayerFisher : Player
 
     public event Action<FishSO> OnFishCaught;
 
+    public event Action OnBaitChange;
+
 
 
 
@@ -34,6 +36,7 @@ public class PlayerFisher : Player
             playerData.OnLevelUp -= LevelUp;
 
             playerData.OnStatChange -= OnStatChangeFisher;
+            playerData.OnBaitChange -= OnBaitChangeFisher;
         }
     }
 
@@ -68,6 +71,7 @@ public class PlayerFisher : Player
             playerData.OnLevelUp += LevelUp;
 
             playerData.OnStatChange += OnStatChangeFisher;
+            playerData.OnBaitChange += OnBaitChangeFisher;
         }
     }
 
@@ -183,6 +187,11 @@ public class PlayerFisher : Player
     private void OnStatChangeFisher(int id, int value)
     {
         OnStatChange?.Invoke(id, value);
+    }
+
+    private void OnBaitChangeFisher()
+    {
+        OnBaitChange?.Invoke();
     }
 
     #endregion

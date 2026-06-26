@@ -74,6 +74,8 @@ public class PlayerFisherData : IBasePlayerData
     public event Action OnLevelUp;
     public event Action<int, int> OnStatChange;
 
+    public event Action OnBaitChange;
+
     public PlayerFisherData()
     {
         GenerateBaseStats();
@@ -259,5 +261,15 @@ public class PlayerFisherData : IBasePlayerData
         }
 
         OnStatChange?.Invoke(id, amount);
+    }
+
+
+    public void SetActiveBait(BaitSO bait)
+    {
+        IsBaitActive = true;
+        ActiveBait = bait;
+        RemainingTimeBait += bait.Duration;
+
+        OnBaitChange?.Invoke();
     }
 }
