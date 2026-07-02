@@ -19,6 +19,7 @@ public class UITabPlayerJob : UITabWindow
     [SerializeField] UITab tabFisher;
     [SerializeField] UITab tabFarmer;
     [SerializeField] UITab tabMage;
+    [SerializeField] UITab tabAlchemist;
 
     private List<UIButtonJobTab> jobTabs;
 
@@ -49,6 +50,7 @@ public class UITabPlayerJob : UITabWindow
                 case SceneLoaderManager.SceneType.Fisher: currentTab = UtilsPlayer.PlayerJob.Fisher; break;
                 case SceneLoaderManager.SceneType.Farmer: currentTab = UtilsPlayer.PlayerJob.Farmer; break;
                 case SceneLoaderManager.SceneType.Mage: currentTab = UtilsPlayer.PlayerJob.Mage; break;
+                case SceneLoaderManager.SceneType.Alchemist: currentTab = UtilsPlayer.PlayerJob.Alchemist; break;
             }
             ChangeCurrentTab(currentTab);
         }
@@ -69,7 +71,8 @@ public class UITabPlayerJob : UITabWindow
                 tabBlacksmith.GetComponent<UIButtonJobTab>(),
                 tabFisher.GetComponent<UIButtonJobTab>(),
                 tabFarmer.GetComponent<UIButtonJobTab>(),
-                tabMage.GetComponent<UIButtonJobTab>()
+                tabMage.GetComponent<UIButtonJobTab>(),
+                tabAlchemist.GetComponent<UIButtonJobTab>()
             };
         }
     }
@@ -86,6 +89,7 @@ public class UITabPlayerJob : UITabWindow
             case UtilsPlayer.PlayerJob.Fisher: tabFisher.Select(); break;
             case UtilsPlayer.PlayerJob.Farmer: tabFarmer.Select(); break;
             case UtilsPlayer.PlayerJob.Mage: tabMage.Select(); break;
+            case UtilsPlayer.PlayerJob.Alchemist: tabAlchemist.Select(); break;
         }
 
         ChangeTitleText(tab);
@@ -119,6 +123,7 @@ public class UITabPlayerJob : UITabWindow
             case UtilsPlayer.PlayerJob.Fisher: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_fisher]; break;
             case UtilsPlayer.PlayerJob.Farmer: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_farmer]; break;
             case UtilsPlayer.PlayerJob.Mage: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_mage]; break;
+            case UtilsPlayer.PlayerJob.Alchemist: textJob.text = UtilsText.AllText[UtilsText.text_button_help_filter_alchemist]; break;
         }
     }
 

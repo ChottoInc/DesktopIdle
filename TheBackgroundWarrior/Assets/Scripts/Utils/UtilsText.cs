@@ -42,6 +42,7 @@ public static class UtilsText
     public const string text_name_class_farmer = "text_name_class_farmer";
     public const string text_name_class_blacksmith = "text_name_class_blacksmith";
     public const string text_name_class_mage = "text_name_class_mage";
+    public const string text_name_class_alchemist = "text_name_class_alchemist";
 
     public const string text_name_warrior_stat_maxhp = "text_name_warrior_stat_maxhp";
     public const string text_name_warrior_stat_atk = "text_name_warrior_stat_atk";
@@ -75,6 +76,11 @@ public static class UtilsText
     public const string text_name_mage_stat_castspeed = "text_name_mage_stat_castspeed";
     public const string text_name_mage_stat_scholar = "text_name_mage_stat_scholar";
     public const string text_name_mage_stat_proficiency = "text_name_mage_stat_proficiency";
+
+    public const string text_name_alchemist_stat_routine = "text_name_alchemist_stat_routine";
+    public const string text_name_alchemist_stat_yield = "text_name_alchemist_stat_yield";
+    public const string text_name_alchemist_stat_research = "text_name_alchemist_stat_research";
+    public const string text_name_alchemist_stat_stability = "text_name_alchemist_stat_stability";
 
 
     public const string text_name_daymoment_morning = "text_name_daymoment_morning";
@@ -139,6 +145,11 @@ public static class UtilsText
     public const string text_tooltip_stat_mage_castspeed = "text_tooltip_stat_mage_castspeed";
     public const string text_tooltip_stat_mage_scholar = "text_tooltip_stat_mage_scholar";
     public const string text_tooltip_stat_mage_proficiency = "text_tooltip_stat_mage_proficiency";
+
+    public const string text_tooltip_stat_alchemist_routine = "text_tooltip_stat_alchemist_routine";
+    public const string text_tooltip_stat_alchemist_yield = "text_tooltip_stat_alchemist_yield";
+    public const string text_tooltip_stat_alchemist_research = "text_tooltip_stat_alchemist_research";
+    public const string text_tooltip_stat_alchemist_stability = "text_tooltip_stat_alchemist_stability";
 
     // -------------------- TITLE --------------------- //
 
@@ -230,6 +241,7 @@ public static class UtilsText
     public const string text_job_farmer_unlockconditions = "text_job_farmer_unlockconditions";
     public const string text_job_blacksmith_unlockconditions = "text_job_blacksmith_unlockconditions";
     public const string text_job_mage_unlockconditions = "text_job_mage_unlockconditions";
+    public const string text_job_alchemist_unlockconditions = "text_job_alchemist_unlockconditions";
 
     public const string text_job_warrior_mapstage = "text_job_warrior_mapstage";
     public const string text_job_warrior_possiblemonsters = "text_job_warrior_possiblemonsters";
@@ -256,6 +268,10 @@ public static class UtilsText
 
 
     public const string text_job_mage_spell_locked = "text_job_mage_spell_locked";
+    public const string text_job_alchemist_recipe_locked = "text_job_alchemist_recipe_locked";
+
+
+    public const string text_job_alchemist_ingredients = "text_job_alchemist_ingredients";
 
 
     // -------------------- BUTTONS --------------------- //
@@ -296,6 +312,8 @@ public static class UtilsText
 
     public const string text_button_learn = "text_button_learn";
 
+    public const string text_button_craft = "text_button_craft";
+
     public const string text_button_revealall = "text_button_revealall";
 
     public const string text_button_shop_filter_cardpacks = "text_button_shop_filter_cardpacks";
@@ -320,6 +338,7 @@ public static class UtilsText
     public const string text_button_help_filter_blacksmith = "text_button_help_filter_blacksmith";
     public const string text_button_help_filter_farmer = "text_button_help_filter_farmer";
     public const string text_button_help_filter_mage = "text_button_help_filter_mage";
+    public const string text_button_help_filter_alchemist = "text_button_help_filter_alchemist";
 
     public const string text_button_inventory_filter_all = "text_button_inventory_filter_all";
     public const string text_button_inventory_filter_ores = "text_button_inventory_filter_ores";
@@ -797,6 +816,7 @@ public static class UtilsText
     public const string text_help_blacksmith = "text_help_blacksmith";
     public const string text_help_farmer = "text_help_farmer";
     public const string text_help_mage = "text_help_mage";
+    public const string text_help_alchemist = "text_help_alchemist";
 
     public const string text_description_warrior = "text_description_warrior";
     public const string text_description_miner = "text_description_miner";
@@ -805,6 +825,7 @@ public static class UtilsText
     public const string text_description_farmer_companions = "text_description_farmer_companions";
     public const string text_description_blacksmith = "text_description_blacksmith";
     public const string text_description_mage = "text_description_mage";
+    public const string text_description_alchemist = "text_description_alchemist";
 
     #endregion
 
@@ -901,6 +922,7 @@ public static class UtilsText
             { text_name_class_farmer, "Farmer" },
             { text_name_class_blacksmith, "Blacksmith" },
             { text_name_class_mage, "Mage" },
+            { text_name_class_alchemist, "Alchemist" },
 
             { text_name_warrior_stat_maxhp, "Max Hp" },
             { text_name_warrior_stat_atk, "Atk" },
@@ -934,6 +956,11 @@ public static class UtilsText
             { text_name_mage_stat_castspeed, "Cast Speed" },
             { text_name_mage_stat_scholar, "Scholar" },
             { text_name_mage_stat_proficiency, "Proficiency" },
+
+            { text_name_alchemist_stat_routine, "Routine" },
+            { text_name_alchemist_stat_yield, "Yield" },
+            { text_name_alchemist_stat_research, "Research" },
+            { text_name_alchemist_stat_stability, "Stability" },
 
 
 
@@ -1003,6 +1030,11 @@ public static class UtilsText
             { text_tooltip_stat_mage_castspeed, "Increase Mage and Warrior casting speed" },
             { text_tooltip_stat_mage_scholar, "Unlock a new spell for the Mage to learn every 5 levels" },
             { text_tooltip_stat_mage_proficiency, "Every 5 levels unlock a slot to equip a spell to cast when advancing through the stages" },
+
+            { text_tooltip_stat_alchemist_routine, "Increase Alchemist crafting speed" },
+            { text_tooltip_stat_alchemist_yield, "Increase Alchemist chance to craft extra materials" },
+            { text_tooltip_stat_alchemist_research, "Every 5 levels unlock a new recipe for the Alchemist to craft" },
+            { text_tooltip_stat_alchemist_stability, "Increase successful crafts" },
 
             // -------------------- TITLE --------------------- //
 
@@ -1096,6 +1128,7 @@ public static class UtilsText
             { text_job_farmer_unlockconditions, "Purchasable from the shop" },
             { text_job_blacksmith_unlockconditions, "Collect at least 1 gold ore." },
             { text_job_mage_unlockconditions, "Find the Ancient Tome card" },
+            { text_job_alchemist_unlockconditions, "Find the Debug mode code" },
 
             { text_job_warrior_mapstage, "Stage: {0}/{1}" },
             { text_job_warrior_possiblemonsters, "Possible monsters:<br>" },
@@ -1119,11 +1152,14 @@ public static class UtilsText
 
 
             { text_job_mage_spell_locked, "Spell locked" },
+            { text_job_alchemist_recipe_locked, "Recipe not available" },
 
 
             { text_job_fisher_raritytooltip, "<color=#{1}>{2}</color><br>" },
             { text_job_fisher_spawntime, "Spawn time: {3}" },
             { text_job_fisher_waittime, "Average time: ~{0}m{1}s" },
+
+            { text_job_alchemist_ingredients, "Ingredients" },
 
             
             // -------------------- BUTTONS --------------------- //
@@ -1164,6 +1200,8 @@ public static class UtilsText
 
             { text_button_learn, "Learn" },
 
+            { text_button_craft, "Craft" },
+
             { text_button_revealall, "Reveal All" },
 
             { text_button_shop_filter_cardpacks, "Card Packs" },
@@ -1188,6 +1226,7 @@ public static class UtilsText
             { text_button_help_filter_blacksmith, "Blacksmith" },
             { text_button_help_filter_farmer, "Farmer" },
             { text_button_help_filter_mage, "Mage" },
+            { text_button_help_filter_alchemist, "Alchemist" },
 
             { text_button_inventory_filter_all, "All" },
             { text_button_inventory_filter_ores, "Ores" },
@@ -1720,6 +1759,12 @@ public static class UtilsText
                 "Every 5 levels of Scholar ability a new spell is unlocked, and every 5 levels of Proficiency ability a new slot to equip spells will be unlocked."
             },
 
+             { text_help_alchemist,
+                "<align=\"center\">Alchemist<br>----------------------------</align><br>The Alchemist crafts powerful items following repices.<br><br>" +
+                "Every 5 levels of Research ability a new recipe will be unlocked,some can also  be purchased from the shop<br>" +
+                "You can find them in the Inventory once they're crafted."
+            },
+
 
 
             { text_description_warrior,
@@ -1748,6 +1793,10 @@ public static class UtilsText
 
             { text_description_mage,
                 "Description: Learn spell to autocast while advancing through the stages"
+            },
+
+            { text_description_alchemist,
+                "Description:<br>Craft powerful items reported int the recipes"
             },
         };
     }

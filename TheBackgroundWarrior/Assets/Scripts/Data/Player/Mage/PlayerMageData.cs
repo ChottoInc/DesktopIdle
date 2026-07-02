@@ -103,7 +103,7 @@ public class PlayerMageData : IBasePlayerData
         // reset available points to 0 if previous bugs occured, and set exp to 0
         if (CurrentLevel >= UtilsMage.MAX_LEVEL_MAGE)
         {
-            AvailableStatPoints = UtilsFarmer.MAX_LEVEL_FARMER - 1 -
+            AvailableStatPoints = UtilsMage.MAX_LEVEL_MAGE - 1 -
                LevelStatInsight - LevelStatCastSpeed - LevelStatScholar - LevelStatProficiency;
             CurrentExp = 0;
         }
@@ -164,9 +164,9 @@ public class PlayerMageData : IBasePlayerData
 
     public void AddLevel(int amount)
     {
-        if (CurrentLevel + amount > UtilsFarmer.MAX_LEVEL_FARMER)
+        if (CurrentLevel + amount > UtilsMage.MAX_LEVEL_MAGE)
         {
-            amount = UtilsFarmer.MAX_LEVEL_FARMER - CurrentLevel;
+            amount = UtilsMage.MAX_LEVEL_MAGE - CurrentLevel;
         }
         CurrentLevel += amount;
         AvailableStatPoints += amount;
@@ -175,7 +175,7 @@ public class PlayerMageData : IBasePlayerData
     public void AddExp(long amount)
     {
         // check max level
-        if (CurrentLevel >= UtilsFarmer.MAX_LEVEL_FARMER)
+        if (CurrentLevel >= UtilsMage.MAX_LEVEL_MAGE)
         {
             // set current exp to 0
             CurrentExp = 0;

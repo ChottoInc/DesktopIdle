@@ -8,4 +8,10 @@ public class FishSO : ItemSO
 
     public UtilsItem.FishRarity FishRarity => fishRarity;
     public UtilsGeneral.DayMoment SpawnDayMoment => spawnDayMoment;
+
+
+    public override string ToString()
+    {
+        return string.Format("Fish {0} with id {1}, rarity: {2}, spawn moment: {3}", ItemName, Id, FishRarity, SpawnDayMoment);
+    }
 }

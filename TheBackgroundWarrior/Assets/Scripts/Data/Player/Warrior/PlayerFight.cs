@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerFight : Player, IDamageable, IHealable
@@ -107,10 +108,20 @@ public class PlayerFight : Player, IDamageable, IHealable
         startScale = spriteRenderer.transform.localScale;
 
         StartCoroutine(CoSpawned());
+
+        _buffsToCheckTypes = new List<UtilsBuffs.BuffType>()
+        {
+            UtilsBuffs.BuffType.Greed,
+            UtilsBuffs.BuffType.Veteran,
+            UtilsBuffs.BuffType.Storyteller,
+            UtilsBuffs.BuffType.IronSkin,
+        };
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         CheckSpeedMult();
     }
 
@@ -345,6 +356,22 @@ public class PlayerFight : Player, IDamageable, IHealable
         yield return new WaitForSeconds(timerResetAfterDeath);
 
         OnResetAfterDeath?.Invoke();
+    }
+
+
+    public override IBasePlayerData GetPlayerData()
+    {
+        return PlayerData;
+    }
+
+    public override long GetCurrenExp()
+    {
+        return PlayerData.CurrentExp;
+    }
+
+    public override long GetExpToNextLevel()
+    {
+        return PlayerData.ExpToNextLevel;
     }
 
     #region SAVE

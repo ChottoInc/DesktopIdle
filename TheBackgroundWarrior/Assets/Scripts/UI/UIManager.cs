@@ -7,6 +7,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] RectTransform rightButtonsContainer;
     [SerializeField] UISelectedTabContent selectedTabContent;
 
+    [Space(10)]
+    [SerializeField] UIPlayerExpBar playerExpBar;
+
     protected VerticalLayoutGroup vLayoutGroup;
 
 
@@ -31,7 +34,7 @@ public class UIManager : MonoBehaviour
 
     public virtual void Setup()
     {
-        // Handle every ui at the start
+        playerExpBar.Setup();
     }
 
     protected virtual void OnInvertedHUD(bool isOn)

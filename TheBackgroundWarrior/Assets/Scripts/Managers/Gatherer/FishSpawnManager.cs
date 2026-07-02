@@ -13,7 +13,7 @@ public class FishSpawnManager : MonoBehaviour
     [Space(10)]
     [SerializeField] GenericBar fishBar;
 
-    private float timer20seconds;
+    private float timer20Seconds;
 
     private float passedTimeHook;
     private float timerHook;
@@ -25,13 +25,13 @@ public class FishSpawnManager : MonoBehaviour
     [Space(10)]
     [SerializeField] UtilsGeneral.GeneralChances<UtilsItem.FishRarity>[] rarityProbabilities;
 
-
     [Space(10)]
     [SerializeField] PlayerFisher player;
 
 
     [Header("Cheats")]
     [SerializeField] bool alwaysCatchFishCheat;
+    [SerializeField] bool reducedHookCheat;
 
     public bool AlwaysCatchFishCheat => alwaysCatchFishCheat;
 
@@ -39,11 +39,9 @@ public class FishSpawnManager : MonoBehaviour
 
     private List<FishSO> currentPool;
 
-    private List<FishSO> caughtFishesSession;
 
 
-
-    public List<FishSO> CaughtFishesSession => caughtFishesSession;
+    public List<FishSO> CaughtFishesSession { get; private set; }
 
 
 
@@ -72,7 +70,6 @@ public class FishSpawnManager : MonoBehaviour
     private void OnDestroy()
     {
         player.OnFishCaught -= AddFishToCaughtList;
-        player.OnBaitChange -= OnFisherBaitChange;
 
         SettingsManager.Instance.OnIsHiddenFishingBarChange -= OnFishBarHiddenChange;
     }
@@ -81,15 +78,15 @@ public class FishSpawnManager : MonoBehaviour
     private void Start()
     {
         player.OnFishCaught += AddFishToCaughtList;
-        player.OnBaitChange += OnFisherBaitChange;
 
 
         currentPool = new List<FishSO>();
-        caughtFishesSession = new List<FishSO>();
+        CaughtFishesSession = new List<FishSO>();
 
-        FillPool();
+        // set pool
+        CheckBuffs();
 
-        timer20seconds = UtilsGeneral.TIMER_20SECONDS;
+        timer20Seconds = UtilsGeneral.TIMER_20SECONDS;
 
         timerHook = GetRandomHookTime();
         passedTimeHook = 0;
@@ -103,16 +100,26 @@ public class FishSpawnManager : MonoBehaviour
     {
         if (!isInitialized) return;
 
-        if(timer20seconds <= 0)
+        HandleFishBarUI();
+
+        HandleHook();
+    }
+
+    private void HandleFishBarUI()
+    {
+        if (timer20Seconds <= 0)
         {
             UpdateFishBarUI();
-            timer20seconds = UtilsGeneral.TIMER_20SECONDS;
+            timer20Seconds = UtilsGeneral.TIMER_20SECONDS;
         }
         else
         {
-            timer20seconds -= Time.deltaTime;
+            timer20Seconds -= Time.deltaTime;
         }
+    }
 
+    private void HandleHook()
+    {
         if (passedTimeHook >= timerHook)
         {
             //Debug.Log("Attempt catch fish");
@@ -130,12 +137,31 @@ public class FishSpawnManager : MonoBehaviour
         }
     }
 
-    private void OnFisherBaitChange()
+    public void CheckBuffs()
     {
+        // clear the pool
         currentPool.Clear();
 
-        if (player.PlayerData.IsBaitActive)
+        PlayerBuffsData data = PlayerManager.Instance.PlayerBuffsData;
+
+        Buff anglerBuff = null;
+
+        if (data.HasBuff(UtilsBuffs.BuffType.MorningAngler))
         {
+            anglerBuff = data.GetBuffByType(UtilsBuffs.BuffType.MorningAngler);
+        }
+        else if(data.HasBuff(UtilsBuffs.BuffType.MorningAngler))
+        {
+            anglerBuff = data.GetBuffByType(UtilsBuffs.BuffType.AfternoonAngler);
+        }
+        else if(data.HasBuff(UtilsBuffs.BuffType.MorningAngler))
+        {
+            anglerBuff = data.GetBuffByType(UtilsBuffs.BuffType.NightAngler);
+        }
+
+        if(anglerBuff != null)
+        {
+            // get bait from data
             BaitSO bait = player.PlayerData.ActiveBait;
 
             int loop1Counter = 0, loop2Counter = 0;
@@ -184,17 +210,21 @@ public class FishSpawnManager : MonoBehaviour
 
     public void FillPool(int loop1Count, int loop2Count, UtilsGeneral.DayMoment moment)
     {
+        //Debug.Log("count 1: " + loop1Count);
         while (currentPool.Count < loop1Count)
         {
             SinglePoolAdd(moment);
+            //Debug.Log("pool count: " + currentPool.Count);
         }
 
-        while (currentPool.Count < loop2Count)
+        //Debug.Log("count 2: " + loop2Count);
+        while (currentPool.Count < loop2Count + loop1Count)
         {
             // Get day moment
             UtilsGeneral.DayMoment currentMoment = UtilsGeneral.GetDayMoment();
 
             SinglePoolAdd(currentMoment);
+            //Debug.Log("pool count: " + currentPool.Count);
         }
     }
 
@@ -220,6 +250,7 @@ public class FishSpawnManager : MonoBehaviour
 
         // Get random fish
         FishSO randFish = UtilsItem.GetRandomFishByDayMomentAndRarity(moment, randRarity);
+        //Debug.Log(randFish.ToString());
 
         // Add to pool
         currentPool.Add(randFish);
@@ -275,7 +306,10 @@ public class FishSpawnManager : MonoBehaviour
 
     private float GetRandomHookTime()
     {
-        return Random.Range(minHookTime, CurrentMaxHookTime);
+        if (reducedHookCheat && SettingsManager.Instance.AreCheatsEnabled)
+            return 30f;
+        else
+            return Random.Range(minHookTime, CurrentMaxHookTime);
 
         // Test
         //int rand = Random.Range(10, 15);
@@ -285,7 +319,7 @@ public class FishSpawnManager : MonoBehaviour
 
     private void AddFishToCaughtList(FishSO fishSO)
     {
-        caughtFishesSession.Add(fishSO);
+        CaughtFishesSession.Add(fishSO);
     }
 
     private void UpdateFishBarUI()

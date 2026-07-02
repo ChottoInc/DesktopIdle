@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,6 +37,16 @@ public class PlayerMage : Player
     private void Awake()
     {
         OnStatChange += CheckSpellBar;
+    }
+
+    private void Start()
+    {
+        _buffsToCheckTypes = new List<UtilsBuffs.BuffType>()
+        {
+            UtilsBuffs.BuffType.Greed,
+            UtilsBuffs.BuffType.Veteran,
+            UtilsBuffs.BuffType.Arcanist,
+        };
     }
 
 
@@ -90,8 +101,10 @@ public class PlayerMage : Player
         }
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (_spellPrefab == null) return;
 
         if(_timerCast <= 0)
@@ -157,6 +170,22 @@ public class PlayerMage : Player
     private void UpdateSpellBar()
     {
         barSpell.Setup(_currentSpell.RequiredPointsToNextRank, _currentSpell.CurrentLearnPoints);
+    }
+
+
+    public override IBasePlayerData GetPlayerData()
+    {
+        return PlayerData;
+    }
+
+    public override long GetCurrenExp()
+    {
+        return PlayerData.CurrentExp;
+    }
+
+    public override long GetExpToNextLevel()
+    {
+        return PlayerData.ExpToNextLevel;
     }
 
     #region SAVE

@@ -158,6 +158,14 @@ public class Inventory
         return -1;
     }
 
+    public int GetItemQuantity(int id)
+    {
+        int index = GetGroupIndex(id);
+
+        if (index == -1) return -1;
+        return itemGroups[index].Quantity;
+    }
+
     public List<ItemGroup> GetGroupsOfType(UtilsItem.ItemType itemType)
     {
         return itemGroups.Where(group => UtilsItem.GetItemById(group.IdItem).ItemType == itemType).ToList();

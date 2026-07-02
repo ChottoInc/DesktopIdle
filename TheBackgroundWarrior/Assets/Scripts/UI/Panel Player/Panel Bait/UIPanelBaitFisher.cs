@@ -42,9 +42,9 @@ public class UIPanelBaitFisher : MonoBehaviour
 
     private void Refresh()
     {
-        _content.SetActive(_playerFisher.PlayerData.IsBaitActive);
+        _content.SetActive(_playerFisher.PlayerData.ActiveBait == null ? false : true);
 
-        if (_playerFisher.PlayerData.IsBaitActive)
+        if (_playerFisher.PlayerData.ActiveBait != null)
         {
             _imageDayMoment.sprite = GetMomentIcon(_playerFisher.PlayerData.ActiveBait.AttractsMoment);
         }

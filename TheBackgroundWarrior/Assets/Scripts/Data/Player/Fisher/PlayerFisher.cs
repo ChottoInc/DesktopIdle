@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerFisher : Player
@@ -24,8 +25,6 @@ public class PlayerFisher : Player
     public event Action OnBaitChange;
 
 
-
-
     public PlayerFisherData PlayerData => playerData;
 
 
@@ -36,17 +35,28 @@ public class PlayerFisher : Player
             playerData.OnLevelUp -= LevelUp;
 
             playerData.OnStatChange -= OnStatChangeFisher;
-            playerData.OnBaitChange -= OnBaitChangeFisher;
         }
     }
 
     private void Start()
     {
         timer5Mins = UtilsGeneral.TIMER_5MIN_IN_SECONDS;
+
+        _buffsToCheckTypes = new List<UtilsBuffs.BuffType>()
+        {
+            UtilsBuffs.BuffType.Greed,
+            UtilsBuffs.BuffType.Veteran,
+            UtilsBuffs.BuffType.Sailor,
+            UtilsBuffs.BuffType.MorningAngler,
+            UtilsBuffs.BuffType.AfternoonAngler,
+            UtilsBuffs.BuffType.NightAngler,
+        };
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         // every 5 mins give some exp to the player
         if(timer5Mins <= 0)
         {
@@ -71,7 +81,6 @@ public class PlayerFisher : Player
             playerData.OnLevelUp += LevelUp;
 
             playerData.OnStatChange += OnStatChangeFisher;
-            playerData.OnBaitChange += OnBaitChangeFisher;
         }
     }
 
@@ -165,6 +174,44 @@ public class PlayerFisher : Player
     }
 
 
+    public override IBasePlayerData GetPlayerData()
+    {
+        return PlayerData;
+    }
+
+    public override long GetCurrenExp()
+    {
+        return PlayerData.CurrentExp;
+    }
+
+    public override long GetExpToNextLevel()
+    {
+        return PlayerData.ExpToNextLevel;
+    }
+
+    protected override void OnBuffAdded(UtilsBuffs.BuffType buffType)
+    {
+        if (buffType == UtilsBuffs.BuffType.MorningAngler ||
+           buffType == UtilsBuffs.BuffType.AfternoonAngler ||
+           buffType == UtilsBuffs.BuffType.NightAngler)
+        {
+            FishSpawnManager.Instance.CheckBuffs();
+            OnBaitChange?.Invoke();
+        }
+    }
+
+    protected override void OnBuffRemoved(UtilsBuffs.BuffType buffType)
+    {
+        if (buffType == UtilsBuffs.BuffType.MorningAngler ||
+            buffType == UtilsBuffs.BuffType.AfternoonAngler ||
+            buffType == UtilsBuffs.BuffType.NightAngler)
+        {
+            FishSpawnManager.Instance.CheckBuffs();
+            OnBaitChange?.Invoke();
+        }
+    }
+
+
     #region SAVE
 
     public void SaveFisherData()
@@ -187,11 +234,6 @@ public class PlayerFisher : Player
     private void OnStatChangeFisher(int id, int value)
     {
         OnStatChange?.Invoke(id, value);
-    }
-
-    private void OnBaitChangeFisher()
-    {
-        OnBaitChange?.Invoke();
     }
 
     #endregion

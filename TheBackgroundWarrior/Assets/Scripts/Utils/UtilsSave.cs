@@ -12,12 +12,14 @@ public static class UtilsSave
     public const string PLAYER_INVENTORY_FILE = "player_inventory.json";
 
     public const string PLAYER_JOBS_FILE = "player_jobs.json";
+    public const string PLAYER_BUFFS_FILE = "player_buffs.json";
     public const string PLAYER_FIGHT_FILE = "player_fight.json";
     public const string PLAYER_MINER_FILE = "player_miner.json";
     public const string PLAYER_BLACKSMITH_FILE = "player_blacksmith.json";
     public const string PLAYER_FISHER_FILE = "player_fisher.json";
     public const string PLAYER_FARMER_FILE = "player_farmer.json";
     public const string PLAYER_MAGE_FILE = "player_mage.json";
+    public const string PLAYER_ALCHEMIST_FILE = "player_alchemist.json";
 
     public const string COMBATMAPS_FOLDER = "CombatMaps";
     public const string COMBATMAPS_EXT = ".json";
@@ -58,6 +60,11 @@ public static class UtilsSave
         return GetPlayerFolder() + "/" + PLAYER_JOBS_FILE;
     }
 
+    public static string GetPlayerBuffsFile()
+    {
+        return GetPlayerFolder() + "/" + PLAYER_BUFFS_FILE;
+    }
+
     public static string GetPlayerFightFile()
     {
         return GetPlayerFolder() + "/" + PLAYER_FIGHT_FILE;
@@ -86,6 +93,11 @@ public static class UtilsSave
     public static string GetPlayerMageFile()
     {
         return GetPlayerFolder() + "/" + PLAYER_MAGE_FILE;
+    }
+
+    public static string GetPlayerAlchemistFile()
+    {
+        return GetPlayerFolder() + "/" + PLAYER_ALCHEMIST_FILE;
     }
 
     // ----- MAPS

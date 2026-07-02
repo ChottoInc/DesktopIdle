@@ -7,6 +7,7 @@ public static class UtilsGeneral
 {
     public const float TIMER_5MIN_IN_SECONDS = 300f;
     public const float TIMER_20SECONDS = 20f;
+    public const float TIMER_1SECONDS = 1f;
 
 
     public enum Language { Eng, Ita }

@@ -92,8 +92,10 @@ public class PlayerFarmer : Player
         timerWatering = GetRandomWateringTime();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         // get next action in queue
         if((currentAction == FarmerAction.Watering || currentAction == FarmerAction.None) && nextActions.Count > 0)
         {
@@ -157,6 +159,13 @@ public class PlayerFarmer : Player
         StartCoroutine(CoSpawned());
 
         timer5Mins = UtilsGeneral.TIMER_5MIN_IN_SECONDS;
+
+        _buffsToCheckTypes = new List<UtilsBuffs.BuffType>()
+        {
+            UtilsBuffs.BuffType.Greed,
+            UtilsBuffs.BuffType.Veteran,
+            UtilsBuffs.BuffType.Tamer,
+        };
     }
 
 
@@ -547,6 +556,22 @@ public class PlayerFarmer : Player
         return UtilsGeneral.GetRandomValueBtwValues(minCooldownWatering, maxCooldownWatering);
     }
 
+
+
+    public override IBasePlayerData GetPlayerData()
+    {
+        return PlayerData;
+    }
+
+    public override long GetCurrenExp()
+    {
+        return PlayerData.CurrentExp;
+    }
+
+    public override long GetExpToNextLevel()
+    {
+        return PlayerData.ExpToNextLevel;
+    }
 
     #region SAVE
 

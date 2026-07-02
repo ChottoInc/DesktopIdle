@@ -4,7 +4,7 @@ using static UtilsText;
 
 public static class UtilsPlayer
 {
-    public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher, Farmer, Mage }
+    public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher, Farmer, Mage, Alchemist }
 
     private static PlayerJobSO[] jobs;
 
@@ -46,6 +46,11 @@ public static class UtilsPlayer
     public const int ID_MAGE_SCHOLAR = 62;              // every x levels unlock new spell
     public const int ID_MAGE_PROFICIENCY = 63;          // every x levels unlock spell slot
 
+    public const int ID_ALCHEMIST_ROUTINE = 70;         // increase crafting speed
+    public const int ID_ALCHEMIST_YIELD = 71;           // craft extra materials
+    public const int ID_ALCHEMIST_RESEARCH = 72;        // every x levels unlock new recipe
+    public const int ID_ALCHEMIST_STABILITY = 73;       // reduce failed crafts
+
 
     public static void Initialize()
     {
@@ -63,6 +68,7 @@ public static class UtilsPlayer
         UtilsFisher.Initialize();
         UtilsFarmer.Initialize();
         UtilsMage.Initialize();
+        UtilsAlchemist.Initialize();
     }
 
     private static PlayerJobSO[] LoadJobs()
@@ -144,6 +150,12 @@ public static class UtilsPlayer
             case ID_MAGE_CASTSPEED: return UtilsMage.PER_LEVEL_MAGE_MAX_CASTSPEED;
             case ID_MAGE_SCHOLAR: return UtilsMage.PER_LEVEL_MAGE_MAX_SCHOLAR;
             case ID_MAGE_PROFICIENCY: return UtilsMage.PER_LEVEL_MAGE_MAX_PROFICIENCY;
+
+            // ALCHEMIST DATA
+            case ID_ALCHEMIST_ROUTINE: return UtilsAlchemist.PER_LEVEL_ALCHEMIST_MAX_ROUTINE;
+            case ID_ALCHEMIST_YIELD: return UtilsAlchemist.PER_LEVEL_ALCHEMIST_MAX_YIELD;
+            case ID_ALCHEMIST_RESEARCH: return UtilsAlchemist.PER_LEVEL_ALCHEMIST_MAX_RESEARCH;
+            case ID_ALCHEMIST_STABILITY: return UtilsAlchemist.PER_LEVEL_ALCHEMIST_MAX_STABILITY;
         }
     }
 
@@ -191,6 +203,12 @@ public static class UtilsPlayer
             case ID_MAGE_CASTSPEED: return PlayerManager.Instance.PlayerMageData.LevelStatCastSpeed;
             case ID_MAGE_SCHOLAR: return PlayerManager.Instance.PlayerMageData.LevelStatScholar;
             case ID_MAGE_PROFICIENCY: return PlayerManager.Instance.PlayerMageData.LevelStatProficiency;
+
+            // ALCHEMIST DATA
+            case ID_ALCHEMIST_ROUTINE: return PlayerManager.Instance.PlayerAlchemistData.LevelStatRoutine;
+            case ID_ALCHEMIST_YIELD: return PlayerManager.Instance.PlayerAlchemistData.LevelStatYield;
+            case ID_ALCHEMIST_RESEARCH: return PlayerManager.Instance.PlayerAlchemistData.LevelStatResearch;
+            case ID_ALCHEMIST_STABILITY: return PlayerManager.Instance.PlayerAlchemistData.LevelStatStability;
         }
     }
 
@@ -238,6 +256,12 @@ public static class UtilsPlayer
             case ID_MAGE_CASTSPEED: return AllText[text_tooltip_stat_mage_castspeed];
             case ID_MAGE_SCHOLAR: return AllText[text_tooltip_stat_mage_scholar];
             case ID_MAGE_PROFICIENCY: return AllText[text_tooltip_stat_mage_proficiency];
+
+            // ALCHEMIST DATA
+            case ID_ALCHEMIST_ROUTINE: return AllText[text_tooltip_stat_alchemist_routine];
+            case ID_ALCHEMIST_YIELD: return AllText[text_tooltip_stat_alchemist_yield];
+            case ID_ALCHEMIST_RESEARCH: return AllText[text_tooltip_stat_alchemist_research];
+            case ID_ALCHEMIST_STABILITY: return AllText[text_tooltip_stat_alchemist_stability];
         }
     }
 
@@ -247,7 +271,9 @@ public static class UtilsPlayer
             PlayerManager.Instance.PlayerMinerData.CurrentLevel > UtilsMiner.MAX_LEVEL_MINER &&
             PlayerManager.Instance.PlayerBlacksmithData.CurrentLevel > UtilsBlacksmith.MAX_LEVEL_BLACKSMITH &&
             PlayerManager.Instance.PlayerFisherData.CurrentLevel > UtilsFisher.MAX_LEVEL_FISHER &&
-            PlayerManager.Instance.PlayerFarmerData.CurrentLevel > UtilsFarmer.MAX_LEVEL_FARMER)
+            PlayerManager.Instance.PlayerFarmerData.CurrentLevel > UtilsFarmer.MAX_LEVEL_FARMER &&
+            PlayerManager.Instance.PlayerMageData.CurrentLevel > UtilsMage.MAX_LEVEL_MAGE &&
+            PlayerManager.Instance.PlayerAlchemistData.CurrentLevel > UtilsAlchemist.MAX_LEVEL_ALCHEMIST)
         {
             return true;
         }
@@ -260,38 +286,43 @@ public static class UtilsPlayer
         switch (id)
         {
             default: return "Error";
-            case ID_WARRIOR_MAXHP: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_warrior]);
-            case ID_WARRIOR_ATK: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_warrior]);
-            case ID_WARRIOR_DEF: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_warrior]);
-            case ID_WARRIOR_ATKSPD: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_warrior]);
-            case ID_WARRIOR_CRITRATE: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_warrior]);
-            case ID_WARRIOR_CRITDMG: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_warrior]);
+            case ID_WARRIOR_MAXHP:
+            case ID_WARRIOR_ATK:
+            case ID_WARRIOR_DEF:
+            case ID_WARRIOR_ATKSPD:
+            case ID_WARRIOR_CRITRATE: 
+            case ID_WARRIOR_CRITDMG:
             case ID_WARRIOR_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_warrior]);
 
-            case ID_MINER_POWER: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_miner]);
-            case ID_MINER_SMASHSPEED: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_miner]);
-            case ID_MINER_SHOCKWAVE: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_miner]);
+            case ID_MINER_POWER:
+            case ID_MINER_SMASHSPEED:
+            case ID_MINER_SHOCKWAVE: 
             case ID_MINER_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_miner]);
 
-            case ID_BLACKSMITH_CRAFTSPEED: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_blacksmith]);
-            case ID_BLACKSMITH_EFFICIENCY: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_blacksmith]);
-            case ID_BLACKSMITH_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_blacksmith]);
+            case ID_BLACKSMITH_CRAFTSPEED:
+            case ID_BLACKSMITH_EFFICIENCY:
+            case ID_BLACKSMITH_LUCK:
             case ID_BLACKSMITH_METALLURGY: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_blacksmith]);
 
-            case ID_FISHER_CALMNESS: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_fisher]);
-            case ID_FISHER_REFLEX: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_fisher]);
-            case ID_FISHER_KNOWLEDGE: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_fisher]);
+            case ID_FISHER_CALMNESS:
+            case ID_FISHER_REFLEX:
+            case ID_FISHER_KNOWLEDGE:
             case ID_FISHER_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_fisher]);
 
-            case ID_FARMER_GREENTHUMB: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_farmer]);
-            case ID_FARMER_AGRONOMY: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_farmer]);
-            case ID_FARMER_KINDNESS: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_farmer]);
+            case ID_FARMER_GREENTHUMB:
+            case ID_FARMER_AGRONOMY:
+            case ID_FARMER_KINDNESS:
             case ID_FARMER_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_farmer]);
 
-            case ID_MAGE_INSIGHT: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_mage]);
-            case ID_MAGE_CASTSPEED: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_mage]);
-            case ID_MAGE_SCHOLAR: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_mage]);
+            case ID_MAGE_INSIGHT:
+            case ID_MAGE_CASTSPEED:
+            case ID_MAGE_SCHOLAR:
             case ID_MAGE_PROFICIENCY: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_mage]);
+
+            case ID_ALCHEMIST_ROUTINE:
+            case ID_ALCHEMIST_YIELD:
+            case ID_ALCHEMIST_RESEARCH:
+            case ID_ALCHEMIST_STABILITY: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_alchemist]);
         }
     }
     
@@ -332,6 +363,11 @@ public static class UtilsPlayer
             case ID_MAGE_CASTSPEED: return AllText[text_name_mage_stat_castspeed];
             case ID_MAGE_SCHOLAR: return AllText[text_name_mage_stat_scholar];
             case ID_MAGE_PROFICIENCY: return AllText[text_name_mage_stat_proficiency];
+
+            case ID_ALCHEMIST_ROUTINE: return AllText[text_name_alchemist_stat_routine];
+            case ID_ALCHEMIST_YIELD: return AllText[text_name_alchemist_stat_yield];
+            case ID_ALCHEMIST_RESEARCH: return AllText[text_name_alchemist_stat_research];
+            case ID_ALCHEMIST_STABILITY: return AllText[text_name_alchemist_stat_stability];
         }
     }
 }

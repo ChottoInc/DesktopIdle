@@ -64,9 +64,7 @@ public class PlayerFisherData : IBasePlayerData
 
     // ---- BAITS VARS
 
-    public bool IsBaitActive { get; private set; }
     public BaitSO ActiveBait { get; private set; }
-    public float RemainingTimeBait { get; private set; }
 
 
 
@@ -122,9 +120,7 @@ public class PlayerFisherData : IBasePlayerData
 
         FillFishGroupsSeriesCompletion();
 
-        IsBaitActive = saveData.isBaitActive;
         ActiveBait = UtilsItem.GetItemById(saveData.activeBaitId) as BaitSO;
-        RemainingTimeBait = saveData.remainingTimeBait;
     }
 
     private void GenerateBaseStats()
@@ -145,9 +141,7 @@ public class PlayerFisherData : IBasePlayerData
 
         baseLuck = 0f; // controls rarity of fish, up to 0.4 - 40%
 
-        IsBaitActive = false;
         ActiveBait = null;
-        RemainingTimeBait = 0f;
     }
 
     public void FillFishGroupsSeriesCompletion()
@@ -266,9 +260,14 @@ public class PlayerFisherData : IBasePlayerData
 
     public void SetActiveBait(BaitSO bait)
     {
-        IsBaitActive = true;
         ActiveBait = bait;
-        RemainingTimeBait += bait.Duration;
+
+        OnBaitChange?.Invoke();
+    }
+
+    public void DisableBait()
+    {
+        ActiveBait = null;
 
         OnBaitChange?.Invoke();
     }

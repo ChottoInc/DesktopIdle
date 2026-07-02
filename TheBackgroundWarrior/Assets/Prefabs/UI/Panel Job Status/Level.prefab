@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4712208522141868753}
   - component: {fileID: 1626736135346904155}
-  - component: {fileID: 1886140695010283590}
+  - component: {fileID: 4213982693804231679}
   m_Layer: 5
   m_Name: UI Player Exp Slider
   m_TagString: Untagged
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1886140695010283590
+--- !u!114 &4213982693804231679
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 213132724102647474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b19351b7eb9b844baaed23c7354879, type: 3}
+  m_Script: {fileID: 11500000, guid: dfd1c889f7bc86b498c903bfc1075a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 1626736135346904155}

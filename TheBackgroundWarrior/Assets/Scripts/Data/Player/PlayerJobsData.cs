@@ -12,6 +12,7 @@ public class PlayerJobsData
     public bool IsBlacksmithUnlocked { get; private set; }
     public bool IsFarmerUnlocked { get; private set; }
     public bool IsMageUnlocked { get; private set; }
+    public bool IsAlchemistUnlocked { get; private set; }
 
 
     public PlayerJobsData()
@@ -47,6 +48,11 @@ public class PlayerJobsData
         {
             IsMageUnlocked = true;
         }
+
+        if (availableJobs.Contains(UtilsPlayer.PlayerJob.Alchemist))
+        {
+            IsAlchemistUnlocked = true;
+        }
     }
 
     private void GenerateBaseStats()
@@ -60,11 +66,13 @@ public class PlayerJobsData
             //UtilsPlayer.PlayerJob.Farmer,
             //UtilsPlayer.PlayerJob.Blacksmith
             //UtilsPlayer.PlayerJob.Mage
+            //UtilsPlayer.PlayerJob.Alchemist,
         };
 
         IsBlacksmithUnlocked = false;
         IsFarmerUnlocked = false;
         IsMageUnlocked = false;
+        IsAlchemistUnlocked = false;
     }
 
 
@@ -77,6 +85,7 @@ public class PlayerJobsData
             case UtilsPlayer.PlayerJob.Blacksmith: IsBlacksmithUnlocked = true; break;
             case UtilsPlayer.PlayerJob.Farmer: IsFarmerUnlocked = true; break;
             case UtilsPlayer.PlayerJob.Mage: IsMageUnlocked = true; break;
+            case UtilsPlayer.PlayerJob.Alchemist: IsAlchemistUnlocked = true; break;
         }
 
         PlayerManager.Instance.SaveJobsData();

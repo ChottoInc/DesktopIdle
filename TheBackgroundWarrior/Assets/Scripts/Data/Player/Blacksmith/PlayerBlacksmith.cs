@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -66,11 +67,20 @@ public class PlayerBlacksmith : Player
 
     private void Start()
     {
+        _buffsToCheckTypes = new List<UtilsBuffs.BuffType>()
+        {
+            UtilsBuffs.BuffType.Greed,
+            UtilsBuffs.BuffType.Veteran,
+            UtilsBuffs.BuffType.Dwarf,
+        };
+
         OnTryForge();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (isForging)
         {
             CheckForge();
@@ -261,6 +271,21 @@ public class PlayerBlacksmith : Player
         }
     }
 
+
+    public override IBasePlayerData GetPlayerData()
+    {
+        return PlayerData;
+    }
+
+    public override long GetCurrenExp()
+    {
+        return PlayerData.CurrentExp;
+    }
+
+    public override long GetExpToNextLevel()
+    {
+        return PlayerData.ExpToNextLevel;
+    }
 
 
     #region SAVE

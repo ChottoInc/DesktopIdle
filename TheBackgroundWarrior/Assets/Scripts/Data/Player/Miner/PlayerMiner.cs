@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMiner : Player
@@ -77,6 +78,13 @@ public class PlayerMiner : Player
         startScale = spriteRenderer.transform.localScale;
 
         StartCoroutine(CoSpawned());
+
+        _buffsToCheckTypes = new List<UtilsBuffs.BuffType>()
+        {
+            UtilsBuffs.BuffType.Greed,
+            UtilsBuffs.BuffType.Veteran,
+            UtilsBuffs.BuffType.Stoned,
+        };
     }
 
     private void FixedUpdate()
@@ -240,6 +248,20 @@ public class PlayerMiner : Player
     }
 
 
+    public override IBasePlayerData GetPlayerData()
+    {
+        return PlayerData;
+    }
+
+    public override long GetCurrenExp()
+    {
+        return PlayerData.CurrentExp;
+    }
+
+    public override long GetExpToNextLevel()
+    {
+        return PlayerData.ExpToNextLevel;
+    }
 
     #region SAVE
 

@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoaderManager : MonoBehaviour
 {
-    public enum SceneType { Home, CombatMap, Miner, Blacksmith, Fisher, Farmer, Mage }
+    public enum SceneType { Home, CombatMap, Miner, Blacksmith, Fisher, Farmer, Mage, Alchemist }
 
 
     [SerializeField] Material fadeMaterial;
@@ -89,6 +89,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.Fisher: break;
                 case SceneType.Farmer: break;
                 case SceneType.Mage: break;     //TODO: ADD handle switch scene
+                case SceneType.Alchemist: break;     //TODO: ADD handle switch scene
             }
         }
 
@@ -137,6 +138,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.Fisher: break;
                 case SceneType.Farmer: break;
                 case SceneType.Mage: break;     //TODO: ADD handle switch scene
+                case SceneType.Alchemist: break;     //TODO: ADD handle switch scene
             }
         }
 
@@ -201,34 +203,34 @@ public class SceneLoaderManager : MonoBehaviour
             {
                 case SceneType.CombatMap:
                     CombatManager.Instance.Setup(UtilsCombatMap.GetMapById(settings.lastCombatMapId));
-                    uiManager = FindFirstObjectByType<UIManager>();
                     break;
 
                 case SceneType.Miner:
                     SmashManager.Instance.Setup();
-                    uiManager = FindFirstObjectByType<UIManager>();
                     break;
 
                 case SceneType.Blacksmith:
                     FindFirstObjectByType<PlayerBlacksmith>().Setup(PlayerManager.Instance.PlayerBlacksmithData);
-                    uiManager = FindFirstObjectByType<UIManager>();
                     break;
 
                 case SceneType.Fisher:
                     FindFirstObjectByType<PlayerFisher>().Setup(PlayerManager.Instance.PlayerFisherData);
-                    uiManager = FindFirstObjectByType<UIManager>();
                     break;
 
                 case SceneType.Farmer:
                     FindFirstObjectByType<PlayerFarmer>().Setup(PlayerManager.Instance.PlayerFarmerData);
-                    uiManager = FindFirstObjectByType<UIManager>();
                     break;
 
                 case SceneType.Mage:
                     FindFirstObjectByType<PlayerMage>().Setup(PlayerManager.Instance.PlayerMageData);
-                    uiManager = FindFirstObjectByType<UIManager>();
+                    break;
+
+                case SceneType.Alchemist:
+                    FindFirstObjectByType<PlayerAlchemist>().Setup(PlayerManager.Instance.PlayerAlchemistData);
                     break;
             }
+
+            uiManager = FindFirstObjectByType<UIManager>();
         }
 
         if (uiManager != null)
