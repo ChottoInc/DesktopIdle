@@ -73,8 +73,10 @@ public class PlayerFarmer : Player
     public PlayerFarmerData PlayerData => playerData;
 
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (playerData != null)
         {
             playerData.OnLevelUp -= LevelUp;
@@ -83,8 +85,10 @@ public class PlayerFarmer : Player
         }
     }
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         rb = GetComponent<Rigidbody2D>();
 
         nextActions = new Queue<FarmerAction>();

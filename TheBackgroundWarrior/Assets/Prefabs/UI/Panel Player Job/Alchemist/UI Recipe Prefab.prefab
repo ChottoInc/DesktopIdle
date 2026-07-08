@@ -485,10 +485,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64b94e23d8abeb44bbf0805721f91577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tabAlchemist: {fileID: 0}
   _recipe: {fileID: 11400000, guid: 469a0016b79930f4fa0249d23d7f2ed5, type: 2}
   _imageRecipe: {fileID: 3076103736601467634}
   _textName: {fileID: 2042117620768389885}
   _textDesc: {fileID: 439924093682505669}
+  _colorHighlight: {r: 0.14117648, g: 0.90588236, b: 0.23529412, a: 1}
+  _imageBorder: {fileID: 172929027717062571}
 --- !u!114 &8564445950789475293
 MonoBehaviour:
   m_ObjectHideFlags: 0

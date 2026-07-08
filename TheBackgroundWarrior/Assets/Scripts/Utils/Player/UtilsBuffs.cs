@@ -1,4 +1,6 @@
-
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public static class UtilsBuffs
 {
@@ -18,5 +20,23 @@ public static class UtilsBuffs
         NightAngler = 32,           // find night fishes
 
         IronSkin = 40,              // gain 20% max hp shield warrior
+    }
+
+    private static Dictionary<int, ListableGameDataSO> _dictBuffToSprite;
+
+    public static void Initialize()
+    {
+        LoadDictBuffToSprites();
+    }
+
+    private static void LoadDictBuffToSprites()
+    {
+        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Alchemist/ContainerGameData_BuffToSprites");
+        _dictBuffToSprite = container.Entries.ToDictionary(e => e.Id);
+    }
+
+    public static Sprite GetBuffSpriteByType(BuffType type)
+    {
+        return _dictBuffToSprite.Values.Cast<BuffToSprite>().Where(b => b.BuffType == type).First().Sprite;
     }
 }

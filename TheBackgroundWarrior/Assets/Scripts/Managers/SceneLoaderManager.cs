@@ -89,7 +89,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.Fisher: break;
                 case SceneType.Farmer: break;
                 case SceneType.Mage: break;     //TODO: ADD handle switch scene
-                case SceneType.Alchemist: break;     //TODO: ADD handle switch scene
+                case SceneType.Alchemist: FindFirstObjectByType<PlayerAlchemist>().HandleSwitchScene(); break;
             }
         }
 
@@ -138,7 +138,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.Fisher: break;
                 case SceneType.Farmer: break;
                 case SceneType.Mage: break;     //TODO: ADD handle switch scene
-                case SceneType.Alchemist: break;     //TODO: ADD handle switch scene
+                case SceneType.Alchemist: FindFirstObjectByType<PlayerAlchemist>().HandleSwitchScene(); break;
             }
         }
 

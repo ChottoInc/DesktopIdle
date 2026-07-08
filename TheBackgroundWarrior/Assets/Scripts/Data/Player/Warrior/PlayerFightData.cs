@@ -11,6 +11,12 @@ public class PlayerFightData : IBasePlayerData
 
     // ---- BASE STAT VALUES
 
+    private const float ALCHEMIST_PERMA_ADD_MAXHP = 100f;
+    private const float ALCHEMIST_PERMA_ADD_ATTACK = 2f;
+    private const float ALCHEMIST_PERMA_ADD_DEFENSE = 1f;
+
+
+
     private const float BASE_MAXHP = 85f;
     private const float BASE_ATK = 10f;
     private const float BASE_DEF = 2.5f;
@@ -245,11 +251,11 @@ public class PlayerFightData : IBasePlayerData
         levelStatLuck = startLevelLuck;
 
 
-        baseMaxHp = BASE_MAXHP;
+        baseMaxHp = BASE_MAXHP + ((float)PlayerManager.Instance.PlayerAlchemistData.StatPermaMaxHpCounter * ALCHEMIST_PERMA_ADD_MAXHP);
         currentHp = MaxHp;
 
-        baseAtk = BASE_ATK;
-        baseDef = BASE_DEF;
+        baseAtk = BASE_ATK + ((float)PlayerManager.Instance.PlayerAlchemistData.StatPermaAttackCounter * ALCHEMIST_PERMA_ADD_ATTACK);
+        baseDef = BASE_DEF + ((float)PlayerManager.Instance.PlayerAlchemistData.StatPermaDefenseCounter * ALCHEMIST_PERMA_ADD_DEFENSE);
 
         baseAtkSpd = BASE_ATKSPD;   // 1 attack per second
         //baseAtkSpd = 5f;   // 1 attack per second

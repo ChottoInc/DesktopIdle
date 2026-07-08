@@ -14,6 +14,19 @@ public class Player : MonoBehaviour, IPlayerDataProvider
     public event Action OnLevelUp;
 
 
+    protected virtual void Awake()
+    {
+        PlayerManager.Instance.PlayerBuffsData.OnAddBuff += OnBuffAdded;
+        PlayerManager.Instance.PlayerBuffsData.OnRemoveBuff += OnBuffRemoved;
+    }
+
+    protected virtual void OnDestroy()
+    {
+        PlayerManager.Instance.PlayerBuffsData.OnAddBuff -= OnBuffAdded;
+        PlayerManager.Instance.PlayerBuffsData.OnRemoveBuff -= OnBuffRemoved;
+    }
+
+
     protected virtual void Update()
     {
         HandleBuffs();

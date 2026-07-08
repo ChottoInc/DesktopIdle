@@ -1,11 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public static class UtilsAlchemist
 {
+    public enum PermaStat { MaxHp, Attack, Defense }
+
     private static Dictionary<int, ListableGameDataSO> _dictRecipes;
+    private static Dictionary<int, ListableGameDataSO> _dictResearch;
 
 
 
@@ -66,6 +68,7 @@ public static class UtilsAlchemist
 
 
         LoadDictRecipes();
+        LoadDictResearch();
     }
 
 
@@ -94,5 +97,35 @@ public static class UtilsAlchemist
     public static RecipeSO GetRecipeById(int id)
     {
         return UtilsGeneral.GetGameDataSO<RecipeSO>(id, _dictRecipes);
+    }
+
+
+
+    private static void LoadDictResearch()
+    {
+        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Alchemist/ContainerGameData_Research");
+        _dictResearch = container.Entries.ToDictionary(e => e.Id);
+    }
+
+    public static RecipeSO GetRecipeFromResearch(int id)
+    {
+        return UtilsGeneral.GetGameDataSO<ResearchItemSO>(id, _dictResearch).UnlocksRecipe;
+    }
+
+
+
+    public static int GetPossibleQuantity(RecipeSO recipe, Inventory inventory)
+    {
+        int maxCraftable = int.MaxValue;
+
+        foreach (var ingredient in recipe.Ingredients)
+        {
+            int ownedAmount = inventory.GetItemQuantity(ingredient.item.Id);
+            int possibleCrafts = ownedAmount / ingredient.quantity;
+
+            maxCraftable = Mathf.Min(maxCraftable, possibleCrafts);
+        }
+
+        return maxCraftable == int.MaxValue ? 0 : maxCraftable;
     }
 }

@@ -69,6 +69,8 @@ public static class UtilsPlayer
         UtilsFarmer.Initialize();
         UtilsMage.Initialize();
         UtilsAlchemist.Initialize();
+
+        UtilsBuffs.Initialize();
     }
 
     private static PlayerJobSO[] LoadJobs()

@@ -11,11 +11,12 @@ public static class UtilsItem
      * Fishes ids start from 200
      * Crops ids start from 400
      * Baits ids start from 450
+     * Concoctions ids start from 500
      * */
 
     private static Dictionary<int, ListableGameDataSO> dictItems;
 
-    public enum ItemType { Ore, Card, Metal, Fish, Crop, Bait }
+    public enum ItemType { Ore, Card, Metal, Fish, Crop, Bait, Concoction }
 
     public enum CardRarity { Common, Uncommon, Rare }
 
@@ -209,6 +210,7 @@ public static class UtilsItem
     private static readonly Dictionary<ItemType, IConsumableHandler> _consumableHandlers = new()
     {
         { ItemType.Bait, new ConsumableBaitHandler() },
+        { ItemType.Concoction, new ConsumableConcoctionHandler() },
     };
 
 

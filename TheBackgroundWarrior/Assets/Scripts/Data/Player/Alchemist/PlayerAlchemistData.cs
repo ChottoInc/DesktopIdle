@@ -45,6 +45,7 @@ public class PlayerAlchemistData : IBasePlayerData
     public float CurrentStability => baseStability + UtilsAlchemist.PER_LEVEL_ALCHEMIST_GAIN_STABILITY * (LevelStatStability - 1);
 
 
+
     // ---- RECIPES
 
     public RecipeSO CurrentCraftingRecipe { get; private set; }
@@ -54,6 +55,12 @@ public class PlayerAlchemistData : IBasePlayerData
 
     public List<RecipeSO> AvailableRecipes { get; private set; }
 
+
+    // ---- PERMA STATS USED
+
+    public int StatPermaMaxHpCounter { get; private set; }
+    public int StatPermaAttackCounter { get; private set; }
+    public int StatPermaDefenseCounter { get; private set; }
 
 
 
@@ -108,6 +115,11 @@ public class PlayerAlchemistData : IBasePlayerData
 
         // load recipes
         AvailableRecipes = saveData.recipes.Select(recipe => UtilsAlchemist.GetRecipeById(recipe)).ToList();
+
+
+        StatPermaMaxHpCounter = saveData.statPermaMaxHpCounter;
+        StatPermaAttackCounter = saveData.statPermaAttackCounter;
+        StatPermaDefenseCounter = saveData.statPermaDefenseCounter;
     }
 
     private void GenerateBaseStats()
@@ -123,7 +135,7 @@ public class PlayerAlchemistData : IBasePlayerData
 
 
         // multiplier
-        baseRoutine = 0f; // increase craft speed, up to 15%
+        baseRoutine = 1f; // increase craft speed, up to 15%
         baseYield = 0f; // craft extra materials chance, up to 20%
         baseResearch = 0f; // unlocks new recipe, check on whole values
         baseStability = 0.5f; // reduce failed crafts
@@ -137,6 +149,11 @@ public class PlayerAlchemistData : IBasePlayerData
         {
             UtilsAlchemist.GetRecipeById(0)
         };
+
+
+        StatPermaMaxHpCounter = 0;
+        StatPermaAttackCounter = 0;
+        StatPermaDefenseCounter = 0;
     }
 
     public void AddStatPoints(int amount)
@@ -199,8 +216,10 @@ public class PlayerAlchemistData : IBasePlayerData
                 int maxIndex = (int)CurrentResearch + 1;
                 for (int i = 0; i < maxIndex; i++)
                 {
-                    if (!IsRecipeAvailable(UtilsAlchemist.GetRecipeById(i)))
-                        AddAvailableRecipe(i);
+                    // check list of research and add recipe if not available yet
+                    var recipe = UtilsAlchemist.GetRecipeFromResearch(i);
+                    if (!IsRecipeAvailable(recipe))
+                        AddAvailableRecipe(recipe);
                 }
                 break;
             case UtilsPlayer.ID_ALCHEMIST_STABILITY: LevelStatStability += amount; break;
@@ -224,12 +243,26 @@ public class PlayerAlchemistData : IBasePlayerData
         return AvailableRecipes.Where(r => r.Id == recipe.Id).Any();
     }
 
+    public void AddPermaStatCounter(UtilsAlchemist.PermaStat stat)
+    {
+        // TODO: add some kind of event to trigger increase stats while in warrior scene, and also for quests maybe
+        switch (stat)
+        {
+            default: Debug.Log("Wrong type of perma stat tried to add"); break;
+            case UtilsAlchemist.PermaStat.MaxHp: StatPermaMaxHpCounter++; break;
+            case UtilsAlchemist.PermaStat.Attack: StatPermaMaxHpCounter++; break;
+            case UtilsAlchemist.PermaStat.Defense: StatPermaMaxHpCounter++; break;
+        }
+    }
+
+    // ------------ CRAFTING --------------
+
     public void SetCraftingRecipe(RecipeSO recipe)
     {
         CurrentCraftingRecipe = recipe;
     }
 
-    public void SetInfiniteForging(bool infinite)
+    public void SetInfiniteCrafting(bool infinite)
     {
         IsInfiniteCrafting = infinite;
     }

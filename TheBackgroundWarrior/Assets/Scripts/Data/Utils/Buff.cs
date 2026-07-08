@@ -8,6 +8,8 @@ public class Buff
     private BuffType _buffType;
     private float _remainingTime;
 
+    public float StartDuration { get; private set; }
+
     public event Action<BuffType> OnBuffExpired;
 
     public BuffType BuffType => _buffType;
@@ -19,6 +21,8 @@ public class Buff
     {
         _buffType = buffType;
         _remainingTime = remainingTime;
+
+        StartDuration = remainingTime;
     }
 
     public Buff(BuffSaveData saveData)

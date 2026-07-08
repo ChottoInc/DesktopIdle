@@ -22,18 +22,11 @@ public class UITooltipName : MonoBehaviour
     [SerializeField] float minHeight = 80f;
     [SerializeField] float maxHeight = 2000f;
 
-    private float startHeight;
-
     private Tween tweenFade;
 
     private void OnDestroy()
     {
         tweenFade?.Kill();
-    }
-
-    private void Start()
-    {
-        startHeight = root.rect.height;
     }
 
     private void Resize()

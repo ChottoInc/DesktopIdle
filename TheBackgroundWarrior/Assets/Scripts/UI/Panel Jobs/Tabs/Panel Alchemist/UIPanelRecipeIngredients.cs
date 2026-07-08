@@ -69,17 +69,7 @@ public class UIPanelRecipeIngredients : MonoBehaviour
 
     private int GetPossibleQuantity(RecipeSO recipe)
     {
-        int maxCraftable = int.MaxValue;
-
-        foreach (var ingredient in recipe.Ingredients)
-        {
-            int ownedAmount = PlayerManager.Instance.Inventory.GetItemQuantity(ingredient.item.Id);
-            int possibleCrafts = ownedAmount / ingredient.quantity;
-
-            maxCraftable = Mathf.Min(maxCraftable, possibleCrafts);
-        }
-
-        return maxCraftable == int.MaxValue ? 0 : maxCraftable;
+        return UtilsAlchemist.GetPossibleQuantity(recipe, PlayerManager.Instance.Inventory);
     }
 
 
@@ -106,7 +96,7 @@ public class UIPanelRecipeIngredients : MonoBehaviour
             // get quantity
             int maxItem = GetPossibleQuantity(recipe);
 
-            data.SetInfiniteForging(false);
+            data.SetInfiniteCrafting(false);
             _customInput.SetInfinite(false);
 
             _selectedCraftedQuantity = maxItem;
@@ -164,7 +154,7 @@ public class UIPanelRecipeIngredients : MonoBehaviour
         // invert infinite
         if (data.IsInfiniteCrafting)
         {
-            data.SetInfiniteForging(false);
+            data.SetInfiniteCrafting(false);
 
             _selectedCraftedQuantity = maxItem;
             data.SetCurrentCraftingQuantity(_selectedCraftedQuantity);
@@ -172,7 +162,7 @@ public class UIPanelRecipeIngredients : MonoBehaviour
         }
         else
         {
-            data.SetInfiniteForging(true);
+            data.SetInfiniteCrafting(true);
             _selectedCraftedQuantity = -1;
         }
 

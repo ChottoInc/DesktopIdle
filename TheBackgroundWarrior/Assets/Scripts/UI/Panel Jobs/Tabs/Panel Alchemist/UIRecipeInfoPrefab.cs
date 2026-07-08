@@ -14,6 +14,10 @@ public class UIRecipeInfoPrefab : MonoBehaviour
     [SerializeField] TMP_Text _textName;
     [SerializeField] TMP_Text _textDesc;
 
+    [Space(10)]
+    [SerializeField] Color _colorHighlight;
+    [SerializeField] Image _imageBorder;
+
 
     public RecipeSO RecipeSO => _recipe;
 
@@ -42,5 +46,10 @@ public class UIRecipeInfoPrefab : MonoBehaviour
     public void OnClick()
     {
         tabAlchemist.OnSelectRecipe(this);
+    }
+
+    public void Select(bool select)
+    {
+        _imageBorder.color = select ? _colorHighlight : Color.white;
     }
 }

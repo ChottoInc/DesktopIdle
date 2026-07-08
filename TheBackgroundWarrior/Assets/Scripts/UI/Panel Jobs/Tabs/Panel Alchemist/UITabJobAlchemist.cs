@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class UITabJobAlchemist : UITabWindow
@@ -45,8 +46,22 @@ public class UITabJobAlchemist : UITabWindow
         // refresh all recipes
         RefreshRecipes();
 
-        // select first one in list
-        OnSelectRecipe(_recipeInfoPrefabs[0]);
+        SelectSavedRecipe();
+    }
+
+    private void SelectSavedRecipe()
+    {
+        // select saved recipe ui, or first by default
+        RecipeSO currentRecipe = PlayerManager.Instance.PlayerAlchemistData.CurrentCraftingRecipe;
+        if (currentRecipe != null)
+        {
+            var uiRecipe = _recipeInfoPrefabs.Where(recipeInfo => recipeInfo.RecipeSO.Id == currentRecipe.Id).First();
+            OnSelectRecipe(uiRecipe);
+        }
+        else
+        {
+            OnSelectRecipe(_recipeInfoPrefabs[0]);
+        }
     }
 
     public void OnButtonBack()
@@ -71,8 +86,11 @@ public class UITabJobAlchemist : UITabWindow
     /// <param name="uiRecipe">Recipe UI Prefab</param>
     public void OnSelectRecipe(UIRecipeInfoPrefab uiRecipe)
     {
+        if (_lastRecipe != null) _lastRecipe.Select(false);
+
         _lastRecipe = uiRecipe;
         _panelIngredients.Setup(_lastRecipe.RecipeSO);
+        _lastRecipe.Select(true);
     }
 
 
@@ -80,7 +98,19 @@ public class UITabJobAlchemist : UITabWindow
     {
         if (_player != null)
         {
-            _panelJob.OnButtonClose();
+            if (!_player.IsCrafting)
+            {
+                // if it's not already crafting, start
+                _player.OnTryCraft();
+            }
+            else
+            {
+                // if it's already crafting, but a different item, stop current and start new
+                if (_player.CurrentRecipe.Id != _player.PlayerData.CurrentCraftingRecipe.Id)
+                {
+                    _player.OnTryCraft();
+                }
+            }
         }
         else
         {

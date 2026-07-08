@@ -34,8 +34,10 @@ public class PlayerMage : Player
     public PlayerMageData PlayerData { get; private set; }
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         OnStatChange += CheckSpellBar;
     }
 
@@ -50,8 +52,10 @@ public class PlayerMage : Player
     }
 
 
-    private void OnDestroy()
-    {
+    protected override void OnDestroy()
+    {   
+        base.OnDestroy();
+
         OnStatChange -= CheckSpellBar;
 
         if (PlayerData != null)

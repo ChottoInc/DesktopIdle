@@ -19,6 +19,11 @@ public class PlayerAlchemistSaveData
 
     public List<int> recipes;
 
+
+    public int statPermaMaxHpCounter;
+    public int statPermaAttackCounter;
+    public int statPermaDefenseCounter; 
+
     public PlayerAlchemistSaveData() { }
 
     public PlayerAlchemistSaveData(PlayerAlchemistData data)
@@ -38,5 +43,10 @@ public class PlayerAlchemistSaveData
         currentCraftingQuantity = data.CurrentCraftingQuantity;
 
         recipes = data.AvailableRecipes.Select(recipe => recipe.Id).ToList();
+
+
+        statPermaMaxHpCounter = data.StatPermaMaxHpCounter;
+        statPermaAttackCounter = data.StatPermaAttackCounter;
+        statPermaDefenseCounter = data.StatPermaDefenseCounter;
     }
 }

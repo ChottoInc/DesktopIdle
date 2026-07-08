@@ -91,12 +91,16 @@ public class Inventory
         }
         else
         {
-            ItemSO itemSO = UtilsItem.GetItemById(id);
-            if(itemSO.ItemType != UtilsItem.ItemType.Fish)
+            //ItemSO itemSO = UtilsItem.GetItemById(id);
+
+            int index = GetGroupIndex(id);
+            itemGroups[index].AddQuantity(quantity);
+            /*
+            if (itemSO.ItemType != UtilsItem.ItemType.Fish)
             {
                 int index = GetGroupIndex(id);
                 itemGroups[index].AddQuantity(quantity);
-            }
+            }*/
         }
 
         itemGroups.Sort();

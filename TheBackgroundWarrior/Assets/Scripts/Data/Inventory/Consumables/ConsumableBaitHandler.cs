@@ -25,8 +25,7 @@ public class ConsumableBaitHandler : AbstractConsumableHandler<BaitSO>
         // check if already active, in that case add duration, else remove other bait effect and active new one
         if (buffData.HasBuff(anglerBuff))
         {
-            var activeBuff = buffData.GetBuffByType(activatingBuff);
-            activeBuff.AddTimer(bait.Duration);
+            buffData.AddBuff(anglerBuff);
         }
         else
         {

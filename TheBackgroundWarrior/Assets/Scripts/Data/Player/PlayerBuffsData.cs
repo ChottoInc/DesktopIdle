@@ -64,14 +64,22 @@ public class PlayerBuffsData
 
     public void AddBuff(Buff buff)
     {
-        // add expired handler
-        buff.OnBuffExpired += HandlerExpiredBuff;
+        if (HasBuff(buff))
+        {
+            var buffInList = GetBuffByType(buff.BuffType);
+            buff.AddTimer(buff.StartDuration);
+        }
+        else
+        {
+            // add expired handler
+            buff.OnBuffExpired += HandlerExpiredBuff;
 
-        // add to list
-        ActiveBuffs.Add(buff);
+            // add to list
+            ActiveBuffs.Add(buff);
 
-        // invoke event add
-        OnAddBuff?.Invoke(buff.BuffType);
+            // invoke event add
+            OnAddBuff?.Invoke(buff.BuffType);
+        }
     }
 
     public void RemoveBuff(Buff buff)

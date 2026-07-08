@@ -47,8 +47,10 @@ public class PlayerBlacksmith : Player
     public PlayerBlacksmithData PlayerData => playerData;
 
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (playerData != null)
         {
             playerData.OnLevelUp -= LevelUp;
@@ -60,8 +62,9 @@ public class PlayerBlacksmith : Player
     }
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         OnPerformSmash += CheckForgeProgress;
     }
 
@@ -109,7 +112,7 @@ public class PlayerBlacksmith : Player
             int needAmount = metal.RequiredOres;
 
             // check has enough material
-            if( PlayerManager.Instance.Inventory.HasEnough(ore.Id, needAmount))
+            if(PlayerManager.Instance.Inventory.HasEnough(ore.Id, needAmount))
             {
                 imageOutOfOrder.gameObject.SetActive(false);
 

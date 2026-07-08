@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9c1b116341dae545af7469517ad6a57, type: 3}
-  m_Name: RecipeData_0
+  m_Script: {fileID: 11500000, guid: 661c9bf61a9a16f48a3c75b3e882f6d2, type: 3}
+  m_Name: ResearchItemData_3
   m_EditorClassIdentifier: 
-  id: 0
-  _ingredients: []
-  _product: {fileID: 0}
-  _craftTime: 0
+  id: 3
+  _unlocksRecipe: {fileID: 11400000, guid: f7927b7b2dbb30e458f92148cfc28a3c, type: 2}

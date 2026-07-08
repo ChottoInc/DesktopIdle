@@ -55,8 +55,10 @@ public class PlayerMiner : Player
     public PlayerMinerData PlayerData => playerData;
 
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (playerData != null)
         {
             playerData.OnLevelUp -= LevelUp;
@@ -66,8 +68,10 @@ public class PlayerMiner : Player
     }
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         rb = GetComponent<Rigidbody2D>();
 
         startingAttackSpeedAnimationDuration = attackClip.length;

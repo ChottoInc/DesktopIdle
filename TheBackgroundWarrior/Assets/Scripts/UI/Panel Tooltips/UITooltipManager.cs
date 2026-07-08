@@ -8,6 +8,7 @@ public class UITooltipManager : MonoBehaviour
     public const int ID_SHOW_CARD = 1;
     public const int ID_SHOW_YESNO = 2;
     public const int ID_SHOW_CARDOPENING = 3;
+    public const int ID_SHOW_BUFFS = 4;
 
 
     [SerializeField] Transform centerPoint;
@@ -17,6 +18,7 @@ public class UITooltipManager : MonoBehaviour
     [SerializeField] UITooltipCard tooltipCard;
     [SerializeField] UITooltipYesNo tooltipYesNo;
     [SerializeField] UITooltipCardOpening tooltipCardOpening;
+    [SerializeField] UITooltipBuff tooltipBuff;
 
 
 
@@ -47,6 +49,7 @@ public class UITooltipManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
     }
 
@@ -57,6 +60,7 @@ public class UITooltipManager : MonoBehaviour
             case ID_SHOW_TEXT: tooltipName.Show(tooltipData.text, position, fade, fontMaxSize); break;
             case ID_SHOW_CARD: tooltipCard.Show(tooltipData.cardSO, fade); break;
             case ID_SHOW_CARDOPENING: tooltipCardOpening.Show(tooltipData.openingCards, fade); break;
+            case ID_SHOW_BUFFS: tooltipBuff.Show(fade); break;
         }
     }
 
@@ -73,6 +77,7 @@ public class UITooltipManager : MonoBehaviour
             case ID_SHOW_TEXT: tooltipName.Hide(fade); break;
             case ID_SHOW_CARD: tooltipCard.Hide(fade); break;
             case ID_SHOW_CARDOPENING: tooltipCardOpening.Hide(fade); break;
+            case ID_SHOW_BUFFS: tooltipBuff.Hide(fade); break;
         }
     }
 }

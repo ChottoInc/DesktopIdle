@@ -33,7 +33,16 @@ public class UIInventoryPanelInfo : MonoBehaviour
 
         // Set panel buttons to active if the selected item is a card
         _panelCardButtons.SetActive(itemSO.ItemType == UtilsItem.ItemType.Card);
-        _panelConsumableButtons.SetActive(itemSO.ItemType == UtilsItem.ItemType.Bait);
+
+        if( itemSO.ItemType == UtilsItem.ItemType.Bait ||
+            itemSO.ItemType == UtilsItem.ItemType.Concoction)
+        {
+            _panelConsumableButtons.SetActive(true);
+        }
+        else
+        {
+            _panelConsumableButtons.SetActive(false);
+        }
     }
 
     public void Show(bool show)

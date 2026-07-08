@@ -28,8 +28,10 @@ public class PlayerFisher : Player
     public PlayerFisherData PlayerData => playerData;
 
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (playerData != null)
         {
             playerData.OnLevelUp -= LevelUp;
@@ -126,7 +128,7 @@ public class PlayerFisher : Player
         animator.SetTrigger("Caught");
 
         long rewardedExp;
-
+        /*
         // Fish caught
         bool hasAlreadyFish = PlayerManager.Instance.Inventory.HasItem(hookedFish.Id);
 
@@ -138,7 +140,7 @@ public class PlayerFisher : Player
             int bitsToAdd = UtilsItem.DismantleFish(hookedFish.FishRarity);
             PlayerManager.Instance.Inventory.AddBits(bitsToAdd);
         }
-
+        */
         // Add fish to caught
         PlayerManager.Instance.Inventory.AddItem(hookedFish.Id, 1);
 
@@ -191,16 +193,15 @@ public class PlayerFisher : Player
 
     protected override void OnBuffAdded(UtilsBuffs.BuffType buffType)
     {
-        if (buffType == UtilsBuffs.BuffType.MorningAngler ||
-           buffType == UtilsBuffs.BuffType.AfternoonAngler ||
-           buffType == UtilsBuffs.BuffType.NightAngler)
-        {
-            FishSpawnManager.Instance.CheckBuffs();
-            OnBaitChange?.Invoke();
-        }
+        OnBuffChange(buffType);
     }
 
     protected override void OnBuffRemoved(UtilsBuffs.BuffType buffType)
+    {
+        OnBuffChange(buffType);
+    }
+
+    private void OnBuffChange(UtilsBuffs.BuffType buffType)
     {
         if (buffType == UtilsBuffs.BuffType.MorningAngler ||
             buffType == UtilsBuffs.BuffType.AfternoonAngler ||

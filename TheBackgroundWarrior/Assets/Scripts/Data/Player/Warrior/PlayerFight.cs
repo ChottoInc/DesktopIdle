@@ -80,8 +80,10 @@ public class PlayerFight : Player, IDamageable, IHealable
 
 
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if(playerData != null)
         {
             playerData.OnHpChange -= UpdateHpBarUI;
@@ -95,8 +97,10 @@ public class PlayerFight : Player, IDamageable, IHealable
     }
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         rb = GetComponent<Rigidbody2D>();
 
         // Get default speed for animator walk
