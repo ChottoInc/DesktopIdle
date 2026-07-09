@@ -155,7 +155,7 @@ PrefabInstance:
     - target: {fileID: 3414337755123211944, guid: 85f7fcca0e5ed3e4b863fcebf17ea74a, type: 3}
       propertyPath: imageIcon
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 974758323320755115}
     - target: {fileID: 3429660195617894584, guid: 85f7fcca0e5ed3e4b863fcebf17ea74a, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -420,5 +420,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f463e93156d03e4e942243dc4f086c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &974758323320755115 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2756154250043972320, guid: 85f7fcca0e5ed3e4b863fcebf17ea74a, type: 3}
+  m_PrefabInstance: {fileID: 3150507872852265291}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

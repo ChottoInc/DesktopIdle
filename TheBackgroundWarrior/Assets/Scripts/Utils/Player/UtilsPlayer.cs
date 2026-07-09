@@ -62,6 +62,9 @@ public static class UtilsPlayer
 
 
         // Call every static helper for jobs after the load of SOs
+
+        UtilsBuffs.Initialize();
+
         UtilsWarrior.Initialize();
         UtilsMiner.Initialize();
         UtilsBlacksmith.Initialize();
@@ -70,7 +73,7 @@ public static class UtilsPlayer
         UtilsMage.Initialize();
         UtilsAlchemist.Initialize();
 
-        UtilsBuffs.Initialize();
+        
     }
 
     private static PlayerJobSO[] LoadJobs()

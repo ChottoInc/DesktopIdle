@@ -15,11 +15,12 @@ MonoBehaviour:
   id: 500
   itemType: 6
   sprite: {fileID: 21300000, guid: a8abb36a487244f4097f24089a2765cc, type: 3}
-  itemNameTextId: 
+  itemNameTextId: text_item_concoction_1_name
   itemNamePluralTextId: 
   itemName: Greed Elixir
-  itemDescTextId: 
+  itemDescTextId: text_item_concoction_1_desc
   itemDesc: Increase Bits gain from all sources by 20% for {0} minutes.
   _permanent: 0
+  _permaStat: 0
   _buff: 0
   _buffDuration: 20

@@ -29,7 +29,8 @@ public class Player : MonoBehaviour, IPlayerDataProvider
 
     protected virtual void Update()
     {
-        HandleBuffs();
+        if(_buffsToCheckTypes != null)
+            HandleBuffs();
     }
 
     protected virtual void HandleBuffs()

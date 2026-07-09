@@ -31,12 +31,12 @@ public static class UtilsBuffs
 
     private static void LoadDictBuffToSprites()
     {
-        var container = Resources.Load<ContainerGameDataSO>("Data/Player/Alchemist/ContainerGameData_BuffToSprites");
+        var container = Resources.Load<ContainerGameDataSO>("Data/Player/ContainerGameData_BuffToSprites");
         _dictBuffToSprite = container.Entries.ToDictionary(e => e.Id);
     }
 
     public static Sprite GetBuffSpriteByType(BuffType type)
     {
-        return _dictBuffToSprite.Values.Cast<BuffToSprite>().Where(b => b.BuffType == type).First().Sprite;
+        return _dictBuffToSprite.Values.Cast<BuffSO>().Where(b => b.BuffType == type).First().Sprite;
     }
 }

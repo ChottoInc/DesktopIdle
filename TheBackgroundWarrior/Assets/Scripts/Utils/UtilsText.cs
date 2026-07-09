@@ -36,6 +36,32 @@ public static class UtilsText
 
     // -------------------- NAMES --------------------- //
 
+    public const string text_name_buff_greed = "text_name_buff_greed";
+    public const string text_name_buff_veteran = "text_name_buff_veteran";
+    public const string text_name_buff_storyteller = "text_name_buff_storyteller";
+    public const string text_name_buff_stoned = "text_name_buff_stoned";
+    public const string text_name_buff_sailor = "text_name_buff_sailor";
+    public const string text_name_buff_dwarf = "text_name_buff_dwarf";
+    public const string text_name_buff_tamer = "text_name_buff_tamer";
+    public const string text_name_buff_arcanist = "text_name_buff_arcanist";
+    public const string text_name_buff_morningangler = "text_name_buff_morningangler";
+    public const string text_name_buff_afternoonangler = "text_name_buff_afternoonangler";
+    public const string text_name_buff_nightangler = "text_name_buff_nightangler";
+    public const string text_name_buff_ironskin = "text_name_buff_ironskin";
+
+    public const string text_name_buff_greed_effect = "text_name_buff_greed_effect";
+    public const string text_name_buff_veteran_effect = "text_name_buff_veteran_effect";
+    public const string text_name_buff_storyteller_effect = "text_name_buff_storyteller_effect";
+    public const string text_name_buff_stoned_effect = "text_name_buff_stoned_effect";
+    public const string text_name_buff_sailor_effect = "text_name_buff_sailor_effect";
+    public const string text_name_buff_dwarf_effect = "text_name_buff_dwarf_effect";
+    public const string text_name_buff_tamer_effect = "text_name_buff_tamer_effect";
+    public const string text_name_buff_arcanist_effect = "text_name_buff_arcanist_effect";
+    public const string text_name_buff_morningangler_effect = "text_name_buff_morningangler_effect";
+    public const string text_name_buff_afternoonangler_effect = "text_name_buff_afternoonangler_effect";
+    public const string text_name_buff_nightangler_effect = "text_name_buff_nightangler_effect";
+    public const string text_name_buff_ironskin_effect = "text_name_buff_ironskin_effect";
+
     public const string text_name_class_warrior = "text_name_class_warrior";
     public const string text_name_class_miner = "text_name_class_miner";
     public const string text_name_class_fisher = "text_name_class_fisher";
@@ -548,6 +574,19 @@ public static class UtilsText
     public const string text_item_bait_8_name = "text_item_bait_8_name";
     public const string text_item_bait_9_name = "text_item_bait_9_name";
 
+    public const string text_item_concoction_1_name = "text_item_concoction_1_name";
+    public const string text_item_concoction_2_name = "text_item_concoction_2_name";
+    public const string text_item_concoction_3_name = "text_item_concoction_3_name";
+    public const string text_item_concoction_4_name = "text_item_concoction_4_name";
+    public const string text_item_concoction_5_name = "text_item_concoction_5_name";
+    public const string text_item_concoction_6_name = "text_item_concoction_6_name";
+    public const string text_item_concoction_7_name = "text_item_concoction_7_name";
+    public const string text_item_concoction_8_name = "text_item_concoction_8_name";
+    public const string text_item_concoction_9_name = "text_item_concoction_9_name";
+    public const string text_item_concoction_10_name = "text_item_concoction_10_name";
+    public const string text_item_concoction_11_name = "text_item_concoction_11_name";
+    public const string text_item_concoction_12_name = "text_item_concoction_12_name";
+
 
     public const string text_item_fish_group_life_name = "text_item_fish_group_life_name";
     public const string text_item_fish_group_predator_name = "text_item_fish_group_predator_name";
@@ -751,6 +790,19 @@ public static class UtilsText
     public const string text_item_bait_8_desc = "text_item_bait_8_desc";
     public const string text_item_bait_9_desc = "text_item_bait_9_desc";
 
+    public const string text_item_concoction_1_desc = "text_item_concoction_1_desc";
+    public const string text_item_concoction_2_desc = "text_item_concoction_2_desc";
+    public const string text_item_concoction_3_desc = "text_item_concoction_3_desc";
+    public const string text_item_concoction_4_desc = "text_item_concoction_4_desc";
+    public const string text_item_concoction_5_desc = "text_item_concoction_5_desc";
+    public const string text_item_concoction_6_desc = "text_item_concoction_6_desc";
+    public const string text_item_concoction_7_desc = "text_item_concoction_7_desc";
+    public const string text_item_concoction_8_desc = "text_item_concoction_8_desc";
+    public const string text_item_concoction_9_desc = "text_item_concoction_9_desc";
+    public const string text_item_concoction_10_desc = "text_item_concoction_10_desc";
+    public const string text_item_concoction_11_desc = "text_item_concoction_11_desc";
+    public const string text_item_concoction_12_desc = "text_item_concoction_12_desc";
+
     public const string text_item_fish_group_life_desc = "text_item_fish_group_life_desc";
     public const string text_item_fish_group_predator_desc = "text_item_fish_group_predator_desc";
     public const string text_item_fish_group_guardian_desc = "text_item_fish_group_guardian_desc";
@@ -915,6 +967,34 @@ public static class UtilsText
             { text_tutorial_intro_11, "Spend Bits in the shop to purchase cards and jobs." },
 
             // -------------------- NAMES --------------------- //
+
+            { text_name_buff_greed, "Greed" },
+            { text_name_buff_veteran, "Veteran" },
+            { text_name_buff_storyteller, "Storyteller" },
+            { text_name_buff_stoned, "Stoned" },
+            { text_name_buff_sailor, "Sailor" },
+            { text_name_buff_dwarf, "Dwarf" },
+            { text_name_buff_tamer, "Tamer" },
+            { text_name_buff_arcanist, "Arcanist" },
+            { text_name_buff_morningangler, "Morning Angler" },
+            { text_name_buff_afternoonangler, "Afternoon Angler" },
+            { text_name_buff_nightangler, "Night Angler" },
+            { text_name_buff_ironskin, "Iron Skin" },
+
+            { text_name_buff_greed_effect, "Increase Bits gain from all sources by 20% for {0} minutes." },
+            { text_name_buff_veteran_effect, "Increase Experience gain from all sources by 20% for {0} minutes." },
+            { text_name_buff_storyteller_effect, "Increase Cards drop rate by 20% for {0} minutes." },
+            { text_name_buff_stoned_effect, "Increase Ores drop rate by 20% for {0} minutes." },
+            { text_name_buff_sailor_effect, "Increase successful hooks by 20% for {0} minutes." },
+            { text_name_buff_dwarf_effect, "Increase Blacksmith forged materials by 20% for {0} minutes." },
+            { text_name_buff_tamer_effect, "Increase Farmer chance to befriend a companion by 20% for {0} minutes." },
+            { text_name_buff_arcanist_effect, "Increase Mage learning ability by 20% for {0} minutes." },
+            { text_name_buff_morningangler_effect, "Attracts fishes normally found in the morning." },
+            { text_name_buff_afternoonangler_effect, "Attracts fishes normally found in the afternoon." },
+            { text_name_buff_nightangler_effect, "Attracts fishes normally found in the night." },
+            { text_name_buff_ironskin_effect, "At the start of a stage, gain a shield equal to 20% of Warrior Max Hp, lasts for {0} minutes." },
+
+
 
             { text_name_class_warrior, "Warrior" },
             { text_name_class_miner, "Miner" },
@@ -1430,6 +1510,19 @@ public static class UtilsText
             { text_item_bait_8_name, "Shrimp Bait Plus" },
             { text_item_bait_9_name, "Earthworm Bait Max" },
 
+            { text_item_concoction_1_name, "Greed Elixir" },
+            { text_item_concoction_2_name, "Veteran Drink" },
+            { text_item_concoction_3_name, "Storyteller Sip" },
+            { text_item_concoction_4_name, "Stoned Brew" },
+            { text_item_concoction_5_name, "Sailor Elixir" },
+            { text_item_concoction_6_name, "Dwarf Drink" },
+            { text_item_concoction_7_name, "Tamer Drink" },
+            { text_item_concoction_8_name, "Arcanist Elixir" },
+            { text_item_concoction_9_name, "Iron Skin Potion" },
+            { text_item_concoction_10_name, "Health Potion" },
+            { text_item_concoction_11_name, "Attack Potion" },
+            { text_item_concoction_12_name, "Defense Potion" },
+
             { text_item_fish_group_life_name, "Life Series" },
             { text_item_fish_group_predator_name, "Predator Series" },
             { text_item_fish_group_guardian_name, "Guardian Series" },
@@ -1654,6 +1747,19 @@ public static class UtilsText
             { text_item_bait_7_desc, "For 10 minutes, also attracts fishes normally found in the night" },
             { text_item_bait_8_desc, "For 10 minutes, also attracts a lot of fishes normally found in the night" },
             { text_item_bait_9_desc, "For 10 minutes, attracts only fishes normally found in the night" },
+
+            { text_item_concoction_1_desc, "Grants Greed buff." },
+            { text_item_concoction_2_desc, "Grants Veteran buff." },
+            { text_item_concoction_3_desc, "Grants Storyteller buff." },
+            { text_item_concoction_4_desc, "Grants Stoned buff." },
+            { text_item_concoction_5_desc, "Grants Sailor buff." },
+            { text_item_concoction_6_desc, "Grants Dwarf buff." },
+            { text_item_concoction_7_desc, "Grants Tamer buff." },
+            { text_item_concoction_8_desc, "Grants Arcanist buff." },
+            { text_item_concoction_9_desc, "Grants Iron Skin buff." },
+            { text_item_concoction_10_desc, "Increase by 100 Warrior base Max Hp" },
+            { text_item_concoction_11_desc, "Increase by 2 Warrior base Attack" },
+            { text_item_concoction_12_desc, "Increase by 2 Warrior base Defense" },
 
             { text_item_fish_group_life_desc, "Increase Max Hp for Warrior Job by 100%." },
             { text_item_fish_group_predator_desc, "Increase Atk for Warrior Job by 50%." },

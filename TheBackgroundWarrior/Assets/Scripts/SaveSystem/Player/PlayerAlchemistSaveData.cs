@@ -38,7 +38,9 @@ public class PlayerAlchemistSaveData
         currentLevel = data.CurrentLevel;
         currentExp = data.CurrentExp;
 
+        if(data.CurrentCraftingRecipe != null)
         currentCraftingRecipe = data.CurrentCraftingRecipe.Id;
+
         isInfiniteCrafting = data.IsInfiniteCrafting;
         currentCraftingQuantity = data.CurrentCraftingQuantity;
 

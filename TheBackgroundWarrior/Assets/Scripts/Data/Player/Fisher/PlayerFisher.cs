@@ -40,9 +40,9 @@ public class PlayerFisher : Player
         }
     }
 
-    private void Start()
+    protected override void Awake()
     {
-        timer5Mins = UtilsGeneral.TIMER_5MIN_IN_SECONDS;
+        base.Awake();
 
         _buffsToCheckTypes = new List<UtilsBuffs.BuffType>()
         {
@@ -53,6 +53,11 @@ public class PlayerFisher : Player
             UtilsBuffs.BuffType.AfternoonAngler,
             UtilsBuffs.BuffType.NightAngler,
         };
+    }
+
+    private void Start()
+    {
+        timer5Mins = UtilsGeneral.TIMER_5MIN_IN_SECONDS;
     }
 
     protected override void Update()

@@ -59,7 +59,9 @@ public class PlayerBuffsData
     public void DecreaseBuff(BuffType buffType, float val)
     {
         var buff = GetBuffByType(buffType);
-        buff.DecreaseTimer(val);
+
+        if(buff != null)
+            buff.DecreaseTimer(val);
     }
 
     public void AddBuff(Buff buff)

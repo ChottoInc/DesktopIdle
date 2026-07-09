@@ -15,11 +15,12 @@ MonoBehaviour:
   id: 502
   itemType: 6
   sprite: {fileID: 21300000, guid: 7e7c7de13fd2c8f45b11169d4582997a, type: 3}
-  itemNameTextId: 
+  itemNameTextId: text_item_concoction_3_name
   itemNamePluralTextId: 
   itemName: Storyteller Sip
-  itemDescTextId: 
+  itemDescTextId: text_item_concoction_3_desc
   itemDesc: Increase Cards drop rate by 20% for {0} minutes.
   _permanent: 0
+  _permaStat: 0
   _buff: 2
   _buffDuration: 20

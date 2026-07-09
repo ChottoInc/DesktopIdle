@@ -15,12 +15,13 @@ MonoBehaviour:
   id: 540
   itemType: 6
   sprite: {fileID: 21300000, guid: 966349ed44b4735488489c251f1ffc49, type: 3}
-  itemNameTextId: 
+  itemNameTextId: text_item_concoction_9_name
   itemNamePluralTextId: 
   itemName: Iron Skin Potion
-  itemDescTextId: 
+  itemDescTextId: text_item_concoction_9_desc
   itemDesc: At the start of a stage, gain a shield equal to 20% of Warrior Max Hp,
     lasts for {0} minutes.
   _permanent: 0
+  _permaStat: 0
   _buff: 40
   _buffDuration: 20
