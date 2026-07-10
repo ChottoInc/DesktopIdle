@@ -6,14 +6,9 @@ using UnityEngine;
 public class Inventory
 {
     // base currency
-    private int currentBits;
+    public int CurrentBits { get; private set; }
 
-    private List<ItemGroup> itemGroups;
-
-
-    public int CurrentBits => currentBits;
-
-    public List<ItemGroup> ItemGroups => itemGroups;
+    public List<ItemGroup> ItemGroups { get; private set; }
 
 
 
@@ -24,19 +19,19 @@ public class Inventory
 
     public Inventory()
     {
-        currentBits = 0;
-        itemGroups = new List<ItemGroup>();
+        CurrentBits = 0;
+        ItemGroups = new List<ItemGroup>();
     }
 
     public Inventory(InventorySaveData saveData)
     {
-        currentBits = saveData.currentBits;
+        CurrentBits = saveData.currentBits;
 
-        itemGroups = new List<ItemGroup>();
+        ItemGroups = new List<ItemGroup>();
 
         foreach (var group in saveData.groupSaves)
         {
-            itemGroups.Add(new ItemGroup(group));
+            ItemGroups.Add(new ItemGroup(group));
         }
     }
 
@@ -44,18 +39,24 @@ public class Inventory
 
     public void AddBits(int amount)
     {
-        currentBits += amount;
+        // check if player has greed buff active, adds 20%
+        if (PlayerManager.Instance.PlayerBuffsData.HasBuff(UtilsBuffs.BuffType.Greed))
+        {
+            amount = Mathf.RoundToInt((float)amount * 1.2f);
+        }
+
+        CurrentBits += amount;
     }
 
     public bool RemoveBits(int amount)
     {
-        if(currentBits < amount)
+        if(CurrentBits < amount)
         {
             Debug.Log("Insufficient bits");
             return false;
         }
 
-        currentBits -= amount;
+        CurrentBits -= amount;
         return true;
     }
 
@@ -87,14 +88,14 @@ public class Inventory
         if (!HasItem(id))
         {
             ItemGroup group = new ItemGroup(id, quantity);
-            itemGroups.Add(group);
+            ItemGroups.Add(group);
         }
         else
         {
             //ItemSO itemSO = UtilsItem.GetItemById(id);
 
             int index = GetGroupIndex(id);
-            itemGroups[index].AddQuantity(quantity);
+            ItemGroups[index].AddQuantity(quantity);
             /*
             if (itemSO.ItemType != UtilsItem.ItemType.Fish)
             {
@@ -103,7 +104,7 @@ public class Inventory
             }*/
         }
 
-        itemGroups.Sort();
+        ItemGroups.Sort();
     }
 
     public bool RemoveItem(int id, int quantity)
@@ -112,13 +113,13 @@ public class Inventory
 
         int index = GetGroupIndex(id);
 
-        bool result = itemGroups[index].RemoveQuantity(quantity);
+        bool result = ItemGroups[index].RemoveQuantity(quantity);
 
         if(result)
         {
-            if (itemGroups[index].Quantity <= 0)
+            if (ItemGroups[index].Quantity <= 0)
             {
-                itemGroups.RemoveAt(index);
+                ItemGroups.RemoveAt(index);
             }
         }
 
@@ -127,7 +128,7 @@ public class Inventory
 
     public bool HasItem(int id)
     {
-        foreach (var group in itemGroups)
+        foreach (var group in ItemGroups)
         {
             if (group.IdItem == id)
                 return true;
@@ -143,7 +144,7 @@ public class Inventory
 
         if (index > -1)
         {
-            if (itemGroups[index].Quantity >= amount)
+            if (ItemGroups[index].Quantity >= amount)
             {
                 return true;
             }
@@ -154,9 +155,9 @@ public class Inventory
 
     public int GetGroupIndex(int id)
     {
-        for (int i = 0; i < itemGroups.Count; i++)
+        for (int i = 0; i < ItemGroups.Count; i++)
         {
-            if (itemGroups[i].IdItem == id)
+            if (ItemGroups[i].IdItem == id)
                 return i;
         }
         return -1;
@@ -167,18 +168,18 @@ public class Inventory
         int index = GetGroupIndex(id);
 
         if (index == -1) return -1;
-        return itemGroups[index].Quantity;
+        return ItemGroups[index].Quantity;
     }
 
     public List<ItemGroup> GetGroupsOfType(UtilsItem.ItemType itemType)
     {
-        return itemGroups.Where(group => UtilsItem.GetItemById(group.IdItem).ItemType == itemType).ToList();
+        return ItemGroups.Where(group => UtilsItem.GetItemById(group.IdItem).ItemType == itemType).ToList();
     }
 
     public List<ItemGroup> GetAllCards()
     {
         List<ItemGroup> result = new List<ItemGroup>();
-        foreach (var group in itemGroups)
+        foreach (var group in ItemGroups)
         {
             ItemSO item = UtilsItem.GetItemById(group.IdItem);
             if (item.ItemType == UtilsItem.ItemType.Card)

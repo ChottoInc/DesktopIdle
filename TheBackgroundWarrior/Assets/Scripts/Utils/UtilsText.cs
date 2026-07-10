@@ -372,6 +372,7 @@ public static class UtilsText
     public const string text_button_inventory_filter_fishes = "text_button_inventory_filter_fishes";
     public const string text_button_inventory_filter_crops = "text_button_inventory_filter_crops";
     public const string text_button_inventory_filter_baits = "text_button_inventory_filter_baits";
+    public const string text_button_inventory_filter_concoctions = "text_button_inventory_filter_concoctions";
     public const string text_button_inventory_filter_cards = "text_button_inventory_filter_cards";
 
 
@@ -1314,6 +1315,7 @@ public static class UtilsText
             { text_button_inventory_filter_fishes, "Fishes" },
             { text_button_inventory_filter_crops, "Crops" },
             { text_button_inventory_filter_baits, "Baits" },
+            { text_button_inventory_filter_concoctions, "Concoctions" },
             { text_button_inventory_filter_cards, "Cards" },
 
              // -------------------- YESNO --------------------- //

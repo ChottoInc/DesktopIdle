@@ -26,6 +26,7 @@ public class PlayerFight : Player, IDamageable, IHealable
 
     [Space(10)]
     [SerializeField] GenericBar hpBar;
+    [SerializeField] GenericBar _shieldBar;
 
     [Header("Death")]
     [SerializeField] float timerResetAfterDeath = 2f;
@@ -87,6 +88,7 @@ public class PlayerFight : Player, IDamageable, IHealable
         if(playerData != null)
         {
             playerData.OnHpChange -= UpdateHpBarUI;
+            playerData.OnShieldChange -= UpdateShieldBarUI;
             playerData.OnTakeDamage -= OnActionTakeDamage;
             playerData.OnHeal -= OnActionHeal;
             playerData.OnLevelUp -= LevelUp;
@@ -278,6 +280,7 @@ public class PlayerFight : Player, IDamageable, IHealable
         if (playerData != null)
         {
             playerData.OnHpChange += UpdateHpBarUI;
+            playerData.OnShieldChange += UpdateShieldBarUI;
             playerData.OnTakeDamage += OnActionTakeDamage;
             playerData.OnHeal += OnActionHeal;
             playerData.OnLevelUp += LevelUp;
@@ -288,6 +291,7 @@ public class PlayerFight : Player, IDamageable, IHealable
 
         playerData.ResetAfterStage();
         hpBar.Setup(playerData.MaxHp, playerData.CurrentHp);
+        _shieldBar.Setup(playerData.MaxShield, playerData.CurrentShield);
     }
 
 
@@ -298,7 +302,16 @@ public class PlayerFight : Player, IDamageable, IHealable
 
     private void UpdateHpBarUI()
     {
+        hpBar.gameObject.SetActive(playerData.CurrentShield <= 0 ? true : false);
         hpBar.SetCurrentValue(playerData.CurrentHp);
+        //Debug.Log("current: " + playerData.CurrentHp);
+        //Debug.Log("max hp: " + playerData.MaxHp);
+    }
+
+    private void UpdateShieldBarUI()
+    {
+        _shieldBar.gameObject.SetActive(playerData.CurrentShield > 0 ? true : false);
+        _shieldBar.SetCurrentValue(playerData.CurrentShield);
         //Debug.Log("current: " + playerData.CurrentHp);
         //Debug.Log("max hp: " + playerData.MaxHp);
     }

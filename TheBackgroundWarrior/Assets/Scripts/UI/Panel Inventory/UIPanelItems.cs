@@ -13,15 +13,15 @@ public class UIPanelItems : MonoBehaviour
 
     private List<ItemGroup> itemGroups;
 
-    private int currentInvFilter;
+    private UITabInventory.InventoryItemType _currentInvFilter;
 
     [Space(10)]
     [SerializeField] UIInventoryPanelInfo panelInfo;
     [SerializeField] UIPanelDismantle panelDismantle;
 
-    public void Setup(int filter)
+    public void Setup(UITabInventory.InventoryItemType filter)
     {
-        currentInvFilter = filter;
+        _currentInvFilter = filter;
 
         itemObjs = ClearList(itemObjs);
 
@@ -48,18 +48,19 @@ public class UIPanelItems : MonoBehaviour
         if (itemGroups != null) itemGroups.Clear();
 
         // get updated list
-        if(currentInvFilter != 0)
+        if(_currentInvFilter != 0)
         {
             UtilsItem.ItemType itemType = UtilsItem.ItemType.Ore;
-            switch (currentInvFilter)
+            switch (_currentInvFilter)
             {
-                default:
-                case UITabInventory.ID_INVENTORY_FILTER_ORES: itemType = UtilsItem.ItemType.Ore; break;
-                case UITabInventory.ID_INVENTORY_FILTER_METALS: itemType = UtilsItem.ItemType.Metal; break;
-                case UITabInventory.ID_INVENTORY_FILTER_FISHES: itemType = UtilsItem.ItemType.Fish; break;
-                case UITabInventory.ID_INVENTORY_FILTER_CROPS: itemType = UtilsItem.ItemType.Crop; break;
-                case UITabInventory.ID_INVENTORY_FILTER_BAITS: itemType = UtilsItem.ItemType.Bait; break;
-                case UITabInventory.ID_INVENTORY_FILTER_CARDS: itemType = UtilsItem.ItemType.Card; break;
+                default: itemGroups = new List<ItemGroup>(PlayerManager.Instance.Inventory.ItemGroups); break;
+                case UITabInventory.InventoryItemType.Ores: itemType = UtilsItem.ItemType.Ore; break;
+                case UITabInventory.InventoryItemType.Metals: itemType = UtilsItem.ItemType.Metal; break;
+                case UITabInventory.InventoryItemType.Fishes: itemType = UtilsItem.ItemType.Fish; break;
+                case UITabInventory.InventoryItemType.Crops: itemType = UtilsItem.ItemType.Crop; break;
+                case UITabInventory.InventoryItemType.Baits: itemType = UtilsItem.ItemType.Bait; break;
+                case UITabInventory.InventoryItemType.Cards: itemType = UtilsItem.ItemType.Card; break;
+                case UITabInventory.InventoryItemType.Concoctions: itemType = UtilsItem.ItemType.Concoction; break;
             }
             itemGroups = PlayerManager.Instance.Inventory.GetGroupsOfType(itemType);
         }

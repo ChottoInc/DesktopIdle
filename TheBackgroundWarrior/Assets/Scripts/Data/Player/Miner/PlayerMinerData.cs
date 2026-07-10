@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using static UtilsPlayer;
 
-public class PlayerMinerData : IBasePlayerData
+public class PlayerMinerData : BasePlayerData
 {
     // ---- BASE STAT VALUES
 
@@ -35,25 +35,10 @@ public class PlayerMinerData : IBasePlayerData
     public int LevelStatLuck => levelStatLuck;
 
 
-    // ---- POINTS
-
-    private int availableStatPoints;
-
-    public int AvailableStatPoints => availableStatPoints;
-
 
     // ---- FINAL STAT VALUES
 
-    private int currentLevel;
-    private long currentExp;
-
-
-
-
-
-    public int CurrentLevel => currentLevel;
-    public long CurrentExp => currentExp;
-    public long ExpToNextLevel => UtilsMiner.RequiredExpForMinerLevel(currentLevel + 1);
+    public long ExpToNextLevel => UtilsMiner.RequiredExpForMinerLevel(CurrentLevel + 1);
 
 
     public float CurrentPower => basePower + UtilsMiner.PER_LEVEL_MINER_GAIN_POWER * (levelStatPower - 1);
@@ -64,10 +49,6 @@ public class PlayerMinerData : IBasePlayerData
     public int WeaponLevel => levelWeaponMiner;
 
 
-
-    public event Action OnAddedExp;
-    public event Action OnLevelUp;
-    public event Action<int, int> OnStatChange;
 
     public PlayerMinerData()
     {
@@ -90,25 +71,25 @@ public class PlayerMinerData : IBasePlayerData
         levelStatLuck = Math.Min(levelStatLuck, UtilsMiner.PER_LEVEL_MINER_MAX_LUCK);
 
 
-        availableStatPoints = saveData.availableStatPoints;
+        AvailableStatPoints = saveData.availableStatPoints;
 
-        currentLevel = saveData.currentLevel;
-        currentExp = saveData.currentExp;
+        CurrentLevel = saveData.currentLevel;
+        CurrentExp = saveData.currentExp;
 
         int sumLevels =
             levelStatPower + levelSmashSpeed + levelShockwave + levelStatLuck +
             //startLevelPower + startLevelSmashSpeed + startLevelShockwave + startLevelLuck +
-            availableStatPoints +
+            AvailableStatPoints +
             1;
 
-        currentLevel = Math.Min(currentLevel, sumLevels);
+        CurrentLevel = Math.Min(CurrentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if (currentLevel >= UtilsMiner.MAX_LEVEL_MINER)
+        if (CurrentLevel >= UtilsMiner.MAX_LEVEL_MINER)
         {
-            availableStatPoints = UtilsMiner.MAX_LEVEL_MINER - 1 -
+            AvailableStatPoints = UtilsMiner.MAX_LEVEL_MINER - 1 -
                levelStatPower - levelSmashSpeed - levelShockwave - levelStatLuck;
-            currentExp = 0;
+            CurrentExp = 0;
         }
 
         // ---- WEAPON
@@ -118,8 +99,8 @@ public class PlayerMinerData : IBasePlayerData
 
     private void GenerateBaseStats()
     {
-        currentLevel = 1;
-        currentExp = 0;
+        CurrentLevel = 1;
+        CurrentExp = 0;
 
         levelStatPower = startLevelPower;
         levelSmashSpeed = startLevelSmashSpeed;
@@ -139,57 +120,13 @@ public class PlayerMinerData : IBasePlayerData
         levelWeaponMiner = 1;
     }
 
-    public void AddStatPoints(int amount)
-    {
-        availableStatPoints += amount;
-    }
-
-    public void RemoveStatPoints(int amount)
-    {
-        availableStatPoints -= amount;
-    }
-
-    public void AddLevel(int amount)
-    {
-        if (currentLevel + amount > UtilsMiner.MAX_LEVEL_MINER)
-        {
-            amount = UtilsMiner.MAX_LEVEL_MINER - currentLevel;
-        }
-        currentLevel += amount;
-        availableStatPoints += amount;
-    }
-
     public void AddExp(long amount)
     {
-        // check max level
-        if (currentLevel >= UtilsMiner.MAX_LEVEL_MINER)
-        {
-            // set current exp to 0
-            currentExp = 0;
-            return;
-        }
-
-        currentExp += amount;
-
-        
-
-        // looping for every level gained
-        while (currentExp >= ExpToNextLevel)
-        {
-            // recalculate current exp
-            currentExp -= ExpToNextLevel;
-
-            // give level and stat point
-            currentLevel++;
-            AddStatPoints(1);
-
-            OnLevelUp?.Invoke();
-        }
-
-        //Debug.Log("current exp: " + currentExp);
-        //Debug.Log("next level exp: " + ExpToNextLevel);
-
-        OnAddedExp?.Invoke();
+        base.AddExp(
+            amount,
+            level => level >= UtilsMiner.MAX_LEVEL_MINER,
+            () => ExpToNextLevel
+        );
     }
 
     public void IncreaseLevelStat(int id, int amount)
@@ -203,7 +140,7 @@ public class PlayerMinerData : IBasePlayerData
             case ID_MINER_LUCK: levelStatLuck += amount; break;
         }
 
-        OnStatChange?.Invoke(id, amount);
+        InvokeStatChange(id, amount);
     }
 
     public void AddMinerWeaponLevel(int level)

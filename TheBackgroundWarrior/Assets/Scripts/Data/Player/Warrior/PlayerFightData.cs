@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFightData : IBasePlayerData
+public class PlayerFightData : BasePlayerData
 {
     // ---- VISITABLE MAPS
 
@@ -77,20 +77,8 @@ public class PlayerFightData : IBasePlayerData
     public int LevelStatLuck => levelStatLuck;
 
 
-    // ---- POINTS
-
-    private int availableStatPoints;
-
-    public int AvailableStatPoints => availableStatPoints;
-
 
     // ---- FINAL STAT VALUES
-
-    private int currentLevel;
-    private long currentExp;
-
-    private float currentHp;
-
 
     private float maxHpModifier = 1f;
     private float atkModifier = 1f;
@@ -99,12 +87,7 @@ public class PlayerFightData : IBasePlayerData
     private float critDmgModifier = 1f;
 
 
-
-
-
-    public int CurrentLevel => currentLevel;
-    public long CurrentExp => currentExp;
-    public long ExpToNextLevel => UtilsWarrior.RequiredExpForWarriorLevel(currentLevel + 1);
+    public long ExpToNextLevel => UtilsWarrior.RequiredExpForWarriorLevel(CurrentLevel + 1);
 
 
     public float MaxHp => 
@@ -113,7 +96,7 @@ public class PlayerFightData : IBasePlayerData
         PlayerManager.Instance.FisherLifeSeriesMultiplier *
         maxHpModifier;
 
-    public float CurrentHp => currentHp;
+    public float CurrentHp { get; private set; }
 
     public float CurrentAtk => 
         (baseAtk + UtilsWarrior.PER_LEVEL_WARRIOR_GAIN_ATK * (levelStatAtk - 1)) *
@@ -152,16 +135,19 @@ public class PlayerFightData : IBasePlayerData
         PlayerManager.Instance.FisherGoldenSeriesMultiplier;
 
 
+    // ----- SHIELD 
 
-    public event Action OnAddedExp;
-    public event Action OnLevelUp;
+    public float MaxShield { get; private set; }
+    public float CurrentShield { get; private set; }
+
 
     public event Action OnHpChange;
     public event Action<int> OnTakeDamage;
     public event Action<int> OnHeal;
 
+    public event Action OnShieldChange;
 
-    public event Action<int, int> OnStatChange;
+
     public event Action<int> OnAddMap;
 
 
@@ -202,28 +188,31 @@ public class PlayerFightData : IBasePlayerData
         levelStatLuck = Math.Min(levelStatLuck, UtilsWarrior.PER_LEVEL_WARRIOR_MAX_LUCK);
 
 
-        availableStatPoints = saveData.availableStatPoints;
+        AvailableStatPoints = saveData.availableStatPoints;
 
-        currentLevel = saveData.currentLevel;
-        currentExp = saveData.currentExp;
+        CurrentLevel = saveData.currentLevel;
+        CurrentExp = saveData.currentExp;
 
         int sumLevels =
             levelStatMaxHp + levelStatAtk + levelStatDef + levelStatAtkSpd + levelStatCritRate + levelStatCritDmg + levelStatLuck +
             //startLevelMaxHp + startLevelAtk + startLevelDef + startLevelAtkSpd + startLevelCritRate + startLevelCritDmg + startLevelLuck +
-            availableStatPoints +
+            AvailableStatPoints +
             1;
 
-        currentLevel = Math.Min(currentLevel, sumLevels);
+        CurrentLevel = Math.Min(CurrentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if (currentLevel >= UtilsWarrior.MAX_LEVEL_WARRIOR)
+        if (CurrentLevel >= UtilsWarrior.MAX_LEVEL_WARRIOR)
         {
-            availableStatPoints = UtilsWarrior.MAX_LEVEL_WARRIOR - 1 -
+            AvailableStatPoints = UtilsWarrior.MAX_LEVEL_WARRIOR - 1 -
                 levelStatMaxHp - levelStatAtk - levelStatDef - levelStatAtkSpd - levelStatCritRate - levelStatCritDmg - levelStatLuck;
-            currentExp = 0;
+            CurrentExp = 0;
         }
 
-        currentHp = MaxHp;
+        CurrentHp = MaxHp;
+
+        // at start check if has iron skin
+        CheckShieldAtStart();
     }
 
     private void GenerateBaseStats()
@@ -234,8 +223,8 @@ public class PlayerFightData : IBasePlayerData
         };
 
 
-        currentLevel = 1;
-        currentExp = 0;
+        CurrentLevel = 1;
+        CurrentExp = 0;
 
 
         levelStatMaxHp = startLevelMaxHp;
@@ -252,7 +241,7 @@ public class PlayerFightData : IBasePlayerData
 
 
         baseMaxHp = BASE_MAXHP + ((float)PlayerManager.Instance.PlayerAlchemistData.StatPermaMaxHpCounter * ALCHEMIST_PERMA_ADD_MAXHP);
-        currentHp = MaxHp;
+        CurrentHp = MaxHp;
 
         baseAtk = BASE_ATK + ((float)PlayerManager.Instance.PlayerAlchemistData.StatPermaAttackCounter * ALCHEMIST_PERMA_ADD_ATTACK);
         baseDef = BASE_DEF + ((float)PlayerManager.Instance.PlayerAlchemistData.StatPermaDefenseCounter * ALCHEMIST_PERMA_ADD_DEFENSE);
@@ -268,52 +257,13 @@ public class PlayerFightData : IBasePlayerData
 
     #region STATS
 
-    public void AddStatPoints(int amount)
+    public void AddExp(long amount)
     {
-        availableStatPoints += amount;
-    }
-
-    public void RemoveStatPoints(int amount)
-    {
-        availableStatPoints -= amount;
-    }
-
-    public void AddLevel(int amount)
-    {
-        if (currentLevel + amount > UtilsWarrior.MAX_LEVEL_WARRIOR)
-        {
-            amount = UtilsWarrior.MAX_LEVEL_WARRIOR - currentLevel;
-        }
-        currentLevel += amount;
-        availableStatPoints += amount;
-    }
-
-    public void AddExp(int amount)
-    {
-        // check max level
-        if (currentLevel >= UtilsWarrior.MAX_LEVEL_WARRIOR)
-        {
-            // set current exp to 0
-            currentExp = 0;
-            return;
-        }
-
-        currentExp += amount;
-
-        // looping for every level gained
-        while(currentExp >= ExpToNextLevel)
-        {
-            // recalculate current exp
-            currentExp -= ExpToNextLevel;
-
-            // give level and stat point
-            currentLevel++;
-            AddStatPoints(1);
-
-            OnLevelUp?.Invoke();
-        }
-
-        OnAddedExp?.Invoke();
+        base.AddExp(
+            amount,
+            level => level >= UtilsWarrior.MAX_LEVEL_WARRIOR,
+            () => ExpToNextLevel
+        );
     }
 
     public void IncreaseLevelStat(int id, int amount)
@@ -330,17 +280,26 @@ public class PlayerFightData : IBasePlayerData
             case UtilsPlayer.ID_WARRIOR_LUCK: levelStatLuck += amount; break;
         }
 
-        OnStatChange?.Invoke(id, amount);
+        InvokeStatChange(id, amount);
     }
 
     public void SetHp(float value)
     {
-        currentHp = value;
+        CurrentHp = value;
     }
 
     #endregion
 
     #region FIGHT
+
+    private void CheckShieldAtStart()
+    {
+        if (PlayerManager.Instance.PlayerBuffsData.HasBuff(UtilsBuffs.BuffType.IronSkin))
+        {
+            MaxShield = MaxHp * 0.2f;
+            CurrentShield = MaxShield;
+        }
+    }
 
     public void TakeDamage(EnemyData data)
     {
@@ -355,8 +314,30 @@ public class PlayerFightData : IBasePlayerData
 
         total = Mathf.Max(0f, baseDamage - CurrentDef);
 
-        // subtract total to hp
-        currentHp -= total;
+        // check for shield
+        if(CurrentShield > 0)
+        {
+            float restFromShield = 0;
+
+            // damage shield
+            CurrentShield -= total;
+
+            // if shield breaks, damage hp
+            if(CurrentShield < 0)
+            {
+                restFromShield = Mathf.Abs(CurrentShield);
+                CurrentHp -= restFromShield;
+                CurrentShield = 0;
+            }
+
+            OnShieldChange?.Invoke();
+        }
+        else
+        {
+            // subtract total to hp
+            CurrentHp -= total;
+        }
+            
 
         //Debug.Log("damage: " + total);
         //Debug.Log("current hp: " + currentHp);
@@ -364,9 +345,9 @@ public class PlayerFightData : IBasePlayerData
 
         OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
 
-        if (currentHp <= 0f)
+        if (CurrentHp <= 0f)
         {
-            currentHp = 0;
+            CurrentHp = 0;
         }
 
         OnHpChange?.Invoke();
@@ -380,15 +361,15 @@ public class PlayerFightData : IBasePlayerData
         float total = Mathf.Max(0f, damage);
 
         // subtract total to hp
-        currentHp -= total;
+        CurrentHp -= total;
 
         OnHpChange?.Invoke();
 
         OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
 
-        if (currentHp <= 0f)
+        if (CurrentHp <= 0f)
         {
-            currentHp = 0;
+            CurrentHp = 0;
         }
     }
 
@@ -400,22 +381,24 @@ public class PlayerFightData : IBasePlayerData
         float total = Mathf.Max(0f, value);
 
         // subtract total to hp
-        currentHp += total;
+        CurrentHp += total;
 
         OnHpChange?.Invoke();
 
         OnHeal?.Invoke(Mathf.FloorToInt(total));
 
-        currentHp = Mathf.Max(0, currentHp);
+        CurrentHp = Mathf.Max(0, CurrentHp);
     }
 
     public void ResetAfterStage()
     {
-        currentHp = MaxHp;
+        CurrentHp = MaxHp;
+        CheckShieldAtStart();
 
         //Debug.Log("Max hp after death: " + currentHp);
 
         OnHpChange?.Invoke();
+        OnShieldChange?.Invoke();
     }
 
 

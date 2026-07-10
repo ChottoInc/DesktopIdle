@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerAlchemistData : IBasePlayerData
+public class PlayerAlchemistData : BasePlayerData
 {
     // ---- BASE STAT VALUES
 
@@ -29,13 +29,8 @@ public class PlayerAlchemistData : IBasePlayerData
 
     // ---- POINTS
 
-    public int AvailableStatPoints { get; private set; }
-
 
     // ---- FINAL STAT VALUES
-
-    public int CurrentLevel { get; private set; }
-    public long CurrentExp { get; private set; }
     public long ExpToNextLevel => UtilsAlchemist.RequiredExpForAlchemistLevel(CurrentLevel + 1);
 
 
@@ -61,12 +56,6 @@ public class PlayerAlchemistData : IBasePlayerData
     public int StatPermaMaxHpCounter { get; private set; }
     public int StatPermaAttackCounter { get; private set; }
     public int StatPermaDefenseCounter { get; private set; }
-
-
-
-    public event Action OnAddedExp;
-    public event Action OnLevelUp;
-    public event Action<int, int> OnStatChange;
 
 
     public PlayerAlchemistData()
@@ -156,52 +145,13 @@ public class PlayerAlchemistData : IBasePlayerData
         StatPermaDefenseCounter = 0;
     }
 
-    public void AddStatPoints(int amount)
-    {
-        AvailableStatPoints += amount;
-    }
-
-    public void RemoveStatPoints(int amount)
-    {
-        AvailableStatPoints -= amount;
-    }
-
-    public void AddLevel(int amount)
-    {
-        if (CurrentLevel + amount > UtilsAlchemist.MAX_LEVEL_ALCHEMIST)
-        {
-            amount = UtilsAlchemist.MAX_LEVEL_ALCHEMIST - CurrentLevel;
-        }
-        CurrentLevel += amount;
-        AvailableStatPoints += amount;
-    }
-
     public void AddExp(long amount)
     {
-        // check max level
-        if (CurrentLevel >= UtilsAlchemist.MAX_LEVEL_ALCHEMIST)
-        {
-            // set current exp to 0
-            CurrentExp = 0;
-            return;
-        }
-
-        CurrentExp += amount;
-
-        // looping for every level gained
-        while (CurrentExp >= ExpToNextLevel)
-        {
-            // recalculate current exp
-            CurrentExp -= ExpToNextLevel;
-
-            // give level and stat point
-            CurrentLevel++;
-            AddStatPoints(1);
-
-            OnLevelUp?.Invoke();
-        }
-
-        OnAddedExp?.Invoke();
+        base.AddExp(
+            amount,
+            level => level >= UtilsAlchemist.MAX_LEVEL_ALCHEMIST,
+            () => ExpToNextLevel
+        );
     }
 
     public void IncreaseLevelStat(int id, int amount)
@@ -225,7 +175,7 @@ public class PlayerAlchemistData : IBasePlayerData
             case UtilsPlayer.ID_ALCHEMIST_STABILITY: LevelStatStability += amount; break;
         }
 
-        OnStatChange?.Invoke(id, amount);
+        InvokeStatChange(id, amount);
     }
 
     public void AddAvailableRecipe(int id)

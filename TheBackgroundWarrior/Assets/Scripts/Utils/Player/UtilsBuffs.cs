@@ -13,7 +13,7 @@ public static class UtilsBuffs
         Sailor = 4,                 // increase successfull hooks
         Dwarf = 5,                  // increase extra materials blacksmith
         Tamer = 6,                  // increase befriend chance
-        Arcanist = 7,               // increase learn points gain
+        Arcanist = 7,               // increase learn points gain, doubles
 
         MorningAngler = 30,         // find morning fishes
         AfternoonAngler = 31,       // find afternoon fishes

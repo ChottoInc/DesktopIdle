@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using static UtilsPlayer;
 
-public class PlayerFisherData : IBasePlayerData
+public class PlayerFisherData : BasePlayerData
 {
     // ---- BASE STAT VALUES
 
@@ -27,21 +27,15 @@ public class PlayerFisherData : IBasePlayerData
 
     // ---- POINTS
 
-    private int availableStatPoints;
-
-    public int AvailableStatPoints => availableStatPoints;
+    
 
 
     // ---- FINAL STAT VALUES
 
-    private int currentLevel;
-    private long currentExp;
 
 
-
-    public int CurrentLevel => currentLevel;
-    public long CurrentExp => currentExp;
-    public long ExpToNextLevel => UtilsFisher.RequiredExpForFisherLevel(currentLevel + 1);
+    
+    public long ExpToNextLevel => UtilsFisher.RequiredExpForFisherLevel(CurrentLevel + 1);
 
     public float CurrentCalmness => baseCalmness + UtilsFisher.PER_LEVEL_FISHER_GAIN_CALMNESS * (LevelStatCalmness);
     public float CurrentReflex => baseReflex + UtilsFisher.PER_LEVEL_FISHER_GAIN_REFLEX * (LevelStatReflex - 1);
@@ -68,9 +62,7 @@ public class PlayerFisherData : IBasePlayerData
 
 
 
-    public event Action OnAddedExp;
-    public event Action OnLevelUp;
-    public event Action<int, int> OnStatChange;
+    
 
     public event Action OnBaitChange;
 
@@ -97,25 +89,25 @@ public class PlayerFisherData : IBasePlayerData
         LevelStatLuck = Math.Min(LevelStatLuck, UtilsFisher.PER_LEVEL_FISHER_MAX_LUCK);
 
 
-        availableStatPoints = saveData.availableStatPoints;
+        AvailableStatPoints = saveData.availableStatPoints;
         
-        currentLevel = saveData.currentLevel;
-        currentExp = saveData.currentExp;
+        CurrentLevel = saveData.currentLevel;
+        CurrentExp = saveData.currentExp;
 
         int sumLevels =
             LevelStatCalmness + LevelStatReflex + LevelStatKnowledge + LevelStatLuck +
             //startLevelCalmness + startLevelReflex + startLevelKnowledge + startLevelLuck +
-            availableStatPoints +
+            AvailableStatPoints +
             1;
 
-        currentLevel = Math.Min(currentLevel, sumLevels);
+        CurrentLevel = Math.Min(CurrentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if (currentLevel >= UtilsFisher.MAX_LEVEL_FISHER)
+        if (CurrentLevel >= UtilsFisher.MAX_LEVEL_FISHER)
         {
-            availableStatPoints = UtilsFisher.MAX_LEVEL_FISHER - 1 -
+            AvailableStatPoints = UtilsFisher.MAX_LEVEL_FISHER - 1 -
                LevelStatCalmness - LevelStatReflex - LevelStatKnowledge - LevelStatLuck;
-            currentExp = 0;
+            CurrentExp = 0;
         }
 
         FillFishGroupsSeriesCompletion();
@@ -125,8 +117,8 @@ public class PlayerFisherData : IBasePlayerData
 
     private void GenerateBaseStats()
     {
-        currentLevel = 1;
-        currentExp = 0;
+        CurrentLevel = 1;
+        CurrentExp = 0;
 
         LevelStatCalmness = startLevelCalmness;
         LevelStatReflex = startLevelReflex;
@@ -195,52 +187,13 @@ public class PlayerFisherData : IBasePlayerData
         return result;
     }
 
-    public void AddStatPoints(int amount)
-    {
-        availableStatPoints += amount;
-    }
-
-    public void RemoveStatPoints(int amount)
-    {
-        availableStatPoints -= amount;
-    }
-
-    public void AddLevel(int amount)
-    {
-        if (currentLevel + amount > UtilsFisher.MAX_LEVEL_FISHER)
-        {
-            amount = UtilsFisher.MAX_LEVEL_FISHER - currentLevel;
-        }
-        currentLevel += amount;
-        availableStatPoints += amount;
-    }
-
     public void AddExp(long amount)
     {
-        // check max level
-        if (currentLevel >= UtilsFisher.MAX_LEVEL_FISHER)
-        {
-            // set current exp to 0
-            currentExp = 0;
-            return;
-        }
-
-        currentExp += amount;
-
-        // looping for every level gained
-        while (currentExp >= ExpToNextLevel)
-        {
-            // recalculate current exp
-            currentExp -= ExpToNextLevel;
-
-            // give level and stat point
-            currentLevel++;
-            AddStatPoints(1);
-
-            OnLevelUp?.Invoke();
-        }
-
-        OnAddedExp?.Invoke();
+        base.AddExp(
+            amount,
+            level => level >= UtilsFisher.MAX_LEVEL_FISHER,
+            () => ExpToNextLevel
+        );
     }
 
     public void IncreaseLevelStat(int id, int amount)
@@ -254,7 +207,7 @@ public class PlayerFisherData : IBasePlayerData
             case ID_FISHER_LUCK: LevelStatLuck += amount; break;
         }
 
-        OnStatChange?.Invoke(id, amount);
+        InvokeStatChange(id, amount);
     }
 
 

@@ -177,7 +177,15 @@ public class Companion : MonoBehaviour
                 isGoingToCrop = false;
 
                 // take action befriended or not
-                bool success = UtilsGeneral.GetRandomSuccessFromValue(PlayerManager.Instance.PlayerFarmerData.CurrentLuck);
+                float finalTotalCheck = PlayerManager.Instance.PlayerFarmerData.CurrentLuck;
+
+                // check if player has tamer buff
+                if (PlayerManager.Instance.PlayerBuffsData.HasBuff(UtilsBuffs.BuffType.Tamer))
+                {
+                    finalTotalCheck += 0.2f;
+                }
+
+                bool success = UtilsGeneral.GetRandomSuccessFromValue(finalTotalCheck);
                 if (success || CropsPlantManager.Instance.AlwaysBefriendCheat)
                 {
                     // call farmer mow, doesn't need reset after mow

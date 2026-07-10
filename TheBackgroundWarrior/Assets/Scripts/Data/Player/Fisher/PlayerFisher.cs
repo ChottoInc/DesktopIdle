@@ -108,7 +108,14 @@ public class PlayerFisher : Player
         else
         {
             // Check success hook
-            successReflex = UtilsGeneral.GetRandomSuccessFromValue(playerData.CurrentReflex);
+            float finalTotalCheck = playerData.CurrentReflex;
+
+            // check if player has sailor buff
+            if (PlayerManager.Instance.PlayerBuffsData.HasBuff(UtilsBuffs.BuffType.Sailor))
+            {
+                finalTotalCheck += 0.2f;
+            }
+            successReflex = UtilsGeneral.GetRandomSuccessFromValue(finalTotalCheck);
         }
 
         //Debug.Log("Success: " + successReflex);

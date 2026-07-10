@@ -253,7 +253,17 @@ public class CombatManager : MonoBehaviour
         }
         else
         {
-            if (UnityEngine.Random.value <= baseCardDropRate + player.PlayerData.CurrentLuck)
+            float finalTotalCheck = 
+                baseCardDropRate +
+                player.PlayerData.CurrentLuck;
+
+            // check if player has storyteller buff
+            if (PlayerManager.Instance.PlayerBuffsData.HasBuff(UtilsBuffs.BuffType.Storyteller))
+            {
+                finalTotalCheck += 0.2f;
+            }
+
+            if (UnityEngine.Random.value <= finalTotalCheck)
             {
                 // get card drop, card can be null, it means no drop
                 CardSO randCardSO = UtilsGeneral.GetRandomValueFromGeneralChanches(StageManager.Instance.PossibleCards);

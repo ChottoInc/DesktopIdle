@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class RockSpawnManager : MonoBehaviour
@@ -9,9 +8,6 @@ public class RockSpawnManager : MonoBehaviour
 
     [SerializeField] int startingRocks = 20;
     [SerializeField] UtilsGeneral.GeneralChances<RockSO>[] possibleRocks;
-
-    [Header("UI")]
-    [SerializeField] TMP_Text textStage;
 
     private int currentRockIndex;
 
@@ -54,8 +50,6 @@ public class RockSpawnManager : MonoBehaviour
         maxXSpawn = Camera.main.ScreenToWorldPoint(new Vector2(Screen.currentResolution.width - offsetSpawn, 0)).x;
 
         StartCoroutine(CoSpawnStartingRocks());
-
-        UpdateStageUI();
     }
 
     #region ROCKS FUNCTIONS
@@ -157,13 +151,4 @@ public class RockSpawnManager : MonoBehaviour
     {
         currentRockIndex = 1;
     }
-
-    #region UI
-
-    private void UpdateStageUI()
-    {
-        textStage.text = $"Rocks";
-    }
-
-    #endregion
 }

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using static UtilsPlayer;
 
-public class PlayerBlacksmithData : IBasePlayerData
+public class PlayerBlacksmithData : BasePlayerData
 {
     // ---- BASE STAT VALUES
 
@@ -49,19 +49,6 @@ public class PlayerBlacksmithData : IBasePlayerData
 
 
 
-    // ---- POINTS
-
-    private int availableStatPoints;
-
-    public int AvailableStatPoints => availableStatPoints;
-
-
-    // ---- FINAL STAT VALUES
-
-    private int currentLevel;
-    private long currentExp;
-
-
     // ---- FORGING VARIABLES
 
     private int currentForgingOre;
@@ -74,12 +61,7 @@ public class PlayerBlacksmithData : IBasePlayerData
     public int CurrentForgingQuantity => currentForgingQuantity;
 
 
-
-
-
-    public int CurrentLevel => currentLevel;
-    public long CurrentExp => currentExp;
-    public long ExpToNextLevel => UtilsBlacksmith.RequiredExpForBlacksmithLevel(currentLevel + 1);
+    public long ExpToNextLevel => UtilsBlacksmith.RequiredExpForBlacksmithLevel(CurrentLevel + 1);
 
 
     public float CurrentCraftSpeed => baseCraftSpeed + UtilsBlacksmith.PER_LEVEL_BLACKSMITH_GAIN_CRAFTSPEED * (levelStatCraftSpeed - 1);
@@ -90,18 +72,6 @@ public class PlayerBlacksmithData : IBasePlayerData
     public float CurrentCraftTime => 60f / CurrentCraftSpeed;
 
 
-
-    
-
-
-
-    
-
-
-
-    public event Action OnAddedExp;
-    public event Action OnLevelUp;
-    public event Action<int, int> OnStatChange;
 
     public PlayerBlacksmithData()
     {
@@ -123,25 +93,25 @@ public class PlayerBlacksmithData : IBasePlayerData
         levelStatMetallurgy = Math.Min(levelStatMetallurgy, UtilsBlacksmith.PER_LEVEL_BLACKSMITH_MAX_METALLURGY);
 
 
-        availableStatPoints = saveData.availableStatPoints;
+        AvailableStatPoints = saveData.availableStatPoints;
 
-        currentLevel = saveData.currentLevel;
-        currentExp = saveData.currentExp;
+        CurrentLevel = saveData.currentLevel;
+        CurrentExp = saveData.currentExp;
 
         int sumLevels = 
             levelStatCraftSpeed + levelEfficiency + levelStatLuck + levelStatMetallurgy +
             //startLevelCraftSpeed + startLevelEfficiency + startLevelStatLuck + startLevelMetallurgy +
-            availableStatPoints +
+            AvailableStatPoints +
             1;
 
-        currentLevel = Math.Min(currentLevel, sumLevels);
+        CurrentLevel = Math.Min(CurrentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if(currentLevel >= UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
+        if(CurrentLevel >= UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
         {
-            availableStatPoints = UtilsBlacksmith.MAX_LEVEL_BLACKSMITH - 1 -
+            AvailableStatPoints = UtilsBlacksmith.MAX_LEVEL_BLACKSMITH - 1 -
                 levelStatCraftSpeed - levelEfficiency - levelStatLuck - levelStatMetallurgy;
-            currentExp = 0;
+            CurrentExp = 0;
         }
 
         // ---- WEAPON
@@ -159,8 +129,8 @@ public class PlayerBlacksmithData : IBasePlayerData
 
     private void GenerateBaseStats()
     {
-        currentLevel = 1;
-        currentExp = 0;
+        CurrentLevel = 1;
+        CurrentExp = 0;
 
         levelStatCraftSpeed = startLevelCraftSpeed;
         levelEfficiency = startLevelEfficiency;
@@ -187,52 +157,13 @@ public class PlayerBlacksmithData : IBasePlayerData
         currentForgingQuantity = 0;
     }
 
-    public void AddStatPoints(int amount)
-    {
-        availableStatPoints += amount;
-    }
-
-    public void RemoveStatPoints(int amount)
-    {
-        availableStatPoints -= amount;
-    }
-
-    public void AddLevel(int amount)
-    {
-        if (currentLevel + amount > UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
-        {
-            amount = UtilsBlacksmith.MAX_LEVEL_BLACKSMITH - currentLevel;
-        }
-        currentLevel += amount;
-        availableStatPoints += amount;
-    }
-
     public void AddExp(long amount)
     {
-        // check max level
-        if (currentLevel >= UtilsBlacksmith.MAX_LEVEL_BLACKSMITH)
-        {
-            // set current exp to 0
-            currentExp = 0;
-            return;
-        }
-
-        currentExp += amount;
-
-        // looping for every level gained
-        while (currentExp >= ExpToNextLevel)
-        {
-            // recalculate current exp
-            currentExp -= ExpToNextLevel;
-
-            // give level and stat point
-            currentLevel++;
-            AddStatPoints(1);
-
-            OnLevelUp?.Invoke();
-        }
-
-        OnAddedExp?.Invoke();
+        base.AddExp(
+            amount,
+            level => level >= UtilsBlacksmith.MAX_LEVEL_BLACKSMITH,
+            () => ExpToNextLevel
+        );
     }
 
     public void IncreaseLevelStat(int id, int amount)
@@ -246,7 +177,7 @@ public class PlayerBlacksmithData : IBasePlayerData
             case ID_BLACKSMITH_METALLURGY: levelStatMetallurgy += amount; break;
         }
 
-        OnStatChange?.Invoke(id, amount);
+        InvokeStatChange(id, amount);
     }
 
     public void AddBlacksmithHelmetLevel(int level)

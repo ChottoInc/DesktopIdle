@@ -130,7 +130,15 @@ public class PlayerMage : Player
         animator.SetTrigger("Attack");
 
         // add points and update player data
-        _currentSpell.AddPoints(1);
+        int finalPointsToAdd = 1;
+
+        // check if player has arcanist buff
+        if (PlayerManager.Instance.PlayerBuffsData.HasBuff(UtilsBuffs.BuffType.Arcanist))
+        {
+            finalPointsToAdd *= 2;
+        }
+        _currentSpell.AddPoints(finalPointsToAdd);
+
         PlayerData.UpdateSpellData(_currentSpell);
         PlayerData.AddExp(UtilsMage.GetSpellCastExp(_currentSpell.SpellSO.SpellType));
 

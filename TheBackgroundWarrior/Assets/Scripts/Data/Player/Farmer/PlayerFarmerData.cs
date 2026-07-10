@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerFarmerData : IBasePlayerData
+public class PlayerFarmerData : BasePlayerData
 {
     // ---- BASE STAT VALUES
 
@@ -30,23 +30,10 @@ public class PlayerFarmerData : IBasePlayerData
     public int LevelStatLuck => levelStatLuck;
 
 
-    // ---- POINTS
-
-    private int availableStatPoints;
-
-    public int AvailableStatPoints => availableStatPoints;
 
 
     // ---- FINAL STAT VALUES
-
-    private int currentLevel;
-    private long currentExp;
-
-
-
-    public int CurrentLevel => currentLevel;
-    public long CurrentExp => currentExp;
-    public long ExpToNextLevel => UtilsFarmer.RequiredExpForFarmerLevel(currentLevel + 1);
+    public long ExpToNextLevel => UtilsFarmer.RequiredExpForFarmerLevel(CurrentLevel + 1);
 
 
     public float CurrentGreenthumb => baseGreenthumb + UtilsFarmer.PER_LEVEL_FARMER_GAIN_GREENTHUMB * (levelStatGreenthumb - 1);
@@ -77,11 +64,6 @@ public class PlayerFarmerData : IBasePlayerData
 
 
 
-
-    public event Action OnAddedExp;
-    public event Action OnLevelUp;
-    public event Action<int, int> OnStatChange;
-
     public event Action OnCompanionEquipped;
 
     public PlayerFarmerData()
@@ -103,25 +85,25 @@ public class PlayerFarmerData : IBasePlayerData
         levelstatKindness = Math.Min(levelstatKindness, UtilsFarmer.PER_LEVEL_FARMER_MAX_KINDNESS);
         levelStatLuck = Math.Min(levelStatLuck, UtilsFarmer.PER_LEVEL_FARMER_MAX_LUCK);
 
-        availableStatPoints = saveData.availableStatPoints;
+        AvailableStatPoints = saveData.availableStatPoints;
 
-        currentLevel = saveData.currentLevel;
-        currentExp = saveData.currentExp;
+        CurrentLevel = saveData.currentLevel;
+        CurrentExp = saveData.currentExp;
 
         int sumLevels =
             levelStatGreenthumb + levelstatAgronomy + levelstatKindness + levelStatLuck +
             //startLevelGreenthumb + startLevelAgronomy + startLevelKindness + startLevelLuck +
-            availableStatPoints +
+            AvailableStatPoints +
             1;
 
-        currentLevel = Math.Min(currentLevel, sumLevels);
+        CurrentLevel = Math.Min(CurrentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if (currentLevel >= UtilsFarmer.MAX_LEVEL_FARMER)
+        if (CurrentLevel >= UtilsFarmer.MAX_LEVEL_FARMER)
         {
-            availableStatPoints = UtilsFarmer.MAX_LEVEL_FARMER - 1 -
+            AvailableStatPoints = UtilsFarmer.MAX_LEVEL_FARMER - 1 -
                levelStatGreenthumb - levelstatAgronomy - levelstatKindness - levelStatLuck;
-            currentExp = 0;
+            CurrentExp = 0;
         }
 
 
@@ -147,8 +129,8 @@ public class PlayerFarmerData : IBasePlayerData
 
     private void GenerateBaseStats()
     {
-        currentLevel = 1;
-        currentExp = 0;
+        CurrentLevel = 1;
+        CurrentExp = 0;
 
 
         levelStatGreenthumb = startLevelGreenthumb;
@@ -168,52 +150,13 @@ public class PlayerFarmerData : IBasePlayerData
         companions = new List<CompanionData>();
     }
 
-    public void AddStatPoints(int amount)
-    {
-        availableStatPoints += amount;
-    }
-
-    public void RemoveStatPoints(int amount)
-    {
-        availableStatPoints -= amount;
-    }
-
-    public void AddLevel(int amount)
-    {
-        if (currentLevel + amount > UtilsFarmer.MAX_LEVEL_FARMER)
-        {
-            amount = UtilsFarmer.MAX_LEVEL_FARMER - currentLevel;
-        }
-        currentLevel += amount;
-        availableStatPoints += amount;
-    }
-
     public void AddExp(long amount)
     {
-        // check max level
-        if (currentLevel >= UtilsFarmer.MAX_LEVEL_FARMER)
-        {
-            // set current exp to 0
-            currentExp = 0;
-            return;
-        }
-
-        currentExp += amount;
-
-        // looping for every level gained
-        while (currentExp >= ExpToNextLevel)
-        {
-            // recalculate current exp
-            currentExp -= ExpToNextLevel;
-
-            // give level and stat point
-            currentLevel++;
-            AddStatPoints(1);
-
-            OnLevelUp?.Invoke();
-        }
-
-        OnAddedExp?.Invoke();
+        base.AddExp(
+            amount,
+            level => level >= UtilsFarmer.MAX_LEVEL_FARMER,
+            () => ExpToNextLevel
+        );
     }
 
     public void IncreaseLevelStat(int id, int amount)
@@ -227,7 +170,7 @@ public class PlayerFarmerData : IBasePlayerData
             case UtilsPlayer.ID_FARMER_LUCK: levelStatLuck += amount; break;
         }
 
-        OnStatChange?.Invoke(id, amount);
+        InvokeStatChange(id, amount);
     }
 
     public CropData SetCropToSlot(CropSO crop, int slot)

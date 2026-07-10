@@ -13,6 +13,7 @@ public class UIShopPanelRedeem : MonoBehaviour
     private const string FISHER_STAT_CODE = "03";
     private const string FARMER_STAT_CODE = "04";
     private const string MAGE_STAT_CODE = "05";
+    private const string ALCHEMIST_STAT_CODE = "06";
 
     private const string ITEM_STAT_CODE = "80";
 
@@ -80,6 +81,7 @@ public class UIShopPanelRedeem : MonoBehaviour
             case FISHER_STAT_CODE:
             case FARMER_STAT_CODE:
             case MAGE_STAT_CODE:
+            case ALCHEMIST_STAT_CODE:
                 return HandleStatRedeem(code);
 
             case ITEM_STAT_CODE:
@@ -103,6 +105,7 @@ public class UIShopPanelRedeem : MonoBehaviour
         }
 
         int quantity = int.Parse(remains);
+        int maxLevel;
         //Debug.Log("Quantity added: " + quantity);
 
 
@@ -111,12 +114,13 @@ public class UIShopPanelRedeem : MonoBehaviour
         switch (onetwo)
         {
             default: return false;
-            case FIGHT_STAT_CODE: playerData = PlayerManager.Instance.PlayerFightData; break;
-            case MINER_STAT_CODE: playerData = PlayerManager.Instance.PlayerMinerData; break;
-            case BLACKSMITH_STAT_CODE: playerData = PlayerManager.Instance.PlayerBlacksmithData; break;
-            case FISHER_STAT_CODE: playerData = PlayerManager.Instance.PlayerFisherData; break;
-            case FARMER_STAT_CODE: playerData = PlayerManager.Instance.PlayerFarmerData; break;
-            case MAGE_STAT_CODE: playerData = PlayerManager.Instance.PlayerMageData; break;
+            case FIGHT_STAT_CODE: playerData = PlayerManager.Instance.PlayerFightData; maxLevel = UtilsWarrior.MAX_LEVEL_WARRIOR; break;
+            case MINER_STAT_CODE: playerData = PlayerManager.Instance.PlayerMinerData; maxLevel = UtilsMiner.MAX_LEVEL_MINER; break;
+            case BLACKSMITH_STAT_CODE: playerData = PlayerManager.Instance.PlayerBlacksmithData; maxLevel = UtilsBlacksmith.MAX_LEVEL_BLACKSMITH; break;
+            case FISHER_STAT_CODE: playerData = PlayerManager.Instance.PlayerFisherData; maxLevel = UtilsFisher.MAX_LEVEL_FISHER; break;
+            case FARMER_STAT_CODE: playerData = PlayerManager.Instance.PlayerFarmerData; maxLevel = UtilsFarmer.MAX_LEVEL_FARMER; break;
+            case MAGE_STAT_CODE: playerData = PlayerManager.Instance.PlayerMageData; maxLevel = UtilsMage.MAX_LEVEL_MAGE; break;
+            case ALCHEMIST_STAT_CODE: playerData = PlayerManager.Instance.PlayerMageData; maxLevel = UtilsAlchemist.MAX_LEVEL_ALCHEMIST; break;
         }
 
         if(playerData != null)
@@ -124,7 +128,7 @@ public class UIShopPanelRedeem : MonoBehaviour
             switch (threefour)
             {
                 default: return false;
-                case LEVEL_CODE: playerData.AddLevel(quantity); break;
+                case LEVEL_CODE: playerData.AddLevel(quantity, maxLevel); break;
                 case AVAILABLE_POINTS_CODE: playerData.AddStatPoints(quantity); break;
             }
             return true;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlayerMageData : IBasePlayerData
+public class PlayerMageData : BasePlayerData
 {
     // ---- BASE STAT VALUES
 
@@ -27,15 +27,8 @@ public class PlayerMageData : IBasePlayerData
     public int LevelStatProficiency { get; private set; }
 
 
-    // ---- POINTS
-
-    public int AvailableStatPoints { get; private set; }
-
 
     // ---- FINAL STAT VALUES
-
-    public int CurrentLevel { get; private set; }
-    public long CurrentExp { get; private set; }
     public long ExpToNextLevel => UtilsMage.RequiredExpForMageLevel(CurrentLevel + 1);
 
 
@@ -63,9 +56,6 @@ public class PlayerMageData : IBasePlayerData
 
 
 
-    public event Action OnAddedExp;
-    public event Action OnLevelUp;
-    public event Action<int, int> OnStatChange;
     public event Action OnEquippedSpellUpdate;
 
 
@@ -152,52 +142,13 @@ public class PlayerMageData : IBasePlayerData
         EquippedSlot1Spell = EquippedSlot2Spell = EquippedSlot3Spell = EquippedSlot4Spell = UtilsMage.MageSpellType.None;
     }
 
-    public void AddStatPoints(int amount)
-    {
-        AvailableStatPoints += amount;
-    }
-
-    public void RemoveStatPoints(int amount)
-    {
-        AvailableStatPoints -= amount;
-    }
-
-    public void AddLevel(int amount)
-    {
-        if (CurrentLevel + amount > UtilsMage.MAX_LEVEL_MAGE)
-        {
-            amount = UtilsMage.MAX_LEVEL_MAGE - CurrentLevel;
-        }
-        CurrentLevel += amount;
-        AvailableStatPoints += amount;
-    }
-
     public void AddExp(long amount)
     {
-        // check max level
-        if (CurrentLevel >= UtilsMage.MAX_LEVEL_MAGE)
-        {
-            // set current exp to 0
-            CurrentExp = 0;
-            return;
-        }
-
-        CurrentExp += amount;
-
-        // looping for every level gained
-        while (CurrentExp >= ExpToNextLevel)
-        {
-            // recalculate current exp
-            CurrentExp -= ExpToNextLevel;
-
-            // give level and stat point
-            CurrentLevel++;
-            AddStatPoints(1);
-
-            OnLevelUp?.Invoke();
-        }
-
-        OnAddedExp?.Invoke();
+        base.AddExp(
+            amount,
+            level => level >= UtilsMage.MAX_LEVEL_MAGE,
+            () => ExpToNextLevel
+        );
     }
 
     public void IncreaseLevelStat(int id, int amount)
@@ -219,7 +170,7 @@ public class PlayerMageData : IBasePlayerData
             case UtilsPlayer.ID_MAGE_PROFICIENCY: LevelStatProficiency += amount; break;
         }
 
-        OnStatChange?.Invoke(id, amount);
+        InvokeStatChange(id, amount);
     }
 
 

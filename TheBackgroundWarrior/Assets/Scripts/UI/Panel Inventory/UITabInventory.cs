@@ -3,13 +3,7 @@ using UnityEngine;
 
 public class UITabInventory : UITabWindow
 {
-    public const int ID_INVENTORY_FILTER_ALL = 0;
-    public const int ID_INVENTORY_FILTER_ORES = 1;
-    public const int ID_INVENTORY_FILTER_METALS = 2;
-    public const int ID_INVENTORY_FILTER_FISHES = 3;
-    public const int ID_INVENTORY_FILTER_CROPS = 4;
-    public const int ID_INVENTORY_FILTER_BAITS = 5;
-    public const int ID_INVENTORY_FILTER_CARDS = 20;
+    public enum InventoryItemType { All, Ores, Metals, Fishes, Crops, Baits, Concoctions, Cards }
 
     [Header("Currencies")]
     [SerializeField] TMP_Text textBits;
@@ -19,7 +13,7 @@ public class UITabInventory : UITabWindow
     UIInventoryFilterButton[] filterButtons;
 
     private UIInventoryFilterButton currentFilterButton;
-    private int currentFilterId;
+    private InventoryItemType _currentFilter;
 
     [Header("Window Center")]
     [SerializeField] UIPanelItems panelItems;
@@ -40,8 +34,8 @@ public class UITabInventory : UITabWindow
 
         currentFilterButton = filterButtons[0];
         currentFilterButton.SelectButton(true);
-        panelItems.Setup(ID_INVENTORY_FILTER_ALL);
-        currentFilterId = ID_INVENTORY_FILTER_ALL;
+        panelItems.Setup(InventoryItemType.All);
+        _currentFilter = InventoryItemType.All;
     }
 
     private void UpdateFilters()
@@ -62,10 +56,10 @@ public class UITabInventory : UITabWindow
 
         panelItems.ShowPanelInfo(false);
 
-        panelItems.Setup(currentFilterId);
+        panelItems.Setup(_currentFilter);
     }
 
-    public void OpenInventory(UIInventoryFilterButton filterButton, int filter)
+    public void OpenInventory(UIInventoryFilterButton filterButton, InventoryItemType filter)
     {
         // deselect current button filter
         if (currentFilterButton != null)
@@ -85,7 +79,7 @@ public class UITabInventory : UITabWindow
         }
 
         panelItems.Setup(filter);
-        currentFilterId = filter;
+        _currentFilter = filter;
 
         ClosePanelConvert();
     }

@@ -197,6 +197,12 @@ public class PlayerBlacksmith : Player
                 amountMetalToAdd *= amountMultiplier; // up to * 5
             }
 
+            // check if player has dwarf buff
+            if (PlayerManager.Instance.PlayerBuffsData.HasBuff(UtilsBuffs.BuffType.Dwarf))
+            {
+                amountMetalToAdd = Mathf.RoundToInt((float)amountMetalToAdd * 1.2f);
+            }
+
             // remove quantity from blacksmith
             playerData.SetCurrentForgingQuantity(playerData.CurrentForgingQuantity - 1);
 
