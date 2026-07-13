@@ -22,6 +22,9 @@ public class UIShopPanelDebug : MonoBehaviour
                     redeemSuccess = true;
                     ShopManager.Instance.SetRedeemCode(UtilsShop.ID_REDEEM_ERIS_CODE);
                     ShopManager.Instance.SaveShopData();
+
+                    PlayerManager.Instance.PlayerJobsData.AddAvailableJob(UtilsPlayer.PlayerJob.Alchemist);
+
                     Debug.Log("Redeem success: " + UtilsShop.REDEEM_ERIS_CODE);
                 }
                 break;

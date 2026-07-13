@@ -101,6 +101,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 010be9c3caf0d214eb1a675537c5db94, type: 3}
+--- !u!114 &4406749253315733132 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3233179578492273718, guid: 010be9c3caf0d214eb1a675537c5db94, type: 3}
+  m_PrefabInstance: {fileID: 1295177055009137338}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7666e2de303501c4ebe1577ea8323f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4747170212269944898 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5771418462100656888, guid: 010be9c3caf0d214eb1a675537c5db94, type: 3}
@@ -680,6 +691,10 @@ PrefabInstance:
       propertyPath: tabWindow
       value: 
       objectReference: {fileID: 8309183873880482303}
+    - target: {fileID: 1320588753749822543, guid: 94dc17a4499a1d74597f80075ac061bf, type: 3}
+      propertyPath: tabWindow
+      value: 
+      objectReference: {fileID: 4406749253315733132}
     - target: {fileID: 2282724843563742285, guid: 94dc17a4499a1d74597f80075ac061bf, type: 3}
       propertyPath: tabWindow
       value: 

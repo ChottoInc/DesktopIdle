@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: tabWindow
       value: 
       objectReference: {fileID: 3497295559160202393}
+    - target: {fileID: 2226937551102182270, guid: c1854e166dcee724fb741df487b6e910, type: 3}
+      propertyPath: tabWindow
+      value: 
+      objectReference: {fileID: 8904450454112577418}
     - target: {fileID: 2593062514497698930, guid: c1854e166dcee724fb741df487b6e910, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -945,5 +949,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2af1e8c655f54114db5daf34b37ebdf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8904450454112577418 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1265504128001998646, guid: 85c9f1879622cfc419619166379ade07, type: 3}
+  m_PrefabInstance: {fileID: 7646285120691460284}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7666e2de303501c4ebe1577ea8323f7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

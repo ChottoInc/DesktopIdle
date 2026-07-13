@@ -35,8 +35,8 @@ public static class UtilsBuffs
         _dictBuffToSprite = container.Entries.ToDictionary(e => e.Id);
     }
 
-    public static Sprite GetBuffSpriteByType(BuffType type)
+    public static BuffSO GetBuffSOByType(BuffType type)
     {
-        return _dictBuffToSprite.Values.Cast<BuffSO>().Where(b => b.BuffType == type).First().Sprite;
+        return _dictBuffToSprite.Values.Cast<BuffSO>().Where(b => b.BuffType == type).First();
     }
 }

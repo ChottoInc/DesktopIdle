@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Data/Player/Buff/Buff To Sprite Data", fileName = "BuffToSpriteData_")]
+[CreateAssetMenu(menuName = "Data/Player/Buff/Buff Data", fileName = "BuffData_")]
 public class BuffSO : ListableGameDataSO
 {
     [SerializeField] UtilsBuffs.BuffType _buffType;

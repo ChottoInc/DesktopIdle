@@ -179,6 +179,7 @@ public static class UtilsText
 
     // -------------------- TITLE --------------------- //
 
+    public const string text_title_buffs = "text_title_buffs";
     public const string text_title_shop = "text_title_shop";
     public const string text_title_quests = "text_title_quests";
     public const string text_title_quests_bountieslist = "text_title_quests_bountieslist";
@@ -1119,6 +1120,7 @@ public static class UtilsText
 
             // -------------------- TITLE --------------------- //
 
+            { text_title_buffs, "Buffs" },
             { text_title_shop, "Shop" },
             { text_title_quests, "Quests" },
             { text_title_quests_bountieslist, "Choose a bounty" },

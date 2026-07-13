@@ -2,25 +2,30 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UITooltipBuffPrefab : MonoBehaviour
+public class UIBuffPrefab : MonoBehaviour
 {
-    [SerializeField] Image _imageIcon;
+    [SerializeField] Image _imageBuff;
+    [SerializeField] TMP_Text _textName;
+    [SerializeField] TMP_Text _textDesc;
+
+    [Space(10)]
     [SerializeField] TMP_Text _textTimer;
 
+
     private Buff _buff;
+    private BuffSO _buffSO;
+
 
     public void Setup(Buff buff)
     {
         _buff = buff;
+        _buffSO = UtilsBuffs.GetBuffSOByType(buff.BuffType);
 
-        _imageIcon.sprite = UtilsBuffs.GetBuffSOByType(buff.BuffType).Sprite;
+        // set sprite from product of recipe
+        _imageBuff.sprite = _buffSO.Sprite;
 
-        UpdateTimerUI();
-    }
-
-    private void Update()
-    {
-        if (_buff == null) return;
+        _textName.text = _buffSO.ItemName;
+        _textDesc.text = string.Format(_buffSO.ItemDesc, _buff.StartDuration);
 
         UpdateTimerUI();
     }
