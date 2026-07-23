@@ -31,16 +31,8 @@ public class UITooltipBuff : MonoBehaviour
         tweenFade?.Kill();
     }
 
-    private void Start()
-    {
-        //startHeight = root.rect.height;
-    }
-
     private void Resize()
     {
-        // Force TMP to update its geometry
-        //textName.ForceMeshUpdate();
-
         int elementCount = _gridLayout.transform.childCount;
         int columns = Mathf.CeilToInt((float)elementCount / _gridLayout.constraintCount);
 
@@ -56,15 +48,6 @@ public class UITooltipBuff : MonoBehaviour
     public void Show(bool fade = false)
     {
         if (!SettingsManager.Instance.AreTooltipsOn) return;
-
-        // set pos
-        //transform.position = position;
-
-        // set text
-        //textName.text = text;
-
-        // set max font size
-        //textName.fontSizeMax = fontMaxSize;
 
         _buffObjects = ClearList(_buffObjects);
 
@@ -93,7 +76,6 @@ public class UITooltipBuff : MonoBehaviour
         }
 
         Resize();
-        //FixTMPAnchors();
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -129,19 +111,6 @@ public class UITooltipBuff : MonoBehaviour
             _buffObjects.Add(prefab);
         }
     }
-
-    /*
-    private void FixTMPAnchors()
-    {
-        RectTransform rt = textName.rectTransform;
-
-        rt.anchorMin = new Vector2(0, 0);
-        rt.anchorMax = new Vector2(1, 1);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-
-        rt.offsetMin = Vector2.zero;
-        rt.offsetMax = Vector2.zero;
-    }*/
 
     public void Hide(bool fade = false)
     {

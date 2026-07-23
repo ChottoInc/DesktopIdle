@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UIPanelRecipeIngredients : MonoBehaviour
 {
+    [SerializeField] UITabJobAlchemist _tabAlchemist;
+
     [Header("Ingredients")]
     [SerializeField] GameObject _requirementPrefab;
     [SerializeField] Transform _container;
@@ -15,24 +17,40 @@ public class UIPanelRecipeIngredients : MonoBehaviour
 
     private UIInfiniteInputQuantity _customInput;
 
-    private int _selectedCraftedQuantity;
 
+    private bool _isSameAsCurrent;
+    private RecipeSO _tempRecipeSO;
+    private int _tempCurrentCraftingQuantity;
+    private bool _tempIsInfiniteCrafting;
 
-    private RecipeSO _recipeSO;
 
     private void Awake()
     {
+        if(_tabAlchemist != null)
+        {
+            _tabAlchemist.OnCrafted += UpdateTempToData;
+        }
+
         _customInput = _inputRefineQuantity.GetComponent<UIInfiniteInputQuantity>();
+    }
+
+    private void OnDestroy()
+    {
+        if (_tabAlchemist != null)
+        {
+            _tabAlchemist.OnCrafted -= UpdateTempToData;
+        }
     }
 
     public void Setup(RecipeSO recipeSO)
     {
         // save recipe
-        _recipeSO = recipeSO;
+        _tempRecipeSO = recipeSO;
 
         _requirementObjs = ClearList(_requirementObjs);
 
         FillRequirements();
+        RefreshQuantity();
     }
 
     private List<GameObject> ClearList(List<GameObject> list)
@@ -51,7 +69,7 @@ public class UIPanelRecipeIngredients : MonoBehaviour
 
     private void FillRequirements()
     {
-        for (int i = 0; i < _recipeSO.Ingredients.Length; i++)
+        for (int i = 0; i < _tempRecipeSO.Ingredients.Length; i++)
         {
             GameObject prefab = Instantiate(_requirementPrefab, transform.position, Quaternion.identity);
             prefab.transform.SetParent(_container);
@@ -61,10 +79,37 @@ public class UIPanelRecipeIngredients : MonoBehaviour
 
             if (prefab.TryGetComponent(out UIIngredientPrefab obj))
             {
-                obj.Setup(_recipeSO.Ingredients[i]);
+                obj.Setup(_tempRecipeSO.Ingredients[i]);
             }
             _requirementObjs.Add(prefab);
         }
+    }
+
+    private void RefreshQuantity()
+    {
+        _isSameAsCurrent = false;
+        PlayerAlchemistData data = PlayerManager.Instance.PlayerAlchemistData;
+        if(data.CurrentCraftingRecipe != null)
+        {
+            if (_tempRecipeSO.Id == data.CurrentCraftingRecipe.Id)
+            {
+                _isSameAsCurrent = true;
+                _tempCurrentCraftingQuantity = data.CurrentCraftingQuantity;
+                _tempIsInfiniteCrafting = _tempCurrentCraftingQuantity == -1 ? true : false;
+            }
+            else
+            {
+                _tempCurrentCraftingQuantity = 1;
+                _tempIsInfiniteCrafting = false;
+            }
+        }
+        else
+        {
+            _tempCurrentCraftingQuantity = 1;
+            _tempIsInfiniteCrafting = false;
+        }
+
+        RefreshInputAmountUI(_tempCurrentCraftingQuantity);
     }
 
     private int GetPossibleQuantity(RecipeSO recipe)
@@ -78,39 +123,27 @@ public class UIPanelRecipeIngredients : MonoBehaviour
         AudioManager.Instance.PlayClickUI();
 
         // if infinite, reduce to maximum, else reduce 1 and check
-        if (_selectedCraftedQuantity == -1)
+        if (_tempCurrentCraftingQuantity == -1)
         {
-            // get data
-            PlayerAlchemistData data = PlayerManager.Instance.PlayerAlchemistData;
-
-            // get ore, if not selected ignore
-            RecipeSO recipe = data.CurrentCraftingRecipe;
-
-            if (recipe == null)
-            {
-                _selectedCraftedQuantity = 0;
-                RefreshInputAmountUI();
-                return;
-            }
-
             // get quantity
-            int maxItem = GetPossibleQuantity(recipe);
+            int maxItem = GetPossibleQuantity(_tempRecipeSO);
 
-            data.SetInfiniteCrafting(false);
+            _tempIsInfiniteCrafting = false;
             _customInput.SetInfinite(false);
 
-            _selectedCraftedQuantity = maxItem;
-            data.SetCurrentCraftingQuantity(_selectedCraftedQuantity);
-            _inputRefineQuantity.text = _selectedCraftedQuantity.ToString();
-
-            PlayerManager.Instance.UpdateAlchemistData(data);
-            PlayerManager.Instance.SaveAlchemistData();
+            _tempCurrentCraftingQuantity = maxItem;
+            _inputRefineQuantity.text = _tempCurrentCraftingQuantity.ToString();
         }
         else
         {
-            _selectedCraftedQuantity--;
-            _inputRefineQuantity.text = _selectedCraftedQuantity.ToString();
+            _tempCurrentCraftingQuantity--;
+            _inputRefineQuantity.text = _tempCurrentCraftingQuantity.ToString();
             OnInputQuantityValueChange(_inputRefineQuantity.text);
+        }
+
+        if (_isSameAsCurrent)
+        {
+            UpdateTempToData();
         }
     }
 
@@ -119,15 +152,20 @@ public class UIPanelRecipeIngredients : MonoBehaviour
         AudioManager.Instance.PlayClickUI();
 
         // if infinite, nothing, else increase 1 and check
-        if (_selectedCraftedQuantity == -1)
+        if (_tempCurrentCraftingQuantity == -1)
         {
             return;
         }
         else
         {
-            _selectedCraftedQuantity++;
-            _inputRefineQuantity.text = _selectedCraftedQuantity.ToString();
+            _tempCurrentCraftingQuantity++;
+            _inputRefineQuantity.text = _tempCurrentCraftingQuantity.ToString();
             OnInputQuantityValueChange(_inputRefineQuantity.text);
+        }
+
+        if (_isSameAsCurrent)
+        {
+            UpdateTempToData();
         }
     }
 
@@ -135,61 +173,35 @@ public class UIPanelRecipeIngredients : MonoBehaviour
     {
         AudioManager.Instance.PlayClickUI();
 
-        // get data
-        PlayerAlchemistData data = PlayerManager.Instance.PlayerAlchemistData;
-
-        // get ore, if not selected ignore
-        RecipeSO recipe = data.CurrentCraftingRecipe;
-
-        if (recipe == null)
-        {
-            _selectedCraftedQuantity = 0;
-            RefreshInputAmountUI();
-            return;
-        }
-
         // get quantity
-        int maxItem = GetPossibleQuantity(recipe);
+        int maxItem = GetPossibleQuantity(_tempRecipeSO);
 
         // invert infinite
-        if (data.IsInfiniteCrafting)
+        if (_tempIsInfiniteCrafting)
         {
-            data.SetInfiniteCrafting(false);
+            _tempIsInfiniteCrafting = false;
 
-            _selectedCraftedQuantity = maxItem;
-            data.SetCurrentCraftingQuantity(_selectedCraftedQuantity);
-            RefreshInputAmountUI();
+            _tempCurrentCraftingQuantity = maxItem;
+            RefreshInputAmountUI(_tempCurrentCraftingQuantity);
         }
         else
         {
-            data.SetInfiniteCrafting(true);
-            _selectedCraftedQuantity = -1;
+            _tempIsInfiniteCrafting = true;
+            _tempCurrentCraftingQuantity = -1;
         }
 
-        _customInput.SetInfinite(data.IsInfiniteCrafting);
+        _customInput.SetInfinite(_tempIsInfiniteCrafting);
 
-        // update data
-        PlayerManager.Instance.UpdateAlchemistData(data);
-        PlayerManager.Instance.SaveAlchemistData();
+        if (_isSameAsCurrent)
+        {
+            UpdateTempToData();
+        }
     }
 
     public void OnInputQuantityValueChange(string value)
     {
-        // get data
-        PlayerAlchemistData data = PlayerManager.Instance.PlayerAlchemistData;
-
-        // get ore, if not selected ignore
-        RecipeSO recipe = data.CurrentCraftingRecipe;
-
-        if (recipe == null)
-        {
-            _selectedCraftedQuantity = 0;
-            RefreshInputAmountUI();
-            return;
-        }
-
         // get quantity
-        int maxItem = GetPossibleQuantity(recipe);
+        int maxItem = GetPossibleQuantity(_tempRecipeSO);
 
         // set quantity
         if (int.TryParse(value, out int parsed))
@@ -201,18 +213,29 @@ public class UIPanelRecipeIngredients : MonoBehaviour
                 parsed = maxItem;
 
             // update ui
-            _selectedCraftedQuantity = parsed;
-            RefreshInputAmountUI();
+            _tempCurrentCraftingQuantity = parsed;
+            RefreshInputAmountUI(_tempCurrentCraftingQuantity);
+        }
 
-            // update data
-            data.SetCurrentCraftingQuantity(_selectedCraftedQuantity);
-            PlayerManager.Instance.UpdateAlchemistData(data);
-            PlayerManager.Instance.SaveAlchemistData();
+        if (_isSameAsCurrent)
+        {
+            UpdateTempToData();
         }
     }
 
-    private void RefreshInputAmountUI()
+    private void RefreshInputAmountUI(int quantity)
     {
-        _inputRefineQuantity.text = _selectedCraftedQuantity.ToString();
+        _inputRefineQuantity.text = quantity.ToString();
+    }
+
+    private void UpdateTempToData()
+    {
+        PlayerAlchemistData data = PlayerManager.Instance.PlayerAlchemistData;
+        data.SetCraftingRecipe(_tempRecipeSO);
+        data.SetCurrentCraftingQuantity(_tempCurrentCraftingQuantity);
+        data.SetInfiniteCrafting(_tempIsInfiniteCrafting);
+
+        PlayerManager.Instance.UpdateAlchemistData(data);
+        PlayerManager.Instance.SaveAlchemistData();
     }
 }

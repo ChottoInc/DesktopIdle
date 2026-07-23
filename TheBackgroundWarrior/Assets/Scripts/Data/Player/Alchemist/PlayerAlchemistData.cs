@@ -128,7 +128,7 @@ public class PlayerAlchemistData : BasePlayerData
 
 
         // multiplier
-        baseRoutine = 1f; // increase craft speed, up to 15%
+        baseRoutine = 0f; // increase craft speed, up to 15%
         baseYield = 0f; // craft extra materials chance, up to 20%
         baseResearch = 0f; // unlocks new recipe, check on whole values
         baseStability = 0.5f; // reduce failed crafts
@@ -151,11 +151,14 @@ public class PlayerAlchemistData : BasePlayerData
 
     public void AddExp(long amount)
     {
+        Debug.Log("current level:" + CurrentLevel + ", required exp: " + ExpToNextLevel);
         base.AddExp(
             amount,
             level => level >= UtilsAlchemist.MAX_LEVEL_ALCHEMIST,
             () => ExpToNextLevel
         );
+
+        Debug.Log("added exp: " + amount + ", required after added exp: " + ExpToNextLevel);
     }
 
     public void IncreaseLevelStat(int id, int amount)

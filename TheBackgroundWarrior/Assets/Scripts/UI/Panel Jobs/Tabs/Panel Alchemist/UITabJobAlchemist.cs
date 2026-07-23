@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ public class UITabJobAlchemist : UITabWindow
 
 
     private UIRecipeInfoPrefab _lastRecipe;
+
+
+    public event Action OnCrafted;
 
 
     private PlayerAlchemist _player;
@@ -93,6 +97,8 @@ public class UITabJobAlchemist : UITabWindow
 
     public void OnButtonCraft()
     {
+        OnCrafted?.Invoke();
+
         if (_player != null)
         {
             if (!_player.IsCrafting)

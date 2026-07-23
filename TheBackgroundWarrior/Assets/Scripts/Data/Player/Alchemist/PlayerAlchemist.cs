@@ -223,6 +223,7 @@ public class PlayerAlchemist : Player
 
         if (isCrafting)
         {
+            _currentCraftingPoints = 0;
             _barCrafting.gameObject.SetActive(true);
             SetCraftingBarUI();
         }
