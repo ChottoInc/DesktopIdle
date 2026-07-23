@@ -10,10 +10,6 @@ public class UIInventoryFilterButton : UIBaseTooltipName
     [SerializeField] UITabInventory.InventoryItemType _filter;
     [SerializeField] UtilsPlayer.PlayerJob[] showIfAvailableJobs;
 
-    [Header("Highlight")]
-    [SerializeField] Image imageSelected;
-    [SerializeField] Color selectedColor;
-
     public void Refresh()
     {
         bool canShow = true;
@@ -33,14 +29,6 @@ public class UIInventoryFilterButton : UIBaseTooltipName
     public void OnButtonClick()
     {
         tabInventory.OpenInventory(this, _filter);
-    }
-
-    public void SelectButton(bool selected)
-    {
-        if (selected)
-            imageSelected.color = selectedColor;
-        else
-            imageSelected.color = Color.white;
     }
 
     public override string GetText()

@@ -19,20 +19,33 @@ public class EditorCustomUtilsManager : Editor
         {
             UpdateFiles(true);
         }
+        
+        if (GUILayout.Button("Show file"))
+        {
+            var dict = GetLocalizedDictionary("file");
+            foreach (var item in dict)
+            {
+                Debug.Log("" + item.Key + ": " + item.Value);
+            }
+        }
     }
 
     private void UpdateFiles(bool fromFile)
     {
 #if UNITY_EDITOR
 
+        // init with default dictionaries
         UtilsTextLimits.Initialize();
         UtilsText.Initialize();
+
+        // make copies here
         Dictionary<string, string> defAllText = new Dictionary<string, string>(UtilsText.GeneralDictionary);
         Dictionary<string, string> defItemNames = new Dictionary<string, string>(UtilsText.ItemNamesTextDictionary);
         Dictionary<string, string> defItemDescs = new Dictionary<string, string>(UtilsText.ItemDescsTextDictionary);
         Dictionary<string, string> defCredits = new Dictionary<string, string>(UtilsText.CreditsTextDictionary);
         Dictionary<string, string> defHelp = new Dictionary<string, string>(UtilsText.HelpTextDictionary);
 
+        // refill with file values
         UtilsText.FillValuesWithLang(UtilsGeneral.Language.Eng);
         string logDir = Path.Combine(Application.persistentDataPath, "Data");
         logDir = Path.Combine(logDir, "Localise");
@@ -43,15 +56,15 @@ public class EditorCustomUtilsManager : Editor
         string itemDescsString = "ItemDescs";
         string creditsString = "Credits";
         string helpString = "Help";
-        string finalString = "_eng.csv";
+        string finalString = "_eng.json";
 
         // keys present in default and not from file
-        var missingPairsAllText = defAllText.Where(pair => !UtilsText.GeneralDictionary.ContainsKey(pair.Key));
+        var missingPairsGeneralText = defAllText.Where(pair => !UtilsText.GeneralDictionary.ContainsKey(pair.Key));
         /*foreach (var pair in missingPairsAllText)
         {
             Debug.Log("key: " + pair.Key + ", val: " + pair.Value);
         }*/
-        UtilsText.GeneralDictionary = MergeWithNonPresent(UtilsText.GeneralDictionary, missingPairsAllText);
+        UtilsText.GeneralDictionary = MergeWithNonPresent(UtilsText.GeneralDictionary, missingPairsGeneralText);
 
         var missingPairsItemNames = defItemNames.Where(pair => !UtilsText.ItemNamesTextDictionary.ContainsKey(pair.Key));
         UtilsText.ItemNamesTextDictionary = MergeWithNonPresent(UtilsText.ItemNamesTextDictionary, missingPairsItemNames);
@@ -65,13 +78,39 @@ public class EditorCustomUtilsManager : Editor
         var missingPairsHelp = defHelp.Where(pair => !UtilsText.HelpTextDictionary.ContainsKey(pair.Key));
         UtilsText.HelpTextDictionary = MergeWithNonPresent(UtilsText.HelpTextDictionary, missingPairsHelp);
 
+        /*
         WriteOnFile(logDir, GetFileName(allTextString, finalString), UtilsText.GeneralDictionary);
         WriteOnFile(logDir, GetFileName(itemNamesString, finalString), UtilsText.ItemNamesTextDictionary);
         WriteOnFile(logDir, GetFileName(itemDescsString, finalString), UtilsText.ItemDescsTextDictionary);
         WriteOnFile(logDir, GetFileName(creditsString, finalString), UtilsText.CreditsTextDictionary);
-        WriteOnFile(logDir, GetFileName(helpString, finalString), UtilsText.HelpTextDictionary);
+        WriteOnFile(logDir, GetFileName(helpString, finalString), UtilsText.HelpTextDictionary);*/
+
+        var jsonGeneral = Newtonsoft.Json.JsonConvert.SerializeObject(UtilsText.GeneralDictionary);
+        var jsonItemNames = Newtonsoft.Json.JsonConvert.SerializeObject(UtilsText.ItemNamesTextDictionary);
+        var jsonItemDescs = Newtonsoft.Json.JsonConvert.SerializeObject(UtilsText.ItemDescsTextDictionary);
+        var jsonCredits = Newtonsoft.Json.JsonConvert.SerializeObject(UtilsText.CreditsTextDictionary);
+        var jsonHelp = Newtonsoft.Json.JsonConvert.SerializeObject(UtilsText.HelpTextDictionary);
+
+        File.WriteAllText(Path.Combine(logDir, GetFileName(allTextString, finalString)), jsonGeneral);
+        File.WriteAllText(Path.Combine(logDir, GetFileName(itemNamesString, finalString)), jsonItemNames);
+        File.WriteAllText(Path.Combine(logDir, GetFileName(itemDescsString, finalString)), jsonItemDescs);
+        File.WriteAllText(Path.Combine(logDir, GetFileName(creditsString, finalString)), jsonCredits);
+        File.WriteAllText(Path.Combine(logDir, GetFileName(helpString, finalString)), jsonHelp);
+
+        //return Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFile.text);
 
 #endif
+    }
+
+    private static Dictionary<string, string> GetLocalizedDictionary(string filepath)
+    {
+        TextAsset jsonFile = Resources.Load<TextAsset>(Path.Combine("files/localize/eng", "Help" + "_eng"));
+        if (jsonFile == null)
+        {
+            Debug.LogWarning($"Localization file not found: {filepath}");
+            return new Dictionary<string, string>();
+        }
+        return Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFile.text);
     }
 
     private Dictionary<string, string> MergeWithNonPresent(Dictionary<string, string> dict, IEnumerable<KeyValuePair<string, string>> pairs)

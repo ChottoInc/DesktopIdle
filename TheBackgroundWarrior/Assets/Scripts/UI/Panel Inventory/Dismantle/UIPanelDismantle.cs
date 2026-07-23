@@ -38,7 +38,7 @@ public class UIPanelDismantle : MonoBehaviour
         itemSO = UtilsItem.GetItemById(group.IdItem);
 
         imageItem.sprite = itemSO.Sprite;
-        textAmount.text = group.Quantity.ToString();
+        textAmount.text = "x" + group.Quantity.ToString();
         textName.text = itemSO.ItemName;
 
         inputAmount.text = "1";

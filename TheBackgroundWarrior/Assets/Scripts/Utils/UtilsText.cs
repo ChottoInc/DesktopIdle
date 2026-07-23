@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
+using UnityEngine;
 
 public static class UtilsText
 {
@@ -874,11 +875,14 @@ public static class UtilsText
 
     public const string text_description_warrior = "text_description_warrior";
     public const string text_description_miner = "text_description_miner";
+    public const string text_description_miner_weapon = "text_description_miner_weapon";
     public const string text_description_fisher = "text_description_fisher";
     public const string text_description_farmer_crops = "text_description_farmer_crops";
     public const string text_description_farmer_companions = "text_description_farmer_companions";
     public const string text_description_blacksmith = "text_description_blacksmith";
+    public const string text_description_blacksmith_equipment = "text_description_blacksmith_equipment";
     public const string text_description_mage = "text_description_mage";
+    public const string text_description_mage_slots = "text_description_mage_slots";
     public const string text_description_alchemist = "text_description_alchemist";
 
     #endregion
@@ -933,6 +937,7 @@ public static class UtilsText
         HelpTextDictionary = GetLocalizedDictionary(Path.Combine(folderpath, "Help" + finalPart));
     }
 
+    /*
     private static Dictionary<string, string> GetLocalizedDictionary(string filepath)
     {
         var list = UtilsGeneral.GetFileStrings(filepath);
@@ -941,9 +946,20 @@ public static class UtilsText
         if(dict.TryGetValue("text_tutorial_intro_2", out string val))
         {
             Debug.Log("dict val: " + val);
-        }*/
+        }
 
         return dict;
+    }*/
+
+    private static Dictionary<string, string> GetLocalizedDictionary(string filepath)
+    {
+        TextAsset jsonFile = Resources.Load<TextAsset>(filepath);
+        if (jsonFile == null)
+        {
+            Debug.LogWarning($"Localization file not found: {filepath}");
+            return new Dictionary<string, string>();
+        }
+        return Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonFile.text);
     }
 
     private static void FillDefaultValues()
@@ -1885,8 +1901,17 @@ public static class UtilsText
                 "Description:<br>Collect ores to upgrade your weapon level. It will increase the damage dealt to enemies"
             },
 
+            { text_description_miner_weapon,
+                "Weapon max level: {0}"
+            },
+
+
             { text_description_blacksmith,
                 "Description:<br>Refine ores into metals to upgrade your equipment level. They will increase the Warrior stats"
+            },
+
+            { text_description_blacksmith_equipment,
+                "Equipment max level: {0}"
             },
 
             { text_description_fisher,
@@ -1902,7 +1927,11 @@ public static class UtilsText
             },
 
             { text_description_mage,
-                "Description: Learn spell to autocast while advancing through the stages"
+                "Description: Learns spell to autocast while advancing through the stages"
+            },
+
+            { text_description_mage_slots,
+                "Spells can be equipped in empty slots. A new slot is unlocked every 5 levels of Proficiency ability"
             },
 
             { text_description_alchemist,

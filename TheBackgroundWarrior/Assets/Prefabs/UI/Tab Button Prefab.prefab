@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 7282815399829285127}
   - component: {fileID: 7685505660014104586}
   - component: {fileID: 5244478680253959617}
-  - component: {fileID: 8985481413391949089}
+  - component: {fileID: 2060121765519642609}
   m_Layer: 5
   m_Name: Tab Button Prefab
   m_TagString: Untagged
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 797849775, guid: 75844d4d668b92f44b4da5bc89ba4de6, type: 3}
+  m_Sprite: {fileID: 10020612, guid: 4b1a23dcb0af9a24cb57c386c25c16f7, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -248,7 +248,7 @@ MonoBehaviour:
   canHighlight: 1
   imageSelected: {fileID: 7685505660014104586}
   selectedColor: {r: 0.14117648, g: 0.90588236, b: 0.23529412, a: 1}
---- !u!114 &8985481413391949089
+--- !u!114 &2060121765519642609
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,7 +257,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5642765514434321813}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0fd6abcafda191489114ad577e08459, type: 3}
+  m_Script: {fileID: 11500000, guid: b55d59d769e11554ab6c65f4ade39393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -304,9 +304,5 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  imageToAnimate: {fileID: 7685505660014104586}
-  timeSingleFrame: 0.2
-  spriteList:
-  - {fileID: 797849775, guid: 75844d4d668b92f44b4da5bc89ba4de6, type: 3}
-  - {fileID: -1766511973, guid: 75844d4d668b92f44b4da5bc89ba4de6, type: 3}
-  - {fileID: 867083657, guid: 75844d4d668b92f44b4da5bc89ba4de6, type: 3}
+  multiplier: 1.1
+  timerShrink: 0.1

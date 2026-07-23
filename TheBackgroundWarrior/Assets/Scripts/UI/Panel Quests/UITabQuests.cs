@@ -13,8 +13,6 @@ public class UITabQuests : UITabWindow
 
     public void OnButtonClose()
     {
-        AudioManager.Instance.PlayClickUI();
-
         base.Close();
     }
 }

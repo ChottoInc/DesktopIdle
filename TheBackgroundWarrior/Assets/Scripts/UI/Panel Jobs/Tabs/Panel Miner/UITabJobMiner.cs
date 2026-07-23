@@ -19,6 +19,7 @@ public class UITabJobMiner : UITabWindow
     private List<GameObject> requirementObjs;
 
     [Header("Weapon")]
+    [SerializeField] TMP_Text _textMaxLevel;
     [SerializeField] Image imageSword;
     [SerializeField] TMP_Text textLevel;
     [SerializeField] TMP_Text textStats;
@@ -69,7 +70,7 @@ public class UITabJobMiner : UITabWindow
 
         lastWeaponLevel = data.WeaponLevel;
 
-
+        _textMaxLevel.text = string.Format(UtilsText.AllText[UtilsText.text_description_miner_weapon], UtilsMiner.MINER_WEAPON_MAX_LEVEL);
 
         UpdateMinerSwordUI();
 

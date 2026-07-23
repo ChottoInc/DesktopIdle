@@ -86,11 +86,8 @@ public class UITabJobAlchemist : UITabWindow
     /// <param name="uiRecipe">Recipe UI Prefab</param>
     public void OnSelectRecipe(UIRecipeInfoPrefab uiRecipe)
     {
-        if (_lastRecipe != null) _lastRecipe.Select(false);
-
         _lastRecipe = uiRecipe;
         _panelIngredients.Setup(_lastRecipe.RecipeSO);
-        _lastRecipe.Select(true);
     }
 
 

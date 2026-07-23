@@ -98,7 +98,11 @@ public class PlayerAlchemistData : BasePlayerData
         }
 
         // get active recipe
-        CurrentCraftingRecipe = UtilsAlchemist.GetRecipeById(saveData.currentCraftingRecipe);
+        if (saveData.currentCraftingRecipe >= 0)
+            CurrentCraftingRecipe = UtilsAlchemist.GetRecipeById(saveData.currentCraftingRecipe);
+        else
+            CurrentCraftingRecipe = null;
+
         IsInfiniteCrafting = saveData.isInfiniteCrafting;
         CurrentCraftingQuantity = saveData.currentCraftingQuantity;
 

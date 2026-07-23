@@ -19,13 +19,6 @@ public class UITabBuffs : UITabWindow
         RefreshBuffs();
     }
 
-    public override void Close()
-    {
-        AudioManager.Instance.PlayClickUI();
-
-        base.Close();
-    }
-
     private List<GameObject> ClearList(List<GameObject> list)
     {
         if (list == null)

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TabManager : MonoBehaviour
@@ -5,6 +6,9 @@ public class TabManager : MonoBehaviour
     [SerializeField] UITab[] tabs;
 
     private UITab currentTab;
+
+
+    public event Action OnSelectFirstTab;
 
     public void ChangeCurrentTab(UITab selected)
     {
@@ -36,6 +40,14 @@ public class TabManager : MonoBehaviour
             if(tabs.Length > 0)
             {
                 tabs[0].Select();
+
+                OnSelectFirstTab?.Invoke();
+
+                if (tabs[0].TryGetComponent(out UIHoverButtonTab hoverButton))
+                {
+                    hoverButton.Hover();
+                    hoverButton.OnPointerClick(null);
+                }
             }
         }
     }

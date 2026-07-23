@@ -159,8 +159,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4768818829181190585}
-  - component: {fileID: 7505886640161061609}
   - component: {fileID: 2150733195876999829}
+  - component: {fileID: 4703531577981144514}
   m_Layer: 5
   m_Name: Convert Item Card Prefab
   m_TagString: Untagged
@@ -189,7 +189,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7505886640161061609
+--- !u!114 &2150733195876999829
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,7 +198,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 3441584543053795839}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 898e62d02685b6d40962b768b4a47112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageBackground: {fileID: 4182921649659642051}
+  imageCard: {fileID: 8491135378717360979}
+  imageSelected: {fileID: 5453344828368723956}
+--- !u!114 &4703531577981144514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3441584543053795839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3190528b0898b31459ac85150bb7f628, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -245,21 +260,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2150733195876999829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3441584543053795839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 898e62d02685b6d40962b768b4a47112, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageBackground: {fileID: 4182921649659642051}
-  imageCard: {fileID: 8491135378717360979}
-  imageSelected: {fileID: 5453344828368723956}
 --- !u!1 &3586998714558470213
 GameObject:
   m_ObjectHideFlags: 0

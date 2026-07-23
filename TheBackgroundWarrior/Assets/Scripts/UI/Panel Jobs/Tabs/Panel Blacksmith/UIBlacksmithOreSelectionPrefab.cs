@@ -37,11 +37,11 @@ public class UIBlacksmithOreSelectionPrefab : MonoBehaviour
 
     public void Select()
     {
-        imageSelectBorder.gameObject.SetActive(true);
+        imageSelectBorder.color = UtilsColor.GetSelectedGreen();
     }
 
     public void Deselect()
     {
-        imageSelectBorder.gameObject.SetActive(false);
+        imageSelectBorder.color = Color.white;
     }
 }

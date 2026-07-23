@@ -10,6 +10,7 @@ public class UIInventoryPanelInfo : MonoBehaviour
     [SerializeField] Image imageItem;
     [SerializeField] TMP_Text textAmount;
     [SerializeField] TMP_Text textName;
+    [SerializeField] TMP_Text textDesc;
 
     [Header("Buttons")]
     [SerializeField] GameObject _panelCardButtons;
@@ -28,8 +29,10 @@ public class UIInventoryPanelInfo : MonoBehaviour
         itemSO = UtilsItem.GetItemById(group.IdItem);
 
         imageItem.sprite = itemSO.Sprite;
-        textAmount.text = group.Quantity.ToString();
+        textAmount.text = "x" + group.Quantity.ToString();
         textName.text = itemSO.ItemName;
+
+        textDesc.text = itemSO.ItemDesc;
 
         // Set panel buttons to active if the selected item is a card
         _panelCardButtons.SetActive(itemSO.ItemType == UtilsItem.ItemType.Card);

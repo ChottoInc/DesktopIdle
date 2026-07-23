@@ -14,8 +14,6 @@ public class UITabSettings : UITabWindow
 
     public void OnButtonClose()
     {
-        AudioManager.Instance.PlayClickUI();
-
         Close();
     }
 }

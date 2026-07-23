@@ -20,6 +20,7 @@ public class UITabJobBlacksmith : UITabWindow
     private UtilsBlacksmith.BlacksmithGear currentGear;
 
     [Header("Gear")]
+    [SerializeField] TMP_Text _textMaxLevel;
     [SerializeField] Image imageGear;
     [SerializeField] TMP_Text textLevel;
     [SerializeField] TMP_Text textStats;
@@ -105,28 +106,35 @@ public class UITabJobBlacksmith : UITabWindow
             lastSelectedGearButton.image.color = Color.white;
         }
 
+        int gearMaxLevel = 0;
         switch (currentGear)
         {
             case UtilsBlacksmith.BlacksmithGear.Helmet: 
                 lastWeaponLevel = data.HelmetLevel;
                 lastSelectedGearButton = buttonHelmet;
+                gearMaxLevel = UtilsBlacksmith.BLACKSMITH_HELMET_MAX_LEVEL;
                 break;
 
             case UtilsBlacksmith.BlacksmithGear.Armor: 
                 lastWeaponLevel = data.ArmorLevel;
                 lastSelectedGearButton = buttonArmor;
+                gearMaxLevel = UtilsBlacksmith.BLACKSMITH_ARMOR_MAX_LEVEL;
                 break;
 
             case UtilsBlacksmith.BlacksmithGear.Gloves:
                 lastWeaponLevel = data.GlovesLevel;
                 lastSelectedGearButton = buttonGloves;
+                gearMaxLevel = UtilsBlacksmith.BLACKSMITH_GLOVES_MAX_LEVEL;
                 break;
 
             case UtilsBlacksmith.BlacksmithGear.Boots: 
                 lastWeaponLevel = data.BootsLevel;
                 lastSelectedGearButton = buttonBoots;
+                gearMaxLevel = UtilsBlacksmith.BLACKSMITH_BOOTS_MAX_LEVEL;
                 break;
         }
+
+        _textMaxLevel.text = string.Format(UtilsText.AllText[UtilsText.text_description_blacksmith_equipment], gearMaxLevel);
 
         // update selected button color
         lastSelectedGearButton.image.color = selectedGearColor;
@@ -500,8 +508,6 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonSelectOre()
     {
-        AudioManager.Instance.PlayClickUI();
-
         panelSelectOre.Open();
     }
 
@@ -525,32 +531,24 @@ public class UITabJobBlacksmith : UITabWindow
 
     public void OnButtonHelmet()
     {
-        AudioManager.Instance.PlayClickUI();
-
         currentGear = UtilsBlacksmith.BlacksmithGear.Helmet;
         Open();
     }
 
     public void OnButtonArmor()
     {
-        AudioManager.Instance.PlayClickUI();
-
         currentGear = UtilsBlacksmith.BlacksmithGear.Armor;
         Open();
     }
 
     public void OnButtonGloves()
     {
-        AudioManager.Instance.PlayClickUI();
-
         currentGear = UtilsBlacksmith.BlacksmithGear.Gloves;
         Open();
     }
 
     public void OnButtonBoots()
     {
-        AudioManager.Instance.PlayClickUI();
-
         currentGear = UtilsBlacksmith.BlacksmithGear.Boots;
         Open();
     }

@@ -51,32 +51,15 @@ public class UITabShop : UITabWindow
         panelRedeem.SetActive(false);
 
         // disable last filter
-        if(currentFilterButton != null)
-        {
-            currentFilterButton.SelectButton(false);
-        }
 
         // select first filter by default
         currentFilterButton = firstFilterButton;
-        currentFilterButton.SelectButton(true);
         panelShopItems.Setup(UtilsShop.ID_SHOP_FILTER_CARDPACKS);
     }
 
     public void OpenShopWindow(UIShopFilterButton filterButton, int filter)
     {
-        // deselect current button filter
-        if(currentFilterButton != null)
-        {
-            currentFilterButton.SelectButton(false);
-        }
-
         currentFilterButton = filterButton;
-
-        // select new button filter
-        if (currentFilterButton != null)
-        {
-            currentFilterButton.SelectButton(true);
-        }
 
         if (filter == UtilsShop.ID_SHOP_FILTER_DEBUG)
         {
@@ -125,8 +108,6 @@ public class UITabShop : UITabWindow
     public void OnButtonClose()
     {
         if (UITooltipManager.Instance.IsCallbackOpen) return;
-
-        AudioManager.Instance.PlayClickUI();
 
         base.Close();
     }

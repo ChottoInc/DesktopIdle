@@ -33,7 +33,6 @@ public class UITabInventory : UITabWindow
         panelItems.ShowPanelInfo(false);
 
         currentFilterButton = filterButtons[0];
-        currentFilterButton.SelectButton(true);
         panelItems.Setup(InventoryItemType.All);
         _currentFilter = InventoryItemType.All;
     }
@@ -61,21 +60,9 @@ public class UITabInventory : UITabWindow
 
     public void OpenInventory(UIInventoryFilterButton filterButton, InventoryItemType filter)
     {
-        // deselect current button filter
-        if (currentFilterButton != null)
-        {
-            currentFilterButton.SelectButton(false);
-        }
-
         if(filterButton != null)
         {
             currentFilterButton = filterButton;
-        }
-
-        // select new button filter
-        if (currentFilterButton != null)
-        {
-            currentFilterButton.SelectButton(true);
         }
 
         panelItems.Setup(filter);
@@ -109,8 +96,6 @@ public class UITabInventory : UITabWindow
 
     public void OnButtonClose()
     {
-        AudioManager.Instance.PlayClickUI();
-
         Close();
     }
 

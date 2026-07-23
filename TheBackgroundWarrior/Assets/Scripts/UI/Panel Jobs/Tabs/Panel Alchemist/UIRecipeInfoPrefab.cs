@@ -14,9 +14,8 @@ public class UIRecipeInfoPrefab : MonoBehaviour
     [SerializeField] TMP_Text _textName;
     [SerializeField] TMP_Text _textDesc;
 
-    [Space(10)]
-    [SerializeField] Color _colorHighlight;
-    [SerializeField] Image _imageBorder;
+
+    public bool IsAvailable { get; private set; }
 
 
     public RecipeSO RecipeSO => _recipe;
@@ -27,16 +26,16 @@ public class UIRecipeInfoPrefab : MonoBehaviour
         _imageRecipe.sprite = _recipe.Product.Sprite;
 
         // fill info if available
-        if (PlayerManager.Instance.PlayerAlchemistData.IsRecipeAvailable(_recipe))
+        IsAvailable = PlayerManager.Instance.PlayerAlchemistData.IsRecipeAvailable(_recipe);
+
+        if (IsAvailable)
         {
-            _imageRecipe.gameObject.SetActive(false);
             _imageRecipe.color = Color.white;
             _textName.text = _recipe.Product.ItemName;
             _textDesc.text = _recipe.Product.ItemDesc;
         }
         else
         {
-            _imageRecipe.gameObject.SetActive(true);
             _imageRecipe.color = Color.black;
             _textName.text = UtilsText.AllText[UtilsText.text_job_alchemist_recipe_locked];
             _textDesc.text = UtilsText.AllText[UtilsText.text_job_alchemist_recipe_locked];
@@ -45,11 +44,10 @@ public class UIRecipeInfoPrefab : MonoBehaviour
 
     public void OnClick()
     {
-        tabAlchemist.OnSelectRecipe(this);
-    }
+        if (!IsAvailable) return;
 
-    public void Select(bool select)
-    {
-        _imageBorder.color = select ? _colorHighlight : Color.white;
+        AudioManager.Instance.PlayClickUI();
+
+        tabAlchemist.OnSelectRecipe(this);
     }
 }
