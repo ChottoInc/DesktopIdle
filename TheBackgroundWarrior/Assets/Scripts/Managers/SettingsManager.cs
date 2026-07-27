@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -133,21 +134,25 @@ public class SettingsManager : MonoBehaviour
     {
         saveService = service;
 
+        // call first default to ensure any new variables is updated by default
+        SetupFromDefault();
+
         try
         {
             SettingsSaveData saveData = saveService.LoadData<SettingsSaveData>(UtilsSave.GetSettingsFile(), FileEncryption);
 
-            // call first default to ensure any new variables is updated by default
-            SetupFromDefault();
-
-            // then call from file so any saved variables is overwritten
+            // override data from file
             SetupFromFile(saveData);
         }
-        catch
+        catch (ConversionException e)
         {
-            SetupFromDefault();
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load settings");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
             FirstOpen = true;
-
             Save();
         }
     }

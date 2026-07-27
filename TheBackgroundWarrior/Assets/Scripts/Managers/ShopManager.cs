@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 using static UtilsShop;
@@ -74,13 +75,17 @@ public class ShopManager : MonoBehaviour
             // update from file
             SetupFromFile(saveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load shop");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             SetupFromDefault();
             SaveShopData();
-
-            //Debug.Log("Datas quest: " + dictQuestsStoryProgress.Count);
-            //Debug.Log("Datas quest active: " + activeStoryQuests.Count);
         }
     }
 

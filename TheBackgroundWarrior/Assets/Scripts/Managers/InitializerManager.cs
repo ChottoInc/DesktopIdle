@@ -1,4 +1,5 @@
 using Kirurobo;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -36,6 +37,8 @@ public class InitializerManager : MonoBehaviour
     public bool HasCheckFiles => hasCheckFiles;
     public bool HasSaveFile => hasSaveFile;
 
+
+    public bool FatalError { get; private set; }
 
 
 
@@ -176,23 +179,33 @@ public class InitializerManager : MonoBehaviour
         {
             hasSaveFile = false;
 
-            Directory.CreateDirectory(persistent + UtilsSave.ROOT_FOLDER);
-
-            Directory.CreateDirectory(persistent + UtilsSave.GetPlayerFolder());
-            Directory.CreateDirectory(persistent + UtilsSave.GetSettingsFolder());
-            Directory.CreateDirectory(persistent + UtilsSave.GetCombatMapsFolder());
-            Directory.CreateDirectory(persistent + UtilsSave.GetQuestsFolder());
-            Directory.CreateDirectory(persistent + UtilsSave.GetShopFolder());
+            UtilsSave.CreateAllFolders();
         }
         else
         {
             hasSaveFile = true;
+
+            UtilsSave.CheckAllFolders();
         }
 
-        SettingsManager.Instance.Setup(jsonService);
-        PlayerManager.Instance.Setup(jsonService);
-        QuestManager.Instance.Setup(jsonService);
-        ShopManager.Instance.Setup(jsonService);
+        try
+        {
+            SettingsManager.Instance.Setup(jsonService);
+            PlayerManager.Instance.Setup(jsonService);
+            QuestManager.Instance.Setup(jsonService);
+            ShopManager.Instance.Setup(jsonService);
+        }
+        catch(FatalLoadException e)
+        {
+            Debug.LogError(e.Message);
+            // handle fatal error
+            FatalError = true;
+        }
+        catch(Exception e)
+        {
+            Debug.LogError(e.Message + "\n" + e.StackTrace);
+            FatalError = true;
+        }
     }
 
 

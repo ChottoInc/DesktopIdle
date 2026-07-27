@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -104,18 +106,31 @@ public class PlayerManager : MonoBehaviour
     {
         saveService = service;
 
-        LoadJobsData();
-        LoadBuffsData();
-        LoadInventoryData();
+        try
+        {
 
-        LoadMinerData();
-        LoadBlacksmithData();
-        LoadFisherData();
-        LoadFarmerData();
-        LoadMageData();
-        LoadAlchemistData();
+            LoadJobsData();
+            LoadBuffsData();
+            LoadInventoryData();
 
-        LoadFightData();
+            LoadMinerData();
+            LoadBlacksmithData();
+            LoadFisherData();
+            LoadFarmerData();
+            LoadMageData();
+            LoadAlchemistData();
+
+            LoadFightData();
+        }
+        catch(FatalLoadException e)
+        {
+            throw e;
+        }
+        catch(Exception e)
+        {
+            Debug.LogError("Different error from loading exception");
+            throw e;
+        }
     }
 
     #region JOBS DATA
@@ -127,18 +142,20 @@ public class PlayerManager : MonoBehaviour
             PlayerJobsSaveData jobsSaveData = saveService.LoadData<PlayerJobsSaveData>(UtilsSave.GetPlayerJobsFile(), SettingsManager.Instance.FileEncryption);
             PlayerJobsData = new PlayerJobsData(jobsSaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load jobs data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             PlayerJobsData = new PlayerJobsData();
             SaveJobsData();
         }
     }
 
-    /*
-    public void UpdateInventoryData(Inventory data)
-    {
-        inventory = data;
-    }*/
 
     public void SaveJobsData()
     {
@@ -157,11 +174,19 @@ public class PlayerManager : MonoBehaviour
             PlayerBuffsSaveData buffsSaveData = saveService.LoadData<PlayerBuffsSaveData>(UtilsSave.GetPlayerBuffsFile(), SettingsManager.Instance.FileEncryption);
             PlayerBuffsData = new PlayerBuffsData(buffsSaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load buffs data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             PlayerBuffsData = new PlayerBuffsData();
             SaveBuffsData();
         }
+
     }
 
     
@@ -187,20 +212,21 @@ public class PlayerManager : MonoBehaviour
             InventorySaveData inventorySaveData = saveService.LoadData<InventorySaveData>(UtilsSave.GetPlayerInventoryFile(), SettingsManager.Instance.FileEncryption);
             Inventory = new Inventory(inventorySaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load inventory data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             Inventory = new Inventory();
             SaveInventoryData();
         }
 
         Inventory.OnItemAdd += ItemAdd;
     }
-
-    /*
-    public void UpdateInventoryData(Inventory data)
-    {
-        inventory = data;
-    }*/
 
     public void SaveInventoryData()
     {
@@ -215,7 +241,7 @@ public class PlayerManager : MonoBehaviour
 
     #endregion
 
-    #region FIGHT DATA
+    #region WARRIOR DATA
 
     private void LoadFightData()
     {
@@ -224,8 +250,15 @@ public class PlayerManager : MonoBehaviour
             PlayerFightSaveData fightSaveData = saveService.LoadData<PlayerFightSaveData>(UtilsSave.GetPlayerFightFile(), SettingsManager.Instance.FileEncryption);
             PlayerFightData = new PlayerFightData(fightSaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load warrior data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             PlayerFightData = new PlayerFightData();
             SaveFightData();
         }
@@ -255,8 +288,15 @@ public class PlayerManager : MonoBehaviour
             PlayerMinerSaveData minerSaveData = saveService.LoadData<PlayerMinerSaveData>(UtilsSave.GetPlayerMinerFile(), SettingsManager.Instance.FileEncryption);
             PlayerMinerData = new PlayerMinerData(minerSaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load miner data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             PlayerMinerData = new PlayerMinerData();
             SaveMinerData();
         }
@@ -286,8 +326,15 @@ public class PlayerManager : MonoBehaviour
             PlayerBlacksmithSaveData blacksmithSaveData = saveService.LoadData<PlayerBlacksmithSaveData>(UtilsSave.GetPlayerBlacksmithFile(), SettingsManager.Instance.FileEncryption);
             PlayerBlacksmithData = new PlayerBlacksmithData(blacksmithSaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load blacksmith data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             PlayerBlacksmithData = new PlayerBlacksmithData();
             SaveBlacksmithData();
         }
@@ -317,8 +364,15 @@ public class PlayerManager : MonoBehaviour
             PlayerFisherSaveData fisherSaveData = saveService.LoadData<PlayerFisherSaveData>(UtilsSave.GetPlayerFisherFile(), SettingsManager.Instance.FileEncryption);
             PlayerFisherData = new PlayerFisherData(fisherSaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load fisher data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             PlayerFisherData = new PlayerFisherData();
             SaveFisherData();
         }
@@ -348,8 +402,15 @@ public class PlayerManager : MonoBehaviour
             PlayerFarmerSaveData farmerSaveData = saveService.LoadData<PlayerFarmerSaveData>(UtilsSave.GetPlayerFarmerFile(), SettingsManager.Instance.FileEncryption);
             PlayerFarmerData = new PlayerFarmerData(farmerSaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load farmer data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             PlayerFarmerData = new PlayerFarmerData();
             SaveFarmerData();
         }
@@ -384,12 +445,18 @@ public class PlayerManager : MonoBehaviour
             PlayerMageSaveData mageSaveData = saveService.LoadData<PlayerMageSaveData>(UtilsSave.GetPlayerMageFile(), SettingsManager.Instance.FileEncryption);
             PlayerMageData = new PlayerMageData(mageSaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load mage data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             PlayerMageData = new PlayerMageData();
             SaveMageData();
         }
-
     }
 
     public void UpdateMageData(PlayerMageData data)
@@ -415,12 +482,18 @@ public class PlayerManager : MonoBehaviour
             PlayerAlchemistSaveData alchemistSaveData = saveService.LoadData<PlayerAlchemistSaveData>(UtilsSave.GetPlayerAlchemistFile(), SettingsManager.Instance.FileEncryption);
             PlayerAlchemistData = new PlayerAlchemistData(alchemistSaveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load alchemist data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             PlayerAlchemistData = new PlayerAlchemistData();
             SaveAlchemistData();
         }
-
     }
 
     public void UpdateAlchemistData(PlayerAlchemistData data)

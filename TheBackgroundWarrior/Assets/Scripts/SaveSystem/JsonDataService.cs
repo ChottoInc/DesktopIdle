@@ -18,29 +18,11 @@ public class JsonDataService : IDataService
 
         try
         {
-            if (File.Exists(path))
-            {
-                //Debug.Log("File exists, removing and adding again");
-                File.Delete(path);
-            }
-            else
-            {
-                //Debug.Log("Creating new file");
-            }
+            // convert the data to json
+            string json = JsonConvert.SerializeObject(data);
 
-            using FileStream stream = File.Create(path);
+            SaveAtomic(path, json, encrypted);
 
-            if(encrypted)
-            {
-                WriteEncryptedData(data, stream);
-            }
-            else
-            {
-                stream.Close();
-
-                File.WriteAllText(path, JsonConvert.SerializeObject(data));
-            }
-           
             return true;
         }
         catch(Exception e)
@@ -50,8 +32,48 @@ public class JsonDataService : IDataService
         }
     }
 
-    private void WriteEncryptedData<T>(T data, FileStream stream)
+    public bool SaveAtomic(string path, string json, bool encrypted)
     {
+        // get filename singularly from saving path
+        string filenameWithoutExt = Path.GetFileNameWithoutExtension(path);
+        string filenameExt = Path.GetExtension(path);
+        string filename = filenameWithoutExt + filenameExt;
+
+        // Example: data / temps / player_something.json.tmp
+        string tempPath = Application.persistentDataPath + "/" + UtilsSave.GetTempsFolder() + "/" + filename + ".tmp";
+
+        // Example: data / backups / player_something.json.bak
+        string backupPath = Application.persistentDataPath + "/" + UtilsSave.GetBackupFolder() + "/" + filename + ".bak";
+
+        // write to a temp file first
+        if (!encrypted)
+        {
+            File.WriteAllText(tempPath, json);
+        }
+        else
+        {
+            // writes encrypted directly on temp data
+            WriteEncryptedData(tempPath, json);
+        }
+
+        // if an old save exists, back it up
+        if (File.Exists(path))
+        {
+            File.Copy(path, backupPath, true);
+        }
+
+        // only now replace the real file with the temp one, also copies encrypted
+        File.Copy(tempPath, path, true);
+        File.Delete(tempPath);
+
+
+        return true;
+    }
+
+    private void WriteEncryptedData(string path, string json)
+    {
+        using FileStream stream = File.Create(path);
+
         using Aes aesProvider = Aes.Create();
         aesProvider.Key = Convert.FromBase64String(ENC_KEY);
         aesProvider.IV = Convert.FromBase64String(ENC_IV);
@@ -66,8 +88,10 @@ public class JsonDataService : IDataService
             CryptoStreamMode.Write
         );
 
-        cryptoStream.Write(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(data)));
+        cryptoStream.Write(Encoding.ASCII.GetBytes(json));
     }
+
+
 
     public T LoadData<T>(string relativePath, bool encrypted)
     {
@@ -75,8 +99,26 @@ public class JsonDataService : IDataService
 
         if (!File.Exists(path))
         {
-            Debug.LogError($"Cannot load file at {path}");
-            throw new FileNotFoundException($"{path} does not exists");
+            // check if has backup
+            // get filename singularly from saving path
+            string filenameWithoutExt = Path.GetFileNameWithoutExtension(path);
+            string filenameExt = Path.GetExtension(path);
+            string filename = filenameWithoutExt + filenameExt;
+
+            // Example: data / backups / player_something.json.bak
+            string backupPath = Application.persistentDataPath + "/" + UtilsSave.GetBackupFolder() + "/" + filename + ".bak";
+
+            if (!File.Exists(backupPath))
+            {
+                //Debug.LogError($"Cannot load file at {path}");
+                throw new FileNotFoundException($"{path} does not exists");
+            }
+            else
+            {
+                // has back file, copy file into path
+                File.Copy(backupPath, path, true);
+                Debug.LogWarning($"Recovered file from backups: {path}");
+            }
         }
 
         try
@@ -91,13 +133,13 @@ public class JsonDataService : IDataService
             {
                 data = JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
             }
-            
+
             return data;
         }
         catch(Exception e)
         {
-            Debug.LogError($"Failed to load due to: {e.Message} {e.StackTrace}");
-            throw e;
+            //Debug.LogError($"Failed to load due to: {e.Message} {e.StackTrace}");
+            throw new ConversionException($"Failed to load due to: {e.Message} {e.StackTrace}");
         }
     }
 
@@ -132,6 +174,10 @@ public class JsonDataService : IDataService
         //Debug.Log($"Decrypted result (if the following is not legible, probably wrong key or IV): {result}");
         return JsonConvert.DeserializeObject<T>(result);
     }
+
+
+
+    
 
     
 }

@@ -383,6 +383,7 @@ public static class UtilsText
     public const string text_yesno_yes = "text_yesno_yes";
     public const string text_yesno_no = "text_yesno_no";
     public const string text_yesno_newgame = "text_yesno_newgame";
+    public const string text_yesno_newgame_fatalerror = "text_yesno_newgame_fatalerror";
 
     public const string text_yesno_question_buy = "text_yesno_question_buy";
 
@@ -1341,6 +1342,11 @@ public static class UtilsText
             { text_yesno_yes, "Confirm" },
             { text_yesno_no, "Cancel" },
             { text_yesno_newgame, "You already have an adventure in progress, starting a new game will erase your current save files.<br>Are you sure you want to continue?" },
+            { text_yesno_newgame_fatalerror, 
+                "A fatal error has occured while loading your save files, try to restart the game.<br>" +
+                "Starting a new game will erase your current save files.<br>" +
+                "Are you sure you want to continue?" 
+            },
 
             { text_yesno_question_buy, "Do you want to buy {0} for {1} bits?" },
             { text_yesno_question_titlescreen, "Return to title screen?" },

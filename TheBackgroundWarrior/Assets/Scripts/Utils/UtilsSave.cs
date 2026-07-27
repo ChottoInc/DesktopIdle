@@ -1,4 +1,7 @@
 
+using System;
+using System.IO;
+using UnityEngine;
 
 public static class UtilsSave
 {
@@ -29,6 +32,9 @@ public static class UtilsSave
 
     public const string SHOP_FOLDER = "Shop";
     public const string SHOP_FILE = "shop.json";
+
+    public const string BACKUP_FOLDER = "Backups";
+    public const string TEMP_FOLDER = "Temps";
 
     // ----- SETTINGS
 
@@ -101,7 +107,6 @@ public static class UtilsSave
     }
 
     // ----- MAPS
-
     public static string GetCombatMapsFolder()
     {
         return ROOT_FOLDER + "/" + COMBATMAPS_FOLDER;
@@ -113,8 +118,8 @@ public static class UtilsSave
     }
 
 
-    // ----- QUESTS
 
+    // ----- QUESTS
     public static string GetQuestsFolder()
     {
         return ROOT_FOLDER + "/" + QUESTS_FOLDER;
@@ -125,8 +130,8 @@ public static class UtilsSave
         return GetQuestsFolder() + "/" + QUESTS_FILE;
     }
 
-    // ----- SHOP
 
+    // ----- SHOP
     public static string GetShopFolder()
     {
         return ROOT_FOLDER + "/" + SHOP_FOLDER;
@@ -136,4 +141,70 @@ public static class UtilsSave
     {
         return GetShopFolder() + "/" + SHOP_FILE;
     }
+
+
+
+    // ----- BACKUPS NA TEMPS
+    public static string GetBackupFolder()
+    {
+        return ROOT_FOLDER + "/" + BACKUP_FOLDER;
+    }
+
+    public static string GetTempsFolder()
+    {
+        return ROOT_FOLDER + "/" + TEMP_FOLDER;
+    }
+
+
+    // ----- CREATE AND CHECK FILES
+
+    public static void CreateAllFolders()
+    {
+        string persistent = Application.persistentDataPath + "/";
+
+        Directory.CreateDirectory(persistent + ROOT_FOLDER);
+
+        Directory.CreateDirectory(persistent + GetPlayerFolder());
+        Directory.CreateDirectory(persistent + GetSettingsFolder());
+        Directory.CreateDirectory(persistent + GetCombatMapsFolder());
+        Directory.CreateDirectory(persistent + GetQuestsFolder());
+        Directory.CreateDirectory(persistent + GetShopFolder());
+        Directory.CreateDirectory(persistent + GetBackupFolder());
+        Directory.CreateDirectory(persistent + GetTempsFolder());
+    }
+
+    public static void CheckAllFolders()
+    {
+        string persistent = Application.persistentDataPath + "/";
+
+        CheckAndCreateFolder(persistent + ROOT_FOLDER);
+
+        CheckAndCreateFolder(persistent + GetPlayerFolder());
+        CheckAndCreateFolder(persistent + GetSettingsFolder());
+        CheckAndCreateFolder(persistent + GetCombatMapsFolder());
+        CheckAndCreateFolder(persistent + GetQuestsFolder());
+        CheckAndCreateFolder(persistent + GetShopFolder());
+        CheckAndCreateFolder(persistent + GetBackupFolder());
+        CheckAndCreateFolder(persistent + GetTempsFolder());
+    }
+
+
+
+    public static bool CheckAndCreateFolder(string path)
+    {
+        if(!Directory.Exists(path))
+        {
+            try
+            {
+                Directory.CreateDirectory(path);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Unable to create folder due to: {e.Message} {e.StackTrace}");
+                return false;
+            }
+        }
+        return true;
+    } 
 }

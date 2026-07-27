@@ -65,7 +65,7 @@ public class UIPanelHome : MonoBehaviour
 
     public void Setup()
     {
-        buttonContinue.interactable = InitializerManager.Instance.HasSaveFile;
+        buttonContinue.interactable = InitializerManager.Instance.HasSaveFile && !InitializerManager.Instance.FatalError;
 
         if (buttonContinue.interactable)
         {
@@ -104,6 +104,37 @@ public class UIPanelHome : MonoBehaviour
             SceneLoaderManager.Instance.LoadScene(SettingsManager.Instance.LastSceneSettings);
 
             isChangingScene = true;
+        }
+        else if (InitializerManager.Instance.FatalError)
+        {
+            string question = UtilsText.AllText[UtilsText.text_yesno_newgame_fatalerror];
+
+            TooltipManagerData tooltipData = new TooltipManagerData();
+            tooltipData.idTooltip = UITooltipManager.ID_SHOW_YESNO;
+            tooltipData.text = question;
+
+            bool confirm = await UITooltipManager.Instance.ShowPanelYesNoCallback(tooltipData, messageNewGamePosition.position, true);
+
+            if (confirm)
+            {
+                // erase and recreate default
+                InitializerManager.Instance.EraseAllSaves();
+                InitializerManager.Instance.HandleSaves();
+
+                // set var that has files
+                InitializerManager.Instance.SetHasSaveFile();
+
+                // call steammanager to get the default lang
+                if (SettingsManager.Instance.IsSteamPlatform)
+                {
+                    steamManager.CheckDefaultLang();
+                }
+
+                // load first scene
+                SceneLoaderManager.Instance.LoadScene(SettingsManager.Instance.LastSceneSettings);
+
+                isChangingScene = true;
+            }
         }
         else
         {

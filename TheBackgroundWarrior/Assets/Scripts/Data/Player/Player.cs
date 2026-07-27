@@ -51,12 +51,12 @@ public class Player : MonoBehaviour, IPlayerDataProvider
 
     protected virtual void OnBuffAdded(UtilsBuffs.BuffType buffType)
     {
-        Debug.Log("Need to inherit from player");
+        //Debug.Log("Need to inherit from player");
     }
 
     protected virtual void OnBuffRemoved(UtilsBuffs.BuffType buffType)
     {
-        Debug.Log("Need to inherit from player");
+        //Debug.Log("Need to inherit from player");
     }
 
     

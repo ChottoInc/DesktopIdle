@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -247,8 +248,15 @@ public class QuestManager : MonoBehaviour
             QuestsSaveData saveData = saveService.LoadData<QuestsSaveData>(UtilsSave.GetQuestFile(), SettingsManager.Instance.FileEncryption);
             SetupFromFile(saveData);
         }
-        catch
+        catch (ConversionException e)
         {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load quests");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
             SetupFromDefault();
             SaveQuestsData();
 
