@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 
 public class UIScrollTriangle : MonoBehaviour
@@ -12,8 +13,16 @@ public class UIScrollTriangle : MonoBehaviour
 
     private bool _isInit;
 
-    private void Update()
+
+    private void Start()
     {
+        StartCoroutine(CoWaitFrame());
+    }
+
+    private IEnumerator CoWaitFrame()
+    {
+        yield return new WaitForEndOfFrame();
+
         InitializeIfNeeded();
     }
 

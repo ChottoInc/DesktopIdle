@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 
 using static Kirurobo.UniWindowController;
@@ -12,6 +13,9 @@ public class InitializerManager : MonoBehaviour
     [Header("Screen")]
     [SerializeField] int heightScreen = 450;
     [SerializeField] UniWindowController windowController;
+
+    public int HeightScreen => heightScreen;
+
 
     [Space(10)]
     [SerializeField] float offsetBound = 200f;
@@ -140,37 +144,45 @@ public class InitializerManager : MonoBehaviour
 
 
 
-    private void HandleOtherSetups()
+    private async void HandleOtherSetups()
     {
-        // initialize all texts
-        UtilsText.Initialize();
+        try
+        {
+            // initialize all texts
+            UtilsText.Initialize();
 
-        // initialize text general
-        UtilsGeneral.Initialize();
+            // initialize text general
+            UtilsGeneral.Initialize();
 
-        // utils setups
-        UtilsPlayer.Initialize();
-        UtilsItem.Initialize();
-        UtilsEnemy.Initialize();
-        UtilsCombatMap.Initialize();
-        UtilsQuest.Initialize();
-        UtilsShop.Initialize();
+            // utils setups
+            UtilsPlayer.Initialize();
+            UtilsItem.Initialize();
+            UtilsEnemy.Initialize();
+            UtilsCombatMap.Initialize();
+            UtilsQuest.Initialize();
+            UtilsShop.Initialize();
 
-        // load files
-        HandleSaves();
+            // load files
+            await HandleSaves();
 
-        // call loader scene setup - set material
-        sceneLoaderManager.Setup();
+            // call loader scene setup - set material
+            sceneLoaderManager.Setup();
 
-        // set checked files
-        hasCheckFiles = true;
+            // set checked files
+            hasCheckFiles = true;
 
-        //Debug.Log(SettingsManager.Instance.LastSceneSettings.lastSceneName);
+            //Debug.Log(SettingsManager.Instance.LastSceneSettings.lastSceneName);
 
-        // check save for last scene - loading scene manager should handle the alpha
+            // check save for last scene - loading scene manager should handle the alpha
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("HandleOtherSetups failed: " + e.Message + "\n" + e.StackTrace);
+            FatalError = true;
+        }
     }
 
-    public void HandleSaves()
+    public async Task HandleSaves()
     {
         string persistent = Application.persistentDataPath + "/";
 
@@ -185,7 +197,15 @@ public class InitializerManager : MonoBehaviour
         {
             hasSaveFile = true;
 
-            UtilsSave.CheckAllFolders();
+            try
+            {
+                UtilsSave.CheckAllFolders();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message + "\n" + e.StackTrace);
+                FatalError = true;
+            }
         }
 
         try
@@ -206,6 +226,10 @@ public class InitializerManager : MonoBehaviour
             Debug.LogError(e.Message + "\n" + e.StackTrace);
             FatalError = true;
         }
+
+        // If nothing above is genuinely async yet, this yields a frame so callers
+        // can safely await this method without blocking. Remove once real awaits exist below.
+        await Task.Yield();
     }
 
 

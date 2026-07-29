@@ -33,7 +33,7 @@ public class UITooltipBuff : MonoBehaviour
 
     private void Resize()
     {
-        int elementCount = _gridLayout.transform.childCount;
+        int elementCount = PlayerManager.Instance.PlayerBuffsData.ActiveBuffs.Count;
         int columns = Mathf.CeilToInt((float)elementCount / _gridLayout.constraintCount);
 
         float totalWidth = columns * (_gridLayout.cellSize.x + _gridLayout.spacing.x)
@@ -43,6 +43,9 @@ public class UITooltipBuff : MonoBehaviour
 
         totalWidth = Mathf.Clamp(totalWidth, minWidth, maxWidth);
         _root.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, totalWidth);
+
+        //Debug.Log("conctions buff tooltip columns: " + columns);
+        //Debug.Log("conctions buff tooltip size: " + totalWidth);
     }
 
     public void Show(bool fade = false)

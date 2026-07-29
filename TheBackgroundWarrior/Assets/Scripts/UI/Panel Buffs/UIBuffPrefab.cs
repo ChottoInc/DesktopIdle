@@ -25,7 +25,7 @@ public class UIBuffPrefab : MonoBehaviour
         _imageBuff.sprite = _buffSO.Sprite;
 
         _textName.text = _buffSO.ItemName;
-        _textDesc.text = string.Format(_buffSO.ItemDesc, _buff.StartDuration);
+        _textDesc.text = string.Format(_buffSO.ItemDesc, Mathf.RoundToInt(_buff.StartDuration/60f));
 
         UpdateTimerUI();
     }

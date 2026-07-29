@@ -55,6 +55,14 @@ public class EditorQuestStorySO : Editor
 
     private SerializedProperty s_amountBefriend;
 
+    // --------- Quest Spell Rank Up ---------
+    private SerializedProperty s_questSpellSpecific;
+
+    // --- Specific
+    private SerializedProperty s_spellSO;
+
+    private SerializedProperty s_amountRank;
+
 
     // --------- Reward ---------
     private SerializedProperty s_rewardAmount;
@@ -89,6 +97,10 @@ public class EditorQuestStorySO : Editor
         s_questBefriendSpecific = s_questData.FindPropertyRelative("questBefriendSpecific");
         s_companionSO = s_questData.FindPropertyRelative("companionSO");
         s_amountBefriend = s_questData.FindPropertyRelative("amountBefriend");
+
+        s_questSpellSpecific = s_questData.FindPropertyRelative("questSpellSpecific");
+        s_spellSO = s_questData.FindPropertyRelative("spellSO");
+        s_amountRank = s_questData.FindPropertyRelative("amountRank");
 
         s_rewardAmount = s_questData.FindPropertyRelative("rewardAmount");
     }
@@ -187,6 +199,21 @@ public class EditorQuestStorySO : Editor
 
                     EditorGUILayout.Space();
                     EditorGUILayout.PropertyField(s_amountBefriend);
+
+                    break;
+
+                case QuestObjectiveType.SpellRank:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.PropertyField(s_questSpellSpecific);
+
+                    if (_quest.QuestData.questSpellSpecific)
+                    {
+                        EditorGUILayout.Space();
+                        EditorGUILayout.PropertyField(s_spellSO);
+                    }
+
+                    EditorGUILayout.Space();
+                    EditorGUILayout.PropertyField(s_amountRank);
 
                     break;
             }

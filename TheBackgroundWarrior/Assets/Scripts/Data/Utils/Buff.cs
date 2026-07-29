@@ -1,44 +1,52 @@
 
 using System;
+using System.Linq;
 using static UtilsBuffs;
 
 [System.Serializable]
 public class Buff
 {
-    private BuffType _buffType;
-    private float _remainingTime;
 
     public float StartDuration { get; private set; }
 
+
+    public BuffType BuffType { get; private set; }
+    public float RemainingTime { get; private set; }
+
+
+    public bool IsExpired => RemainingTime <= 0;
+
+
     public event Action<BuffType> OnBuffExpired;
-
-    public BuffType BuffType => _buffType;
-    public float RemainingTime => _remainingTime;
-
-    public bool IsExpired => _remainingTime <= 0 ? true : false;
 
     public Buff(BuffType buffType, float remainingTime)
     {
-        _buffType = buffType;
-        _remainingTime = remainingTime;
+        BuffType = buffType;
+        RemainingTime = remainingTime;
 
         StartDuration = remainingTime;
     }
 
     public Buff(BuffSaveData saveData)
     {
-        _buffType = (BuffType)saveData.buffType;
-        _remainingTime = saveData.remainingTime;
+        BuffType = (BuffType)saveData.buffType;
+        RemainingTime = saveData.remainingTime;
+
+        ConcoctionSO so = UtilsItem.GetAllTypeItem<ConcoctionSO>().Where(c => c.Buff == BuffType).FirstOrDefault();
+        if(so != null)
+        {
+            StartDuration = so.Duration;
+        }
     }
 
     public void AddTimer(float val)
     {
-        _remainingTime += val;
+        RemainingTime += val;
     }
 
     public void DecreaseTimer(float val)
     {
-        _remainingTime -= val;
-        if (IsExpired) OnBuffExpired?.Invoke(_buffType);
+        RemainingTime -= val;
+        if (IsExpired) OnBuffExpired?.Invoke(BuffType);
     }
 }

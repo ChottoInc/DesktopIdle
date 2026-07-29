@@ -113,6 +113,10 @@ public class UIQuestPrefab : MonoBehaviour
             case UtilsQuest.QuestObjectiveType.Befriend:
                 progressBar.Setup(data.amountObtain, progress.progressCounter);
                 break;
+
+            case UtilsQuest.QuestObjectiveType.SpellRank:
+                progressBar.Setup(data.amountRank, progress.progressCounter);
+                break;
         }
         
     }

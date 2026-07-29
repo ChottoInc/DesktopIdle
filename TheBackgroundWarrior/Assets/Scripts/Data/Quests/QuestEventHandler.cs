@@ -411,6 +411,87 @@ public class QuestEventHandler
 
     #endregion
 
+    #region SPELL RANK UP EVENT
+
+    public void OnSpellRankUp(int id)
+    {
+        // create custom event basic data
+        CustomEventData customEventData = new CustomEventData();
+        customEventData.spellId = id;
+
+        HandleEvent(customEventData, HandleSpellRankUp);
+    }
+
+    private HandleEventResult HandleSpellRankUp(CustomEventData eventData)
+    {
+        HandleEventResult result = new HandleEventResult()
+        {
+            needSave = false,
+            needNotification = false
+        };
+
+        if (NeedUpdateSpellRankProgress(eventData.questData, eventData.spellId))
+        {
+            UpdateSpellRankProgress(eventData.questType, eventData.questId);
+            result.needSave = true;
+            result.needNotification = QuestManager.Instance.CheckNotifications(eventData.questData, eventData.questType, eventData.questId);
+        }
+
+        return result;
+    }
+
+    private bool NeedUpdateSpellRankProgress(QuestData data, int spellId)
+    {
+        if (data.questObjectiveType == QuestObjectiveType.SpellRank)
+        {
+            // check specific
+            if (data.questSpellSpecific)
+            {
+                if (data.spellSO.Id == spellId)
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void UpdateSpellRankProgress(QuestType questType, string questId)
+    {
+        QuestDataProgress progress;
+
+        switch (questType)
+        {
+            default:
+            case QuestType.Story:
+                progress = QuestManager.Instance.DictQuestsStoryProgress[questId];
+
+                progress.progressCounter++;
+                QuestManager.Instance.DictQuestsStoryProgress[questId] = progress;
+                break;
+
+            case QuestType.Bounties:
+                progress = QuestManager.Instance.DictQuestsBountyProgress[questId];
+
+                progress.progressCounter++;
+                QuestManager.Instance.DictQuestsBountyProgress[questId] = progress;
+                break;
+
+            case QuestType.Daily:
+                progress = QuestManager.Instance.DictQuestsDailyProgress[questId];
+
+                progress.progressCounter++;
+                QuestManager.Instance.DictQuestsDailyProgress[questId] = progress;
+                break;
+        }
+    }
+
+    #endregion
+
     /// <summary>
     /// Iterate through list and returns if needs save or notification
     /// </summary>

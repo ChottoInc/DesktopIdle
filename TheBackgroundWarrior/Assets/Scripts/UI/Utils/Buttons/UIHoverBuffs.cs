@@ -20,6 +20,11 @@ public class UIHoverBuffs : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         _tabBuff.OnDeselected -= Deselected;
     }
 
+    private void Start()
+    {
+        gameObject.SetActive(PlayerManager.Instance.PlayerJobsData.AvailableJobs.Contains(UtilsPlayer.PlayerJob.Alchemist));
+    }
+
     private void Selected()
     {
         _isTabbed = true;
@@ -37,6 +42,8 @@ public class UIHoverBuffs : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (PlayerManager.Instance.PlayerBuffsData.ActiveBuffs.Count < 1) return;
+
         if (_isTabbed) return;
 
         TooltipManagerData tooltipData = new TooltipManagerData();
@@ -48,6 +55,8 @@ public class UIHoverBuffs : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (PlayerManager.Instance.PlayerBuffsData.ActiveBuffs.Count < 1) return;
+
         OnExit();
     }
 

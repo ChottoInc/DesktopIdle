@@ -291,7 +291,7 @@ public class UITabJobMiner : UITabWindow
     {
         if (player != null)
         {
-            panelJob.OnButtonClose();
+            panelJob.OnButtonClose(false);
         }
 
         LastSceneSettings settings = new LastSceneSettings();

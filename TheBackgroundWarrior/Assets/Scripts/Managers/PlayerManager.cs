@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -10,9 +9,6 @@ public class PlayerManager : MonoBehaviour
 
     // --- INVENTORY
     public Inventory Inventory { get; private set; }
-
-    // Trigger used for quests
-    public event Action<int> OnItemAdd;
 
 
     // ------- JOBS -------------
@@ -36,10 +32,12 @@ public class PlayerManager : MonoBehaviour
     public PlayerAlchemistData PlayerAlchemistData { get; private set; }
 
 
-    // --- COMPANIONS
 
-    // Trigger used for quests
+    // TRIGGERS FOR QUESTS
+
+    public event Action<int> OnItemAdd;
     public event Action<int> OnCompanionBefriended;
+    public event Action<int> OnSpellRankUp;
 
 
 
@@ -429,7 +427,7 @@ public class PlayerManager : MonoBehaviour
         saveService.SaveData(UtilsSave.GetPlayerFarmerFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
-    public void OnBefriendedCompanion(int companion)
+    public void OnBefriendedCompanionEvent(int companion)
     {
         OnCompanionBefriended?.Invoke(companion);
     }
@@ -469,6 +467,11 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerMageSaveData data = new PlayerMageSaveData(PlayerMageData);
         saveService.SaveData(UtilsSave.GetPlayerMageFile(), data, SettingsManager.Instance.FileEncryption);
+    }
+
+    public void OnSpellRankUpEvent(int spell)
+    {
+        OnSpellRankUp?.Invoke(spell);
     }
 
     #endregion

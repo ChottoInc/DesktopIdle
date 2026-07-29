@@ -119,7 +119,7 @@ public class UIPanelHome : MonoBehaviour
             {
                 // erase and recreate default
                 InitializerManager.Instance.EraseAllSaves();
-                InitializerManager.Instance.HandleSaves();
+                await InitializerManager.Instance.HandleSaves();
 
                 // set var that has files
                 InitializerManager.Instance.SetHasSaveFile();
@@ -150,7 +150,7 @@ public class UIPanelHome : MonoBehaviour
             {
                 // erase and recreate default
                 InitializerManager.Instance.EraseAllSaves();
-                InitializerManager.Instance.HandleSaves();
+                await InitializerManager.Instance.HandleSaves();
 
                 // set var that has files
                 InitializerManager.Instance.SetHasSaveFile();

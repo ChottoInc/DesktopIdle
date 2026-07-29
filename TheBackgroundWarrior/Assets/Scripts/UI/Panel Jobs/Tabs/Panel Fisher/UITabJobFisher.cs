@@ -150,7 +150,7 @@ public class UITabJobFisher : UITabWindow
     {
         if (player != null)
         {
-            panelJob.OnButtonClose();
+            panelJob.OnButtonClose(false);
         }
 
         LastSceneSettings settings = new LastSceneSettings();
@@ -159,33 +159,6 @@ public class UITabJobFisher : UITabWindow
 
         SceneLoaderManager.Instance.LoadScene(settings);
     }
-    /*
-    public void OnButtonLog()
-    {
-        AudioManager.Instance.PlayClickUI();
-
-        if (!isLogShow)
-        {
-            panelFishGroup.SetActive(false);
-            panelLog.SetActive(true);
-
-            textButtonLog.text = "Groups";
-
-            FillLog();
-
-            isLogShow = true;
-        }
-        else
-        {
-            panelFishGroup.SetActive(true);
-            panelLog.SetActive(false);
-
-            textButtonLog.text = "Log";
-
-            isLogShow = false;
-        }
-    }
-    */
 
     private void FillLog()
     {

@@ -173,19 +173,28 @@ public static class UtilsSave
         Directory.CreateDirectory(persistent + GetTempsFolder());
     }
 
-    public static void CheckAllFolders()
+    public static bool CheckAllFolders()
     {
         string persistent = Application.persistentDataPath + "/";
 
-        CheckAndCreateFolder(persistent + ROOT_FOLDER);
+        try
+        {
 
-        CheckAndCreateFolder(persistent + GetPlayerFolder());
-        CheckAndCreateFolder(persistent + GetSettingsFolder());
-        CheckAndCreateFolder(persistent + GetCombatMapsFolder());
-        CheckAndCreateFolder(persistent + GetQuestsFolder());
-        CheckAndCreateFolder(persistent + GetShopFolder());
-        CheckAndCreateFolder(persistent + GetBackupFolder());
-        CheckAndCreateFolder(persistent + GetTempsFolder());
+            CheckAndCreateFolder(persistent + ROOT_FOLDER);
+
+            CheckAndCreateFolder(persistent + GetPlayerFolder());
+            CheckAndCreateFolder(persistent + GetSettingsFolder());
+            CheckAndCreateFolder(persistent + GetCombatMapsFolder());
+            CheckAndCreateFolder(persistent + GetQuestsFolder());
+            CheckAndCreateFolder(persistent + GetShopFolder());
+            CheckAndCreateFolder(persistent + GetBackupFolder());
+            CheckAndCreateFolder(persistent + GetTempsFolder());
+            return true;
+        }
+        catch (Exception e)
+        {
+            throw e;
+        }
     }
 
 
@@ -202,7 +211,7 @@ public static class UtilsSave
             catch (Exception e)
             {
                 Debug.LogError($"Unable to create folder due to: {e.Message} {e.StackTrace}");
-                return false;
+                throw e;
             }
         }
         return true;

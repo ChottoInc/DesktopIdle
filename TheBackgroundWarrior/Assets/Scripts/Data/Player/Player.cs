@@ -31,6 +31,29 @@ public class Player : MonoBehaviour, IPlayerDataProvider
     {
         if(_buffsToCheckTypes != null)
             HandleBuffs();
+
+        CheckSpeedMult();
+    }
+
+    protected void CheckSpeedMult()
+    {
+        if (!SettingsManager.Instance.AreCheatsEnabled) return;
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (Time.timeScale == 1f)
+            {
+                Time.timeScale = 2f;
+            }
+            else if (Time.timeScale == 2f)
+            {
+                Time.timeScale = 4f;
+            }
+            else if (Time.timeScale == 4f)
+            {
+                Time.timeScale = 1f;
+            }
+        }
     }
 
     protected virtual void HandleBuffs()

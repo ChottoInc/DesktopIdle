@@ -113,6 +113,8 @@ public class QuestManager : MonoBehaviour
     private PlayerBlacksmith playerBlacksmith;
     private PlayerFisher playerFisher;
     private PlayerFarmer playerFarmer;
+    private PlayerMage playerMage;
+    private PlayerAlchemist playerAlchemist;
 
 
 
@@ -172,6 +174,12 @@ public class QuestManager : MonoBehaviour
 
         if (playerFarmer != null)
             playerFarmer.OnStatChange -= questEventHandler.OnStatUp;
+
+        if (playerMage != null)
+            playerMage.OnStatChange -= questEventHandler.OnStatUp;
+
+        if (playerAlchemist != null)
+            playerAlchemist.OnStatChange -= questEventHandler.OnStatUp;
     }
 
     private void OnDestroy()
@@ -183,6 +191,7 @@ public class QuestManager : MonoBehaviour
         {
             PlayerManager.Instance.OnItemAdd -= questEventHandler.OnItemObtain;
             PlayerManager.Instance.OnCompanionBefriended -= questEventHandler.OnBefriend;
+            PlayerManager.Instance.OnSpellRankUp -= questEventHandler.OnSpellRankUp;
         }
     }
 
@@ -223,6 +232,16 @@ public class QuestManager : MonoBehaviour
                 playerFarmer = FindFirstObjectByType<PlayerFarmer>();
                 playerFarmer.OnStatChange += questEventHandler.OnStatUp;
                 break;
+
+            case SceneLoaderManager.SceneType.Mage:
+                playerMage = FindFirstObjectByType<PlayerMage>();
+                playerMage.OnStatChange += questEventHandler.OnStatUp;
+                break;
+
+            case SceneLoaderManager.SceneType.Alchemist:
+                playerAlchemist = FindFirstObjectByType<PlayerAlchemist>();
+                playerAlchemist.OnStatChange += questEventHandler.OnStatUp;
+                break;
         }
     }
 
@@ -234,6 +253,7 @@ public class QuestManager : MonoBehaviour
         {
             PlayerManager.Instance.OnItemAdd += questEventHandler.OnItemObtain;
             PlayerManager.Instance.OnCompanionBefriended += questEventHandler.OnBefriend;
+            PlayerManager.Instance.OnSpellRankUp += questEventHandler.OnSpellRankUp;
             isPlayerObserverInit = true;
         }
     }

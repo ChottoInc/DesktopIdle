@@ -214,13 +214,21 @@ public static class UtilsText
 
     public const string text_quest_desc_obtain_specific = "text_quest_desc_obtain_specific";
     public const string text_quest_desc_obtain_nonspecific = "text_quest_desc_obtain_nonspecific";
+
     public const string text_quest_desc_levelup_specific_once = "text_quest_desc_levelup_specific_once";
     public const string text_quest_desc_levelup_specific_multiple = "text_quest_desc_levelup_specific_multiple";
     public const string text_quest_desc_levelup_nonspecific_once = "text_quest_desc_levelup_nonspecific_once";
     public const string text_quest_desc_levelup_nonspecific_multiple = "text_quest_desc_levelup_nonspecific_multiple";
+
     public const string text_quest_desc_unlockmap = "text_quest_desc_unlockmap";
+
     public const string text_quest_desc_befriend_specific = "text_quest_desc_befriend_specific";
     public const string text_quest_desc_befriend_nonspecific = "text_quest_desc_befriend_nonspecific";
+
+    public const string text_quest_desc_spellrankup_specific_once = "text_quest_desc_spellrankup_specific_once";
+    public const string text_quest_desc_spellrankup_specific_multiple = "text_quest_desc_spellrankup_specific_multiple";
+    public const string text_quest_desc_spellrankup_nonspecific_once = "text_quest_desc_spellrankup_nonspecific_once";
+    public const string text_quest_desc_spellrankup_nonspecific_multiple = "text_quest_desc_spellrankup_nonspecific_multiple";
 
     public const string text_quest_reward_bounty = "text_quest_reward_bounty";
 
@@ -1171,13 +1179,21 @@ public static class UtilsText
 
             { text_quest_desc_obtain_specific, "Obtain {0} {1}" },
             { text_quest_desc_obtain_nonspecific, "Obtain {0} {1}" },
+
             { text_quest_desc_levelup_specific_once, "Level up {0} {1} time" },
             { text_quest_desc_levelup_specific_multiple, "Level up {0} {1} times" },
             { text_quest_desc_levelup_nonspecific_once, "Level up any stat {0} time" },
             { text_quest_desc_levelup_nonspecific_multiple, "Level up any stat {0} times" },
+
             { text_quest_desc_unlockmap, "Unlock {0} map" },
+
             { text_quest_desc_befriend_specific, "Obtain {0} {1}" },
             { text_quest_desc_befriend_nonspecific, "Obtain {0} companions" },
+
+            { text_quest_desc_spellrankup_specific_once, "Rank up {0} {1} time" },
+            { text_quest_desc_spellrankup_specific_multiple, "Rank up {0} {1} times" },
+            { text_quest_desc_spellrankup_nonspecific_once, "Rank up any spell {0} time" },
+            { text_quest_desc_spellrankup_nonspecific_multiple, "Rank up any spell {0} times" },
 
             { text_quest_reward_bounty, "Reward: {0} bits" },
 

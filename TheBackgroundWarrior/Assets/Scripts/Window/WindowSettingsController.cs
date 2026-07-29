@@ -33,8 +33,19 @@ public class WindowSettingsController : MonoBehaviour
         // ensure is called after the start
         isInitialized = true;
 
+        bool wantTopmost = SettingsManager.Instance.IsAlwaysOnTop;
+        if (windowController.isTopmost != wantTopmost)
+        {
+            windowController.isTopmost = wantTopmost;
+        }
+
         windowController.isTopmost = SettingsManager.Instance.IsAlwaysOnTop;
         windowController.isHitTestEnabled = SettingsManager.Instance.IsClickThrough;
+
+        Vector2 windowSize = new Vector2(Display.displays[SettingsManager.Instance.CurrentMonitorIndex].systemWidth, InitializerManager.Instance.HeightScreen);
+        windowController.windowSize = windowSize;
+
+        //Debug.Log("Window pos: " + windowController.windowPosition.ToString() + ", size: " + windowController.windowSize.ToString());
     }
 
 

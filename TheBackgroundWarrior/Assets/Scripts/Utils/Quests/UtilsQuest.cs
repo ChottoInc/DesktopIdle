@@ -5,7 +5,7 @@ public static class UtilsQuest
 {
     public enum QuestType { Story, Daily, Bounties }
 
-    public enum QuestObjectiveType { Kill, Obtain, LevelUp, UnlockMap, Befriend }
+    public enum QuestObjectiveType { Kill, Obtain, LevelUp, UnlockMap, Befriend, SpellRank }
 
 
     private static QuestStorySO[] storySOs;
@@ -137,6 +137,10 @@ public static class UtilsQuest
             case QuestObjectiveType.Befriend:
                 result += string.Format("\n{0}/{1}", progress.progressCounter, data.amountBefriend);
                 break;
+
+            case QuestObjectiveType.SpellRank:
+                result += string.Format("\n{0}/{1}", progress.progressCounter, data.amountRank);
+                break;
         }
 
         return result;
@@ -158,6 +162,9 @@ public static class UtilsQuest
 
             case QuestObjectiveType.Befriend:
                 return HandleCounterQuestCheck(data.amountBefriend, progress.progressCounter);
+
+            case QuestObjectiveType.SpellRank:
+                return HandleCounterQuestCheck(data.amountRank, progress.progressCounter);
 
             case QuestObjectiveType.LevelUp:
                 return HandleCounterQuestCheck(data.amountStat, progress.progressCounter);
@@ -259,6 +266,14 @@ public static class UtilsQuest
 
         public int amountBefriend;
 
+        // --------- Quest Learn Spells ---------
+        public bool questSpellSpecific;
+
+        // --- Specific
+        public SpellSO spellSO;
+
+        public int amountRank;
+
 
         // --------- Reward ---------
         public int rewardAmount;
@@ -339,6 +354,9 @@ public static class UtilsQuest
 
         // on befriend companion
         public int companionId;
+
+        // on rank spell level up
+        public int spellId;
     }
 
     #endregion

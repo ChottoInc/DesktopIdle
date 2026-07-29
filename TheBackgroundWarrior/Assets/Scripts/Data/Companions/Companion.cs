@@ -201,7 +201,7 @@ public class Companion : MonoBehaviour
                     // add exp, might tweak
                     PlayerManager.Instance.PlayerFarmerData.AddExp(500);
 
-                    PlayerManager.Instance.OnBefriendedCompanion(tempSOBefriend.Id);
+                    PlayerManager.Instance.OnBefriendedCompanionEvent(tempSOBefriend.Id);
 
                     if (PlayerManager.Instance.PlayerFarmerData.HasCompanion(tempSOBefriend))
                     {

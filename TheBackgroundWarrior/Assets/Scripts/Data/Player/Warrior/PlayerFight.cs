@@ -124,13 +124,6 @@ public class PlayerFight : Player, IDamageable, IHealable
         };
     }
 
-    protected override void Update()
-    {
-        base.Update();
-
-        CheckSpeedMult();
-    }
-
     private IEnumerator CoSpawned()
     {
         yield return new WaitForSeconds(1f);
@@ -142,27 +135,6 @@ public class PlayerFight : Player, IDamageable, IHealable
         canInitialMove = true;
 
         GenerateNewTarget();
-    }
-
-    private void CheckSpeedMult()
-    {
-        if (!SettingsManager.Instance.AreCheatsEnabled) return;
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            if (Time.timeScale == 1f)
-            {
-                Time.timeScale = 2f;
-            }
-            else if (Time.timeScale == 2f)
-            {
-                Time.timeScale = 4f;
-            }
-            else if (Time.timeScale == 4f)
-            {
-                Time.timeScale = 1f;
-            }
-        }
     }
 
     private void FixedUpdate()

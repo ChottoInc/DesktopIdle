@@ -79,6 +79,8 @@ public class SpellData
             // give rank
             CurrentRank++;
 
+            PlayerManager.Instance.OnSpellRankUpEvent(SpellSO.Id);
+
             //OnLevelUp?.Invoke();
         }
 
