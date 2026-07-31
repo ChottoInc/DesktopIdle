@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public static class UtilsQuest
@@ -41,6 +42,21 @@ public static class UtilsQuest
                 return quest;
         }
         return null;
+    }
+
+    public static bool IsQuestNextToAnother(string id)
+    {
+        return storySOs.Any(so => so.Nexts.Any(next => next.UniqueId == id));
+    }
+
+    public static QuestStorySO GetPreviousQuest(string id)
+    {
+        if (IsQuestNextToAnother(id))
+        {
+            return storySOs.FirstOrDefault(so => so.Nexts.Any(next => next.UniqueId == id));
+        }
+        return null;
+        
     }
 
     #endregion

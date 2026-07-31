@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -311,11 +312,9 @@ public class QuestManager : MonoBehaviour
     {
         // initialize dict and first actives quests
 
-        if(ActiveStoryQuests == null)
-            ActiveStoryQuests = new List<string>();
+        ActiveStoryQuests ??= new List<string>();
 
-        if(DictQuestsStoryProgress == null)
-            DictQuestsStoryProgress = new Dictionary<string, QuestDataProgress>();
+        DictQuestsStoryProgress ??= new Dictionary<string, QuestDataProgress>();
 
         // create default for every story
         QuestStorySO[] storyQuests = GetAllStoryQuests();
@@ -483,14 +482,15 @@ public class QuestManager : MonoBehaviour
 
     private void LoadStoryQuests(List<QuestStorySaveData> datas)
     {
-        if (ActiveStoryQuests == null)
-            ActiveStoryQuests = new List<string>();
+        ActiveStoryQuests ??= new List<string>();
 
-        if (DictQuestsStoryProgress == null)
-            DictQuestsStoryProgress = new Dictionary<string, QuestDataProgress>();
+        DictQuestsStoryProgress ??= new Dictionary<string, QuestDataProgress>();
 
         // used for debug infos
         int exceptionIndex = 0;
+
+        // store every id of story saved data
+        List<string> alreadySavedDataIds = new List<string>();
 
         try
         {
@@ -503,6 +503,9 @@ public class QuestManager : MonoBehaviour
                 QuestDataProgress dataProgress = new QuestDataProgress(datas[i]);
 
                 DictQuestsStoryProgress[datas[i].questId] = dataProgress;
+
+                // store id of already saved
+                alreadySavedDataIds.Add(datas[i].questId);
 
                 // if save is inactive but active by default, remove from list
                 if (!dataProgress.isActive && ActiveStoryQuests.Contains(datas[i].questId))
@@ -522,6 +525,25 @@ public class QuestManager : MonoBehaviour
                     }
                 }
             }
+
+            // get non saved quest ids
+            List<string> nonSavedIds = UtilsGeneral.GetNonSharedValues(DictQuestsStoryProgress.Keys.ToList(), alreadySavedDataIds);
+
+            // loop non saved datas and active the once next to another
+            foreach (var id in nonSavedIds)
+            {
+                if (IsQuestNextToAnother(id))
+                {
+                    var data = DictQuestsStoryProgress[id];
+                    data.isActive = true;
+                    DictQuestsStoryProgress[id] = data;
+
+                    ActiveStoryQuests.Add(id);
+                }
+            }
+
+            // deactive if previous has not been cleared
+            DeactivePreviouslyUnclearedQuests();
         }
         catch
         {
@@ -529,6 +551,32 @@ public class QuestManager : MonoBehaviour
         }
 
         //Debug.Log("Dictionary quests counter: " + DictQuestsStoryProgress.Count);
+    }
+
+    private void DeactivePreviouslyUnclearedQuests()
+    {
+        List<string> needDeactive = new List<string>();
+
+        // loop actives
+        foreach (var id in ActiveStoryQuests)
+        {
+            // get previous of active
+            var prev = GetPreviousQuest(id);
+            if(prev != null)
+            {
+                // if the prev is not cleared, add to deactives
+                if (!DictQuestsStoryProgress[prev.UniqueId].isCleared)
+                {
+                    needDeactive.Add(id);
+                }
+            }
+        }
+
+        // deactive the ones needing it
+        foreach (var deactivateId in needDeactive)
+        {
+            ActiveStoryQuests.Remove(deactivateId);
+        }
     }
 
     private void LoadBountyQuests(List<QuestBountySaveData> datas)

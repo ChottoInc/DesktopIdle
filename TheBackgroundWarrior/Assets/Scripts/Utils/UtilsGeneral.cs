@@ -94,6 +94,20 @@ public static class UtilsGeneral
         return Random.Range(val1, val2);
     }
 
+
+    public static List<string> GetNonSharedValues(List<string> list1, List<string> list2)
+    {
+        List<string> result = new List<string>();
+
+        foreach (string s in list2)
+        {
+            if(!list1.Contains(s))
+                result.Add(s);
+        }
+        return result;
+    }
+
+
     #region DAY MOMENT
 
     public static DayMoment GetDayMoment()

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: QuestStoryData_mage_05
   m_EditorClassIdentifier: 
   uniqueId: mage_05
-  isActiveFromStart: 1
+  isActiveFromStart: 0
   availableFor: 06000000
   questData:
     questObjectiveType: 5
@@ -35,4 +35,5 @@ MonoBehaviour:
     spellSO: {fileID: 11400000, guid: 6622f03593c3da8439e12224694d4134, type: 2}
     amountRank: 1
     rewardAmount: 20
-  nexts: []
+  nexts:
+  - {fileID: 11400000, guid: 47dc602ee8c2dd04faf674c2a4b9008a, type: 2}
