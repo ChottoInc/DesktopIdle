@@ -178,7 +178,7 @@ public class SettingsManager : MonoBehaviour
         // --- gameplay
         SetIsAutoBattle(saveData.isAutoBattleOn, false);
 
-        SetIsInvertedHUDOn(saveData.isInvertedHUDOn, false);
+        //SetIsInvertedHUDOn(saveData.isInvertedHUDOn, false);
 
         SetIsDamageOn(saveData.isDamageOn, false);
         SetIsItemCollectionOn(saveData.isItemCollectionOn, false);

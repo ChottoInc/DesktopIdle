@@ -11,6 +11,9 @@ public class UITooltipBase : MonoBehaviour
     protected Tween tweenFade;
 
 
+    protected TooltipManagerData tooltipData;
+
+
     public bool IsShowing { get; private set; }
 
     protected virtual void OnDestroy()
@@ -18,8 +21,12 @@ public class UITooltipBase : MonoBehaviour
         tweenFade?.Kill();
     }
 
-    public virtual void Appear(bool fade)
+    public virtual void Appear(TooltipManagerData data, bool fade, Vector2 position)
     {
+        tooltipData = data;
+
+        transform.position = position;
+
         gameObject.SetActive(true);
 
         if (!fade)

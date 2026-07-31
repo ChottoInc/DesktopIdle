@@ -70,9 +70,14 @@ public class UITabWarriorMap : MonoBehaviour
 
     public void OnPointerEnter()
     {
-        if (isShowingTooltip) return;
-
-        StartCoroutine(CoShowMapMonsters());
+        if (!isShowingTooltip)
+        {
+            StartCoroutine(CoShowMapMonsters());
+        }
+        else
+        {
+            OnPointerExit();
+        }
     }
 
     public void OnPointerExit()
@@ -83,7 +88,7 @@ public class UITabWarriorMap : MonoBehaviour
 
         isShowingTooltip = false;
 
-        UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_TEXT, true);
+        UITooltipManager.Instance.Hide(UITooltipManager.ID_SHOW_MAPINFO, true);
     }
 
     private IEnumerator CoShowMapMonsters()
@@ -107,15 +112,38 @@ public class UITabWarriorMap : MonoBehaviour
             }
         }
 
+
+
+        string possibleCards = string.Empty;
+
+        MapToCardsSO mapCardsSO = UtilsCombatMap.GetCardsByMap(mapSO.IdMap);
+
+        for (int i = 0; i < mapCardsSO.PossibleCards.Length; i++)
+        {
+            possibleCards += mapCardsSO.PossibleCards[i].value.ItemName;
+
+            // add new line only when not last possible
+            if (i < mapCardsSO.PossibleCards.Length - 1)
+            {
+                possibleCards += "\n";
+            }
+        }
+
+
+        /*
         string text = string.Format(
             UtilsText.AllText[UtilsText.text_job_warrior_possiblemonsters] +
-            "{0}",
-            possibleMonsters);
-
+            "{0}<br>" +
+            UtilsText.AllText[UtilsText.text_job_warrior_possiblecards] +
+            "{1}",
+            possibleMonsters,
+            possibleCards);
+        */
 
         TooltipManagerData tooltipData = new TooltipManagerData();
-        tooltipData.idTooltip = UITooltipManager.ID_SHOW_TEXT;
-        tooltipData.text = text;
+        tooltipData.idTooltip = UITooltipManager.ID_SHOW_MAPINFO;
+        tooltipData.possibleEnemies = possibleMonsters;
+        tooltipData.possibleCards = possibleCards;
         UITooltipManager.Instance.Show(tooltipData, tooltipPosition.position, true, 35f);
     }
 

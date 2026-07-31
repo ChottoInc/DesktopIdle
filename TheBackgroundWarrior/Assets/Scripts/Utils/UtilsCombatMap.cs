@@ -4,12 +4,14 @@ public static class UtilsCombatMap
 {
     private static CombatMapSO[] maps;
     private static MapToEnemiesSO[] mapEnemies;
+    private static MapToCardsSO[] mapCards;
 
 
     public static void Initialize()
     {
         maps = LoadMaps();
         mapEnemies = LoadMapEnemies();
+        mapCards = LoadMapCards();
     }
 
     private static CombatMapSO[] LoadMaps()
@@ -61,6 +63,39 @@ public static class UtilsCombatMap
         foreach(var possibleEnemy in mapEnemySO.PossibleEnemies)
         {
             if (possibleEnemy.value.Id == idEnemy)
+                return true;
+        }
+        return false;
+    }
+
+
+
+    private static MapToCardsSO[] LoadMapCards()
+    {
+        return Resources.LoadAll<MapToCardsSO>("Data/MapToCards");
+    }
+
+
+    public static MapToCardsSO[] GetAllMapCards()
+    {
+        return mapCards;
+    }
+
+    public static MapToCardsSO GetCardsByMap(int id)
+    {
+        foreach (var mapCard in mapCards)
+        {
+            if (mapCard.MapSO.IdMap == id)
+                return mapCard;
+        }
+        return null;
+    }
+
+    public static bool IsCardsInMap(int idCard, MapToCardsSO mapCardsSO)
+    {
+        foreach (var possibleCard in mapCardsSO.PossibleCards)
+        {
+            if (possibleCard.value.Id == idCard)
                 return true;
         }
         return false;

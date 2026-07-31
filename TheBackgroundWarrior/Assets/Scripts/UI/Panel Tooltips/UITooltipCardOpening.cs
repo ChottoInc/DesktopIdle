@@ -17,19 +17,19 @@ public class UITooltipCardOpening : UITooltipBase
 
     
 
-    public void Show(List<CardSO> cards, bool fade = false)
+    public void Show(TooltipManagerData data, Vector2 position, bool fade = false)
     {
         if (Time.timeScale == 1f) Time.timeScale = 0f;
 
         // clear previuos list
         if (this.cards != null) this.cards.Clear();
 
-        this.cards = cards;
+        this.cards = data.openingCards;
 
         // populate list cards
         Setup();
 
-        Appear(fade);
+        Appear(data, fade, position);
 
         RefreshTexts();
     }

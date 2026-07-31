@@ -50,8 +50,6 @@ public class UITooltipBuff : MonoBehaviour
 
     public void Show(bool fade = false)
     {
-        if (!SettingsManager.Instance.AreTooltipsOn) return;
-
         _buffObjects = ClearList(_buffObjects);
 
         FillRequirements();

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06aaca5f792c20845aca9190e0568559, type: 3}
+  m_Name: MapToCardsData_SequoiaForest
+  m_EditorClassIdentifier: 
+  mapSO: {fileID: 11400000, guid: 726058c0cf233fa45900427a9b5721cc, type: 2}
+  _possibleCards:
+  - value: {fileID: 11400000, guid: 6726ca3943916cd429c3b82918a14ba3, type: 2}
+    chanches: 25
+  - value: {fileID: 11400000, guid: 8e02b41a18c267e4f9cb568c77540ccd, type: 2}
+    chanches: 20
+  - value: {fileID: 11400000, guid: 393f0d1db16bbeb4dbdff7c60e2b3a79, type: 2}
+    chanches: 15
+  - value: {fileID: 11400000, guid: afcc7aa754ccb724497fdfd0baa972a0, type: 2}
+    chanches: 15
+  - value: {fileID: 11400000, guid: f26099148c6b3af46ac860e66cdcd0ee, type: 2}
+    chanches: 10
+  - value: {fileID: 11400000, guid: f7ae222bba9bac745ab01530be9fb02b, type: 2}
+    chanches: 10
+  - value: {fileID: 11400000, guid: e933b00c20805e94bbc85eb64b422033, type: 2}
+    chanches: 5

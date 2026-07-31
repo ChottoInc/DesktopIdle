@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06aaca5f792c20845aca9190e0568559, type: 3}
+  m_Name: MapToCardsData_Mountains
+  m_EditorClassIdentifier: 
+  mapSO: {fileID: 11400000, guid: d2923e66192671d4b820e4d0df46e476, type: 2}
+  _possibleCards:
+  - value: {fileID: 11400000, guid: 4418626aa03d299419fb0c9a2a0c9d8b, type: 2}
+    chanches: 25
+  - value: {fileID: 11400000, guid: 6726ca3943916cd429c3b82918a14ba3, type: 2}
+    chanches: 20
+  - value: {fileID: 11400000, guid: 0fd6aee620a82754993d897c534c08a3, type: 2}
+    chanches: 15
+  - value: {fileID: 11400000, guid: 04959276365eaba43bbb8c91f0ad15ea, type: 2}
+    chanches: 15
+  - value: {fileID: 11400000, guid: bab4c9baf64083d41af437f8c2193ba3, type: 2}
+    chanches: 10
+  - value: {fileID: 11400000, guid: 30a82cf763489294dadeef7786ae8146, type: 2}
+    chanches: 10
+  - value: {fileID: 11400000, guid: 16316091c839ed046a0ea31f1f1467b6, type: 2}
+    chanches: 5

@@ -1029,6 +1029,7 @@ MonoBehaviour:
     chanches: 15
   - value: {fileID: 11400000, guid: 65818a57813af664eb197d1577a6426b, type: 2}
     chanches: 5
+  _mapCards: {fileID: 11400000, guid: 53a85ff7b2abd834093da1cf048ca379, type: 2}
   textStage: {fileID: 695338987}
 --- !u!114 &695338987 stripped
 MonoBehaviour:
@@ -2913,6 +2914,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 415015960325915086, guid: 9cd320b08c35d364ba88c4826e13a4e3, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427024044375098037, guid: 9cd320b08c35d364ba88c4826e13a4e3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427024044375098037, guid: 9cd320b08c35d364ba88c4826e13a4e3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 427024044375098037, guid: 9cd320b08c35d364ba88c4826e13a4e3, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 466894819182476478, guid: 9cd320b08c35d364ba88c4826e13a4e3, type: 3}

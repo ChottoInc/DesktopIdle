@@ -281,6 +281,7 @@ public static class UtilsText
 
     public const string text_job_warrior_mapstage = "text_job_warrior_mapstage";
     public const string text_job_warrior_possiblemonsters = "text_job_warrior_possiblemonsters";
+    public const string text_job_warrior_possiblecards = "text_job_warrior_possiblecards";
 
 
     public const string text_job_miner_weapon_currentlevel = "text_job_miner_weapon_currentlevel";
@@ -1248,6 +1249,7 @@ public static class UtilsText
 
             { text_job_warrior_mapstage, "Stage: {0}/{1}" },
             { text_job_warrior_possiblemonsters, "Possible monsters:<br>" },
+            { text_job_warrior_possiblecards, "Possible cards:<br>" },
 
 
             { text_job_miner_weapon_currentlevel, "Lv. {0}" },

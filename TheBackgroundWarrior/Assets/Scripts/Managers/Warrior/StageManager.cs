@@ -18,7 +18,7 @@ public class StageManager : MonoBehaviour
     public bool FinishedStartingEnemies => finishedStartingEnemies;
 
     [Header("Drops")]
-    [SerializeField] UtilsGeneral.GeneralChances<CardSO>[] possibleCards;
+    [SerializeField] MapToCardsSO _mapCards;
 
     [Header("UI")]
     [SerializeField] TMP_Text textStage;
@@ -45,7 +45,7 @@ public class StageManager : MonoBehaviour
 
     // drop utils
 
-    public UtilsGeneral.GeneralChances<CardSO>[] PossibleCards => possibleCards;
+    public UtilsGeneral.GeneralChances<CardSO>[] PossibleCards => /*possibleCards;*/ _mapCards.PossibleCards;
 
 
 

@@ -9,6 +9,7 @@ public class UITooltipManager : MonoBehaviour
     public const int ID_SHOW_YESNO = 2;
     public const int ID_SHOW_CARDOPENING = 3;
     public const int ID_SHOW_BUFFS = 4;
+    public const int ID_SHOW_MAPINFO = 5;
 
 
     [SerializeField] Transform centerPoint;
@@ -19,6 +20,7 @@ public class UITooltipManager : MonoBehaviour
     [SerializeField] UITooltipYesNo tooltipYesNo;
     [SerializeField] UITooltipCardOpening tooltipCardOpening;
     [SerializeField] UITooltipBuff tooltipBuff;
+    [SerializeField] UITooltipMapInfo tooltipMapInfo;
 
 
 
@@ -59,8 +61,9 @@ public class UITooltipManager : MonoBehaviour
         {
             case ID_SHOW_TEXT: tooltipName.Show(tooltipData.text, position, fade, fontMaxSize); break;
             case ID_SHOW_CARD: tooltipCard.Show(tooltipData.cardSO, fade); break;
-            case ID_SHOW_CARDOPENING: tooltipCardOpening.Show(tooltipData.openingCards, fade); break;
+            case ID_SHOW_CARDOPENING: tooltipCardOpening.Show(tooltipData, position, fade); break;
             case ID_SHOW_BUFFS: tooltipBuff.Show(fade); break;
+            case ID_SHOW_MAPINFO: tooltipMapInfo.Appear(tooltipData, fade, position); break;
         }
     }
 
@@ -78,6 +81,7 @@ public class UITooltipManager : MonoBehaviour
             case ID_SHOW_CARD: tooltipCard.Hide(fade); break;
             case ID_SHOW_CARDOPENING: tooltipCardOpening.Hide(fade); break;
             case ID_SHOW_BUFFS: tooltipBuff.Hide(fade); break;
+            case ID_SHOW_MAPINFO: tooltipMapInfo.Disappear(fade); break;
         }
     }
 }
@@ -94,4 +98,8 @@ public struct TooltipManagerData
 
     // tooltip card opening
     public List<CardSO> openingCards;
+
+    // tooltip map info
+    public string possibleEnemies;
+    public string possibleCards;
 }

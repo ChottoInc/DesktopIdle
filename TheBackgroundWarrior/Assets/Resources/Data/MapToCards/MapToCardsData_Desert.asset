@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06aaca5f792c20845aca9190e0568559, type: 3}
+  m_Name: MapToCardsData_Desert
+  m_EditorClassIdentifier: 
+  mapSO: {fileID: 11400000, guid: db68f68b3a2772d47886de7afcbab375, type: 2}
+  _possibleCards:
+  - value: {fileID: 11400000, guid: c43308c0b16433b4b93e0803a94098ac, type: 2}
+    chanches: 25
+  - value: {fileID: 11400000, guid: ce24c9ffae0b86e48942d1d5b910e61b, type: 2}
+    chanches: 25
+  - value: {fileID: 11400000, guid: 03d9a01bd65b1c34081a5c3525997150, type: 2}
+    chanches: 15
+  - value: {fileID: 11400000, guid: 236fba516d7457a46aad587f10b61d22, type: 2}
+    chanches: 15
+  - value: {fileID: 11400000, guid: f55d923ac267cef4793e4e9648d0402e, type: 2}
+    chanches: 10
+  - value: {fileID: 11400000, guid: 16316091c839ed046a0ea31f1f1467b6, type: 2}
+    chanches: 10
