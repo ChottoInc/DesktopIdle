@@ -142,7 +142,44 @@ public static class UtilsGeneral
 
     #endregion
 
-    
+
+    #region SETTINGS
+
+    public enum AutocloseTimerType { MINS5, MINS10, MINS20, MINS30, MINS60, MINS120 }
+
+    public static string GetAutocloseTimerText(AutocloseTimerType timerType)
+    {
+        string text = string.Empty;
+        switch(timerType)
+        {
+            case AutocloseTimerType.MINS5: text += "5 "; break;
+            case AutocloseTimerType.MINS10: text += "10 "; break;
+            case AutocloseTimerType.MINS20: text += "20 "; break;
+            case AutocloseTimerType.MINS30: text += "30 "; break;
+            case AutocloseTimerType.MINS60: text += "60 "; break;
+            case AutocloseTimerType.MINS120: text += "120 "; break;
+        }
+
+        return text + UtilsText.AllText[UtilsText.text_settings_gameplay_option_minutes];
+    }
+
+    public static float GetAutocloseTimerByType(AutocloseTimerType timerType)
+    {
+        switch (timerType)
+        {
+            default:
+            case AutocloseTimerType.MINS5: return 300f;
+            case AutocloseTimerType.MINS10: return 600f;
+            //case AutocloseTimerType.MINS10: return 20f; //  DEBUG
+            case AutocloseTimerType.MINS20: return 1200f;
+            case AutocloseTimerType.MINS30: return 1800f;
+            case AutocloseTimerType.MINS60: return 3600f;
+            case AutocloseTimerType.MINS120: return 7200f;
+        }
+    }
+
+    #endregion
+
 
     #region FILE READING
 

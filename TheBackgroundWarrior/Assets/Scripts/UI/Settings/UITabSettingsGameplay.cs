@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ public class UITabSettingsGameplay : UITabWindow
 
     [Header("HUD")]
     [SerializeField] Toggle toggleInvertedHUD;
+    [SerializeField] Toggle toggleAutocloseHUD;
+    [SerializeField] TMP_Dropdown dropdownMinutes;
 
     [Header("Floating HUD")]
     [SerializeField] Toggle toggleDamage;
@@ -54,6 +57,24 @@ public class UITabSettingsGameplay : UITabWindow
         if (toggleInvertedHUD != null)
             toggleInvertedHUD.SetIsOnWithoutNotify(SettingsManager.Instance.IsInvertedHudOn);
 
+        if (toggleAutocloseHUD != null)
+            toggleAutocloseHUD.SetIsOnWithoutNotify(SettingsManager.Instance.IsAutocloseHudOn);
+
+        dropdownMinutes.ClearOptions();
+        List<TMP_Dropdown.OptionData> listLanguage = new List<TMP_Dropdown.OptionData>()
+        {
+            new TMP_Dropdown.OptionData(UtilsGeneral.GetAutocloseTimerText(UtilsGeneral.AutocloseTimerType.MINS5)),
+            new TMP_Dropdown.OptionData(UtilsGeneral.GetAutocloseTimerText(UtilsGeneral.AutocloseTimerType.MINS10)),
+            new TMP_Dropdown.OptionData(UtilsGeneral.GetAutocloseTimerText(UtilsGeneral.AutocloseTimerType.MINS20)),
+            new TMP_Dropdown.OptionData(UtilsGeneral.GetAutocloseTimerText(UtilsGeneral.AutocloseTimerType.MINS30)),
+            new TMP_Dropdown.OptionData(UtilsGeneral.GetAutocloseTimerText(UtilsGeneral.AutocloseTimerType.MINS60)),
+            new TMP_Dropdown.OptionData(UtilsGeneral.GetAutocloseTimerText(UtilsGeneral.AutocloseTimerType.MINS120)),
+        };
+
+        dropdownMinutes.AddOptions(listLanguage);
+
+        dropdownMinutes.SetValueWithoutNotify((int)SettingsManager.Instance.CurrentAutocloseTimerType);
+
 
         if (toggleDamage != null)
             toggleDamage.SetIsOnWithoutNotify(SettingsManager.Instance.IsDamageOn);
@@ -96,6 +117,17 @@ public class UITabSettingsGameplay : UITabWindow
     {
         AudioManager.Instance.PlayClickUI();
         SettingsManager.Instance.SetIsInvertedHUDOn(isOn);
+    }
+
+    public void OnToggleAutocloseHUD(bool isOn)
+    {
+        AudioManager.Instance.PlayClickUI();
+        SettingsManager.Instance.SetIsAutocloseHUDOn(isOn);
+    }
+
+    public void OnAutocloseTimerChange(int index)
+    {
+        SettingsManager.Instance.SetAutocloseTimer((UtilsGeneral.AutocloseTimerType)index);
     }
 
 

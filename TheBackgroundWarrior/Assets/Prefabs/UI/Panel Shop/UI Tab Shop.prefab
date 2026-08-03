@@ -4755,6 +4755,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9056358198910100164}
   - component: {fileID: 678640727285658222}
+  - component: {fileID: 1114125447682547754}
   m_Layer: 5
   m_Name: UI Tab Shop
   m_TagString: Untagged
@@ -4800,6 +4801,18 @@ MonoBehaviour:
   panelRedeem: {fileID: 1034079194095472465}
   buttonDebug: {fileID: 8148873170854449942}
   panelDebug: {fileID: 6261288859278740664}
+--- !u!114 &1114125447682547754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4595149391133033293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609f1c5f533a8d441a6e820d847b7f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4961208366025271323
 GameObject:
   m_ObjectHideFlags: 0
@@ -7210,6 +7223,8 @@ MonoBehaviour:
   _scrollSpeed: 0.2
   _resumeDelay: 2
   _wheelSensitivity: 0.2
+  _text: {fileID: 0}
+  _alignment: 514
 --- !u!1 &8969249460077497445
 GameObject:
   m_ObjectHideFlags: 0

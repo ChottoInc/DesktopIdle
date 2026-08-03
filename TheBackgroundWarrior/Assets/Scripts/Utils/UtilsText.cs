@@ -247,6 +247,9 @@ public static class UtilsText
     public const string text_settings_gameplay_autobattle = "text_settings_gameplay_autobattle";
     public const string text_settings_gameplay_titlehud = "text_settings_gameplay_titlehud";
     public const string text_settings_gameplay_option_invertedhud = "text_settings_gameplay_option_invertedhud";
+    public const string text_settings_gameplay_option_autoclosehud = "text_settings_gameplay_option_autoclosehud";
+    public const string text_settings_gameplay_option_timerautoclose = "text_settings_gameplay_option_timerautoclose";
+    public const string text_settings_gameplay_option_minutes = "text_settings_gameplay_option_minutes";
     public const string text_settings_gameplay_titlefloatinghud = "text_settings_gameplay_titlefloatinghud";
     public const string text_settings_gameplay_option_damage = "text_settings_gameplay_option_damage";
     public const string text_settings_gameplay_option_itemcollected = "text_settings_gameplay_option_itemcollected";
@@ -1215,6 +1218,9 @@ public static class UtilsText
             { text_settings_gameplay_autobattle, "Auto-Battle" },
             { text_settings_gameplay_titlehud, "HUD" },
             { text_settings_gameplay_option_invertedhud, "Inverted HUD" },
+            { text_settings_gameplay_option_autoclosehud, "Autoclose" },
+            { text_settings_gameplay_option_timerautoclose, "Autoclose timer" },
+            { text_settings_gameplay_option_minutes, "minutes" },
             { text_settings_gameplay_titlefloatinghud, "Floating HUD" },
             { text_settings_gameplay_option_damage, "Damage" },
             { text_settings_gameplay_option_itemcollected, "Item Collected" },

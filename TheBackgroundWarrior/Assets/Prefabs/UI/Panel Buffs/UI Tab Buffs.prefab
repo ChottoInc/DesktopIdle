@@ -1004,6 +1004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8881059679963819584}
   - component: {fileID: 1225988206185944227}
+  - component: {fileID: 610469031620990224}
   m_Layer: 5
   m_Name: UI Tab Buffs
   m_TagString: Untagged
@@ -1045,6 +1046,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffPrefab: {fileID: 4889257263546773576, guid: f3d62e90e9b6e8d46907eac89c731a70, type: 3}
   container: {fileID: 1827208252243956888}
+--- !u!114 &610469031620990224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4130989926129094601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609f1c5f533a8d441a6e820d847b7f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4248429348850527075
 GameObject:
   m_ObjectHideFlags: 0

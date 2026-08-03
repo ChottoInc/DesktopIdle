@@ -62,7 +62,7 @@ public class UITabPlayerStatus : UITabWindow
 
     protected void OnPlayerLevelUp()
     {
-        if (!isOpen) return;
+        if (!IsOpen) return;
 
         availablePoints++;
 

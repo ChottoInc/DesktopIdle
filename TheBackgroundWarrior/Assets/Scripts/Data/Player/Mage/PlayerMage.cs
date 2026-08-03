@@ -19,6 +19,9 @@ public class PlayerMage : Player
     [Space(10)]
     [SerializeField] GenericBar barSpell;
 
+    [Space(10)]
+    [SerializeField] GenericBar _barCooldown;
+
     private float _finalCooldownCast;
 
     private SpellData _currentSpell;
@@ -95,6 +98,8 @@ public class PlayerMage : Player
             UpdateCooldownCast();
             _timerCast = _finalCooldownCast;
 
+            _barCooldown.Setup(_finalCooldownCast, 0f);
+
             // update current spell sprite icon
             _imageLearningSpell.gameObject.SetActive(true);
             _imageLearningSpell.sprite = _currentSpell.SpellSO.Sprite;
@@ -121,6 +126,7 @@ public class PlayerMage : Player
         else
         {
             _timerCast -= Time.deltaTime;
+            UpdateCooldowBar();
         }
     }
 
@@ -182,6 +188,11 @@ public class PlayerMage : Player
     private void UpdateSpellBar()
     {
         barSpell.Setup(_currentSpell.RequiredPointsToNextRank, _currentSpell.CurrentLearnPoints);
+    }
+
+    private void UpdateCooldowBar()
+    {
+        _barCooldown.SetCurrentValue(_finalCooldownCast - _timerCast);
     }
 
 

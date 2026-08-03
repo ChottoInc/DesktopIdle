@@ -55,6 +55,8 @@ public class SettingsManager : MonoBehaviour
 
     // -- HUD
     public bool IsInvertedHudOn { get; private set; }
+    public bool IsAutocloseHudOn { get; private set; }
+    public UtilsGeneral.AutocloseTimerType CurrentAutocloseTimerType { get; private set; }
 
     // -- Floating HUD
     public bool IsDamageOn { get; private set; }
@@ -70,6 +72,8 @@ public class SettingsManager : MonoBehaviour
 
 
     public event Action<bool> OnInvertedHUDChange;
+    public event Action<bool> OnAutocloseHUDChange;
+
     public event Action<bool> OnInvertedFishingSpotChange;
     public event Action<bool> OnIsHiddenFishingBarChange;
 
@@ -179,6 +183,8 @@ public class SettingsManager : MonoBehaviour
         SetIsAutoBattle(saveData.isAutoBattleOn, false);
 
         //SetIsInvertedHUDOn(saveData.isInvertedHUDOn, false);
+        SetIsAutocloseHUDOn(saveData.isAutocloseHUDOn, false);
+        SetAutocloseTimer((UtilsGeneral.AutocloseTimerType)saveData.autocloseTimer, false);
 
         SetIsDamageOn(saveData.isDamageOn, false);
         SetIsItemCollectionOn(saveData.isItemCollectionOn, false);
@@ -222,6 +228,8 @@ public class SettingsManager : MonoBehaviour
         SetIsAutoBattle(true, false);
 
         SetIsInvertedHUDOn(false, false);
+        SetIsAutocloseHUDOn(false, false);
+        SetAutocloseTimer(UtilsGeneral.AutocloseTimerType.MINS5, false);
 
         SetIsDamageOn(true, false);
         SetIsItemCollectionOn(true, false);
@@ -335,6 +343,25 @@ public class SettingsManager : MonoBehaviour
     {
         IsInvertedHudOn = isOn;
         OnInvertedHUDChange?.Invoke(isOn);
+
+        if (save)
+            Save();
+    }
+
+    public void SetIsAutocloseHUDOn(bool isOn, bool save = true)
+    {
+        IsAutocloseHudOn = isOn;
+        OnAutocloseHUDChange?.Invoke(isOn);
+
+        if (save)
+            Save();
+    }
+
+    public void SetAutocloseTimer(UtilsGeneral.AutocloseTimerType timerType, bool save = true)
+    {
+        CurrentAutocloseTimerType = timerType;
+
+        //OnLanguageChange?.Invoke();
 
         if (save)
             Save();

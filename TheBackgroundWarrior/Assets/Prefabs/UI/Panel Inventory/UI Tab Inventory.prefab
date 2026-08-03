@@ -432,6 +432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6790750873001112200}
   - component: {fileID: 8171079448344253253}
+  - component: {fileID: 8438506236185563744}
   m_Layer: 5
   m_Name: UI Tab Inventory
   m_TagString: Untagged
@@ -484,6 +485,18 @@ MonoBehaviour:
   panelItems: {fileID: 7050028353446223105}
   panelConvert: {fileID: 7917133186258548956}
   panelConvertList: {fileID: 983268923300087753}
+--- !u!114 &8438506236185563744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669897114105389845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609f1c5f533a8d441a6e820d847b7f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &791496932529718461
 GameObject:
   m_ObjectHideFlags: 0

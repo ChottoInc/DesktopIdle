@@ -3,20 +3,20 @@ using UnityEngine;
 
 public class UITabWindow : MonoBehaviour
 {
-    protected bool isOpen;
+    public bool IsOpen { get; private set; }
 
     public event Action OnTabClose;
 
     public virtual void Open()
     {
-        isOpen = true;
+        IsOpen = true;
 
         gameObject.SetActive(true);
     }
 
     public virtual void Close()
     {
-        isOpen = false;
+        IsOpen = false;
 
         gameObject.SetActive(false);
 
