@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class UIPanelBaitFisher : MonoBehaviour
 {
     [SerializeField] GameObject _content;
-    [SerializeField] Image _imageBait;
+    //[SerializeField] Image _imageBait;
     [SerializeField] Image _imageDayMoment;
 
     [Header("Sprites")]

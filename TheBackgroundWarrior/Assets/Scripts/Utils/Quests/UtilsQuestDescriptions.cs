@@ -11,6 +11,7 @@ public static class UtilsQuestDescriptions
             default: return "";
             case QuestObjectiveType.Kill: return HandleKillDescription(data);
             case QuestObjectiveType.Obtain: return HandleObtainItemDescription(data);
+            case QuestObjectiveType.Craft: return HandleCraftItemDescription(data);
             case QuestObjectiveType.LevelUp: return HandleLevelUpStatDescription(data);
             case QuestObjectiveType.UnlockMap: return HandleUnlockMapDescription(data);
             case QuestObjectiveType.Befriend: return HandleBefriendDescription(data);
@@ -72,6 +73,21 @@ public static class UtilsQuestDescriptions
             }
 
             return string.Format(AllText[text_quest_desc_obtain_nonspecific], data.amountObtain, itemType);
+        }
+    }
+
+    private static string HandleCraftItemDescription(QuestData data)
+    {
+        bool plural = data.amountObtain > 1;
+        if (data.questObtainSpecific)
+        {
+            ItemSO itemSO = UtilsItem.GetItemById(data.itemId);
+            string name = plural ? itemSO.ItemNamePlural : itemSO.ItemName;
+            return string.Format(AllText[text_quest_desc_craft_specific], data.amountObtain, name);
+        }
+        else
+        {
+            return string.Format(AllText[text_quest_desc_craft_nonspecific], data.amountObtain);
         }
     }
 

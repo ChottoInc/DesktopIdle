@@ -4,7 +4,9 @@ using static UtilsText;
 
 public static class UtilsPlayer
 {
-    public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher, Farmer, Mage, Alchemist }
+    public enum AdvanceStatType { None, Flat, Multiplier }
+
+    public enum PlayerJob { None, Warrior, Miner, Blacksmith, Fisher, Farmer, Mage, Alchemist, Necromancer }
 
     private static PlayerJobSO[] jobs;
 
@@ -51,6 +53,13 @@ public static class UtilsPlayer
     public const int ID_ALCHEMIST_RESEARCH = 72;        // every x levels unlock new recipe
     public const int ID_ALCHEMIST_STABILITY = 73;       // reduce failed crafts
 
+    public const int ID_NECROMANCER_APTITUDE = 80;      // every x levels increase couple fighting necromancer
+    public const int ID_NECROMANCER_SUMMON = 81;        // increase spawn speed
+    public const int ID_NECROMANCER_MIGHT = 82;         // increase minions stength
+    public const int ID_NECROMANCER_LIFESPAN = 83;      // increase life duration
+    public const int ID_NECROMANCER_HORDE = 84;         // every x levels increase horde limit by 1
+    public const int ID_NECROMANCER_LUCK = 85;          // increase spawn chance of big minion - increase experience gain necromancer
+
 
     public static void Initialize()
     {
@@ -72,6 +81,7 @@ public static class UtilsPlayer
         UtilsFarmer.Initialize();
         UtilsMage.Initialize();
         UtilsAlchemist.Initialize();
+        UtilsNecromancer.Initialize();
 
         
     }
@@ -214,6 +224,59 @@ public static class UtilsPlayer
             case ID_ALCHEMIST_YIELD: return PlayerManager.Instance.PlayerAlchemistData.LevelStatYield;
             case ID_ALCHEMIST_RESEARCH: return PlayerManager.Instance.PlayerAlchemistData.LevelStatResearch;
             case ID_ALCHEMIST_STABILITY: return PlayerManager.Instance.PlayerAlchemistData.LevelStatStability;
+        }
+    }
+
+    public static float GetCurrentStatById(int id)
+    {
+        switch (id)
+        {
+            default: Debug.Log("stat id not correct. " + id); return -1;
+
+            // FIGHT DATA
+            case ID_WARRIOR_MAXHP: return PlayerManager.Instance.PlayerFightData.MaxHp;
+            case ID_WARRIOR_ATK: return PlayerManager.Instance.PlayerFightData.CurrentAtk;
+            case ID_WARRIOR_DEF: return PlayerManager.Instance.PlayerFightData.CurrentDef;
+            case ID_WARRIOR_ATKSPD: return PlayerManager.Instance.PlayerFightData.CurrentAtkSpd;
+            case ID_WARRIOR_CRITRATE: return PlayerManager.Instance.PlayerFightData.CurrentCritRate;
+            case ID_WARRIOR_CRITDMG: return PlayerManager.Instance.PlayerFightData.CurrentCritDmg;
+            case ID_WARRIOR_LUCK: return PlayerManager.Instance.PlayerFightData.CurrentLuck;
+
+            // MINER DATA
+            case ID_MINER_POWER: return PlayerManager.Instance.PlayerMinerData.CurrentPower;
+            case ID_MINER_SMASHSPEED: return PlayerManager.Instance.PlayerMinerData.CurrentSmashSpeed;
+            case ID_MINER_SHOCKWAVE: return PlayerManager.Instance.PlayerMinerData.CurrentShockwave;
+            case ID_MINER_LUCK: return PlayerManager.Instance.PlayerMinerData.CurrentLuck;
+
+            // BLACKSMITH DATA
+            case ID_BLACKSMITH_CRAFTSPEED: return PlayerManager.Instance.PlayerBlacksmithData.CurrentCraftSpeed;
+            case ID_BLACKSMITH_EFFICIENCY: return PlayerManager.Instance.PlayerBlacksmithData.CurrentEfficiency;
+            case ID_BLACKSMITH_LUCK: return PlayerManager.Instance.PlayerBlacksmithData.CurrentLuck;
+            case ID_BLACKSMITH_METALLURGY: return PlayerManager.Instance.PlayerBlacksmithData.CurrentMetallurgy;
+
+            // FISHER DATA
+            case ID_FISHER_CALMNESS: return PlayerManager.Instance.PlayerFisherData.CurrentCalmness;
+            case ID_FISHER_REFLEX: return PlayerManager.Instance.PlayerFisherData.CurrentReflex;
+            case ID_FISHER_KNOWLEDGE: return PlayerManager.Instance.PlayerFisherData.CurrentKnowledge;
+            case ID_FISHER_LUCK: return PlayerManager.Instance.PlayerFisherData.CurrentLuck;
+
+            // FARMER DATA
+            case ID_FARMER_GREENTHUMB: return PlayerManager.Instance.PlayerFarmerData.CurrentGreenthumb;
+            case ID_FARMER_AGRONOMY: return PlayerManager.Instance.PlayerFarmerData.CurrentAgronomy;
+            case ID_FARMER_KINDNESS: return PlayerManager.Instance.PlayerFarmerData.CurrentKindness;
+            case ID_FARMER_LUCK: return PlayerManager.Instance.PlayerFarmerData.CurrentLuck;
+
+            // MAGE DATA
+            case ID_MAGE_INSIGHT: return PlayerManager.Instance.PlayerMageData.CurrentInsight;
+            case ID_MAGE_CASTSPEED: return PlayerManager.Instance.PlayerMageData.CurrentCastSpeed;
+            case ID_MAGE_SCHOLAR: return PlayerManager.Instance.PlayerMageData.CurrentScholar;
+            case ID_MAGE_PROFICIENCY: return PlayerManager.Instance.PlayerMageData.CurrentProficiency;
+
+            // ALCHEMIST DATA
+            case ID_ALCHEMIST_ROUTINE: return PlayerManager.Instance.PlayerAlchemistData.CurrentRoutine;
+            case ID_ALCHEMIST_YIELD: return PlayerManager.Instance.PlayerAlchemistData.CurrentYield;
+            case ID_ALCHEMIST_RESEARCH: return PlayerManager.Instance.PlayerAlchemistData.CurrentResearch;
+            case ID_ALCHEMIST_STABILITY: return PlayerManager.Instance.PlayerAlchemistData.CurrentStability;
         }
     }
 
@@ -374,5 +437,66 @@ public static class UtilsPlayer
             case ID_ALCHEMIST_RESEARCH: return AllText[text_name_alchemist_stat_research];
             case ID_ALCHEMIST_STABILITY: return AllText[text_name_alchemist_stat_stability];
         }
+    }
+
+    public static AdvanceStatType GetAdvanceStatType(int id)
+    {
+        switch (id)
+        {
+            default: Debug.Log("Set advance type for " + id); return AdvanceStatType.None;
+            case ID_WARRIOR_MAXHP: return AdvanceStatType.Flat;
+            case ID_WARRIOR_ATK: return AdvanceStatType.Flat;
+            case ID_WARRIOR_DEF: return AdvanceStatType.Flat;
+            case ID_WARRIOR_ATKSPD: return AdvanceStatType.Flat;
+            case ID_WARRIOR_CRITRATE: return AdvanceStatType.Multiplier;
+            case ID_WARRIOR_CRITDMG: return AdvanceStatType.Multiplier;
+            case ID_WARRIOR_LUCK: return AdvanceStatType.Multiplier;
+
+            case ID_MINER_POWER: return AdvanceStatType.Flat;
+            case ID_MINER_SMASHSPEED: return AdvanceStatType.Flat;
+            case ID_MINER_SHOCKWAVE: return AdvanceStatType.Multiplier;
+            case ID_MINER_LUCK: return AdvanceStatType.Multiplier;
+
+            case ID_BLACKSMITH_CRAFTSPEED: return AdvanceStatType.Flat;
+            case ID_BLACKSMITH_EFFICIENCY: return AdvanceStatType.Multiplier;
+            case ID_BLACKSMITH_LUCK: return AdvanceStatType.Multiplier;
+            case ID_BLACKSMITH_METALLURGY: return AdvanceStatType.Multiplier;
+
+            case ID_FISHER_CALMNESS: return AdvanceStatType.Multiplier;
+            case ID_FISHER_REFLEX: return AdvanceStatType.Multiplier;
+            case ID_FISHER_KNOWLEDGE: return AdvanceStatType.Multiplier;
+            case ID_FISHER_LUCK: return AdvanceStatType.Multiplier;
+
+            case ID_FARMER_GREENTHUMB: return AdvanceStatType.Multiplier;
+            case ID_FARMER_AGRONOMY: return AdvanceStatType.Flat;
+            case ID_FARMER_KINDNESS: return AdvanceStatType.Multiplier;
+            case ID_FARMER_LUCK: return AdvanceStatType.Multiplier;
+
+            case ID_MAGE_INSIGHT: return AdvanceStatType.Multiplier;
+            case ID_MAGE_CASTSPEED: return AdvanceStatType.Flat;
+            case ID_MAGE_SCHOLAR: return AdvanceStatType.Multiplier;
+            case ID_MAGE_PROFICIENCY: return AdvanceStatType.Multiplier;
+
+            case ID_ALCHEMIST_ROUTINE: return AdvanceStatType.Multiplier;
+            case ID_ALCHEMIST_YIELD: return AdvanceStatType.Multiplier;
+            case ID_ALCHEMIST_RESEARCH: return AdvanceStatType.Flat;
+            case ID_ALCHEMIST_STABILITY: return AdvanceStatType.Multiplier;
+        }
+    }
+
+    public static string GetAdvancedStatText(float stat, int id)
+    {
+        string res = string.Empty;
+
+        var type = GetAdvanceStatType(id);
+
+        switch(type)
+        {
+            case AdvanceStatType.None: return res;
+            case AdvanceStatType.Flat: res = stat.ToString(); break;
+            case AdvanceStatType.Multiplier: res = (stat * 100f).ToString() + "%"; break;
+        }
+
+        return res;
     }
 }

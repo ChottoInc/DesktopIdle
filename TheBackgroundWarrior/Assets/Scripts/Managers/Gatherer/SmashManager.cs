@@ -16,9 +16,6 @@ public class SmashManager : MonoBehaviour
     private Rock currentRock;
 
 
-    private const int ID_GOLD_ORE = 4;
-
-
 
     public static SmashManager Instance { get; private set; }
 
@@ -204,7 +201,7 @@ public class SmashManager : MonoBehaviour
 
 
                 // Check for Blacksmith job unlock
-                if(randLoot.Id == ID_GOLD_ORE)
+                if(randLoot.Id == UtilsItem.ID_GOLD_ORE)
                 {
                     if (!PlayerManager.Instance.PlayerJobsData.IsBlacksmithUnlocked)
                     {

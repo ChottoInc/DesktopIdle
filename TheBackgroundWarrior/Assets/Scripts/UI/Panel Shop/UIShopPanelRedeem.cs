@@ -15,23 +15,30 @@ public class UIShopPanelRedeem : MonoBehaviour
     private const string MAGE_STAT_CODE = "05";
     private const string ALCHEMIST_STAT_CODE = "06";
 
-    private const string ITEM_STAT_CODE = "80";
+    private const string ITEM_ADD_CODE = "80";
 
     // ------- THREE FOUR ------ //
     private const string LEVEL_CODE = "00";
     private const string AVAILABLE_POINTS_CODE = "01";
 
-    private const string COPPERORE_POINTS_CODE = "00";
-    private const string IRONORE_POINTS_CODE = "01";
-    private const string BRONZEORE_POINTS_CODE = "02";
-    private const string SILVERORE_POINTS_CODE = "03";
-    private const string GOLDORE_POINTS_CODE = "04";
+    private const string COPPERORE_CODE = "00";
+    private const string IRONORE_CODE = "01";
+    private const string BRONZEORE_CODE = "02";
+    private const string SILVERORE_CODE = "03";
+    private const string GOLDORE_CODE = "04";
 
-    private const string COPPER_POINTS_CODE = "30";
-    private const string IRON_POINTS_CODE = "31";
-    private const string BRONZE_POINTS_CODE = "32";
-    private const string SILVER_POINTS_CODE = "33";
-    private const string GOLD_POINTS_CODE = "34";
+    private const string COPPER_CODE = "30";
+    private const string IRON_CODE = "31";
+    private const string BRONZE_CODE = "32";
+    private const string SILVER_CODE = "33";
+    private const string GOLD_CODE = "34";
+
+    private const string CARD_MONSTERSTAMPEDE_CODE = "80";
+    private const string CARD_ERISPAGE1_CODE = "83";
+    private const string CARD_ERISPAGE2_CODE = "84";
+    private const string CARD_ERISPAGE3_CODE = "85";
+    private const string CARD_ERISPAGE4_CODE = "86";
+    private const string CARD_ERISPAGE5_CODE = "87";
 
     private const string FISH_GROUP_POINTS_CODE = "FH";
 
@@ -84,7 +91,7 @@ public class UIShopPanelRedeem : MonoBehaviour
             case ALCHEMIST_STAT_CODE:
                 return HandleStatRedeem(code);
 
-            case ITEM_STAT_CODE:
+            case ITEM_ADD_CODE:
                 return HandleItemRedeem(code);
         }
 
@@ -156,17 +163,29 @@ public class UIShopPanelRedeem : MonoBehaviour
             switch (threefour)
             {
                 default: return false;
-                case COPPERORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(0, quantity); break;
-                case IRONORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(1, quantity); break;
-                case BRONZEORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(2, quantity); break;
-                case SILVERORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(3, quantity); break;
-                case GOLDORE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(4, quantity); break;
+                case COPPERORE_CODE: PlayerManager.Instance.Inventory.AddItem(0, quantity); break;
+                case IRONORE_CODE: PlayerManager.Instance.Inventory.AddItem(1, quantity); break;
+                case BRONZEORE_CODE: PlayerManager.Instance.Inventory.AddItem(2, quantity); break;
+                case SILVERORE_CODE: PlayerManager.Instance.Inventory.AddItem(3, quantity); break;
+                case GOLDORE_CODE: PlayerManager.Instance.Inventory.AddItem(4, quantity); break;
 
-                case COPPER_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(150, quantity); break;
-                case IRON_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(151, quantity); break;
-                case BRONZE_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(152, quantity); break;
-                case SILVER_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(153, quantity); break;
-                case GOLD_POINTS_CODE: PlayerManager.Instance.Inventory.AddItem(154, quantity); break;
+                case COPPER_CODE: PlayerManager.Instance.Inventory.AddItem(150, quantity); break;
+                case IRON_CODE: PlayerManager.Instance.Inventory.AddItem(151, quantity); break;
+                case BRONZE_CODE: PlayerManager.Instance.Inventory.AddItem(152, quantity); break;
+                case SILVER_CODE: PlayerManager.Instance.Inventory.AddItem(153, quantity); break;
+                case GOLD_CODE: PlayerManager.Instance.Inventory.AddItem(154, quantity); break;
+
+                case CARD_MONSTERSTAMPEDE_CODE: PlayerManager.Instance.Inventory.AddItem(80, quantity);
+                    if (!PlayerManager.Instance.PlayerJobsData.IsMageUnlocked)
+                    {
+                        PlayerManager.Instance.PlayerJobsData.AddAvailableJob(UtilsPlayer.PlayerJob.Mage);
+                    }
+                    break;
+                case CARD_ERISPAGE1_CODE: PlayerManager.Instance.Inventory.AddItem(83, quantity); break;
+                case CARD_ERISPAGE2_CODE: PlayerManager.Instance.Inventory.AddItem(84, quantity); break;
+                case CARD_ERISPAGE3_CODE: PlayerManager.Instance.Inventory.AddItem(85, quantity); break;
+                case CARD_ERISPAGE4_CODE: PlayerManager.Instance.Inventory.AddItem(86, quantity); break;
+                case CARD_ERISPAGE5_CODE: PlayerManager.Instance.Inventory.AddItem(87, quantity); break;
             }
         }
         else

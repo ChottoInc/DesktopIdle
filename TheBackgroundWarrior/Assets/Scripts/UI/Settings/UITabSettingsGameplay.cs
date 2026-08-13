@@ -13,6 +13,7 @@ public class UITabSettingsGameplay : UITabWindow
     [SerializeField] Toggle toggleInvertedHUD;
     [SerializeField] Toggle toggleAutocloseHUD;
     [SerializeField] TMP_Dropdown dropdownMinutes;
+    [SerializeField] Toggle toggleAdvancedStats;
 
     [Header("Floating HUD")]
     [SerializeField] Toggle toggleDamage;
@@ -76,6 +77,11 @@ public class UITabSettingsGameplay : UITabWindow
         dropdownMinutes.SetValueWithoutNotify((int)SettingsManager.Instance.CurrentAutocloseTimerType);
 
 
+        if (toggleAdvancedStats != null)
+            toggleAdvancedStats.SetIsOnWithoutNotify(SettingsManager.Instance.IsShowAdvancedStatOn);
+
+
+
         if (toggleDamage != null)
             toggleDamage.SetIsOnWithoutNotify(SettingsManager.Instance.IsDamageOn);
 
@@ -128,6 +134,12 @@ public class UITabSettingsGameplay : UITabWindow
     public void OnAutocloseTimerChange(int index)
     {
         SettingsManager.Instance.SetAutocloseTimer((UtilsGeneral.AutocloseTimerType)index);
+    }
+
+    public void OnToggleShowAdvancedStats(bool isOn)
+    {
+        AudioManager.Instance.PlayClickUI();
+        SettingsManager.Instance.SetIsShowAdvancedStatsOn(isOn);
     }
 
 

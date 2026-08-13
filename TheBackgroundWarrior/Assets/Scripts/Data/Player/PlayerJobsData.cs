@@ -78,7 +78,8 @@ public class PlayerJobsData
 
     public void AddAvailableJob(UtilsPlayer.PlayerJob job)
     {
-        availableJobs.Add(job);
+        if(!availableJobs.Contains(job))
+            availableJobs.Add(job);
 
         switch(job)
         {

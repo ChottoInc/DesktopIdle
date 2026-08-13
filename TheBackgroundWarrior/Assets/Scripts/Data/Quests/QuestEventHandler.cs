@@ -123,7 +123,7 @@ public class QuestEventHandler
 
     private bool NeedUpdateObtainProgress(QuestData data, int itemId)
     {
-        if (data.questObjectiveType == QuestObjectiveType.Obtain)
+        if (data.questObjectiveType == QuestObjectiveType.Obtain || data.questObjectiveType == QuestObjectiveType.Craft)
         {
             // check specific
             if (data.questObtainSpecific)

@@ -215,6 +215,9 @@ public static class UtilsText
     public const string text_quest_desc_obtain_specific = "text_quest_desc_obtain_specific";
     public const string text_quest_desc_obtain_nonspecific = "text_quest_desc_obtain_nonspecific";
 
+    public const string text_quest_desc_craft_specific = "text_quest_desc_craft_specific";
+    public const string text_quest_desc_craft_nonspecific = "text_quest_desc_craft_nonspecific";
+
     public const string text_quest_desc_levelup_specific_once = "text_quest_desc_levelup_specific_once";
     public const string text_quest_desc_levelup_specific_multiple = "text_quest_desc_levelup_specific_multiple";
     public const string text_quest_desc_levelup_nonspecific_once = "text_quest_desc_levelup_nonspecific_once";
@@ -250,6 +253,7 @@ public static class UtilsText
     public const string text_settings_gameplay_option_autoclosehud = "text_settings_gameplay_option_autoclosehud";
     public const string text_settings_gameplay_option_timerautoclose = "text_settings_gameplay_option_timerautoclose";
     public const string text_settings_gameplay_option_minutes = "text_settings_gameplay_option_minutes";
+    public const string text_settings_gameplay_option_showadvancedstats = "text_settings_gameplay_option_showadvancedstats";
     public const string text_settings_gameplay_titlefloatinghud = "text_settings_gameplay_titlefloatinghud";
     public const string text_settings_gameplay_option_damage = "text_settings_gameplay_option_damage";
     public const string text_settings_gameplay_option_itemcollected = "text_settings_gameplay_option_itemcollected";
@@ -281,6 +285,7 @@ public static class UtilsText
     public const string text_job_blacksmith_unlockconditions = "text_job_blacksmith_unlockconditions";
     public const string text_job_mage_unlockconditions = "text_job_mage_unlockconditions";
     public const string text_job_alchemist_unlockconditions = "text_job_alchemist_unlockconditions";
+    public const string text_job_necromancer_unlockconditions = "text_job_necromancer_unlockconditions";
 
     public const string text_job_warrior_mapstage = "text_job_warrior_mapstage";
     public const string text_job_warrior_possiblemonsters = "text_job_warrior_possiblemonsters";
@@ -379,6 +384,7 @@ public static class UtilsText
     public const string text_button_help_filter_farmer = "text_button_help_filter_farmer";
     public const string text_button_help_filter_mage = "text_button_help_filter_mage";
     public const string text_button_help_filter_alchemist = "text_button_help_filter_alchemist";
+    public const string text_button_help_filter_necromancer = "text_button_help_filter_necromancer";
 
     public const string text_button_inventory_filter_all = "text_button_inventory_filter_all";
     public const string text_button_inventory_filter_ores = "text_button_inventory_filter_ores";
@@ -1184,6 +1190,9 @@ public static class UtilsText
             { text_quest_desc_obtain_specific, "Obtain {0} {1}" },
             { text_quest_desc_obtain_nonspecific, "Obtain {0} {1}" },
 
+            { text_quest_desc_craft_specific, "Craft {0} {1}" },
+            { text_quest_desc_craft_nonspecific, "Craft {0} Concoctions" },
+
             { text_quest_desc_levelup_specific_once, "Level up {0} {1} time" },
             { text_quest_desc_levelup_specific_multiple, "Level up {0} {1} times" },
             { text_quest_desc_levelup_nonspecific_once, "Level up any stat {0} time" },
@@ -1221,6 +1230,7 @@ public static class UtilsText
             { text_settings_gameplay_option_autoclosehud, "Autoclose" },
             { text_settings_gameplay_option_timerautoclose, "Autoclose timer" },
             { text_settings_gameplay_option_minutes, "minutes" },
+            { text_settings_gameplay_option_showadvancedstats, "Show advanced stats" },
             { text_settings_gameplay_titlefloatinghud, "Floating HUD" },
             { text_settings_gameplay_option_damage, "Damage" },
             { text_settings_gameplay_option_itemcollected, "Item Collected" },
@@ -1252,6 +1262,7 @@ public static class UtilsText
             { text_job_blacksmith_unlockconditions, "Collect at least 1 gold ore." },
             { text_job_mage_unlockconditions, "Find the Ancient Tome card" },
             { text_job_alchemist_unlockconditions, "Find the Debug mode code" },
+            { text_job_necromancer_unlockconditions, "Coming soon" },
 
             { text_job_warrior_mapstage, "Stage: {0}/{1}" },
             { text_job_warrior_possiblemonsters, "Possible monsters:<br>" },
@@ -1351,6 +1362,7 @@ public static class UtilsText
             { text_button_help_filter_farmer, "Farmer" },
             { text_button_help_filter_mage, "Mage" },
             { text_button_help_filter_alchemist, "Alchemist" },
+            { text_button_help_filter_necromancer, "Necromancer" },
 
             { text_button_inventory_filter_all, "All" },
             { text_button_inventory_filter_ores, "Ores" },

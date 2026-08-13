@@ -99,6 +99,7 @@ public class UIQuestPrefab : MonoBehaviour
                 break;
 
             case UtilsQuest.QuestObjectiveType.Obtain:
+            case UtilsQuest.QuestObjectiveType.Craft:
                 progressBar.Setup(data.amountObtain, progress.progressCounter);
                 break;
 

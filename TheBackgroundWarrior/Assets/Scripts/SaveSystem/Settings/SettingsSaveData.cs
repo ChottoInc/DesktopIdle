@@ -30,6 +30,7 @@ public class SettingsSaveData
     public bool isInvertedHUDOn;
     public bool isAutocloseHUDOn;
     public int autocloseTimer;
+    public bool isShowAdvancedStatsOn;
 
     // -- Floating HUD
     public bool isDamageOn;
@@ -84,6 +85,7 @@ public class SettingsSaveData
         isInvertedHUDOn = manager.IsInvertedHudOn;
         isAutocloseHUDOn = manager.IsAutocloseHudOn;
         autocloseTimer = (int)manager.CurrentAutocloseTimerType;
+        isShowAdvancedStatsOn = manager.IsShowAdvancedStatOn;
 
         isDamageOn = manager.IsDamageOn;
         isItemCollectionOn = manager.IsItemCollectionOn;

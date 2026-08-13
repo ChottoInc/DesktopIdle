@@ -24,7 +24,7 @@ public class EditorQuestBountySO : Editor
 
     private SerializedProperty s_amountKill;
 
-    // --------- Quest Obtain ---------
+    // --------- Quest Obtain / Craft ---------
     private SerializedProperty s_itemType;
     private SerializedProperty s_questObtainSpecific;
 
@@ -143,6 +143,7 @@ public class EditorQuestBountySO : Editor
                     break;
 
                 case QuestObjectiveType.Obtain:
+                case QuestObjectiveType.Craft:
                     EditorGUILayout.Space();
                     EditorGUILayout.PropertyField(s_itemType);
 

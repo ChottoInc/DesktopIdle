@@ -90,57 +90,146 @@ public class InitializerManager : MonoBehaviour
         List<DisplayInfo> displays = new List<DisplayInfo>();
         Screen.GetDisplayLayout(displays);
 
-        windowController.windowPosition = new Vector2(0, Display.displays[0].systemHeight - displays[0].workArea.height - 1);
+        //LogWindowPositions();
 
-        //Debug.Log("win init pos: " + windowController.windowPosition);
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+
+        // get monitors with name
+        List<UtilsWindowsMonitor.MonitorData> monitors = UtilsWindowsMonitor.GetMonitorsLeftToRight();
+
+        Dictionary<int, int> unityDisplayToWindowsIndex = new Dictionary<int, int>();
+
+        // loop windows monitors
+        for (int i = 0; i < monitors.Count; i++)
+        {
+            // check last character to get primary and not indexes
+            string deviceName = monitors[i].DeviceName;
+            string lastChar = deviceName[deviceName.Length - 1].ToString();
+            if (int.TryParse(lastChar, out int indexMonitor))
+            {
+                // key: windows index, value: unity index
+                unityDisplayToWindowsIndex.Add(indexMonitor - 1, i);
+            }
+        }
+        
+        // get the correct display info using the dictionary
+        Rect monitorRect = UniWindowController.GetMonitorRect(unityDisplayToWindowsIndex[0]);
+
+        float taskbarHeight = Display.displays[0].systemHeight - displays[0].workArea.height;
+
+        windowController.windowPosition = new Vector2(
+            0f,
+            monitorRect.y + taskbarHeight - 1
+        );
+#else
+        windowController.windowPosition = new Vector2(0, Display.displays[0].systemHeight - displays[0].workArea.height - 1);
+#endif
 
         HandleOtherSetups();
 
         //Debug.Log("Screen: " + windowController.windowSize);
-        //Debug.Log("Screen pos: " + windowController.windowPosition);
+        //Debug.Log("start Screen pos: " + windowController.windowPosition);
         //Debug.Log("taskbar size: " + usableScreen.y);
     }
 
     public IEnumerator CoChangeMonitor(int monitorIndex)
     {
-        //Debug.Log("monitor index: " + monitorIndex);
+        //Debug.Log("switchhing to: " + monitorIndex);
 
         List<DisplayInfo> displays = new List<DisplayInfo>();
         Screen.GetDisplayLayout(displays);
         AsyncOperation moveScreenOp = Screen.MoveMainWindowTo(displays[monitorIndex], Vector2Int.zero); //RoundToInt(Vector2.zero)
 
-        //Debug.Log("working area: " + displays[monitorIndex].workArea.ToString());
+        //Debug.Log("moving...");
 
         yield return moveScreenOp;
 
+        //Debug.Log("moved.");
+
         // if null the scene changed from last time
-        if(windowController == null)
+        if (windowController == null)
         {
             windowController = FindFirstObjectByType<UniWindowController>();
         }
 
-        //Debug.Log("win pos after default move: " + windowController.windowPosition);
-
-        // get new window pos, y set from top to bottom, so the difference is necessary to set at the bottom
-        Vector2 windowPos = new Vector2(windowController.windowPosition.x, Display.displays[monitorIndex].systemHeight - displays[monitorIndex].workArea.height - 1);
-        //Debug.Log("expected pos: " + windowPos);
-        //Debug.Log("system h: " + Display.displays[monitorIndex].systemHeight + ", usable screen h: " + displays[monitorIndex].workArea.height + ", pos y: " + windowPos.y);
-        
         // get new window size
         Vector2 windowSize = new Vector2(Display.displays[monitorIndex].systemWidth, heightScreen);
-        //Debug.Log("expected win size: " + windowSize);
+        Vector2 windowPos = Vector2.zero;
 
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+
+        try
+        {
+            // get monitors with name
+            List<UtilsWindowsMonitor.MonitorData> monitors = UtilsWindowsMonitor.GetMonitorsLeftToRight();
+
+            Dictionary<int, int> unityDisplayToWindowsIndex = new Dictionary<int, int>();
+
+            // loop windows monitors
+            for (int i = 0; i < monitors.Count; i++)
+            {
+                // check last character to get primary and not indexes
+                string deviceName = monitors[i].DeviceName;
+                string lastChar = deviceName[deviceName.Length - 1].ToString();
+
+                //Debug.Log("device name: " + deviceName);
+                if (int.TryParse(lastChar, out int indexMonitor))
+                {
+                    // key: windows index, value: unity index
+                    unityDisplayToWindowsIndex.Add(indexMonitor - 1, i);
+                    //Debug.Log("added key: " + (indexMonitor - 1) + ", val: " + i);
+                }
+            }
+
+            // get the correct display info using the dictionary
+            Rect monitorRect = UniWindowController.GetMonitorRect(unityDisplayToWindowsIndex[monitorIndex]);
+
+            //Debug.Log("--- setting pos and size.");
+            float taskbarHeight = Display.displays[monitorIndex].systemHeight - displays[monitorIndex].workArea.height;
+
+            windowPos = new Vector2(
+                monitorRect.x,
+                monitorRect.y + taskbarHeight - 1
+            );
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.ToString());
+
+            // defaulted to use system height if any exception occurs
+            // get new window pos, y set from top to bottom, so the difference is necessary to set at the bottom
+            windowPos = new Vector2(windowController.windowPosition.x, Display.displays[monitorIndex].systemHeight - displays[monitorIndex].workArea.height - 1);
+        }
+#else
+        // get new window pos, y set from top to bottom, so the difference is necessary to set at the bottom
+        windowPos = new Vector2(windowController.windowPosition.x, Display.displays[monitorIndex].systemHeight - displays[monitorIndex].workArea.height - 1);
+#endif
         // set window
-        // should put the window at the start of the monitor
         windowController.windowSize = windowSize;
         windowController.windowPosition = windowPos;
 
-        //Debug.Log("actual win pos: " + windowController.windowPosition);
+        //Debug.Log("after change montor: " + windowController.windowPosition);
         //Debug.Log("actual win size: " + windowController.windowSize);
         //
         //Debug.Log("---------------------------------------------------");
     }
 
+    private void LogWindowPositions()
+    {
+        List<DisplayInfo> displays = new List<DisplayInfo>();
+        Screen.GetDisplayLayout(displays);
+
+        for (int i = 0; i < displays.Count; i++)
+        {
+            Debug.Log($"DisplayInfo {i} -> workArea: {displays[i].workArea}");
+        }
+
+        int monitorCount = UniWindowController.GetMonitorCount();
+        for (int i = 0; i < monitorCount; i++)
+        {
+            Debug.Log($"MonitorRect {i} -> {UniWindowController.GetMonitorRect(i)}");
+        }
+    }
 
 
 
@@ -214,6 +303,10 @@ public class InitializerManager : MonoBehaviour
             PlayerManager.Instance.Setup(jsonService);
             QuestManager.Instance.Setup(jsonService);
             ShopManager.Instance.Setup(jsonService);
+
+
+            // Check for jobs that you should have unlocked but they aren't for some reason
+            PlayerManager.Instance.InitialJobChecks();
         }
         catch(FatalLoadException e)
         {

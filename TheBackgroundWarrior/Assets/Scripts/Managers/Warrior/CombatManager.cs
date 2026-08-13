@@ -6,7 +6,7 @@ public class CombatManager : MonoBehaviour
 {
     private const float BASE_CARD_DROPRATE = 0.005f;
 
-    private const int ID_CARD_ANCIENTTOME = 80;
+    
 
 
     [SerializeField] PlayerFight player;
@@ -271,7 +271,7 @@ public class CombatManager : MonoBehaviour
                 {
                     player.AddItem(randCardSO.Id, 1);
 
-                    if(randCardSO.Id == ID_CARD_ANCIENTTOME)
+                    if(randCardSO.Id == UtilsItem.ID_CARD_ANCIENTTOME)
                     {
                         if (!PlayerManager.Instance.PlayerJobsData.IsMageUnlocked)
                         {

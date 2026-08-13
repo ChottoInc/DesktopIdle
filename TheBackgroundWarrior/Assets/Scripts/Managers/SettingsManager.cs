@@ -57,6 +57,7 @@ public class SettingsManager : MonoBehaviour
     public bool IsInvertedHudOn { get; private set; }
     public bool IsAutocloseHudOn { get; private set; }
     public UtilsGeneral.AutocloseTimerType CurrentAutocloseTimerType { get; private set; }
+    public bool IsShowAdvancedStatOn { get; private set; }
 
     // -- Floating HUD
     public bool IsDamageOn { get; private set; }
@@ -185,6 +186,7 @@ public class SettingsManager : MonoBehaviour
         //SetIsInvertedHUDOn(saveData.isInvertedHUDOn, false);
         SetIsAutocloseHUDOn(saveData.isAutocloseHUDOn, false);
         SetAutocloseTimer((UtilsGeneral.AutocloseTimerType)saveData.autocloseTimer, false);
+        SetIsShowAdvancedStatsOn(saveData.isShowAdvancedStatsOn, false);
 
         SetIsDamageOn(saveData.isDamageOn, false);
         SetIsItemCollectionOn(saveData.isItemCollectionOn, false);
@@ -230,6 +232,7 @@ public class SettingsManager : MonoBehaviour
         SetIsInvertedHUDOn(false, false);
         SetIsAutocloseHUDOn(false, false);
         SetAutocloseTimer(UtilsGeneral.AutocloseTimerType.MINS5, false);
+        SetIsShowAdvancedStatsOn(false, false);
 
         SetIsDamageOn(true, false);
         SetIsItemCollectionOn(true, false);
@@ -362,6 +365,15 @@ public class SettingsManager : MonoBehaviour
         CurrentAutocloseTimerType = timerType;
 
         //OnLanguageChange?.Invoke();
+
+        if (save)
+            Save();
+    }
+
+    public void SetIsShowAdvancedStatsOn(bool isOn, bool save = true)
+    {
+        IsShowAdvancedStatOn = isOn;
+        //OnAutocloseHUDChange?.Invoke(isOn);
 
         if (save)
             Save();

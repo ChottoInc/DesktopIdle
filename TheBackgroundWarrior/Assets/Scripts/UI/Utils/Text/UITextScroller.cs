@@ -30,6 +30,8 @@ public class UITextScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     private bool _isAutoScrolling = true;
     private bool _canScroll;
 
+    private bool _upwards = true;
+
     private bool _isInitialized;
 
     private void Awake()
@@ -59,11 +61,24 @@ public class UITextScroller : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         }
 
         float pos = _scrollRect.horizontalNormalizedPosition;
-        pos += _scrollSpeed * Time.unscaledDeltaTime;
+
+        if(_upwards)
+            pos += _scrollSpeed * Time.unscaledDeltaTime;
+        else
+            pos -= _scrollSpeed * Time.unscaledDeltaTime;
 
         if (pos > 1f)
         {
-            pos = 0f;
+            //pos = 0f;
+
+            _upwards = false;
+
+            _isAutoScrolling = false;
+            _resumeTimer = _resumeDelay;
+        }
+        else if(pos <= 0f)
+        {
+            _upwards = true;
 
             _isAutoScrolling = false;
             _resumeTimer = _resumeDelay;

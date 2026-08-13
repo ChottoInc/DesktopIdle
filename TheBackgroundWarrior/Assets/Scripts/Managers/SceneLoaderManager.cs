@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoaderManager : MonoBehaviour
 {
-    public enum SceneType { Home, CombatMap, Miner, Blacksmith, Fisher, Farmer, Mage, Alchemist }
+    public enum SceneType { Home, CombatMap, Miner, Blacksmith, Fisher, Farmer, Mage, Alchemist, Necromancer }
 
 
     [SerializeField] Material fadeMaterial;

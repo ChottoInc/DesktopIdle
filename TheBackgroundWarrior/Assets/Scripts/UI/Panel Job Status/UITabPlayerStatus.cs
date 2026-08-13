@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UITabPlayerStatus : UITabWindow
 {
@@ -16,9 +17,11 @@ public class UITabPlayerStatus : UITabWindow
     protected int totalDistributedPoints;
 
     [Header("Texts")]
+    [SerializeField] Toggle toggleAdvancedStats;
     [SerializeField] protected TMP_Text textButtonSave;
 
 
+    public event Action OnToggleAdvancedStats;
 
     public event Action OnStatusSave;
 
@@ -39,6 +42,9 @@ public class UITabPlayerStatus : UITabWindow
 
     protected virtual void Setup()
     {
+        if (toggleAdvancedStats != null)
+            toggleAdvancedStats.SetIsOnWithoutNotify(SettingsManager.Instance.IsShowAdvancedStatOn);
+
         AssignAvailablePoints();
 
         tempAvailablePoints = availablePoints;
@@ -145,6 +151,15 @@ public class UITabPlayerStatus : UITabWindow
     {
         // handle every stat here
         return -1;
+    }
+
+    public virtual void OnToggleShowAdvancedStats(bool isOn)
+    {
+        AudioManager.Instance.PlayClickUI();
+        SettingsManager.Instance.SetIsShowAdvancedStatsOn(isOn);
+
+        // called here event to update if the tab is open on stats
+        OnToggleAdvancedStats?.Invoke();
     }
 
     #endregion

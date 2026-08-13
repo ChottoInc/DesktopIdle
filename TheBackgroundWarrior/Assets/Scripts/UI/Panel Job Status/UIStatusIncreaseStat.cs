@@ -34,11 +34,17 @@ public class UIStatusIncreaseStat : MonoBehaviour
     private void OnDestroy()
     {
         panelStatus.OnStatusSave -= OnStatusSave;
+
+        panelStatus.OnToggleAdvancedStats -= RefreshTexts;
+        panelStatus.OnStatusSave -= RefreshTexts;
     }
 
     private void Awake()
     {
         panelStatus.OnStatusSave += OnStatusSave;
+
+        panelStatus.OnToggleAdvancedStats += RefreshTexts;
+        panelStatus.OnStatusSave += RefreshTexts;
     }
 
     private void OnEnable()
@@ -55,9 +61,20 @@ public class UIStatusIncreaseStat : MonoBehaviour
         RefreshTexts();
     }
 
-    private void RefreshTexts()
+    public void RefreshTexts()
     {
-        textStatName.text = UtilsPlayer.GetStatNameById(idStat);
+        if (SettingsManager.Instance.IsShowAdvancedStatOn)
+        {
+            string name = UtilsPlayer.GetStatNameById(idStat);
+
+            string stat = UtilsPlayer.GetAdvancedStatText(UtilsPlayer.GetCurrentStatById(idStat), idStat);
+
+            textStatName.text = name + " - " + stat;
+        }
+        else
+        {
+            textStatName.text = UtilsPlayer.GetStatNameById(idStat);
+        }
     }
 
 

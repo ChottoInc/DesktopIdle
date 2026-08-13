@@ -161,6 +161,30 @@ public class PlayerManager : MonoBehaviour
         saveService.SaveData(UtilsSave.GetPlayerJobsFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
+    /// <summary>
+    /// Check for jobs that player should have, and if has not add them to availables
+    /// </summary>
+    public void InitialJobChecks()
+    {
+        // Check blacksmith
+        if (Inventory.HasItem(UtilsItem.ID_GOLD_ORE))
+        {
+            if (!PlayerJobsData.IsBlacksmithUnlocked)
+            {
+                PlayerJobsData.AddAvailableJob(UtilsPlayer.PlayerJob.Blacksmith);
+            }
+        }
+
+        // Check mage
+        if (Inventory.HasItem(UtilsItem.ID_CARD_ANCIENTTOME))
+        {
+            if (!PlayerJobsData.IsMageUnlocked)
+            {
+                PlayerJobsData.AddAvailableJob(UtilsPlayer.PlayerJob.Mage);
+            }
+        }
+    }
+
     #endregion
 
     #region BUFFS DATA

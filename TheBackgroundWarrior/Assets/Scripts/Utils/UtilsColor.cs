@@ -15,10 +15,6 @@ public static class UtilsColor
     public const string EQUIPPED_COMPANION = "#8d6e63";
 
 
-    public static Color CommonRarity = new Color(255f / 255f, 195f / 255f, 95f / 255f, 1f);
-    public static Color UncommonRarity = new Color(96f / 255f, 180f / 255f, 255f / 255f, 1f);
-    public static Color RareRarity = new Color(255f / 255f, 125f / 255f, 95f / 255f, 1f);
-
     public static Color GetColorByRarity(UtilsItem.CardRarity rarity)
     {
         switch (rarity)

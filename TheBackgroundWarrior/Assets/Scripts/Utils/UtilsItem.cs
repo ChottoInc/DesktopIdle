@@ -14,6 +14,11 @@ public static class UtilsItem
      * Concoctions ids start from 500
      * */
 
+    public const int ID_GOLD_ORE = 4;
+
+    public const int ID_CARD_ANCIENTTOME = 80;
+
+
     private static Dictionary<int, ListableGameDataSO> dictItems;
 
     public enum ItemType { Ore, Card, Metal, Fish, Crop, Bait, Concoction }

@@ -1,5 +1,6 @@
 using Steamworks;
 using System;
+using UnityEngine;
 
 public class CustomSteamManager : SteamManager
 {
@@ -55,7 +56,15 @@ public class CustomSteamManager : SteamManager
     {
         if (SettingsManager.Instance.CurrentLanguage == UtilsGeneral.Language.Eng)
         {
-            SettingsManager.Instance.CheckSteamLanguage(SteamApps.GetCurrentGameLanguage());
+            // get if the first check has been already done
+            bool firstLangCheck = PlayerPrefs.GetInt("KEY_FIRST_LANG_CHECK", 0) != 0;
+
+            if(!firstLangCheck)
+            {
+                SettingsManager.Instance.CheckSteamLanguage(SteamApps.GetCurrentGameLanguage());
+
+                PlayerPrefs.SetInt("KEY_FIRST_LANG_CHECK", 1);
+            }
         }
 
         UtilsGeneral.RefreshAll();

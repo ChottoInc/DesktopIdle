@@ -6,7 +6,7 @@ public static class UtilsQuest
 {
     public enum QuestType { Story, Daily, Bounties }
 
-    public enum QuestObjectiveType { Kill, Obtain, LevelUp, UnlockMap, Befriend, SpellRank }
+    public enum QuestObjectiveType { Kill, Obtain, LevelUp, UnlockMap, Befriend, SpellRank, Craft }
 
 
     private static QuestStorySO[] storySOs;
@@ -139,6 +139,7 @@ public static class UtilsQuest
                 break;
 
             case QuestObjectiveType.Obtain:
+            case QuestObjectiveType.Craft:
                 result += string.Format("\n{0}/{1}", progress.progressCounter, data.amountObtain);
                 break;
 
@@ -174,6 +175,7 @@ public static class UtilsQuest
                 return HandleCounterQuestCheck(data.amountKill, progress.progressCounter);
 
             case QuestObjectiveType.Obtain:
+            case QuestObjectiveType.Craft:
                 return HandleCounterQuestCheck(data.amountObtain, progress.progressCounter);
 
             case QuestObjectiveType.Befriend:
@@ -251,7 +253,7 @@ public static class UtilsQuest
 
         public int amountKill;
 
-        // --------- Quest Obtain ---------
+        // --------- Quest Obtain / Craft ---------
         public UtilsItem.ItemType itemType;
         public bool questObtainSpecific;
 
