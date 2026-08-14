@@ -49,28 +49,28 @@ public class PlayerNecromancerData : BasePlayerData
 
     // ---- SPELLS
 
-    public List<SpellData> Spells { get; private set; }
-
-
-
     public PlayerNecromancerData()
     {
         GenerateBaseStats();
     }
 
-    public PlayerNecromancerData(PlayerMageSaveData saveData)
+    public PlayerNecromancerData(PlayerNecromancerSaveData saveData)
     {
         GenerateBaseStats();
 
-        LevelStatAptitude = saveData.levelStatInsight;
-        LevelStatSummon = saveData.levelStatCastSpeed;
-        LevelStatMight = saveData.levelStatScholar;
-        LevelStatLifespan = saveData.levelStatProficiency;
+        LevelStatAptitude = saveData.levelStatAptitude;
+        LevelStatSummon = saveData.levelStatSummon;
+        LevelStatMight = saveData.levelStatMight;
+        LevelStatLifespan = saveData.levelStatLifespan;
+        LevelStatHorde = saveData.levelStatHorde;
+        LevelStatLuck = saveData.levelStatLuck;
 
-        LevelStatAptitude = Math.Min(LevelStatAptitude, UtilsMage.PER_LEVEL_MAGE_MAX_INSIGHT);
-        LevelStatSummon = Math.Min(LevelStatSummon, UtilsMage.PER_LEVEL_MAGE_MAX_CASTSPEED);
-        LevelStatMight = Math.Min(LevelStatMight, UtilsMage.PER_LEVEL_MAGE_MAX_SCHOLAR);
-        LevelStatLifespan = Math.Min(LevelStatLifespan, UtilsMage.PER_LEVEL_MAGE_MAX_PROFICIENCY);
+        LevelStatAptitude = Math.Min(LevelStatAptitude, UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_APTITUDE);
+        LevelStatSummon = Math.Min(LevelStatSummon, UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_SUMMON);
+        LevelStatMight = Math.Min(LevelStatMight, UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_MIGHT);
+        LevelStatLifespan = Math.Min(LevelStatLifespan, UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_LIFESPAN);
+        LevelStatHorde = Math.Min(LevelStatHorde, UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_HORDE);
+        LevelStatLuck = Math.Min(LevelStatLuck, UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_LUCK);
 
         AvailableStatPoints = saveData.availableStatPoints;
 
@@ -78,22 +78,19 @@ public class PlayerNecromancerData : BasePlayerData
         CurrentExp = saveData.currentExp;
 
         int sumLevels =
-            LevelStatAptitude + LevelStatSummon + LevelStatMight + LevelStatLifespan +
+            LevelStatAptitude + LevelStatSummon + LevelStatMight + LevelStatLifespan + LevelStatHorde + LevelStatLuck +
             AvailableStatPoints +
             1;
 
         CurrentLevel = Math.Min(CurrentLevel, sumLevels);
 
         // reset available points to 0 if previous bugs occured, and set exp to 0
-        if (CurrentLevel >= UtilsMage.MAX_LEVEL_MAGE)
+        if (CurrentLevel >= UtilsNecromancer.MAX_LEVEL_NECROMANCER)
         {
-            AvailableStatPoints = UtilsMage.MAX_LEVEL_MAGE - 1 -
-               LevelStatAptitude - LevelStatSummon - LevelStatMight - LevelStatLifespan;
+            AvailableStatPoints = UtilsNecromancer.MAX_LEVEL_NECROMANCER - 1 -
+               LevelStatAptitude - LevelStatSummon - LevelStatMight - LevelStatLifespan - LevelStatHorde - LevelStatLuck;
             CurrentExp = 0;
         }
-
-        // load spells
-        Spells = saveData.spells.Select(spell => new SpellData(spell)).ToList();
     }
 
     private void GenerateBaseStats()
@@ -106,18 +103,19 @@ public class PlayerNecromancerData : BasePlayerData
         LevelStatSummon = startLevelSummon;
         LevelStatMight = startLevelMight;
         LevelStatLifespan = startLevelLifespan;
+        LevelStatHorde = startLevelHorde;
+        LevelStatLuck = startLevelLuck;
 
 
         // multiplier
-        baseAptitude = 0f; // reduced learn time spells, up to 25%
+        baseAptitude = 0f; // unlocks new couple in scene to fight
 
-        baseSummon = 0f; // reduce cast speed, up to 20%
-        baseMight = 0f; // unlocks new spell, check on whole values
+        baseSummon = 0f; // reduce ritual speed
+        baseMight = 0f; // increase minions strength
 
-        baseLifespan = 0f; // unlocks new slots, check on whole values
-
-        // creat default spells
-        Spells = UtilsMage.GetAllSpells().Select(spell => new SpellData(spell)).ToList();
+        baseLifespan = 0f; // increase life duration
+        baseHorde = 0f; // unlocks new size limit horde
+        baseLuck = 0f; // increase chance of big minion - increase experience gain necromancer
     }
 
     public void AddExp(long amount)
@@ -134,33 +132,14 @@ public class PlayerNecromancerData : BasePlayerData
         switch (id)
         {
             default: Debug.Log("Increased stat id not correct. " + id); break;
-            case UtilsPlayer.ID_MAGE_INSIGHT: LevelStatAptitude += amount; break;
-            case UtilsPlayer.ID_MAGE_CASTSPEED: LevelStatSummon += amount; break;
-            case UtilsPlayer.ID_MAGE_SCHOLAR:
-                LevelStatMight += amount;
-                int maxIndex = (int)CurrentHorde + 1;
-                for (int i = 0; i < maxIndex; i++)
-                {
-                    if (!Spells[i].IsUnlocked)
-                        Spells[i].SetUnlocked();
-                }
-                break;
-            case UtilsPlayer.ID_MAGE_PROFICIENCY: LevelStatLifespan += amount; break;
+            case UtilsPlayer.ID_NECROMANCER_APTITUDE: LevelStatAptitude += amount; break;
+            case UtilsPlayer.ID_NECROMANCER_SUMMON: LevelStatSummon += amount; break;
+            case UtilsPlayer.ID_NECROMANCER_MIGHT: LevelStatMight += amount; break;
+            case UtilsPlayer.ID_NECROMANCER_LIFESPAN: LevelStatLifespan += amount; break;
+            case UtilsPlayer.ID_NECROMANCER_HORDE: LevelStatHorde += amount; break;
+            case UtilsPlayer.ID_NECROMANCER_LUCK: LevelStatLuck += amount; break;
         }
 
         InvokeStatChange(id, amount);
-    }
-
-
-    public SpellData GetSpellByType(UtilsMage.MageSpellType spellType)
-    {
-        return Spells.Where(spell => spell.SpellSO.SpellType == spellType).FirstOrDefault();
-    }
-
-    public void UpdateSpellData(SpellData data)
-    {
-        int index = Spells.FindIndex(spell => spell.SpellSO.SpellType == data.SpellSO.SpellType);
-        if (index >= 0)
-            Spells[index] = data;
     }
 }

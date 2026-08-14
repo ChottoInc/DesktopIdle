@@ -55,7 +55,7 @@ public static class UtilsPlayer
 
     public const int ID_NECROMANCER_APTITUDE = 80;      // every x levels increase couple fighting necromancer
     public const int ID_NECROMANCER_SUMMON = 81;        // increase spawn speed
-    public const int ID_NECROMANCER_MIGHT = 82;         // increase minions stength
+    public const int ID_NECROMANCER_MIGHT = 82;         // increase minions strength
     public const int ID_NECROMANCER_LIFESPAN = 83;      // increase life duration
     public const int ID_NECROMANCER_HORDE = 84;         // every x levels increase horde limit by 1
     public const int ID_NECROMANCER_LUCK = 85;          // increase spawn chance of big minion - increase experience gain necromancer

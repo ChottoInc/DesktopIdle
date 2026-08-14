@@ -10,21 +10,9 @@ public class PlayerNecromancer : Player
 
 
     [Space(10)]
-    [SerializeField] Transform dummyPosition;
-    [SerializeField] Transform castPosition;
-    [SerializeField] float baseCooldownCast = 10f;
+    [SerializeField] Transform[] _fightPositions;
 
-    [Space(10)]
-    [SerializeField] GenericBar barSpell;
-
-    [Space(10)]
-    [SerializeField] GenericBar _barCooldown;
-
-    private float _finalCooldownCast;
-
-    private SpellData _currentSpell;
     private GameObject _spellPrefab;
-    private float _timerCast;
 
 
     public event Action<int, int> OnStatChange;
@@ -32,14 +20,14 @@ public class PlayerNecromancer : Player
 
 
 
-    public PlayerMageData PlayerData { get; private set; }
+    public PlayerNecromancerData PlayerData { get; private set; }
 
 
     protected override void Awake()
     {
         base.Awake();
 
-        OnStatChange += CheckSpellBar;
+        //OnStatChange += CheckSpellBar;
     }
 
     private void Start()
@@ -48,7 +36,7 @@ public class PlayerNecromancer : Player
         {
             UtilsBuffs.BuffType.Greed,
             UtilsBuffs.BuffType.Veteran,
-            UtilsBuffs.BuffType.Arcanist,
+            //UtilsBuffs.BuffType.Arcanist,
         };
     }
 
@@ -57,17 +45,17 @@ public class PlayerNecromancer : Player
     {
         base.OnDestroy();
 
-        OnStatChange -= CheckSpellBar;
+        //OnStatChange -= CheckSpellBar;
 
         if (PlayerData != null)
         {
             PlayerData.OnLevelUp -= LevelUp;
 
-            PlayerData.OnStatChange -= OnStatChangeMage;
+            PlayerData.OnStatChange -= OnStatChangeNecromancer;
         }
     }
 
-    public void Setup(PlayerMageData playerData)
+    public void Setup(PlayerNecromancerData playerData)
     {
         PlayerData = playerData;
 
@@ -75,12 +63,12 @@ public class PlayerNecromancer : Player
         {
             playerData.OnLevelUp += LevelUp;
 
-            playerData.OnStatChange += OnStatChangeMage;
+            playerData.OnStatChange += OnStatChangeNecromancer;
 
-            RefreshSpell();
+            //RefreshSpell();
         }
     }
-
+    /*
     public void RefreshSpell()
     {
         if (PlayerData.CurrentLearningSpell != UtilsMage.MageSpellType.None)
@@ -100,29 +88,15 @@ public class PlayerNecromancer : Player
 
         }
     }
-
+    */
     protected override void Update()
     {
         base.Update();
-
-        if (_spellPrefab == null) return;
-
-        if (_timerCast <= 0)
-        {
-            CastSpell();
-
-            UpdateCooldownCast();
-            _timerCast = _finalCooldownCast;
-        }
-        else
-        {
-            _timerCast -= Time.deltaTime;
-            UpdateCooldowBar();
-        }
     }
 
     private void CastSpell()
     {
+        /*
         // animator
         animator.SetTrigger("Attack");
 
@@ -141,17 +115,17 @@ public class PlayerNecromancer : Player
 
         // uppdate bar ui
         barSpell.SetCurrentValue(_currentSpell.CurrentLearnPoints);
-
+        */
         // save
-        SaveMageData();
+        SaveNecromancerData();
     }
 
     public void ExternalAttack()
     {
         // cast spell
-        SpawnSpell();
+        //SpawnSpell();
     }
-
+    /*
     private void SpawnSpell()
     {
         GameObject spawned = Instantiate(_spellPrefab, transform.position, Quaternion.identity);
@@ -159,32 +133,15 @@ public class PlayerNecromancer : Player
         {
             if (spellMage.DoesMove)
             {
-                spellMage.SetPositions(castPosition.position, new Vector2(dummyPosition.position.x, castPosition.position.y));
+                spellMage.SetPositions(castPosition.position, new Vector2(_fightPositions.position.x, castPosition.position.y));
             }
             else
             {
-                spellMage.SetPositions(new Vector2(dummyPosition.position.x, castPosition.position.y), new Vector2(dummyPosition.position.x, castPosition.position.y));
+                spellMage.SetPositions(new Vector2(_fightPositions.position.x, castPosition.position.y), new Vector2(_fightPositions.position.x, castPosition.position.y));
             }
             spellMage.Perform();
         }
-    }
-
-    private void UpdateCooldownCast()
-    {
-        _finalCooldownCast =
-            baseCooldownCast -
-            Mathf.FloorToInt(baseCooldownCast * PlayerManager.Instance.PlayerMageData.CurrentCastSpeed);
-    }
-
-    private void UpdateSpellBar()
-    {
-        barSpell.Setup(_currentSpell.RequiredPointsToNextRank, _currentSpell.CurrentLearnPoints);
-    }
-
-    private void UpdateCooldowBar()
-    {
-        _barCooldown.SetCurrentValue(_finalCooldownCast - _timerCast);
-    }
+    }*/
 
 
     public override IBasePlayerData GetPlayerData()
@@ -204,34 +161,26 @@ public class PlayerNecromancer : Player
 
     #region SAVE
 
-    public void SaveMageData()
+    public void SaveNecromancerData()
     {
-        PlayerManager.Instance.UpdateMageData(PlayerData);
-        PlayerManager.Instance.SaveMageData();
+        PlayerManager.Instance.UpdateNecromancerData(PlayerData);
+        PlayerManager.Instance.SaveNecromancerData();
     }
 
     #endregion
 
-    #region HANDLE EVENTS FROM MAGE DATA
+    #region HANDLE EVENTS FROM NECROMANCER DATA
 
     protected override void LevelUp()
     {
         base.LevelUp();
 
-        SaveMageData();
+        SaveNecromancerData();
     }
 
-    private void OnStatChangeMage(int id, int value)
+    private void OnStatChangeNecromancer(int id, int value)
     {
         OnStatChange?.Invoke(id, value);
-    }
-
-    private void CheckSpellBar(int id, int value)
-    {
-        if (id == UtilsPlayer.ID_MAGE_INSIGHT)
-        {
-            UpdateSpellBar();
-        }
     }
 
     #endregion

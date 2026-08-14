@@ -94,33 +94,44 @@ public class InitializerManager : MonoBehaviour
 
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 
-        // get monitors with name
-        List<UtilsWindowsMonitor.MonitorData> monitors = UtilsWindowsMonitor.GetMonitorsLeftToRight();
-
-        Dictionary<int, int> unityDisplayToWindowsIndex = new Dictionary<int, int>();
-
-        // loop windows monitors
-        for (int i = 0; i < monitors.Count; i++)
+        try
         {
-            // check last character to get primary and not indexes
-            string deviceName = monitors[i].DeviceName;
-            string lastChar = deviceName[deviceName.Length - 1].ToString();
-            if (int.TryParse(lastChar, out int indexMonitor))
+            // get monitors with name
+            List<UtilsWindowsMonitor.MonitorData> monitors = UtilsWindowsMonitor.GetMonitorsLeftToRight();
+
+            Dictionary<int, int> unityDisplayToWindowsIndex = new Dictionary<int, int>();
+
+            // loop windows monitors
+            for (int i = 0; i < monitors.Count; i++)
             {
-                // key: windows index, value: unity index
-                unityDisplayToWindowsIndex.Add(indexMonitor - 1, i);
+                // check last character to get primary and not indexes
+                string deviceName = monitors[i].DeviceName;
+                string lastChar = deviceName[deviceName.Length - 1].ToString();
+                if (int.TryParse(lastChar, out int indexMonitor))
+                {
+                    // key: windows index, value: unity index
+                    unityDisplayToWindowsIndex.Add(indexMonitor - 1, i);
+                }
             }
+
+            // get the correct display info using the dictionary
+            Rect monitorRect = UniWindowController.GetMonitorRect(unityDisplayToWindowsIndex[0]);
+
+            float taskbarHeight = Display.displays[0].systemHeight - displays[0].workArea.height;
+
+            windowController.windowPosition = new Vector2(
+                0f,
+                monitorRect.y + taskbarHeight - 1
+            );
         }
-        
-        // get the correct display info using the dictionary
-        Rect monitorRect = UniWindowController.GetMonitorRect(unityDisplayToWindowsIndex[0]);
+        catch (Exception e)
+        {
+            Debug.Log(e.ToString());
 
-        float taskbarHeight = Display.displays[0].systemHeight - displays[0].workArea.height;
-
-        windowController.windowPosition = new Vector2(
-            0f,
-            monitorRect.y + taskbarHeight - 1
-        );
+            // defaulted to use system height if any exception occurs
+            // get new window pos, y set from top to bottom, so the difference is necessary to set at the bottom
+            windowController.windowPosition = new Vector2(0, Display.displays[0].systemHeight - displays[0].workArea.height - 1);
+        }
 #else
         windowController.windowPosition = new Vector2(0, Display.displays[0].systemHeight - displays[0].workArea.height - 1);
 #endif

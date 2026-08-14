@@ -31,6 +31,8 @@ public class PlayerManager : MonoBehaviour
 
     public PlayerAlchemistData PlayerAlchemistData { get; private set; }
 
+    public PlayerNecromancerData PlayerNecromancerData { get; private set; }
+
 
 
     // TRIGGERS FOR QUESTS
@@ -117,6 +119,7 @@ public class PlayerManager : MonoBehaviour
             LoadFarmerData();
             LoadMageData();
             LoadAlchemistData();
+            LoadNecromancerData();
 
             LoadFightData();
         }
@@ -533,6 +536,43 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerAlchemistSaveData data = new PlayerAlchemistSaveData(PlayerAlchemistData);
         saveService.SaveData(UtilsSave.GetPlayerAlchemistFile(), data, SettingsManager.Instance.FileEncryption);
+    }
+
+    #endregion
+
+    #region NECROMANCER DATA
+
+    private void LoadNecromancerData()
+    {
+        try
+        {
+            PlayerNecromancerSaveData necromancerSaveData = saveService.LoadData<PlayerNecromancerSaveData>(UtilsSave.GetPlayerNecromancerFile(), SettingsManager.Instance.FileEncryption);
+            PlayerNecromancerData = new PlayerNecromancerData(necromancerSaveData);
+        }
+        catch (ConversionException e)
+        {
+            Debug.LogError(e.Message);
+            throw new FatalLoadException("Cannot load alchemist data");
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogWarning(e.Message);
+
+            PlayerNecromancerData = new PlayerNecromancerData();
+            SaveNecromancerData();
+        }
+    }
+
+    public void UpdateNecromancerData(PlayerNecromancerData data)
+    {
+        PlayerNecromancerData = data;
+        SaveNecromancerData();
+    }
+
+    public void SaveNecromancerData()
+    {
+        PlayerNecromancerSaveData data = new PlayerNecromancerSaveData(PlayerNecromancerData);
+        saveService.SaveData(UtilsSave.GetPlayerNecromancerFile(), data, SettingsManager.Instance.FileEncryption);
     }
 
     #endregion
