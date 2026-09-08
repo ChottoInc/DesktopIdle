@@ -292,6 +292,22 @@ public class PlayerFightData : BasePlayerData
 
     #region FIGHT
 
+    private int GetDisplayDamage(float damage)
+    {
+        if (damage == 0f)
+        {
+            return 0;
+        }
+        else if (damage > 0f && damage < 1f)
+        {
+            return 1;
+        }
+        else
+        {
+            return Mathf.FloorToInt(damage);
+        }
+    }
+
     private void CheckShieldAtStart()
     {
         if (PlayerManager.Instance.PlayerBuffsData.HasBuff(UtilsBuffs.BuffType.IronSkin))
@@ -343,7 +359,7 @@ public class PlayerFightData : BasePlayerData
         //Debug.Log("current hp: " + currentHp);
         //Debug.Log("max hp: " + MaxHp);
 
-        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
+        OnTakeDamage?.Invoke(GetDisplayDamage(total));
 
         if (CurrentHp <= 0f)
         {
@@ -365,7 +381,7 @@ public class PlayerFightData : BasePlayerData
 
         OnHpChange?.Invoke();
 
-        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
+        OnTakeDamage?.Invoke(GetDisplayDamage(total));
 
         if (CurrentHp <= 0f)
         {

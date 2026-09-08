@@ -70,6 +70,7 @@ public static class UtilsText
     public const string text_name_class_blacksmith = "text_name_class_blacksmith";
     public const string text_name_class_mage = "text_name_class_mage";
     public const string text_name_class_alchemist = "text_name_class_alchemist";
+    public const string text_name_class_necromancer = "text_name_class_necromancer";
 
     public const string text_name_warrior_stat_maxhp = "text_name_warrior_stat_maxhp";
     public const string text_name_warrior_stat_atk = "text_name_warrior_stat_atk";
@@ -108,6 +109,13 @@ public static class UtilsText
     public const string text_name_alchemist_stat_yield = "text_name_alchemist_stat_yield";
     public const string text_name_alchemist_stat_research = "text_name_alchemist_stat_research";
     public const string text_name_alchemist_stat_stability = "text_name_alchemist_stat_stability";
+
+    public const string text_name_necromancer_stat_aptitude = "text_name_necromancer_stat_aptitude";
+    public const string text_name_necromancer_stat_summon = "text_name_necromancer_stat_summon";
+    public const string text_name_necromancer_stat_might = "text_name_necromancer_stat_might";
+    public const string text_name_necromancer_stat_lifespan = "text_name_necromancer_stat_lifespan";
+    public const string text_name_necromancer_stat_horde = "text_name_necromancer_stat_horde";
+    public const string text_name_necromancer_stat_luck = "text_name_necromancer_stat_luck";
 
 
     public const string text_name_daymoment_morning = "text_name_daymoment_morning";
@@ -177,6 +185,13 @@ public static class UtilsText
     public const string text_tooltip_stat_alchemist_yield = "text_tooltip_stat_alchemist_yield";
     public const string text_tooltip_stat_alchemist_research = "text_tooltip_stat_alchemist_research";
     public const string text_tooltip_stat_alchemist_stability = "text_tooltip_stat_alchemist_stability";
+
+    public const string text_tooltip_stat_necromancer_aptitude = "text_tooltip_stat_necromancer_aptitude";
+    public const string text_tooltip_stat_necromancer_summon = "text_tooltip_stat_necromancer_summon";
+    public const string text_tooltip_stat_necromancer_might = "text_tooltip_stat_necromancer_might";
+    public const string text_tooltip_stat_necromancer_lifespan = "text_tooltip_stat_necromancer_lifespan";
+    public const string text_tooltip_stat_necromancer_horde = "text_tooltip_stat_necromancer_horde";
+    public const string text_tooltip_stat_necromancer_luck = "text_tooltip_stat_necromancer_luck";
 
     // -------------------- TITLE --------------------- //
 
@@ -287,6 +302,10 @@ public static class UtilsText
     public const string text_job_alchemist_unlockconditions = "text_job_alchemist_unlockconditions";
     public const string text_job_necromancer_unlockconditions = "text_job_necromancer_unlockconditions";
 
+    public const string text_job_necromancer_arise_unlockconditions = "text_job_necromancer_arise_unlockconditions";
+    public const string text_job_necromancer_afterlife_unlockconditions = "text_job_necromancer_afterlife_unlockconditions";
+    public const string text_job_necromancer_ade_unlockconditions = "text_job_necromancer_ade_unlockconditions";
+
     public const string text_job_warrior_mapstage = "text_job_warrior_mapstage";
     public const string text_job_warrior_possiblemonsters = "text_job_warrior_possiblemonsters";
     public const string text_job_warrior_possiblecards = "text_job_warrior_possiblecards";
@@ -314,6 +333,7 @@ public static class UtilsText
 
     public const string text_job_mage_spell_locked = "text_job_mage_spell_locked";
     public const string text_job_alchemist_recipe_locked = "text_job_alchemist_recipe_locked";
+    public const string text_job_necromancer_ritual_locked = "text_job_necromancer_ritual_locked";
 
 
     public const string text_job_alchemist_ingredients = "text_job_alchemist_ingredients";
@@ -346,6 +366,7 @@ public static class UtilsText
     public const string text_button_levelup = "text_button_levelup";
     public const string text_button_gather = "text_button_gather";
     public const string text_button_forge = "text_button_forge";
+    public const string text_button_chant = "text_button_chant";
 
     public const string text_button_farm = "text_button_farm";
     public const string text_button_companions = "text_button_companions";
@@ -628,6 +649,12 @@ public static class UtilsText
     public const string text_mage_spell_zap_name = "text_mage_spell_zap_name";
 
 
+    public const string text_necromancer_ritual_summon_name = "text_necromancer_ritual_summon_name";
+    public const string text_necromancer_ritual_arise_name = "text_necromancer_ritual_arise_name";
+    public const string text_necromancer_ritual_afterlife_name = "text_necromancer_ritual_afterlife_name";
+    public const string text_necromancer_ritual_ade_name = "text_necromancer_ritual_ade_name";
+
+
 
     public const string text_shopitem_cardpack01_name = "text_shopitem_cardpack01_name";
     public const string text_shopitem_cardpack02_name = "text_shopitem_cardpack02_name";
@@ -841,6 +868,11 @@ public static class UtilsText
     public const string text_mage_spell_poisongas_desc = "text_mage_spell_poisongas_desc";
     public const string text_mage_spell_zap_desc = "text_mage_spell_zap_desc";
 
+    public const string text_necromancer_ritual_summon_desc = "text_necromancer_ritual_summon_desc";
+    public const string text_necromancer_ritual_arise_desc = "text_necromancer_ritual_arise_desc";
+    public const string text_necromancer_ritual_afterlife_desc = "text_necromancer_ritual_afterlife_desc";
+    public const string text_necromancer_ritual_ade_desc = "text_necromancer_ritual_ade_desc";
+
 
 
     public const string text_shopitem_cardpack01_desc = "text_shopitem_cardpack01_desc";
@@ -891,6 +923,7 @@ public static class UtilsText
     public const string text_help_farmer = "text_help_farmer";
     public const string text_help_mage = "text_help_mage";
     public const string text_help_alchemist = "text_help_alchemist";
+    public const string text_help_necromancer = "text_help_necromancer";
 
     public const string text_description_warrior = "text_description_warrior";
     public const string text_description_miner = "text_description_miner";
@@ -903,6 +936,7 @@ public static class UtilsText
     public const string text_description_mage = "text_description_mage";
     public const string text_description_mage_slots = "text_description_mage_slots";
     public const string text_description_alchemist = "text_description_alchemist";
+    public const string text_description_necromancer = "text_description_necromancer";
 
     #endregion
 
@@ -1040,6 +1074,7 @@ public static class UtilsText
             { text_name_class_blacksmith, "Blacksmith" },
             { text_name_class_mage, "Mage" },
             { text_name_class_alchemist, "Alchemist" },
+            { text_name_class_necromancer, "Necromancer" },
 
             { text_name_warrior_stat_maxhp, "Max Hp" },
             { text_name_warrior_stat_atk, "Atk" },
@@ -1078,6 +1113,13 @@ public static class UtilsText
             { text_name_alchemist_stat_yield, "Yield" },
             { text_name_alchemist_stat_research, "Research" },
             { text_name_alchemist_stat_stability, "Stability" },
+
+            { text_name_necromancer_stat_aptitude, "Aptitude" },
+            { text_name_necromancer_stat_summon, "Summon" },
+            { text_name_necromancer_stat_might, "Might" },
+            { text_name_necromancer_stat_lifespan, "Lifespan" },
+            { text_name_necromancer_stat_horde, "Horde" },
+            { text_name_necromancer_stat_luck, "Luck" },
 
 
 
@@ -1151,7 +1193,14 @@ public static class UtilsText
             { text_tooltip_stat_alchemist_routine, "Increase Alchemist crafting speed" },
             { text_tooltip_stat_alchemist_yield, "Increase Alchemist chance to craft extra materials" },
             { text_tooltip_stat_alchemist_research, "Every 5 levels unlock a new recipe for the Alchemist to craft" },
-            { text_tooltip_stat_alchemist_stability, "Increase successful crafts" },
+            { text_tooltip_stat_alchemist_stability, "Increase Alchemist successful crafts" },
+
+            { text_tooltip_stat_necromancer_aptitude, "Every 5 levels the Necromancer will summon a new couple of undead for training" },
+            { text_tooltip_stat_necromancer_summon, "Increase summon speed for the Warrior" },
+            { text_tooltip_stat_necromancer_might, "Increase undeads strength summoned by the Warrior" },
+            { text_tooltip_stat_necromancer_lifespan, "Increase undeads life summoned by the Warrior" },
+            { text_tooltip_stat_necromancer_horde, "Every 5 levels the Warrior maximum horde counter is increased by 1" },
+            { text_tooltip_stat_necromancer_luck, "Increase experience gained by the Necromancer and increase Warrior chance to summon a powerful undead" },
 
             // -------------------- TITLE --------------------- //
 
@@ -1264,6 +1313,10 @@ public static class UtilsText
             { text_job_alchemist_unlockconditions, "Find the Debug mode code" },
             { text_job_necromancer_unlockconditions, "Coming soon" },
 
+            { text_job_necromancer_arise_unlockconditions, "Max out Summon and Horde abilities to unlock" },
+            { text_job_necromancer_afterlife_unlockconditions, "Max out Aptitude and Might abilities to unlock" },
+            { text_job_necromancer_ade_unlockconditions, "Max out Lifespan and Luck abilities to unlock" },
+
             { text_job_warrior_mapstage, "Stage: {0}/{1}" },
             { text_job_warrior_possiblemonsters, "Possible monsters:<br>" },
             { text_job_warrior_possiblecards, "Possible cards:<br>" },
@@ -1288,6 +1341,7 @@ public static class UtilsText
 
             { text_job_mage_spell_locked, "Spell locked" },
             { text_job_alchemist_recipe_locked, "Recipe not available" },
+            { text_job_necromancer_ritual_locked, "Ritual locked" },
 
 
             { text_job_fisher_raritytooltip, "<color=#{1}>{2}</color><br>" },
@@ -1324,6 +1378,7 @@ public static class UtilsText
             { text_button_levelup, "Level up" },
             { text_button_gather, "Gather" },
             { text_button_forge, "Forge" },
+            { text_button_chant, "Chant" },
 
             { text_button_farm, "Farm" },
             { text_button_companions, "Companions" },
@@ -1602,6 +1657,12 @@ public static class UtilsText
             { text_mage_spell_zap_name, "Zap" },
 
 
+            { text_necromancer_ritual_summon_name, "Summon" },
+            { text_necromancer_ritual_arise_name, "Arise" },
+            { text_necromancer_ritual_afterlife_name, "Afterlife" },
+            { text_necromancer_ritual_ade_name, "Ade" },
+
+
 
             { text_shopitem_cardpack01_name, "Copper Pack" },
             { text_shopitem_cardpack02_name, "Iron Pack" },
@@ -1839,6 +1900,11 @@ public static class UtilsText
             { text_mage_spell_poisongas_desc, "Deals {0} of max hp to all enemies hit in a {1} unit radius, enemies hit by the spell will give the player {2} lifesteal for a short time" },
             { text_mage_spell_zap_desc, "Deals {0} of max hp to a single enemy, the spell will bounce {1} times if another enemy is close enough" },
 
+            { text_necromancer_ritual_summon_desc, "While advancing through the stages, the Warrior will summon Undeads to help him" },
+            { text_necromancer_ritual_arise_desc, "When an Undead is summoned, there is a chance it will be stronger than average undeads" },
+            { text_necromancer_ritual_afterlife_desc, "When an undead dies, it will create an explosion around it, damaging the enemies" },
+            { text_necromancer_ritual_ade_desc, "Permanently increase your maximum horde counter by 1" },
+
 
 
             { text_shopitem_cardpack01_desc, "A humble card pack containing 3 cards." },
@@ -1927,10 +1993,16 @@ public static class UtilsText
                 "Every 5 levels of Scholar ability a new spell is unlocked, and every 5 levels of Proficiency ability a new slot to equip spells will be unlocked."
             },
 
-             { text_help_alchemist,
+            { text_help_alchemist,
                 "<align=\"center\">Alchemist<br>----------------------------</align><br>The Alchemist crafts powerful items following repices.<br><br>" +
                 "Every 5 levels of Research ability a new recipe will be unlocked,some can also  be purchased from the shop<br>" +
                 "You can find them in the Inventory once they're crafted."
+            },
+
+            { text_help_necromancer,
+                "<align=\"center\">Necromancer<br>----------------------------</align><br>Max out your Necromancer abilities to unlock new permanent rituals.<br>" +
+                "The Necromancer trains by making is summons fight themselves, increasing the Aptitude ability will also increase the amount of summons that will fight.<br>" +
+                "All Necromancer abilities will increase the summon statistics, except for aptitude and luck, that will also increase the amount of experience gained by the Necromancer."
             },
 
 
@@ -1978,6 +2050,10 @@ public static class UtilsText
 
             { text_description_alchemist,
                 "Description:<br>Craft powerful items reported int the recipes"
+            },
+
+            { text_description_necromancer,
+                "Description:<br>Max out your Necromancer abilities to unlock new permanent rituals"
             },
         };
     }

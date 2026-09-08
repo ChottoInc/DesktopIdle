@@ -90,6 +90,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.Farmer: break;
                 case SceneType.Mage: break;     //TODO: ADD handle switch scene
                 case SceneType.Alchemist: FindFirstObjectByType<PlayerAlchemist>().HandleSwitchScene(); break;
+                case SceneType.Necromancer: break;
             }
         }
 
@@ -139,6 +140,7 @@ public class SceneLoaderManager : MonoBehaviour
                 case SceneType.Farmer: break;
                 case SceneType.Mage: break;     //TODO: ADD handle switch scene
                 case SceneType.Alchemist: FindFirstObjectByType<PlayerAlchemist>().HandleSwitchScene(); break;
+                case SceneType.Necromancer: break;
             }
         }
 
@@ -227,6 +229,10 @@ public class SceneLoaderManager : MonoBehaviour
 
                 case SceneType.Alchemist:
                     FindFirstObjectByType<PlayerAlchemist>().Setup(PlayerManager.Instance.PlayerAlchemistData);
+                    break;
+
+                case SceneType.Necromancer:
+                    FindFirstObjectByType<PlayerNecromancer>().Setup(PlayerManager.Instance.PlayerNecromancerData);
                     break;
             }
 

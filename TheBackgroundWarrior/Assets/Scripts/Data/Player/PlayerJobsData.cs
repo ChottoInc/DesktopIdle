@@ -13,6 +13,7 @@ public class PlayerJobsData
     public bool IsFarmerUnlocked { get; private set; }
     public bool IsMageUnlocked { get; private set; }
     public bool IsAlchemistUnlocked { get; private set; }
+    public bool IsNecromancerUnlocked { get; private set; }
 
 
     public PlayerJobsData()
@@ -53,6 +54,11 @@ public class PlayerJobsData
         {
             IsAlchemistUnlocked = true;
         }
+
+        if (availableJobs.Contains(UtilsPlayer.PlayerJob.Necromancer))
+        {
+            IsNecromancerUnlocked = true;
+        }
     }
 
     private void GenerateBaseStats()
@@ -67,12 +73,14 @@ public class PlayerJobsData
             //UtilsPlayer.PlayerJob.Blacksmith
             //UtilsPlayer.PlayerJob.Mage
             //UtilsPlayer.PlayerJob.Alchemist,
+            //UtilsPlayer.PlayerJob.Necromancer,
         };
 
         IsBlacksmithUnlocked = false;
         IsFarmerUnlocked = false;
         IsMageUnlocked = false;
         IsAlchemistUnlocked = false;
+        IsNecromancerUnlocked = false;
     }
 
 
@@ -87,6 +95,7 @@ public class PlayerJobsData
             case UtilsPlayer.PlayerJob.Farmer: IsFarmerUnlocked = true; break;
             case UtilsPlayer.PlayerJob.Mage: IsMageUnlocked = true; break;
             case UtilsPlayer.PlayerJob.Alchemist: IsAlchemistUnlocked = true; break;
+            case UtilsPlayer.PlayerJob.Necromancer: IsNecromancerUnlocked = true; break;
         }
 
         PlayerManager.Instance.SaveJobsData();

@@ -6,13 +6,16 @@ using UnityEngine;
 public class PlayerNecromancer : Player
 {
     [Header("Movement")]
-    [SerializeField] Animator animator;
+    [SerializeField] Animator _animator;
+
+
+    public bool IsSummonAnimationPlaying { get; private set; }
 
 
     [Space(10)]
-    [SerializeField] Transform[] _fightPositions;
+    [SerializeField] NecromancerFightingSpot[] _fightSpots;
 
-    private GameObject _spellPrefab;
+    private int _maxFightSpots;
 
 
     public event Action<int, int> OnStatChange;
@@ -65,83 +68,62 @@ public class PlayerNecromancer : Player
 
             playerData.OnStatChange += OnStatChangeNecromancer;
 
-            //RefreshSpell();
+            // summon animation and summon first fighters
+            StartCoroutine(CoSummon(2f));
         }
     }
-    /*
-    public void RefreshSpell()
+
+    private void InitializeFightingSpots()
     {
-        if (PlayerData.CurrentLearningSpell != UtilsMage.MageSpellType.None)
+        _maxFightSpots = (int)PlayerData.CurrentAptitude + 1;
+
+        for (int i = 0; i < _maxFightSpots; i++)
         {
-            // get spell and assign prefab to ast
-            _currentSpell = PlayerData.GetSpellByType(PlayerData.CurrentLearningSpell);
-            _spellPrefab = _currentSpell.SpellSO.Prefab;
-
-            // update learning points ui
-            UpdateSpellBar();
-
-            // update timers
-            UpdateCooldownCast();
-            _timerCast = _finalCooldownCast;
-
-            _barCooldown.Setup(_finalCooldownCast, 0f);
-
+            if (!_fightSpots[i].IsInitialized)
+            {
+                _fightSpots[i].Initialize();
+            }
         }
     }
-    */
+
     protected override void Update()
     {
         base.Update();
     }
 
-    private void CastSpell()
+
+
+    public void GiveExp()
     {
-        /*
-        // animator
-        animator.SetTrigger("Attack");
-
-        // add points and update player data
-        int finalPointsToAdd = 1;
-
-        // check if player has arcanist buff
-        if (PlayerManager.Instance.PlayerBuffsData.HasBuff(UtilsBuffs.BuffType.Arcanist))
-        {
-            finalPointsToAdd *= 2;
-        }
-        _currentSpell.AddPoints(finalPointsToAdd);
-
-        PlayerData.UpdateSpellData(_currentSpell);
-        PlayerData.AddExp(UtilsMage.GetSpellCastExp(_currentSpell.SpellSO.SpellType));
-
-        // uppdate bar ui
-        barSpell.SetCurrentValue(_currentSpell.CurrentLearnPoints);
-        */
-        // save
+        long baseExp = 500;
+        long finalExp = Mathf.RoundToInt((float)baseExp * (1f + PlayerData.CurrentLuck));
+        PlayerData.AddExp(finalExp);
         SaveNecromancerData();
     }
 
-    public void ExternalAttack()
+    private IEnumerator CoSummon(float timer)
     {
-        // cast spell
-        //SpawnSpell();
+        yield return new WaitForSeconds(timer);
+
+        InitializeFightingSpots();
+        SummonAnimation();
     }
-    /*
-    private void SpawnSpell()
+
+    public void SummonAnimation()
     {
-        GameObject spawned = Instantiate(_spellPrefab, transform.position, Quaternion.identity);
-        if (spawned.TryGetComponent(out SpellMage spellMage))
-        {
-            if (spellMage.DoesMove)
-            {
-                spellMage.SetPositions(castPosition.position, new Vector2(_fightPositions.position.x, castPosition.position.y));
-            }
-            else
-            {
-                spellMage.SetPositions(new Vector2(_fightPositions.position.x, castPosition.position.y), new Vector2(_fightPositions.position.x, castPosition.position.y));
-            }
-            spellMage.Perform();
-        }
-    }*/
+        if (IsSummonAnimationPlaying) return;
+
+        _animator.SetTrigger("Summon");
+        IsSummonAnimationPlaying = true;
+    }
+
+    public void ExternalEndAnimation()
+    {
+        IsSummonAnimationPlaying = false;
+        _animator.SetTrigger("Idle");
+    }
+
+
 
 
     public override IBasePlayerData GetPlayerData()
@@ -180,6 +162,9 @@ public class PlayerNecromancer : Player
 
     private void OnStatChangeNecromancer(int id, int value)
     {
+        // check for new fighting spots when in scene
+        StartCoroutine(CoSummon(0.25f));
+
         OnStatChange?.Invoke(id, value);
     }
 

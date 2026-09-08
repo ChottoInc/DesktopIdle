@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerNecromancerData : BasePlayerData
@@ -43,11 +40,22 @@ public class PlayerNecromancerData : BasePlayerData
     public float CurrentSummon => baseSummon + UtilsNecromancer.PER_LEVEL_NECROMANCER_GAIN_SUMMON * (LevelStatSummon - 1);
     public float CurrentMight => baseMight + UtilsNecromancer.PER_LEVEL_NECROMANCER_GAIN_MIGHT * (LevelStatMight - 1);
     public float CurrentLifespan => baseLifespan + UtilsNecromancer.PER_LEVEL_NECROMANCER_GAIN_LIFESPAN * (LevelStatLifespan - 1);
-    public float CurrentHorde => baseLifespan + UtilsNecromancer.PER_LEVEL_NECROMANCER_GAIN_HORDE * LevelStatHorde;
-    public float CurrentLuck => baseLifespan + UtilsNecromancer.PER_LEVEL_NECROMANCER_GAIN_LUCK * (LevelStatLuck - 1);
+    public float CurrentHorde => baseHorde + UtilsNecromancer.PER_LEVEL_NECROMANCER_GAIN_HORDE * LevelStatHorde;
+    public float CurrentLuck => baseLuck + UtilsNecromancer.PER_LEVEL_NECROMANCER_GAIN_LUCK * (LevelStatLuck - 1);
 
 
-    // ---- SPELLS
+    public bool IsAriseRitualUnlocked =>
+        LevelStatSummon >= UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_SUMMON &&
+        LevelStatHorde >= UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_HORDE;
+
+    public bool IsAfterlifeRitualUnlocked =>
+        LevelStatAptitude >= UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_APTITUDE &&
+        LevelStatMight >= UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_MIGHT;
+
+    public bool IsAdeRitualUnlocked =>
+        LevelStatLifespan >= UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_LIFESPAN &&
+        LevelStatLuck >= UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_LUCK;
+
 
     public PlayerNecromancerData()
     {
@@ -111,7 +119,7 @@ public class PlayerNecromancerData : BasePlayerData
         baseAptitude = 0f; // unlocks new couple in scene to fight
 
         baseSummon = 0f; // reduce ritual speed
-        baseMight = 0f; // increase minions strength
+        baseMight = 0.02f; // increase minions strength
 
         baseLifespan = 0f; // increase life duration
         baseHorde = 0f; // unlocks new size limit horde

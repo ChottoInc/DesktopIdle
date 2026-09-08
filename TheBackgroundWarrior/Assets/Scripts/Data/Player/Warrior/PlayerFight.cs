@@ -174,6 +174,7 @@ public class PlayerFight : Player, IDamageable, IHealable
         {
             Enemy enemy = hit.GetComponent<Enemy>();
 
+            //Debug.Log("Enemy found: " + enemy.IsDead);
             if (enemy.CanFight && !enemy.IsDead && !IsDead)
             {
                 isEnemyDetected = true;

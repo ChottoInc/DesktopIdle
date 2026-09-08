@@ -1,11 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UITabJobNecromancer : UITabWindow
 {
     [Space(10)]
     [SerializeField] UITabPlayerJob panelJob;
+
+    [Space(10)]
+    [SerializeField] UIRitualPrefab[] _ritualPrefabs;
 
 
 
@@ -25,6 +26,7 @@ public class UITabJobNecromancer : UITabWindow
 
         panelJob.ChangeCurrentTab(this, UtilsPlayer.PlayerJob.Necromancer);
 
+        // refrresh all ritual to update their texts
         Refresh();
     }
 
@@ -38,18 +40,10 @@ public class UITabJobNecromancer : UITabWindow
 
     private void Refresh()
     {
-        // add rituals to update their ui if now the abilities are maxed out and revel themself
-
-        /*
-        foreach (var uiSpell in mageSpells)
+        foreach (var uiRitual in _ritualPrefabs)
         {
-            uiSpell.Refresh();
+            uiRitual.Refresh();
         }
-
-        slot1.Setup(PlayerManager.Instance.PlayerMageData.EquippedSlot1Spell);
-        slot2.Setup(PlayerManager.Instance.PlayerMageData.EquippedSlot2Spell);
-        slot3.Setup(PlayerManager.Instance.PlayerMageData.EquippedSlot3Spell);
-        slot4.Setup(PlayerManager.Instance.PlayerMageData.EquippedSlot4Spell);*/
     }
 
 

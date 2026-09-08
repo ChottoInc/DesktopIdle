@@ -14,6 +14,7 @@ public class UIShopPanelRedeem : MonoBehaviour
     private const string FARMER_STAT_CODE = "04";
     private const string MAGE_STAT_CODE = "05";
     private const string ALCHEMIST_STAT_CODE = "06";
+    private const string NECROMANCER_STAT_CODE = "07";
 
     private const string ITEM_ADD_CODE = "80";
 
@@ -89,6 +90,7 @@ public class UIShopPanelRedeem : MonoBehaviour
             case FARMER_STAT_CODE:
             case MAGE_STAT_CODE:
             case ALCHEMIST_STAT_CODE:
+            case NECROMANCER_STAT_CODE:
                 return HandleStatRedeem(code);
 
             case ITEM_ADD_CODE:
@@ -128,6 +130,7 @@ public class UIShopPanelRedeem : MonoBehaviour
             case FARMER_STAT_CODE: playerData = PlayerManager.Instance.PlayerFarmerData; maxLevel = UtilsFarmer.MAX_LEVEL_FARMER; break;
             case MAGE_STAT_CODE: playerData = PlayerManager.Instance.PlayerMageData; maxLevel = UtilsMage.MAX_LEVEL_MAGE; break;
             case ALCHEMIST_STAT_CODE: playerData = PlayerManager.Instance.PlayerMageData; maxLevel = UtilsAlchemist.MAX_LEVEL_ALCHEMIST; break;
+            case NECROMANCER_STAT_CODE: playerData = PlayerManager.Instance.PlayerNecromancerData; maxLevel = UtilsNecromancer.MAX_LEVEL_NECROMANCER; break;
         }
 
         if(playerData != null)

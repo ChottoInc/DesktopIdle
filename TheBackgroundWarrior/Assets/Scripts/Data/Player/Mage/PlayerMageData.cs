@@ -160,12 +160,22 @@ public class PlayerMageData : BasePlayerData
             case UtilsPlayer.ID_MAGE_CASTSPEED: LevelStatCastSpeed += amount; break;
             case UtilsPlayer.ID_MAGE_SCHOLAR: 
                 LevelStatScholar += amount;
+
+                // since it's a float, cast to int to get which spell you are currently allow to learn
                 int maxIndex = (int)CurrentScholar + 1;
                 for (int i = 0; i < maxIndex; i++)
                 {
+                    // unlock if they are not unlocked yet
                     if (!Spells[i].IsUnlocked)
                         Spells[i].SetUnlocked();
                 }
+
+                // check for necromancer job once the scholar stat is maxed out
+                if(LevelStatScholar >= UtilsMage.PER_LEVEL_MAGE_MAX_SCHOLAR)
+                {
+                    PlayerManager.Instance.PlayerJobsData.AddAvailableJob(UtilsPlayer.PlayerJob.Necromancer);
+                }
+
                 break;
             case UtilsPlayer.ID_MAGE_PROFICIENCY: LevelStatProficiency += amount; break;
         }

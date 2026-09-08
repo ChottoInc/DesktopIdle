@@ -178,6 +178,22 @@ public class EnemyData
 
     #region COMABT SYSTEM
 
+    private int GetDisplayDamage(float damage)
+    {
+        if(damage == 0f)
+        {
+            return 0;
+        }
+        else if(damage > 0f && damage < 1f)
+        {
+            return 1;
+        }
+        else
+        {
+            return Mathf.FloorToInt(damage);
+        }
+    }
+
     public void TakeDamage(PlayerFightData data)
     {
         if (CurrentHp <= 0) return;
@@ -206,7 +222,7 @@ public class EnemyData
         // subtract total to hp
         CurrentHp -= total;
 
-        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
+        OnTakeDamage?.Invoke(GetDisplayDamage(total));
 
         // heal warrior if poisoned
         if (HasStatus(UtilsEnemy.EnemyAffectedStatus.Poisoned))
@@ -230,7 +246,19 @@ public class EnemyData
         // subtract total to hp
         CurrentHp -= total;
 
-        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
+        OnTakeDamage?.Invoke(GetDisplayDamage(total));
+
+        CurrentHp = Mathf.Max(CurrentHp, 0f);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        float total = Mathf.Max(0f, damage);
+
+        // subtract total to hp
+        CurrentHp -= total;
+
+        OnTakeDamage?.Invoke(GetDisplayDamage(total));
 
         CurrentHp = Mathf.Max(CurrentHp, 0f);
     }
@@ -247,10 +275,32 @@ public class EnemyData
         // subtract total to hp
         CurrentHp -= total;
 
-        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
+        OnTakeDamage?.Invoke(GetDisplayDamage(total));
 
         // companions can't kill enemies, at most they reach 1 hp
         CurrentHp = Mathf.Max(CurrentHp, 1f);
+    }
+
+    public void TakeDamage(SummonData data)
+    {
+        if (CurrentHp <= 0) return;
+        
+        // can't take less than 0 or it will cure
+        float total = MaxHp * data.CurrentAtkPerc;
+
+        total = Mathf.Max(0f, total);
+        //Debug.Log("Total dmg: " + total);
+
+        // subtract total to hp
+        CurrentHp -= total;
+
+        OnTakeDamage?.Invoke(GetDisplayDamage(total));
+
+        // companions can't kill enemies, at most they reach 1 hp
+        //CurrentHp = Mathf.Max(CurrentHp, 1f);
+
+        // set to 0 if lower
+        CurrentHp = Mathf.Max(CurrentHp, 0f);
     }
 
     public void TakeDamageFromSpell(float damage)
@@ -274,9 +324,9 @@ public class EnemyData
         // subtract total to hp
         CurrentHp -= total;
 
-        OnTakeDamage?.Invoke(Mathf.FloorToInt(total));
+        OnTakeDamage?.Invoke(GetDisplayDamage(total));
 
-        // se to 0 if lower
+        // set to 0 if lower
         CurrentHp = Mathf.Max(CurrentHp, 0f);
     }
 

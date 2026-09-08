@@ -171,6 +171,14 @@ public static class UtilsPlayer
             case ID_ALCHEMIST_YIELD: return UtilsAlchemist.PER_LEVEL_ALCHEMIST_MAX_YIELD;
             case ID_ALCHEMIST_RESEARCH: return UtilsAlchemist.PER_LEVEL_ALCHEMIST_MAX_RESEARCH;
             case ID_ALCHEMIST_STABILITY: return UtilsAlchemist.PER_LEVEL_ALCHEMIST_MAX_STABILITY;
+
+            // NECROMANCER DATA
+            case ID_NECROMANCER_APTITUDE: return UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_APTITUDE;
+            case ID_NECROMANCER_SUMMON: return UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_SUMMON;
+            case ID_NECROMANCER_MIGHT: return UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_MIGHT;
+            case ID_NECROMANCER_LIFESPAN: return UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_LIFESPAN;
+            case ID_NECROMANCER_HORDE: return UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_HORDE;
+            case ID_NECROMANCER_LUCK: return UtilsNecromancer.PER_LEVEL_NECROMANCER_MAX_LUCK;
         }
     }
 
@@ -224,6 +232,14 @@ public static class UtilsPlayer
             case ID_ALCHEMIST_YIELD: return PlayerManager.Instance.PlayerAlchemistData.LevelStatYield;
             case ID_ALCHEMIST_RESEARCH: return PlayerManager.Instance.PlayerAlchemistData.LevelStatResearch;
             case ID_ALCHEMIST_STABILITY: return PlayerManager.Instance.PlayerAlchemistData.LevelStatStability;
+
+            // NECROMANCER DATA
+            case ID_NECROMANCER_APTITUDE: return PlayerManager.Instance.PlayerNecromancerData.LevelStatAptitude;
+            case ID_NECROMANCER_SUMMON: return PlayerManager.Instance.PlayerNecromancerData.LevelStatSummon;
+            case ID_NECROMANCER_MIGHT: return PlayerManager.Instance.PlayerNecromancerData.LevelStatMight;
+            case ID_NECROMANCER_LIFESPAN: return PlayerManager.Instance.PlayerNecromancerData.LevelStatLifespan;
+            case ID_NECROMANCER_HORDE: return PlayerManager.Instance.PlayerNecromancerData.LevelStatHorde;
+            case ID_NECROMANCER_LUCK: return PlayerManager.Instance.PlayerNecromancerData.LevelStatLuck;
         }
     }
 
@@ -277,6 +293,14 @@ public static class UtilsPlayer
             case ID_ALCHEMIST_YIELD: return PlayerManager.Instance.PlayerAlchemistData.CurrentYield;
             case ID_ALCHEMIST_RESEARCH: return PlayerManager.Instance.PlayerAlchemistData.CurrentResearch;
             case ID_ALCHEMIST_STABILITY: return PlayerManager.Instance.PlayerAlchemistData.CurrentStability;
+
+            // NECROMANCER DATA
+            case ID_NECROMANCER_APTITUDE: return PlayerManager.Instance.PlayerNecromancerData.CurrentAptitude;
+            case ID_NECROMANCER_SUMMON: return PlayerManager.Instance.PlayerNecromancerData.CurrentSummon;
+            case ID_NECROMANCER_MIGHT: return PlayerManager.Instance.PlayerNecromancerData.CurrentMight;
+            case ID_NECROMANCER_LIFESPAN: return PlayerManager.Instance.PlayerNecromancerData.CurrentLifespan;
+            case ID_NECROMANCER_HORDE: return PlayerManager.Instance.PlayerNecromancerData.CurrentHorde;
+            case ID_NECROMANCER_LUCK: return PlayerManager.Instance.PlayerNecromancerData.CurrentLuck;
         }
     }
 
@@ -330,6 +354,14 @@ public static class UtilsPlayer
             case ID_ALCHEMIST_YIELD: return AllText[text_tooltip_stat_alchemist_yield];
             case ID_ALCHEMIST_RESEARCH: return AllText[text_tooltip_stat_alchemist_research];
             case ID_ALCHEMIST_STABILITY: return AllText[text_tooltip_stat_alchemist_stability];
+
+            // NECROMANCER DATA
+            case ID_NECROMANCER_APTITUDE: return AllText[text_tooltip_stat_necromancer_aptitude];
+            case ID_NECROMANCER_SUMMON: return AllText[text_tooltip_stat_necromancer_summon];
+            case ID_NECROMANCER_MIGHT: return AllText[text_tooltip_stat_necromancer_might];
+            case ID_NECROMANCER_LIFESPAN: return AllText[text_tooltip_stat_necromancer_lifespan];
+            case ID_NECROMANCER_HORDE: return AllText[text_tooltip_stat_necromancer_horde];
+            case ID_NECROMANCER_LUCK: return AllText[text_tooltip_stat_necromancer_luck];
         }
     }
 
@@ -341,7 +373,8 @@ public static class UtilsPlayer
             PlayerManager.Instance.PlayerFisherData.CurrentLevel > UtilsFisher.MAX_LEVEL_FISHER &&
             PlayerManager.Instance.PlayerFarmerData.CurrentLevel > UtilsFarmer.MAX_LEVEL_FARMER &&
             PlayerManager.Instance.PlayerMageData.CurrentLevel > UtilsMage.MAX_LEVEL_MAGE &&
-            PlayerManager.Instance.PlayerAlchemistData.CurrentLevel > UtilsAlchemist.MAX_LEVEL_ALCHEMIST)
+            PlayerManager.Instance.PlayerAlchemistData.CurrentLevel > UtilsAlchemist.MAX_LEVEL_ALCHEMIST &&
+            PlayerManager.Instance.PlayerNecromancerData.CurrentLevel > UtilsNecromancer.MAX_LEVEL_NECROMANCER)
         {
             return true;
         }
@@ -391,6 +424,13 @@ public static class UtilsPlayer
             case ID_ALCHEMIST_YIELD:
             case ID_ALCHEMIST_RESEARCH:
             case ID_ALCHEMIST_STABILITY: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_alchemist]);
+
+            case ID_NECROMANCER_APTITUDE:
+            case ID_NECROMANCER_SUMMON:
+            case ID_NECROMANCER_MIGHT:
+            case ID_NECROMANCER_LIFESPAN:
+            case ID_NECROMANCER_HORDE:
+            case ID_NECROMANCER_LUCK: return string.Format("{0} ({1})", GetStatNameById(id), AllText[text_name_class_necromancer]);
         }
     }
     
@@ -436,6 +476,13 @@ public static class UtilsPlayer
             case ID_ALCHEMIST_YIELD: return AllText[text_name_alchemist_stat_yield];
             case ID_ALCHEMIST_RESEARCH: return AllText[text_name_alchemist_stat_research];
             case ID_ALCHEMIST_STABILITY: return AllText[text_name_alchemist_stat_stability];
+
+            case ID_NECROMANCER_APTITUDE: return AllText[text_name_necromancer_stat_aptitude];
+            case ID_NECROMANCER_SUMMON: return AllText[text_name_necromancer_stat_summon];
+            case ID_NECROMANCER_MIGHT: return AllText[text_name_necromancer_stat_might];
+            case ID_NECROMANCER_LIFESPAN: return AllText[text_name_necromancer_stat_lifespan];
+            case ID_NECROMANCER_HORDE: return AllText[text_name_necromancer_stat_horde];
+            case ID_NECROMANCER_LUCK: return AllText[text_name_necromancer_stat_luck];
         }
     }
 
@@ -474,13 +521,20 @@ public static class UtilsPlayer
 
             case ID_MAGE_INSIGHT: return AdvanceStatType.Multiplier;
             case ID_MAGE_CASTSPEED: return AdvanceStatType.Flat;
-            case ID_MAGE_SCHOLAR: return AdvanceStatType.Multiplier;
-            case ID_MAGE_PROFICIENCY: return AdvanceStatType.Multiplier;
+            case ID_MAGE_SCHOLAR: return AdvanceStatType.Flat;
+            case ID_MAGE_PROFICIENCY: return AdvanceStatType.Flat;
 
             case ID_ALCHEMIST_ROUTINE: return AdvanceStatType.Multiplier;
             case ID_ALCHEMIST_YIELD: return AdvanceStatType.Multiplier;
             case ID_ALCHEMIST_RESEARCH: return AdvanceStatType.Flat;
             case ID_ALCHEMIST_STABILITY: return AdvanceStatType.Multiplier;
+
+            case ID_NECROMANCER_APTITUDE: return AdvanceStatType.Flat;
+            case ID_NECROMANCER_SUMMON: return AdvanceStatType.Multiplier;
+            case ID_NECROMANCER_MIGHT: return AdvanceStatType.Multiplier;
+            case ID_NECROMANCER_LIFESPAN: return AdvanceStatType.Multiplier;
+            case ID_NECROMANCER_HORDE: return AdvanceStatType.Flat;
+            case ID_NECROMANCER_LUCK: return AdvanceStatType.Multiplier;
         }
     }
 
